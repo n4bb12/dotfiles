@@ -5,7 +5,7 @@
 # 
 # ================================================
 
-require-binary "pnpm"
+require-node-package "pnpm"
 
 alias p="pnpm"
 alias pi="pnpm install"
