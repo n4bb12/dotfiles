@@ -33,6 +33,7 @@ import npm-name-available
 import open
 import pnpm
 import select
+import ssh-agent
 import tldr
 import underscore
 import words
