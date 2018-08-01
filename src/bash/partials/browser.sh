@@ -28,9 +28,9 @@ browser() {
     browser=google-chrome
   else
     browser=opn
-    warn 'Chrome not found, using default browser.'
-    warn "You can speed open time by setting \$BROWSER."
-    require-node-package 'opn-cli'
+    warn "Chrome is not on the \$PATH. Falling back to default browser."
+    warn "You can speed up the open time by setting \$BROWSER or by putting Chrome in the \$PATH."
+    require-node-package "opn-cli"
   fi
 
   domain="$1"
