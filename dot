@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -e
+
+#
+# Helpers
+##################################################
+
+source src/bash/partials/colors.sh
+source src/bash/partials/env.sh
+
+run() {
+  echo "$@"
+  "$@"
+}
+
+#
+# Commands
+##################################################
+
+lint() {
+  run ./node_modules/.bin/tslint \
+    --project tsconfig.json \
+    --config tslint.json \
+    --format stylish \
+    --fix
+}
+
+clean() {
+  run rm -rf dist
+}
+
+compile() {
+  run ./node_modules/.bin/ts-node \
+    src/bash/urls.ts
+}
+
+copy() {
+  run ./node_modules/.bin/cpy 'bash/**/*.sh' ../dist \
+    --cwd src --parents
+  run cp src/package.dist.json dist/package.json
+}
+
+build() {
+  compile
+  copy
+}
+
+rebuild() {
+  clean
+  build
+}
+
+#
+# CLI
+##################################################
+
+#
+# Call the function specified by the first parameter, passing all remaining
+# parameters to the function. If no such function exists, display usage info.
+#
+if [ -n "$1" ] && type $1 | grep -i function > /dev/null; then
+  yarn
+  command="$1"
+  shift
+  $command ${@}
+else
+  fail "No such command: $1"
+fi

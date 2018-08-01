@@ -1,0 +1,8 @@
+{
+  "name": "@n4bb12/dotfiles",
+  "private": true,
+  "bugs": "https://github.com/n4bb12/dotfiles/issues",
+  "repository": "git@github.com:n4bb12/dotfiles.git",
+  "license": "MIT",
+  "author": "Abraham Schilling"
+}
