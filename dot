@@ -5,6 +5,8 @@ set -e
 # Helpers
 ##################################################
 
+export PATH="$PATH:node_modules/.bin"
+
 source src/bash/partials/colors.sh
 source src/bash/partials/env.sh
 
@@ -18,7 +20,7 @@ run() {
 ##################################################
 
 lint() {
-  run ./node_modules/.bin/tslint \
+  run tslint \
     --project tsconfig.json \
     --config tslint.json \
     --format stylish \
@@ -30,12 +32,12 @@ clean() {
 }
 
 compile() {
-  run ./node_modules/.bin/ts-node \
+  run ts-node \
     src/bash/urls.ts
 }
 
 copy() {
-  run ./node_modules/.bin/cpy 'bash/**/*.sh' ../dist \
+  run cpy 'bash/**/*.sh' ../dist \
     --cwd src --parents
   run cp src/package.dist.json dist/package.json
 }
