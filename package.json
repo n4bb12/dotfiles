@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "description": "Config files, scripts, productivity stuff",
+  "keywords": [
+    "aliases",
+    "config",
+    "dotfiles",
+    "productivity",
+    "scripts"
+  ],
   "bugs": "https://github.com/n4bb12/dotfiles/issues",
   "repository": "git@github.com:n4bb12/dotfiles.git",
   "license": "MIT",
