@@ -29,6 +29,7 @@ import clipboard
 import free-port
 import http-server
 import kill
+import npm
 import npm-name-available
 import open
 import pnpm
