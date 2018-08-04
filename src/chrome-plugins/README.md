@@ -1,7 +1,6 @@
 # Chrome Plugins
 
 ## GitHub
-- [Awesome Autocomplete for GitHub](https://chrome.google.com/webstore/detail/awesome-autocomplete-for/djkfdjpoelphhdclfjhnffmnlnoknfnd)
 - [GitHub Code Folding](https://chrome.google.com/webstore/detail/github-code-folding/lefcpjbffalgdcdgidjdnmabfenecjdf)
 - [GitHub Issue Link Status](https://chrome.google.com/webstore/detail/github-issue-link-status/nbiddhncecgemgccalnoanpnenalmkic)
 - [GitHub Review Filter](https://chrome.google.com/webstore/detail/github-review-filter/gnpcfigiidmljgiidkhmmcgbfkolnacg)
