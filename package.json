@@ -19,8 +19,8 @@
   ],
   "devDependencies": {
     "@types/graceful-fs": "^4.1.2",
-    "@types/lodash": "^4.14.115",
-    "@types/node": "^10.5.4",
+    "@types/lodash": "^4.14.116",
+    "@types/node": "^10.5.6",
     "@types/pify": "^3.0.2",
     "cpy-cli": "^2.0.0",
     "graceful-fs": "^4.1.11",
@@ -28,7 +28,7 @@
     "pify": "^3.0.0",
     "ts-node": "^7.0.0",
     "tslint": "^5.11.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.0.1"
   },
   "$schema": "http://json.schemastore.org/package"
 }
