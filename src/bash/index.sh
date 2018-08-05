@@ -22,6 +22,7 @@ import git
 import node-global
 
 # --> node-global
+import angular
 import bitly
 import browser
 import change-case
