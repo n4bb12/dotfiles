@@ -39,7 +39,11 @@ compile() {
 copy() {
   run cpy 'bash/**/*.sh' ../dist \
     --cwd src --parents
-  run cp src/package.dist.json dist/package.json
+  
+  # preserve existing package.json
+  if [ ! -f dist/package.json ]; then
+    run cp src/package.dist.json dist/package.json
+  fi
 }
 
 build() {
