@@ -4,12 +4,19 @@
 # 
 #   Examples
 #     $ browser example.com
-#     $ browser https://www.google.de/search?q=close+restaurants
+#     $ browser https://www.google.de/search?q=restaurants
 #     $ browser
 # 
 #   (fallback to $BROWSER or system default browser)
 # 
 # ==========================================================
+
+require-node-package "urlencode-cli"
+
+url-encode() {
+  input=$(cat -)
+  urlencode "$input"
+}
 
 browser() {
   if [ ! -z $BROWSER ]; then
@@ -26,9 +33,12 @@ browser() {
     require-node-package "opn-cli"
   fi
 
-  base="$1"
+  domain="$1"
   shift
-  input="$@"
+  path=$(echo "$@" | url-encode)
 
-  ("$browser" "$base$input" &)
+  ("$browser" "$domain$path" &)
 }
+
+alias b="browser"
+alias g="browser"
