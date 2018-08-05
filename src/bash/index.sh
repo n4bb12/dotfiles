@@ -37,6 +37,7 @@ import pnpm
 import sort-package-json
 import ssh-agent
 import tldr
+import typescript
 import underscore
 import words
 import yarn
