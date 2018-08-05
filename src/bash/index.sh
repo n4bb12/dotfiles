@@ -34,7 +34,6 @@ import npm
 import npm-name-available
 import open
 import pnpm
-import select
 import sort-package-json
 import ssh-agent
 import tldr
