@@ -9,10 +9,9 @@ import() {
 }
 
 # --> /
-import cd
+import fs
 import colors
 import explorer
-import ls
 
 # --> colors
 import env
