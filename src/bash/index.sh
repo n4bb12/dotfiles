@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-export DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-export "PATH=$PATH:$DOTFILES_ROOT/node_modules/.bin"
+export DOT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export "PATH=$PATH:$DOT_ROOT/node_modules/.bin"
 
 import() {
   echo "import $1"
@@ -42,4 +42,9 @@ import words
 import yarn
 
 # --> browser
-import urls
+import web-google
+import web-ids
+import web-refs
+import web-search
+import web-sites
+import web-tools

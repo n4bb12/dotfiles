@@ -32,13 +32,11 @@ clean() {
 }
 
 compile() {
-  run ts-node \
-    src/bash/urls.ts
+  run ts-node src/bash/generate.ts
 }
 
 copy() {
-  run cpy 'bash/**/*.sh' ../dist \
-    --cwd src --parents
+  run cpy 'bash/**/*.sh' ../dist --cwd src --parents
   
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
