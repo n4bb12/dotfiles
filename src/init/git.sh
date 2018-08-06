@@ -5,6 +5,7 @@
 # 
 # ================================================
 
+git config --global core.autocrlf false
 git config --global core.editor "code --wait"
 git config --global diff.tool "vs-code"
 git config --global difftool.cmd "code --wait --diff $LOCAL $REMOTE"
