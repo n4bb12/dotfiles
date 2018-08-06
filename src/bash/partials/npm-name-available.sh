@@ -16,14 +16,14 @@
 # 
 # ==========================================================
 
-require-node-package "all-the-package-names"
-require-node-package "available"
+require-node-package 'all-the-package-names'
+require-node-package 'available'
 
 npm-name() {
   all-the-package-names | grep -E "^${1}$" > /dev/null
   status="$?"
 
-  if [ "$status" -ne "0" ]; then
+  if [ "$status" -ne '0' ]; then
     echo -e Package name "${green}${1}${reset}" is available!
   else
     echo -e Package name "${red}${1}${reset}" is already in use: \

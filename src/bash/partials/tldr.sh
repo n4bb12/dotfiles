@@ -10,9 +10,9 @@
 # 
 # ================================================
 
-require-node-package "tldr"
+require-node-package 'tldr'
 
-alias ?="tldr"
-alias how2="tldr"
-alias howto="tldr"
-alias man="tldr"
+alias     ?='tldr'
+alias   man='tldr'
+alias  how2='tldr'
+alias howto='tldr'

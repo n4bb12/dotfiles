@@ -6,4 +6,4 @@
 # 
 # ================================================
 
-require-node-package "@angular/cli"
+require-node-package '@angular/cli'

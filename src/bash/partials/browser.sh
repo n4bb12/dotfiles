@@ -11,7 +11,7 @@
 # 
 # ==========================================================
 
-require-node-package "urlencode-cli"
+require-node-package 'urlencode-cli'
 
 url-encode() {
   input=$(cat -)
@@ -28,9 +28,9 @@ browser() {
     browser=google-chrome
   else
     browser=opn
-    warn "Chrome not found, using default browser."
+    warn 'Chrome not found, using default browser.'
     warn "You can speed open time by setting \$BROWSER."
-    require-node-package "opn-cli"
+    require-node-package 'opn-cli'
   fi
 
   domain="$1"
@@ -40,5 +40,5 @@ browser() {
   ("$browser" "$domain$path" &)
 }
 
-alias b="browser"
-alias g="browser"
+alias b='browser'
+alias g='browser'

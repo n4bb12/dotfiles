@@ -25,4 +25,4 @@ warn() {
   echo -e "${yellow}${@}${reset}"
 }
 
-alias cl="clear"
+alias cl='clear'

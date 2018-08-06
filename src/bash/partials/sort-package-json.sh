@@ -7,4 +7,4 @@
 # 
 # ================================================
 
-require-node-package "sort-package-json"
+require-node-package 'sort-package-json'

@@ -5,4 +5,4 @@
 # 
 # ================================================
 
-require-node-package "superb-cli"
+require-node-package 'superb-cli'

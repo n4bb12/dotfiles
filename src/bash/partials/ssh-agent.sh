@@ -8,9 +8,9 @@ function run_ssh_env {
 }
 
 function start_ssh_agent {
-  echo "Initializing new SSH agent..."
+  echo 'Initializing new SSH agent...'
   ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-  echo "succeeded"
+  echo 'succeeded'
   chmod 600 "${SSH_ENV}"
 
   run_ssh_env;

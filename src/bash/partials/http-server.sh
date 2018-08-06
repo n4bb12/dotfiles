@@ -5,7 +5,7 @@
 # 
 # ================================================
 
-require-node-package "live-server"
+require-node-package 'live-server'
 
-alias serve="live-server"
-alias http-server="live-server"
+alias serve='live-server'
+alias http-server='live-server'

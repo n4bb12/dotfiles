@@ -9,8 +9,8 @@
 # 
 # ================================================
 
-require-node-package "underscore-cli"
+require-node-package 'underscore-cli'
 
-alias _="underscore"
-alias pretty="_ print --color"
-alias scripts="cat package.json | _ extract scripts | pretty"
+alias _='underscore'
+alias pretty='_ print --color'
+alias scripts='cat package.json | _ extract scripts | pretty'

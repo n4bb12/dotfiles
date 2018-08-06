@@ -11,8 +11,8 @@
 # 
 # ==========================================================
 
-require-node-package "opn-cli"
+require-node-package 'opn-cli'
 
 if ! command -v open > /dev/null 2>&1; then
-  alias open="opn"
+  alias open='opn'
 fi

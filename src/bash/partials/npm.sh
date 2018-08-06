@@ -5,7 +5,7 @@
 # 
 # ================================================
 
-require-binary "npm"
-require-node-package "philemon"
+require-binary 'npm'
+require-node-package 'philemon'
 
-alias npm="philemon npm"
+alias npm='philemon npm'
