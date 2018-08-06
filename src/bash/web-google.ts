@@ -1,20 +1,20 @@
 import { BashScript } from "./BashScript"
 
 export default function generate() {
-  const script = new BashScript()
-  const { alias, browse, section } = script
+  const sh = new BashScript()
 
-  section("Google Search",
-  "https://www.lifewire.com/advanced-google-search-3482174")
-  browse("search", "https://www.google.de/search?q=")
-  const search = alias("s", "search")
+  sh.section("Google Search",
+    "https://www.lifewire.com/advanced-google-search-3482174")
 
-  alias("define", search("define"))
-  alias("google", search())
-  alias("stopwatch", search("stopwatch"))
-  alias("timer", search("timer"))
-  alias("watch", search("watch"))
-  alias("weather", search("weather"))
+  sh.browse("search", "https://www.google.de/search?q=")
+  const search = sh.alias("s", "search")
 
-  script.outputTo(__dirname, "partials", "web-google.sh")
+  sh.alias("define", search("define"))
+  sh.alias("google", search())
+  sh.alias("stopwatch", search("stopwatch"))
+  sh.alias("timer", search("timer"))
+  sh.alias("watch", search("watch"))
+  sh.alias("weather", search("weather"))
+
+  sh.outputTo(__dirname, "partials", "web-google.sh")
 }

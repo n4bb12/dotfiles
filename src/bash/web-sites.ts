@@ -1,20 +1,19 @@
 import { BashScript } from "./BashScript"
 
 export default function generate() {
-  const script = new BashScript()
-  const { alias, browse, section } = script
+  const sh = new BashScript()
 
-  section("Websites")
+  sh.section("Websites")
 
-  browse("contacts", "https://contacts.google.com")
-  browse("dango", "https://getdango.com/interactive/?banner=0")
-  browse("escape", "http://www.theukwebdesigncompany.com/articles/entity-escape-characters.php")
-  browse("github", "https://github.com/n4bb12")
-  browse("gitlab", "https://gitlab.com/n4bb12")
-  browse("mail", "https://mail.google.com")
-  browse("music", "https://music.youtube.com")
-  browse("youtube", "https://www.youtube.com")
-  browse("wallpapers", "https://interfacelift.com/wallpaper/downloads/date/wide_16:9/3840x2160/")
+  sh.browse("contacts",   "https://contacts.google.com")
+  sh.browse("dango",      "https://getdango.com/interactive/?banner=0")
+  sh.browse("escape",     "http://www.theukwebdesigncompany.com/articles/entity-escape-characters.php")
+  sh.browse("github",     "https://github.com/n4bb12")
+  sh.browse("gitlab",     "https://gitlab.com/n4bb12")
+  sh.browse("mail",       "https://mail.google.com")
+  sh.browse("music",      "https://music.youtube.com")
+  sh.browse("wallpapers", "https://interfacelift.com/wallpaper/downloads/date/wide_16:9/3840x2160/")
+  sh.browse("youtube",    "https://www.youtube.com")
 
-  script.outputTo(__dirname, "partials", "web-sites.sh")
+  sh.outputTo(__dirname, "partials", "web-sites.sh")
 }

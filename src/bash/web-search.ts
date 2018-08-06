@@ -1,16 +1,15 @@
 import { BashScript } from "./BashScript"
 
 export default function generate() {
-  const script = new BashScript()
-  const { alias, browse, section } = script
+  const sh = new BashScript()
 
-  section("Other Search")
+  sh.section("Other Search")
 
-  browse("caniuse", "https://caniuse.com/#search=")
-  browse("langs", "http://ionicabizau.github.io/github-profile-languages/?user=")
-  browse("emoji", "http://emoji.muan.co/#").alias("emo")
-  browse("flaticon", "https://www.flaticon.com/search?word=")
-  browse("maps", "https://www.google.de/maps/search/")
+  sh.browse("caniuse", "https://caniuse.com/#search=")
+  sh.browse("langs", "http://ionicabizau.github.io/github-profile-languages/?user=")
+  sh.browse("emoji", "http://emoji.muan.co/#").alias("emo")
+  sh.browse("flaticon", "https://www.flaticon.com/search?word=")
+  sh.browse("maps", "https://www.google.de/maps/search/")
 
-  script.outputTo(__dirname, "partials", "web-search.sh")
+  sh.outputTo(__dirname, "partials", "web-search.sh")
 }

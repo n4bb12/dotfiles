@@ -1,12 +1,11 @@
 import { BashScript } from "./BashScript"
 
 export default function generate() {
-  const script = new BashScript()
-  const { alias, browse, section } = script
+  const sh = new BashScript()
 
-  section("References")
+  sh.section("References")
 
-  script.switch("ref", "search 'reference docs'", {
+  sh.switch("ref", "search 'reference docs'", {
     angular:   "browser 'https://github.com/angular/angular-cli/wiki'",
     cypress:   "browser 'https://docs.cypress.io'",
     enzyme:    "browser 'https://airbnb.io/enzyme/docs/api/'",
@@ -26,14 +25,14 @@ export default function generate() {
     types:     "browser 'https://microsoft.github.io/TypeSearch'",
     yarn:      "browser 'https://yarnpkg.com/en/docs/cli'",
 
-    ng:        "ref angular",
-    pkg:       "ref package",
-    sc:        "ref styled",
+    ng:  "ref angular",
+    pkg: "ref package",
+    sc:  "ref styled",
   })
 
-  const ref = alias("reference", "ref")
-  alias("man", ref())
-  alias("docs", ref())
+  const ref = sh.alias("reference", "ref")
+  sh.alias("man", ref())
+  sh.alias("docs", ref())
 
-  script.outputTo(__dirname, "partials", "web-refs.sh")
+  sh.outputTo(__dirname, "partials", "web-refs.sh")
 }
