@@ -7,7 +7,7 @@
 
 require-binary "git"
 
-alias      add="git add -A ."
+alias      add="git add -A"
 alias      eol="git rm --cached -r ."
 alias      fix="git commit --fixup"
 alias      log="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
