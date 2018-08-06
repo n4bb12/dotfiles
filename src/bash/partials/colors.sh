@@ -24,3 +24,5 @@ fail() {
 warn() {
   echo -e "${yellow}${@}${reset}"
 }
+
+alias cl="clear"
