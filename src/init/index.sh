@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-export DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-export "PATH=$PATH:$DOTFILES_ROOT/node_modules/.bin"
+export INIT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo $INIT_ROOT/init
 
 init() {
   echo "init $1"
-  "$DOTFILES_ROOT/bash/partials/$1.sh"
+  "$INIT_ROOT/$1.sh"
 }
 
 # --> /
