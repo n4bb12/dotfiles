@@ -4,8 +4,8 @@ export DOT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export "PATH=$PATH:$DOT_ROOT/node_modules/.bin"
 
 import() {
-  echo "import $1"
-  source "$DOTFILES_ROOT/bash/partials/$1.sh"
+  [ ! -z "$DEBUG" ] && echo "import $1"
+  source "$DOT_ROOT/bash/partials/$1.sh"
 }
 
 # --> /
@@ -48,3 +48,5 @@ import web-refs
 import web-search
 import web-sites
 import web-tools
+
+echo dotfiles loaded
