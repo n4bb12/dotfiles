@@ -12,3 +12,6 @@ mail() { browser 'https://mail.google.com' "$@"; }
 music() { browser 'https://music.youtube.com' "$@"; }
 wallpapers() { browser 'https://interfacelift.com/wallpaper/downloads/date/wide_16:9/3840x2160/' "$@"; }
 youtube() { browser 'https://www.youtube.com' "$@"; }
+alias gh="github"
+alias gl="gitlab"
+alias yt="youtube"
