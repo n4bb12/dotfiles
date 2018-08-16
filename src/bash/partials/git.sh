@@ -7,12 +7,15 @@
 
 require-binary 'git'
 
+work() {
+  git checkout -b $(echo "$1" | slug)
+}
+
 alias       add='git add -A'
 alias       eol='git rm --cached -r .'
 alias       fix='git commit --fixup'
 alias       log='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 alias      diff='git --no-pager diff'
-alias      outb='checkout -b'
 alias      pull='git fetch --prune && git pull --ff'
 alias      push='git push --follow-tags'
 alias      show='git --no-pager show'
