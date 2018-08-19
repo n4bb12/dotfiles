@@ -11,7 +11,7 @@ source src/bash/partials/colors.sh
 source src/bash/partials/env.sh
 
 run() {
-  echo "$@"
+  echo "\$ $@"
   "$@"
 }
 
@@ -49,9 +49,17 @@ build() {
   copy
 }
 
-rebuild() {
-  clean
+update() {
   build
+
+  run cd dist
+  run source bash/index.sh
+  run yarn upgrade
+}
+
+install() {
+  clean
+  update
 }
 
 #
