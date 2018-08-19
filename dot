@@ -52,9 +52,14 @@ build() {
 update() {
   build
 
-  run cd dist
+  pushd dist
   run source bash/index.sh
   run yarn upgrade
+  popd
+
+  pushd src/install
+  run ./index.sh
+  popd
 }
 
 install() {
