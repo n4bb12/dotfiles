@@ -36,6 +36,7 @@ import pnpm
 import sort-package-json
 import ssh-agent
 import tldr
+import tunnel
 import typescript
 import underscore
 import words
