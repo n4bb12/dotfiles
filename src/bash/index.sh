@@ -19,6 +19,7 @@ import env
 # --> env
 import git
 import node-global
+import whoami
 
 # --> node-global
 import angular
