@@ -1,5 +1,7 @@
 # Chrome Plugins
 
+These need to be installed/imported manually.
+
 ## GitHub
 
 - [GitHub Code Folding](https://chrome.google.com/webstore/detail/github-code-folding/lefcpjbffalgdcdgidjdnmabfenecjdf)
