@@ -14,8 +14,8 @@ music() { browser 'https://music.youtube.com' "$@"; }
 pull-requests() { browser 'https://github.com/pulls' "$@"; }
 wallpapers() { browser 'https://interfacelift.com/wallpaper/downloads/date/wide_16:9/3840x2160/' "$@"; }
 youtube() { browser 'https://www.youtube.com' "$@"; }
-alias ci="circleci"
-alias gh="github"
-alias gl="gitlab"
-alias prs="pull-requests"
-alias yt="youtube"
+alias ci='circleci'
+alias gh='github'
+alias gl='gitlab'
+alias prs='pull-requests'
+alias yt='youtube'

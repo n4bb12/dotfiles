@@ -12,6 +12,7 @@
 # ==========================================================
 
 require-node-package 'urlencode-cli'
+require-node-package 'opn-cli'
 
 url-encode() {
   input=$(cat -)
@@ -28,9 +29,8 @@ browser() {
     browser=google-chrome
   else
     browser=opn
-    warn "Chrome is not on the \$PATH. Falling back to default browser."
-    warn "You can speed up the open time by setting \$BROWSER or by putting Chrome in the \$PATH."
-    require-node-package "opn-cli"
+    warn 'Chrome is not on the $PATH. Falling back to default browser.'
+    warn 'You can speed up the open time by setting \$BROWSER or by putting Chrome in the $PATH.'
   fi
 
   domain="$1"

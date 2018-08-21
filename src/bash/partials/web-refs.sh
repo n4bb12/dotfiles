@@ -56,6 +56,6 @@ ref() {
     search 'reference docs' "$args"
   fi
 }
-alias reference="ref"
-alias man="reference"
-alias docs="reference"
+alias reference='ref'
+alias man='reference'
+alias docs='reference'

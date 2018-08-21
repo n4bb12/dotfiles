@@ -29,7 +29,7 @@ export class BashScript {
   }
 
   public alias = (alias: string, replacement: string) => {
-    this.push(`alias ${alias}="${replacement}"`)
+    this.push(`alias ${alias}='${replacement}'`)
     return (more = "") => [alias, more].join(" ").trim()
   }
 

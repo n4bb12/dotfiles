@@ -16,7 +16,7 @@ aliases() {
   code ~/aliases.sh
 }
 
-alias rl="reload"
+alias rl='reload'
 
 # --> /
 import fs
