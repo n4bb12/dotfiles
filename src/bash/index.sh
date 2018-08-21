@@ -27,6 +27,7 @@ import bitly
 import browser
 import change-case
 import clipboard
+import docker
 import free-port
 import http-server
 import kill
