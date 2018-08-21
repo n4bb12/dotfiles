@@ -8,6 +8,16 @@ import() {
   source "$DOT_ROOT/bash/partials/$1.sh"
 }
 
+profile() {
+	code ~/.bash_profile
+}
+
+aliases() {
+	code ~/aliases.sh
+}
+
+alias rl="reload"
+
 # --> /
 import fs
 import colors
