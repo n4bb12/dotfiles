@@ -1,6 +1,6 @@
 <h1 align="center">
-  <img alt="Demo" src="https://image.flaticon.com/icons/svg/994/994077.svg" height="48">
-  @n4bb12/dotfiles
+  <img alt="Logo" src="https://image.flaticon.com/icons/svg/994/994077.svg" height="48">
+  dotfiles
 </h1>
 
 <p align="center">
