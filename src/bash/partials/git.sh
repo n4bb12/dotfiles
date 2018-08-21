@@ -13,18 +13,18 @@ work() {
 
 # Open the repository specified in package.json
 repo() {
-	if [ ! -d .git ]; then
-			fail "ERR: You are not inside a git repository"
-	fi
+  if [ ! -d .git ]; then
+      fail "ERR: You are not inside a git repository"
+  fi
 
-	url=$(git config --get remote.origin.url)
-	url=$(echo $url | sed -e 's|:|/|g')
-	url=$(echo $url | sed -e 's|git@|https://|g')
-	url=$(echo $url | sed -e 's|.git$||g')
+  url=$(git config --get remote.origin.url)
+  url=$(echo $url | sed -e 's|:|/|g')
+  url=$(echo $url | sed -e 's|git@|https://|g')
+  url=$(echo $url | sed -e 's|.git$||g')
 
-	branch=$(git rev-parse --abbrev-ref HEAD)
+  branch=$(git rev-parse --abbrev-ref HEAD)
 
-	opn $url/tree/$branch
+  opn $url/tree/$branch
 }
 
 alias       add='git add -A'

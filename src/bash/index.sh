@@ -9,11 +9,11 @@ import() {
 }
 
 profile() {
-	code ~/.bash_profile
+  code ~/.bash_profile
 }
 
 aliases() {
-	code ~/aliases.sh
+  code ~/aliases.sh
 }
 
 alias rl="reload"
