@@ -38,15 +38,11 @@ export class BashScript {
     return {
       alias: (...others: string[]) => {
         others.forEach((other) => this.alias(other, alias))
-      }
+      },
     }
   }
 
-  public switch = (
-    fnName: string,
-    fallback: string,
-    mapping: { [index: string]: string },
-  ) => {
+  public switch = (fnName: string, fallback: string, mapping: { [index: string]: string }) => {
     this.push(`${fnName}() {`)
     this.push("  args=\"$@\"")
     this.push("  command=\"$1\"")
@@ -69,5 +65,4 @@ export class BashScript {
   public push = (line = "") => {
     this.lines.push(line)
   }
-
 }

@@ -1,25 +1,18 @@
 {
   "$schema": "http://json.schemastore.org/tslint",
   "defaultSeverity": "error",
-  "extends": [
-    "tslint:recommended"
-  ],
+  "extends": ["tslint:recommended"],
   "rules": {
-    "interface-name": [
-      true,
-      "never-prefix"
-    ],
+    "interface-name": [true, "never-prefix"],
     "no-console": false,
-    "quotemark": [
-      true,
-      "double"
-    ],
-    "semicolon": [
-      true,
-      "never"
-    ],
+    "quotemark": [true, "double"],
+    "semicolon": [true, "never"],
     "trailing-comma": [
-      
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
     ]
   }
 }
