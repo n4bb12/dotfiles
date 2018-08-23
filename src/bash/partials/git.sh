@@ -8,7 +8,13 @@
 require-binary 'git'
 
 work() {
-  git checkout -b $(echo "$1" | slug)
+  branch=$(echo "$1" | slug)
+  if git rev-parse --verify "$branch" > /dev/null 2>&1; then
+    git checkout "$branch"
+  else
+    git checkout -b "$branch"
+  fi
+  code .
 }
 
 # Open the repository specified in package.json
