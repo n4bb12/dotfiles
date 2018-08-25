@@ -8,7 +8,7 @@
 require-binary 'git'
 
 work() {
-  branch=$(echo "$1" | slug)
+  branch=$(echo "$@" | slug)
   if git rev-parse --verify "$branch" > /dev/null 2>&1; then
     git checkout "$branch"
   else
