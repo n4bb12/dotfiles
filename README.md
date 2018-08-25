@@ -22,21 +22,18 @@
 ## Usage
 
 ```bash
-# Clone or pull repo
+# Clone
 git clone https://github.com/n4bb12/dotfiles.git
 cd dotfiles
 
-# Rebuild ./dist
-./dot rebuild
-
 # Comment out the parts you don't need
-code ./dist/bash/index.sh
+code ./src/bash/index.sh
 
-# Install script dependencies
-./dist/bash/index.sh
+# Install
+./dot install
 
 # Load it
-source ./dist/bash/index.sh
+source dist/bash/index.sh
 ```
 
 #
