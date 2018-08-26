@@ -7,12 +7,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-cache-{{ .Branch }}
+            - yarn-cache-{{ checksum "yarn.lock" }}
             - yarn-cache-
       - run: yarn install --frozen-lockfile --no-progress
       - save_cache:
-          key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-cache-{{ checksum "yarn.lock" }}
           paths: node_modules
       - persist_to_workspace:
           root: .
@@ -24,7 +23,14 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - restore_cache:
+          keys:
+            - dist-yarn-cache-{{ checksum "dist/yarn.lock" }}
+            - dist-yarn-cache-
       - run: ./dot update
+      - save_cache:
+          key: dist-yarn-cache-{{ checksum "dist/yarn.lock" }}
+          paths: dist/node_modules
 
   lint:
     docker:
