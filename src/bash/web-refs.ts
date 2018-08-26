@@ -8,9 +8,9 @@ export default function generate() {
   sh.switch("ref", "search 'reference docs'", {
     angular:   "browser 'https://github.com/angular/angular-cli/wiki'",
     cypress:   "browser 'https://docs.cypress.io'",
+    ease:      "browser 'https://easings.net/de'",
     enzyme:    "browser 'https://airbnb.io/enzyme/docs/api/'",
     git:       "browser 'https://git-scm.com/docs'",
-    icons:     "browser 'https://material.io/tools/icons/?search='",
     insect:    "browser 'https://github.com/sharkdp/insect#reference'",
     jest:      "browser 'https://jestjs.io/docs/en/getting-started'",
     lodash:    "browser 'https://lodash.com/docs#'",
