@@ -30,7 +30,6 @@ jobs:
       - run:
           command: |
             mkdir -p $HOME/.ssh
-            touch $HOME/.ssh/environment
       - run: ./dot update
       - save_cache:
           key: dist-yarn-cache-{{ checksum "dist/yarn.lock" }}

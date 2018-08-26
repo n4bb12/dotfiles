@@ -4,7 +4,9 @@
 SSH_ENV="$HOME/.ssh/environment"
 
 function run_ssh_env {
-  . "${SSH_ENV}" > /dev/null
+  if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+  fi
 }
 
 function start_ssh_agent {
@@ -12,10 +14,10 @@ function start_ssh_agent {
   ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
   echo 'succeeded'
   chmod 600 "${SSH_ENV}"
-
   run_ssh_env;
-
-  ssh-add ~/.ssh/id_rsa;
+  if [ -f ~/.ssh/id_rsa ]; then
+    ssh-add ~/.ssh/id_rsa;
+  fi
 }
 
 if [ -f "${SSH_ENV}" ]; then
