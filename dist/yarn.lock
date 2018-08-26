@@ -1381,8 +1381,8 @@ faye-websocket@0.11.x:
     websocket-driver ">=0.5.1"
 
 figgy-pudding@^3.0.0, figgy-pudding@^3.1.0, figgy-pudding@^3.2.0, figgy-pudding@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.npmjs.org/figgy-pudding/-/figgy-pudding-3.4.1.tgz#af66da1991fa2f94ff7f33b545a38ea4b3869696"
+  version "3.5.1"
+  resolved "https://registry.npmjs.org/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
 
 figures@^2.0.0:
   version "2.0.0"
@@ -2845,8 +2845,8 @@ mute-stream@0.0.7, mute-stream@~0.0.4:
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
 nan@^2.0.9, nan@^2.9.2:
-  version "2.10.0"
-  resolved "https://registry.npmjs.org/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
+  version "2.11.0"
+  resolved "https://registry.npmjs.org/nan/-/nan-2.11.0.tgz#574e360e4d954ab16966ec102c0c049fd961a099"
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -2904,8 +2904,8 @@ negotiator@0.6.1:
   resolved "https://registry.npmjs.org/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
 nice-try@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/nice-try/-/nice-try-1.0.4.tgz#d93962f6c52f2c1558c0fbda6d512819f1efe1c4"
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
 no-case@^2.2.0, no-case@^2.3.2:
   version "2.3.2"
@@ -3573,8 +3573,8 @@ pinkie@^2.0.0:
   resolved "https://registry.npmjs.org/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
 pnpm@^2.13.5:
-  version "2.13.5"
-  resolved "https://registry.npmjs.org/pnpm/-/pnpm-2.13.5.tgz#276c46f996128b6e7d5aba38706dbec37694bf80"
+  version "2.13.6"
+  resolved "https://registry.npmjs.org/pnpm/-/pnpm-2.13.6.tgz#cf8cddb29e16199d10543a72228299231d7ced0e"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
