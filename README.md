@@ -37,6 +37,9 @@ code ./src/bash/index.sh
 
 # Load it
 source dist/bash/index.sh
+
+# Rebuild dist and update dist node_modules
+./dot update
 ```
 
 #
