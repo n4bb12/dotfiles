@@ -24,7 +24,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: ./run update
+      - run: ./dot update
 
   lint:
     docker:
@@ -32,14 +32,14 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: ./run lint
+      - run: ./dot lint
 
 workflows:
   version: 2
   default:
     jobs:
       - install
-      - build:
+      - update:
           requires:
             - install
       - lint:
