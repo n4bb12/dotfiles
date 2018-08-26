@@ -58,6 +58,7 @@ import yarn
 import web-google
 import web-ids
 import web-refs
+import web-resources
 import web-search
 import web-sites
 import web-tools
