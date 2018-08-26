@@ -1,4 +1,7 @@
 *.log
-dist
-node_modules
 ideas
+node_modules
+
+dist/*
+!dist/yarn.lock
+!dist/package.json
