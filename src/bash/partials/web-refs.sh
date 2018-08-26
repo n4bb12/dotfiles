@@ -14,12 +14,12 @@ ref() {
     browser 'https://github.com/angular/angular-cli/wiki' "$rest"
   elif [ "$command" == "cypress" ]; then
     browser 'https://docs.cypress.io' "$rest"
+  elif [ "$command" == "ease" ]; then
+    browser 'https://easings.net/de' "$rest"
   elif [ "$command" == "enzyme" ]; then
     browser 'https://airbnb.io/enzyme/docs/api/' "$rest"
   elif [ "$command" == "git" ]; then
     browser 'https://git-scm.com/docs' "$rest"
-  elif [ "$command" == "icons" ]; then
-    browser 'https://material.io/tools/icons/?search=' "$rest"
   elif [ "$command" == "insect" ]; then
     browser 'https://github.com/sharkdp/insect#reference' "$rest"
   elif [ "$command" == "jest" ]; then
