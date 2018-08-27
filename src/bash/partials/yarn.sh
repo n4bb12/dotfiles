@@ -1,11 +1,11 @@
-#  
-# 
+#
+#
 #   Yarn Alises
 #   https://yarnpkg.com/lang/en/docs/cli/
-# 
+#
 # ================================================
 
-require-binary 'yarn'
+require-node-package 'yarn'
 
 alias     y='yarn'
 alias    ya='yarn add'
