@@ -1,8 +1,8 @@
-#  
-# 
+#
+#
 #   Git Aliases
 #   https://git-scm.com/docs
-# 
+#
 # ==========================================================
 
 require-binary 'git'
@@ -42,7 +42,6 @@ alias      pull='git fetch --prune && git pull --ff'
 alias      push='git push --follow-tags'
 alias      show='git --no-pager show'
 alias     amend='git commit --amend --no-edit'
-alias     chmod='git update-index --chmod'
 alias     diffs='git --no-pager diff --staged'
 alias     fetch='git fetch --prune'
 alias     ibase='git rebase -i origin/$(git rev-parse --abbrev-ref HEAD)'
@@ -50,6 +49,7 @@ alias     reset='git reset'
 alias    branch='git rev-parse --abbrev-ref HEAD'
 alias    cherry='git cherry-pick'
 alias    commit='git commit'
+alias    gitmod='git update-index --chmod'
 alias    status='git --no-pager status'
 alias   log-all='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 alias  branches='git branch -a'
