@@ -62,5 +62,3 @@ import web-resources
 import web-search
 import web-sites
 import web-tools
-
-echo dotfiles loaded
