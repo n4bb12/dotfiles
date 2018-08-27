@@ -4,19 +4,8 @@ export DOT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export "PATH=$PATH:$DOT_ROOT/node_modules/.bin"
 
 import() {
-  [ ! -z "$DEBUG" ] && echo "import $1"
   source "$DOT_ROOT/bash/partials/$1.sh"
 }
-
-profile() {
-  code ~/.bash_profile
-}
-
-aliases() {
-  code ~/aliases.sh
-}
-
-alias rl='reload'
 
 # --> /
 import fs
