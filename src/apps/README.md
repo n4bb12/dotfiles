@@ -7,6 +7,7 @@ These need to be installed/imported manually.
 - [Java](https://java.com/en/download/)
 - [Node.js](https://nodejs.org/en/download/)
 - [PicPick](https://picpick.app/en/)
+- [PxKeystrokesForScreencasts](https://github.com/Phaiax/PxKeystrokesForScreencasts#download)
 - [Python](https://www.python.org/downloads/)
 - [Rust](https://www.rust-lang.org/en-US/install.html)
 - [ScreenToGif](https://www.screentogif.com/downloads.html)
