@@ -20,7 +20,8 @@ work() {
 # Open the repository specified in package.json
 repo() {
   if [ ! -d .git ]; then
-      fail 'ERR: You are not inside a git repository'
+    fail 'ERR: You are not inside a git repository'
+    return 1
   fi
 
   url=$(git config --get remote.origin.url)
