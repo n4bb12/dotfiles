@@ -1,59 +1,71 @@
-import * as fs from "graceful-fs"
-import * as path from "path"
-import * as pify from "pify"
-
-const writeFile = pify(fs.writeFile)
-
 export class BashScript {
-  private lines: string[] = []
+
+  public readonly dirname = "$(cd \"$(dirname \"${BASH_SOURCE[0]}\")/..\" && pwd)"
+  public readonly shebang = "#!/usr/bin/env bash"
+
+  private readonly lines: string[] = []
+
+  public add = (line = "") => {
+    this.lines.push(line)
+  }
+
+  public env = (key: string, value: string) => {
+    this.add(`export ${key}="${value}"`)
+  }
+
+  public prependEnv = (key: string, value: string) => {
+    this.add(`export ${key}="${value}:$${key}"`)
+  }
+
+  public appendEnv = (key: string, value: string) => {
+    this.add(`export ${key}="$${key}:${value}"`)
+  }
+
+  public comment = (line = "") => {
+    this.add(`# ${line}`)
+  }
+
+  public section = (...lines: string[]) => {
+    this.add(`#`)
+    this.add(`#`)
+    lines.forEach((line) => this.add(`#   ${line}`))
+    this.add(`#`)
+    this.add(`# ==========================================================`)
+  }
+
+  public alias = (name: string, replacement: string) => {
+    this.add(`alias ${name}='${replacement}'`)
+    return (more = "") => [name, more].join(" ").trim()
+  }
+
+public function = (name: string, lines: string[]) => {
+    this.add(`${name}() {`)
+    lines.forEach((line) => this.add(`  ${line}`))
+    this.add(`}`)
+  }
+
+  public switch   = (fnName: string, fallback: string, mapping: { [index: string]: string }) => {
+    this.add(`${fnName}() {`)
+    this.add("  args=\"$@\"")
+    this.add("  command=\"$1\"")
+    this.add("  shift")
+    this.add("  rest=\"$@\"")
+    this.add("")
+    this.add("  if false; then echo false")
+
+    Object.keys(mapping).forEach((key) => {
+      this.add(`  elif [ "$command" == "${key}" ]; then`)
+      this.add(`    ${mapping[key]} "$rest"`)
+    })
+
+    this.add(`  else`)
+    this.add(`    ${fallback} "$args"`)
+    this.add("  fi")
+    this.add("}")
+  }
 
   public toString = () => {
     return this.lines.join("\n")
   }
 
-  public outputTo = async (...paths: string[]) => {
-    const file = path.join(...paths)
-    await writeFile(file, this.toString(), "utf8")
-  }
-
-  public comment = (line = "") => {
-    this.push(`# ${line}`)
-  }
-
-  public section = (...lines: string[]) => {
-    this.push(`#`)
-    this.push(`#`)
-    lines.forEach((line) => this.push(`#   ${line}`))
-    this.push(`#`)
-    this.push(`# ==========================================================`)
-  }
-
-  public alias = (alias: string, replacement: string) => {
-    this.push(`alias ${alias}='${replacement}'`)
-    return (more = "") => [alias, more].join(" ").trim()
-  }
-
-  public switch = (fnName: string, fallback: string, mapping: { [index: string]: string }) => {
-    this.push(`${fnName}() {`)
-    this.push("  args=\"$@\"")
-    this.push("  command=\"$1\"")
-    this.push("  shift")
-    this.push("  rest=\"$@\"")
-    this.push("")
-    this.push("  if false; then echo false")
-
-    Object.keys(mapping).forEach((key) => {
-      this.push(`  elif [ "$command" == "${key}" ]; then`)
-      this.push(`    ${mapping[key]} "$rest"`)
-    })
-
-    this.push(`  else`)
-    this.push(`    ${fallback} "$args"`)
-    this.push("  fi")
-    this.push("}")
-  }
-
-  public push = (line = "") => {
-    this.lines.push(line)
-  }
 }
