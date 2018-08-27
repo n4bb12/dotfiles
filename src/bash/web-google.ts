@@ -1,7 +1,7 @@
-import { BashScript } from "./BashScript"
+import { DotScript } from "./DotScript"
 
 export default function generate() {
-  const sh = new BashScript()
+  const sh = new DotScript()
 
   sh.section("Google Search",
     "https://www.lifewire.com/advanced-google-search-3482174")

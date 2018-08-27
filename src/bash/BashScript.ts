@@ -33,15 +33,6 @@ export class BashScript {
     return (more = "") => [alias, more].join(" ").trim()
   }
 
-  public browse = (alias: string, url: string) => {
-    this.push(`${alias}() { browser '${url}' "$@"; }`)
-    return {
-      alias: (...others: string[]) => {
-        others.forEach((other) => this.alias(other, alias))
-      },
-    }
-  }
-
   public switch = (fnName: string, fallback: string, mapping: { [index: string]: string }) => {
     this.push(`${fnName}() {`)
     this.push("  args=\"$@\"")
