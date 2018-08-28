@@ -23,5 +23,5 @@ export default function generate() {
   sh.alias("prs", "pull-requests")
   sh.alias("yt",  "youtube")
 
-  sh.outputTo(__dirname, "partials", "web-sites.sh")
+  return sh.outputTo(__filename)
 }

@@ -16,5 +16,5 @@ export default function generate() {
 
   sh.alias("wallpapers", "interfacelift")
 
-  sh.outputTo(__dirname, "partials", "web-resources.sh")
+  return sh.outputTo(__filename)
 }

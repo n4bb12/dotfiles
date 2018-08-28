@@ -17,9 +17,10 @@ export class DotScript extends BashScript {
     }
   }
 
-  public outputTo = async (...paths: string[]) => {
-    const file = path.join(...paths)
-    await writeFile(file, this.toString(), "utf8")
+  public outputTo = async (filenameAbs: string) => {
+    const filename = path.basename(filenameAbs, path.extname(filenameAbs)) + ".sh"
+    const outFile = path.join(process.cwd(), "generated", "bash", filename)
+    await writeFile(outFile, this.toString(), "utf8")
   }
 
 }

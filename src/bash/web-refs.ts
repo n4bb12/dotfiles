@@ -1,3 +1,4 @@
+import path from "path"
 import { DotScript } from "./DotScript"
 
 export default function generate() {
@@ -34,5 +35,5 @@ export default function generate() {
   sh.alias("man", ref())
   sh.alias("docs", ref())
 
-  sh.outputTo(__dirname, "partials", "web-refs.sh")
+  return sh.outputTo(__filename)
 }

@@ -14,5 +14,5 @@ export default function generate() {
   sh.alias("icon",  "emoji")
   sh.alias("icons", "emoji")
 
-  sh.outputTo(__dirname, "partials", "web-search.sh")
+  return sh.outputTo(__filename)
 }
