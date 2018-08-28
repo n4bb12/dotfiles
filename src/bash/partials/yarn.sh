@@ -5,7 +5,7 @@
 #
 # ================================================
 
-require-node-package 'yarn'
+require-binary 'yarn'
 
 alias     y='yarn'
 alias    ya='yarn add'
