@@ -2,11 +2,11 @@ import fs from "graceful-fs"
 import path from "path"
 import pify from "pify"
 
-const exists = pify(fs.exists)
 const readFile = pify(fs.readFile)
 const writeFile = pify(fs.writeFile)
 
 const partials = [
+  "index",
   "fs",
   "colors",
   "explorer",
@@ -60,9 +60,9 @@ export default async function generateIndex() {
     const srcFile = path.join(process.cwd(), "src", "bash", "partials", filename)
     const generatedFile = path.join(process.cwd(), "generated", "bash", "partials", filename)
 
-    if (await exists(srcFile)) {
+    if (fs.existsSync(srcFile)) {
       contents.push(await readFile(srcFile, "utf8"))
-    } else if (await exists(generatedFile)) {
+    } else if (fs.existsSync(generatedFile)) {
       contents.push(await readFile(generatedFile, "utf8"))
     } else {
       throw new Error("Bash partial does not exist: " + name)
