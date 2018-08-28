@@ -28,19 +28,21 @@ lint() {
 }
 
 clean() {
+  run rm -rf generated
   run rm -rf dist
 }
 
 compile() {
+  run mkdir -p generated/bash/partials
   run ts-node src/bash/generate.ts
 }
 
 copy() {
   run cpy 'bash/**/*.sh' ../dist --cwd src --parents
-  
+
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
-    run cp src/package.dist.json dist/package.json
+    run cp src/package.json dist/package.json
   fi
 }
 
