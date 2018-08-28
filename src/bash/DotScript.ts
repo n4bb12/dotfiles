@@ -1,6 +1,6 @@
-import * as fs from "graceful-fs"
-import * as path from "path"
-import * as pify from "pify"
+import fs from "graceful-fs"
+import path from "path"
+import pify from "pify"
 
 import { BashScript } from "./BashScript"
 
