@@ -32,23 +32,16 @@ clean() {
   run rm -rf dist
 }
 
-compile() {
+build() {
   run mkdir -p generated/bash/partials
   run ts-node src/bash/generate.ts
-}
-
-copy() {
-  run cpy 'bash/**/*.sh' ../dist --cwd src --parents
+  run mkdir -p dist/bash
+  run cp generated/bash/index.sh dist/bash/index.sh
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
     run cp src/package.json dist/package.json
   fi
-}
-
-build() {
-  compile
-  copy
 }
 
 update() {
