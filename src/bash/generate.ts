@@ -1,3 +1,4 @@
+import generateIndex from "./index"
 import generateWebGoogle from "./web-google"
 import generateWebIds from "./web-ids"
 import generateWebRefs from "./web-refs"
@@ -13,3 +14,4 @@ generateWebResources()
 generateWebSearch()
 generateWebSites()
 generateWebTools()
+generateIndex()
