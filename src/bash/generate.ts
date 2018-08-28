@@ -1,4 +1,3 @@
-import generateIndex from "./index"
 import generateWebGoogle from "./web-google"
 import generateWebIds from "./web-ids"
 import generateWebRefs from "./web-refs"
@@ -7,11 +6,17 @@ import generateWebSearch from "./web-search"
 import generateWebSites from "./web-sites"
 import generateWebTools from "./web-tools"
 
-generateWebGoogle()
-generateWebIds()
-generateWebRefs()
-generateWebResources()
-generateWebSearch()
-generateWebSites()
-generateWebTools()
-generateIndex()
+import generateIndex from "."
+
+async function generate() {
+  await generateWebGoogle()
+  await generateWebIds()
+  await generateWebRefs()
+  await generateWebResources()
+  await generateWebSearch()
+  await generateWebSites()
+  await generateWebTools()
+  await generateIndex()
+}
+
+generate()

@@ -16,5 +16,5 @@ export default function generate() {
   sh.alias("watch",     search("watch"))
   sh.alias("weather",   search("weather"))
 
-  sh.outputTo(__dirname, "partials", "web-google.sh")
+  return sh.outputTo(__filename)
 }

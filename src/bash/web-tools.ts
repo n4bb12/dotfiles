@@ -29,5 +29,5 @@ export default function generate() {
   sh.browse("toolbox",      "https://richardstoolbox.com")
   sh.browse("wolframalpha", "http://www.wolframalpha.com/input/?i=").alias("wolfram", "alpha")
 
-  sh.outputTo(__dirname, "partials", "web-tools.sh")
+  return sh.outputTo(__filename)
 }

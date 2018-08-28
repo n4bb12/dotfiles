@@ -13,5 +13,5 @@ export default function generate() {
     gl: "id gitlab",
   })
 
-  sh.outputTo(__dirname, "partials", "web-ids.sh")
+  return sh.outputTo(__filename)
 }
