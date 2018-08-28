@@ -3,6 +3,7 @@
   "defaultSeverity": "error",
   "extends": ["tslint:recommended"],
   "rules": {
+    "arrow-parens": [true, "ban-single-arg-parens"],
     "interface-name": [true, "never-prefix"],
     "no-console": false,
     "quotemark": [true, "double"],
