@@ -17,7 +17,10 @@ work() {
   code .
 }
 
-# Open the repository specified in package.json
+current-branch() {
+  git rev-parse --abbrev-ref HEAD
+}
+
 repo() {
   if [ ! -d .git ]; then
     fail 'ERR: You are not inside a git repository'
@@ -29,9 +32,17 @@ repo() {
   url=$(echo $url | sed -e 's|git@|https://|g')
   url=$(echo $url | sed -e 's|.git$||g')
 
-  branch=$(git rev-parse --abbrev-ref HEAD)
+  opn $url/tree/$(current-branch)
+}
 
-  opn $url/tree/$branch
+upstream() {
+  git branch --set-upstream-to origin/$(current-branch)
+}
+
+pull() {
+  git fetch --prune
+  git branch --set-upstream-to origin/$(current-branch)
+  git pull
 }
 
 alias       add='git add -A'
@@ -39,15 +50,13 @@ alias       eol='git rm --cached -r .'
 alias       fix='git commit --fixup'
 alias       log='log-all -16'
 alias      diff='git --no-pager diff'
-alias      pull='upstream && git fetch --prune && git pull --ff'
 alias      push='git push --follow-tags'
 alias      show='git --no-pager show'
 alias     amend='git commit --amend --no-edit'
 alias     diffs='git --no-pager diff --staged'
 alias     fetch='git fetch --prune'
-alias     ibase='git rebase -i origin/$(git rev-parse --abbrev-ref HEAD)'
+alias     ibase='git rebase -i origin/$(current-branch)'
 alias     reset='git reset'
-alias    branch='git rev-parse --abbrev-ref HEAD'
 alias    cherry='git cherry-pick'
 alias    commit='git commit'
 alias    gitmod='git update-index --chmod'
@@ -55,7 +64,6 @@ alias    status='git --no-pager status'
 alias   log-all='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 alias  branches='git branch -a'
 alias  checkout='git checkout'
-alias  upstream='git branch --set-upstream-to origin/$(git rev-parse --abbrev-ref HEAD)'
 alias add-white='git add -A && git diff --cached -w | git apply --cached -R'
 
 alias    cm='commit -m'
