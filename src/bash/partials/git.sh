@@ -21,6 +21,10 @@ git-branch() {
   git rev-parse --abbrev-ref HEAD
 }
 
+git-upstream() {
+  git branch --set-upstream-to origin/$(git-branch)
+}
+
 git-repo() {
   if [ ! -d .git ]; then
     fail 'ERR: You are not inside a git repository'
@@ -33,10 +37,6 @@ git-repo() {
   url=$(echo $url | sed -e 's|.git$||g')
 
   opn $url/tree/$(git-branch)
-}
-
-git-upstream() {
-  git branch --set-upstream-to origin/$(git-branch)
 }
 
 git-pull() {
@@ -69,7 +69,6 @@ alias    add-white='git add -A && git diff --cached -w | git apply --cached -R'
 alias           cm='git commit -m'
 alias           lg='log'
 alias           pp='pull && push'
-alias           pr='git-pr'
 alias           st='status'
 alias          bra='branches'
 alias          lga='log'
