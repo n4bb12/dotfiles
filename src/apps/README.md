@@ -15,3 +15,4 @@ These need to be installed/imported manually.
 - [ScreenToGif](https://www.screentogif.com/downloads.html)
 - [Sourcetree](https://www.sourcetreeapp.com/)
 - [VS Code](https://code.visualstudio.com/#alt-downloads)
+- [SVG Viewer Extension](https://github.com/maphew/svg-explorer-extension/releases)
