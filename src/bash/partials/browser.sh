@@ -1,14 +1,14 @@
-#  
-# 
+#
+#
 #   Open Things in the Browser
-# 
+#
 #   Examples
 #     $ browser example.com
 #     $ browser https://www.google.de/search?q=restaurants
 #     $ browser
-# 
+#
 #   (fallback to $BROWSER or system default browser)
-# 
+#
 # ==========================================================
 
 require-node-package 'urlencode-cli'
@@ -40,5 +40,5 @@ browser() {
   ("$browser" "$domain$path" &)
 }
 
-alias b='browser'
-alias g='browser'
+alias            b='browser'
+alias            g='browser'

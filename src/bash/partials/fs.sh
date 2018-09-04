@@ -11,13 +11,13 @@
 #
 # ==========================================================
 
-alias   ~='cd ~'
-alias  ..='cd ..'
-alias  ..1='cd ..'
-alias  ..2='cd ../..'
-alias  ..3='cd ../../..'
-alias  ..4='cd ../../../..'
-alias  ..5='cd ../../../../..'
+alias             ~='cd ~'
+alias            ..='cd ..'
+alias           ..1='cd ..'
+alias           ..2='cd ../..'
+alias           ..3='cd ../../..'
+alias           ..4='cd ../../../..'
+alias           ..5='cd ../../../../..'
 
 # Create a new directory and enter it
 function mkd() {
@@ -36,9 +36,9 @@ function mkd() {
 #
 # ==========================================================
 
-alias   l='ls'
-alias  ll='ls -lah'
-alias lll='ls -lah' # in case of too many 'l's when typing 'll'
+alias            l='ls'
+alias           ll='ls -lah'
+alias          lll='ls -lah' # in case of too many 'l's when typing 'll'
 
 #
 #
