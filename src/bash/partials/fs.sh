@@ -1,14 +1,14 @@
-#  
-# 
+#
+#
 #   Change Directory
-# 
+#
 #   Examples
 #     $ ~
 #     $ ..
 #     $ ...
-# 
+#
 #   http://linuxcommand.org/lc3_man_pages/cdh.html
-# 
+#
 # ==========================================================
 
 alias   ~='cd ~'
@@ -24,25 +24,26 @@ function mkd() {
   mkdir -p "$@" && cd "$_";
 }
 
-# 
-# 
+#
+#
 #   List Files
-# 
+#
 #   Examples
 #     $ l
 #     $ ll
-# 
+#
 #   http://man7.org/linux/man-pages/man1/ls.1.html
-# 
+#
 # ==========================================================
 
-alias l='ls'
-alias ll='l -lah'
+alias   l='ls'
+alias  ll='ls -lah'
+alias lll='ls -lah' # in case of too many 'l's when typing 'll'
 
-#  
-# 
+#
+#
 #   File Size
-# 
+#
 # ================================================
 
 # Determine size of a file or total size of a directory
