@@ -3,6 +3,49 @@
 // https://hyper.is#cfg
 // https://github.com/bnb/awesome-hyper#contents
 
+// TODO Productivity
+// https://www.npmjs.com/package/hyperterm-summon
+// https://github.com/bnb/awesome-hyper#customization
+// https://www.npmjs.com/package/hyperterm-dibdabs
+// https://www.npmjs.com/package/hyperterm-tabs
+// https://www.npmjs.com/package/hyper-match
+// https://www.npmjs.com/package/hyper-broadcast or https://www.npmjs.com/package/hyper-copycat
+// https://www.npmjs.com/package/hyperterm-safepaste
+
+// TODO Customization
+// https://www.npmjs.com/package/hypertheme
+// https://www.npmjs.com/package/hyper-blink
+// https://www.npmjs.com/package/hyperterm-cursor
+// https://www.npmjs.com/package/hyper-tab-icons or https://www.npmjs.com/package/hyper-tabs-enhanced
+// https://www.npmjs.com/package/hyper-transparent
+// https://www.npmjs.com/package/hyper-wal
+// https://www.npmjs.com/package/hyper-pane
+// https://www.npmjs.com/package/hyper-autoprofile
+// https://www.npmjs.com/package/hyperlayout
+// https://www.npmjs.com/package/hyper-stylesheet
+// https://www.npmjs.com/package/hyper-hide-scroll
+// https://www.npmjs.com/package/hypernasa
+
+// TODO Tools
+// https://www.npmjs.com/package/config-hyperterm
+// https://www.npmjs.com/package/themer
+
+// TODO Themes
+// https://www.npmjs.com/package/hyper-chesterish
+// https://www.npmjs.com/package/hyper-clean
+// https://www.npmjs.com/package/hyper-firewatch
+// https://www.npmjs.com/package/hyper-nord
+// https://www.npmjs.com/package/hyper-oceans16
+// https://www.npmjs.com/package/hyper-one-dark-vivid
+// https://www.npmjs.com/package/hyper-relaxed
+// https://www.npmjs.com/package/hyper-ramda
+// https://www.npmjs.com/package/hyper-snazzy
+// https://www.npmjs.com/package/hyperblue
+// https://www.npmjs.com/package/hyperocean
+// https://www.npmjs.com/package/hyperterm-base-16-ocean
+// https://www.npmjs.com/package/hyperterm-firewatch
+// https://www.npmjs.com/package/hyperterm-sourcerer
+
 module.exports = {
   config: {
     // choose either `"stable"` for receiving highly polished,
