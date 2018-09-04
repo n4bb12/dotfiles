@@ -2,8 +2,9 @@
 
 These need to be installed/imported manually.
 
-### Runtimes & Package Managers
+### Runtimes
 - [Java](https://java.com/en/download/)
+- [Julia](https://julialang.org/downloads/)
 - [Node](https://nodejs.org/en/download/)
 - [Python](https://www.python.org/downloads/)
 - [Rust](https://www.rust-lang.org/en-US/install.html)
@@ -18,7 +19,7 @@ These need to be installed/imported manually.
 ### Editors
 - [VS Code](https://code.visualstudio.com/#alt-downloads)
 
-### Screen Sharing & Recording
+### Recording
 - [PicPick](https://picpick.app/en/)
 - [PxKeystrokesForScreencasts](https://github.com/Phaiax/PxKeystrokesForScreencasts#download)
 - [ScreenToGif](https://www.screentogif.com/downloads.html)
