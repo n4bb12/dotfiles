@@ -1,9 +1,9 @@
-#  
-# 
+#
+#
 #   Bash Colors
-# 
+#
 #   https://misc.flogisoft.com/bash/tip_colors_and_formatting
-# 
+#
 # ==========================================================
 
   black="\e[30m"
@@ -25,4 +25,4 @@ warn() {
   echo -e "${yellow}${@}${reset}"
 }
 
-alias cl='clear'
+alias           cl='clear'

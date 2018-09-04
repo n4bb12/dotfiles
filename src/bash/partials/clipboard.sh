@@ -11,5 +11,5 @@
 
 require-node-package 'clipboard-cli'
 
-alias cb='clipboard'
-alias clip='clipboard'
+alias           cb='clipboard'
+alias         clip='clipboard'
