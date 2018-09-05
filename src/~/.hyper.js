@@ -184,8 +184,58 @@ module.exports = {
   // to load it and avoid it being `npm install`ed
   localPlugins: [],
 
-  keymaps: {
-    // Example
-    // "window:devtools": "cmd+alt+o",
+  keymaps: 
+  {
+    "window:devtools": "ctrl+shift+i",
+    "window:reload": "ctrl+shift+r",
+    "window:reloadFull": "ctrl+shift+f5",
+    "window:preferences": "ctrl+,",
+    "zoom:reset": "ctrl+0",
+    "zoom:in": "ctrl+plus",
+    "zoom:out": "ctrl+-",
+    "window:new": "ctrl+shift+n",
+    "window:minimize": "ctrl+shift+m",
+    "window:zoom": "ctrl+shift+alt+m",
+    "window:toggleFullScreen": "f11",
+    "window:close": [
+      "ctrl+shift+q",
+      "alt+f4"
+    ],
+    "tab:new": "ctrl+t",
+    "tab:next": [
+      "ctrl+shift+]",
+      "ctrl+shift+right",
+      "ctrl+alt+right",
+      "ctrl+tab"
+    ],
+    "tab:prev": [
+      "ctrl+shift+[",
+      "ctrl+shift+left",
+      "ctrl+alt+left",
+      "ctrl+shift+tab"
+    ],
+    "tab:jump:prefix": "ctrl",
+    "pane:next": "ctrl+pageup",
+    "pane:prev": "ctrl+pagedown",
+    "pane:splitVertical": "ctrl+shift+d",
+    "pane:splitHorizontal": "ctrl+shift+e",
+    "pane:close": "ctrl+w",
+    "editor:undo": "ctrl+shift+z",
+    "editor:redo": "ctrl+shift+y",
+    "editor:cut": "ctrl+shift+x",
+    "editor:copy": "ctrl+shift+c",
+    "editor:paste": "ctrl+shift+v",
+    "editor:selectAll": "ctrl+shift+a",
+    "editor:movePreviousWord": "ctrl+left",
+    "editor:moveNextWord": "ctrl+right",
+    "editor:moveBeginningLine": "home",
+    "editor:moveEndLine": "end",
+    "editor:deletePreviousWord": "ctrl+backspace",
+    "editor:deleteNextWord": "ctrl+del",
+    "editor:deleteBeginningLine": "ctrl+home",
+    "editor:deleteEndLine": "ctrl+end",
+    "editor:clearBuffer": "ctrl+shift+k",
+    "editor:break": "ctrl+c",
+    "plugins:update": "ctrl+shift+u"
   },
 }
