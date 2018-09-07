@@ -78,10 +78,10 @@ export default async function generateIndex() {
 async function readScript(file: string) {
   const text: string = await readFile(file, "utf8")
   return text
+    .replace(/[\r\n]+/, "\n")
     .split("\n")
-    .map(line => line.trim())
+    .filter(line => line.trim())
     .map(line => line.replace(/alias\s+/, "alias "))
-    .filter(line => line)
     .filter(line => !line.startsWith("#"))
     .join("\n")
 }

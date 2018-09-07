@@ -25,7 +25,7 @@
     "@angular-devkit/core" "0.8.1"
     rxjs "~6.2.0"
 
-"@angular/cli@^6.1.5":
+"@angular/cli@^6.2.1":
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.2.1.tgz#be53e02a73bd8584103d08e408cc4aae7f4b6488"
   dependencies:
@@ -3115,7 +3115,7 @@ npm-user-validate@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/npm-user-validate/-/npm-user-validate-1.0.0.tgz#8ceca0f5cea04d4e93519ef72d0557a75122e951"
 
-npm@^6.4.0:
+npm@^6.4.1:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/npm/-/npm-6.4.1.tgz#4f39f9337b557a28faed4a771d5c8802d6b4288b"
   dependencies:
@@ -3578,7 +3578,7 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
-pnpm@^2.13.6:
+pnpm@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/pnpm/-/pnpm-2.15.0.tgz#ffe9dfa948ac51fbef4cb900a879fc981e10d79c"
 
