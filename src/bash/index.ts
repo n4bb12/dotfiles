@@ -61,18 +61,27 @@ export default async function generateIndex() {
     const generatedFile = path.join(process.cwd(), "generated", "bash", "partials", filename)
 
     if (fs.existsSync(srcFile)) {
-      contents.push(await readFile(srcFile, "utf8"))
+      contents.push(await readScript(srcFile))
     } else if (fs.existsSync(generatedFile)) {
-      contents.push(await readFile(generatedFile, "utf8"))
+      contents.push(await readScript(generatedFile))
     } else {
       throw new Error("Bash partial does not exist: " + name)
     }
   }
 
-  const combined = contents
-    .map((content, index) => `# ${partials[index]}.sh\n${content}`)
-    .join("\n\n\n")
+  const combined = contents.join("\n")
   const outFile = path.join(process.cwd(), "generated", "bash", "index.sh")
 
   return writeFile(outFile, combined, "utf8")
+}
+
+async function readScript(file: string) {
+  const text: string = await readFile(file, "utf8")
+  return text
+    .split("\n")
+    .map(line => line.trim())
+    .map(line => line.replace(/alias\s+/, "alias "))
+    .filter(line => line)
+    .filter(line => !line.startsWith("#"))
+    .join("\n")
 }
