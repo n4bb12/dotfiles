@@ -35,8 +35,8 @@ clean() {
 build() {
   run mkdir -p generated/bash/partials
   run ts-node src/bash/generate.ts
-  run mkdir -p dist/bash
-  run cp generated/bash/index.sh dist/bash/index.sh
+  run mkdir -p dist
+  run cp generated/bash/index.sh dist/bash.sh
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
@@ -47,14 +47,15 @@ build() {
 update() {
   build
 
-  pushd dist
-  run source bash/index.sh
+  run pushd dist
+  run pwd
+  run source bash.sh
   run yarn upgrade
-  popd
+  run popd
 
-  pushd src/install
+  run pushd src/install
   run ./index.sh
-  popd
+  run popd
 }
 
 install() {
