@@ -47,15 +47,16 @@ build() {
 update() {
   build
 
-  run pushd dist
+  pushd dist
   run pwd
   run source bash.sh
   run yarn upgrade
-  run popd
+  popd
 
-  run pushd src/install
+  pushd src/install
+  run pwd
   run ./index.sh
-  run popd
+  popd
 }
 
 install() {

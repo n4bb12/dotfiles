@@ -1,7 +1,7 @@
-#  
-# 
+#
+#
 #   Utils for global node packages
-# 
+#
 # ==========================================================
 
 require-env-var DOT_ROOT
