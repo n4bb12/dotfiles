@@ -7,7 +7,7 @@ module.exports = {
   config: {
     // choose either `"stable"` for receiving highly polished,
     // or `"canary"` for less polished but more frequent updates
-    updateChannel: 'stable',
+    updateChannel: "stable",
 
     // default font size in pixels for all tabs
     fontSize: 18,
@@ -16,74 +16,74 @@ module.exports = {
     fontFamily: `Consolas`,
 
     // default font weight: "normal" or "bold"
-    fontWeight: 'normal',
+    fontWeight: "normal",
 
     // font weight for bold characters: "normal" or "bold"
-    fontWeightBold: 'bold',
+    fontWeightBold: "bold",
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: '#FEED6C',
+    cursorColor: "#FEED6C",
 
     // terminal text color under BLOCK cursor
-    cursorAccentColor: 'black',
+    cursorAccentColor: "black",
 
     // `"BEAM"` for |, `"UNDERLINE"` for _, `"BLOCK"` for █
-    cursorShape: 'BEAM',
+    cursorShape: "BEAM",
 
     // set to `true` (without backticks and without quotes) for blinking cursor
     cursorBlink: false,
 
     // color of the text
-    foregroundColor: 'whitesmoke',
+    foregroundColor: "whitesmoke",
 
     // terminal background color
     // opacity is only supported on macOS
-    backgroundColor: '#111',
+    backgroundColor: "#111",
 
     // terminal selection color
-    selectionColor: 'rgba(254, 237, 108, 0.5)',
+    selectionColor: "rgba(254, 237, 108, 0.5)",
 
     // border color (window, tabs)
-    borderColor: '#333',
+    borderColor: "#333",
 
     // custom CSS to embed in the main window
-    css: '',
+    css: "",
 
     // custom CSS to embed in the terminal window
-    termCSS: '',
+    termCSS: "",
 
     // if you"re using a Linux setup which show native menus, set to false
     // default: `true` on Linux, `true` on Windows, ignored on macOS
-    showHamburgerMenu: '',
+    showHamburgerMenu: "",
 
     // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons
     // additionally, set to `"left"` if you want them on the left, like in Ubuntu
     // default: `true` (without backticks and without quotes) on Windows and Linux, ignored on macOS
-    showWindowControls: '',
+    showWindowControls: "",
 
     // custom padding (CSS format, i.e.: `top right bottom left`)
-    padding: '0 12px',
+    padding: "0 12px",
 
     // the full list. if you're going to provide the full color palette,
     // including the 6 x 6 color cubes and the grayscale map, just provide
     // an array here instead of a color map object
     colors: {
-      black: '#1B1D1E',
-      red: '#F92672',
-      green: '#36D48B',
-      yellow: '#FEED6C',
-      blue: '#268BD2',
-      magenta: '#FF5995',
-      cyan: '#56C2D6',
-      white: '#f8f8f2',
-      lightBlack: '#686868',
-      lightRed: '#FD6F6B',
-      lightGreen: '#67F86F',
-      lightYellow: '#FFFA72',
-      lightBlue: '#6A76FB',
-      lightMagenta: '#FD7CFC',
-      lightCyan: '#68FDFE',
-      lightWhite: '#FFFFFF',
+      black: "#1B1D1E",
+      red: "#F92672",
+      green: "#36D48B",
+      yellow: "#FEED6C",
+      blue: "#268BD2",
+      magenta: "#FF5995",
+      cyan: "#56C2D6",
+      white: "#f8f8f2",
+      lightBlack: "#686868",
+      lightRed: "#FD6F6B",
+      lightGreen: "#B7EB46",
+      lightYellow: "#FFFA72",
+      lightBlue: "#94D8E5",
+      lightMagenta: "#FD7CFC",
+      lightCyan: "#68FDFE",
+      lightWhite: "#FFFFFF",
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
@@ -98,19 +98,19 @@ module.exports = {
     //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
-    shell: 'C:\\Program Files\\Git\\git-cmd.exe',
+    shell: "C:\\Program Files\\Git\\git-cmd.exe",
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
-    shellArgs: ['--command=usr/bin/bash.exe', '-l', '-i'],
+    shellArgs: ["--command=usr/bin/bash.exe", "-l", "-i"],
 
     // for environment variables
     env: {
-      TERM: 'cygwin',
+      TERM: "cygwin",
     },
 
     // set to `false` for no bell
-    bell: 'SOUND',
+    bell: "SOUND",
 
     // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
     copyOnSelect: true,
@@ -143,7 +143,6 @@ module.exports = {
     // https://www.npmjs.com/package/hyper-match
     // https://www.npmjs.com/package/hyper-broadcast or https://www.npmjs.com/package/hyper-copycat
     // https://www.npmjs.com/package/hyperterm-safepaste
-
     // TODO Customization
     // https://www.npmjs.com/package/hypertheme
     // https://www.npmjs.com/package/hyper-blink
@@ -157,11 +156,9 @@ module.exports = {
     // https://www.npmjs.com/package/hyper-stylesheet
     // https://www.npmjs.com/package/hyper-hide-scroll
     // https://www.npmjs.com/package/hypernasa
-
     // TODO Tools
     // https://www.npmjs.com/package/config-hyperterm
     // https://www.npmjs.com/package/themer
-    
     // TODO Themes
     // https://www.npmjs.com/package/hyper-chesterish
     // https://www.npmjs.com/package/hyper-clean
@@ -185,43 +182,53 @@ module.exports = {
   localPlugins: [],
 
   keymaps: {
-    'window:devtools': 'ctrl+shift+i',
-    'window:reload': 'ctrl+shift+r',
-    'window:reloadFull': 'ctrl+shift+f5',
-    'window:preferences': 'ctrl+,',
-    'zoom:reset': 'ctrl+0',
-    'zoom:in': 'ctrl+plus',
-    'zoom:out': 'ctrl+-',
-    'window:new': 'ctrl+shift+n',
-    'window:minimize': 'ctrl+shift+m',
-    'window:zoom': 'ctrl+shift+alt+m',
-    'window:toggleFullScreen': 'f11',
-    'window:close': ['ctrl+shift+q', 'alt+f4'],
-    'tab:new': 'ctrl+t',
-    'tab:next': ['ctrl+shift+]', 'ctrl+shift+right', 'ctrl+alt+right', 'ctrl+tab'],
-    'tab:prev': ['ctrl+shift+[', 'ctrl+shift+left', 'ctrl+alt+left', 'ctrl+shift+tab'],
-    'tab:jump:prefix': 'ctrl',
-    'pane:next': 'ctrl+pageup',
-    'pane:prev': 'ctrl+pagedown',
-    'pane:splitVertical': 'ctrl+shift+d',
-    'pane:splitHorizontal': 'ctrl+shift+e',
-    'pane:close': 'ctrl+w',
-    'editor:undo': 'ctrl+shift+z',
-    'editor:redo': 'ctrl+shift+y',
-    'editor:cut': 'ctrl+shift+x',
-    'editor:copy': 'ctrl+shift+c',
-    'editor:paste': 'ctrl+shift+v',
-    'editor:selectAll': 'ctrl+shift+a',
-    'editor:movePreviousWord': 'ctrl+left',
-    'editor:moveNextWord': 'ctrl+right',
-    'editor:moveBeginningLine': 'home',
-    'editor:moveEndLine': 'end',
-    'editor:deletePreviousWord': 'ctrl+backspace',
-    'editor:deleteNextWord': 'ctrl+del',
-    'editor:deleteBeginningLine': 'ctrl+home',
-    'editor:deleteEndLine': 'ctrl+end',
-    'editor:clearBuffer': 'ctrl+shift+k',
-    'editor:break': 'ctrl+c',
-    'plugins:update': 'ctrl+shift+u',
+    "window:devtools": "ctrl+shift+i",
+    "window:reload": "ctrl+shift+r",
+    "window:reloadFull": "ctrl+shift+f5",
+    "window:preferences": "ctrl+,",
+    "zoom:reset": "ctrl+0",
+    "zoom:in": "ctrl+plus",
+    "zoom:out": "ctrl+-",
+    "window:new": "ctrl+shift+n",
+    "window:minimize": "ctrl+shift+m",
+    "window:zoom": "ctrl+shift+alt+m",
+    "window:toggleFullScreen": "f11",
+    "window:close": ["ctrl+shift+q", "alt+f4"],
+    "tab:new": "ctrl+t",
+    "tab:next": [
+      "ctrl+shift+]",
+      "ctrl+shift+right",
+      "ctrl+alt+right",
+      "ctrl+tab",
+    ],
+    "tab:prev": [
+      "ctrl+shift+[",
+      "ctrl+shift+left",
+      "ctrl+alt+left",
+      "ctrl+shift+tab",
+    ],
+    "tab:jump:prefix": "ctrl",
+    "pane:next": "ctrl+pageup",
+    "pane:prev": "ctrl+pagedown",
+    "pane:splitVertical": "ctrl+shift+d",
+    "pane:splitHorizontal": "ctrl+shift+e",
+    "pane:close": "ctrl+w",
+    "editor:undo": "ctrl+shift+z",
+    "editor:redo": "ctrl+shift+y",
+    "editor:cut": "ctrl+shift+x",
+    "editor:copy": "ctrl+shift+c",
+    "editor:paste": "ctrl+shift+v",
+    "editor:selectAll": "ctrl+shift+a",
+    "editor:movePreviousWord": "ctrl+left",
+    "editor:moveNextWord": "ctrl+right",
+    "editor:moveBeginningLine": "home",
+    "editor:moveEndLine": "end",
+    "editor:deletePreviousWord": "ctrl+backspace",
+    "editor:deleteNextWord": "ctrl+del",
+    "editor:deleteBeginningLine": "ctrl+home",
+    "editor:deleteEndLine": "ctrl+end",
+    "editor:clearBuffer": "ctrl+shift+k",
+    "editor:break": "ctrl+c",
+    "plugins:update": "ctrl+shift+u",
   },
 }
