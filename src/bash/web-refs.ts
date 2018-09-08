@@ -1,4 +1,3 @@
-import path from "path"
 import { DotScript } from "./DotScript"
 
 export default function generate() {
