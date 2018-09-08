@@ -9,10 +9,13 @@
 
 <p align="center">
   <a href="https://circleci.com/gh/n4bb12/workflows/dotfiles">
-    <img alt="Build" src="https://flat.badgen.net/circleci/github/n4bb12/dotfiles?icon=circleci">
+    <img alt="CircleCI" src="https://flat.badgen.net/circleci/github/n4bb12/dotfiles?icon=circleci">
+  </a>
+  <a href="https://lgtm.com/projects/g/n4bb12/dotfiles/alerts">
+    <img alt="LGTM" src="https://flat.badgen.net/lgtm/alerts/g/n4bb12/dotfiles?icon=lgtm">
   </a>
   <a href="https://raw.githubusercontent.com/n4bb12/dotfiles/master/LICENSE">
-    <img alt="License" src="https://flat.badgen.net/github/license/n4bb12/dotfiles">
+    <img alt="License" src="https://flat.badgen.net/github/license/n4bb12/dotfiles?icon=github">
   </a>
 </p>
 
