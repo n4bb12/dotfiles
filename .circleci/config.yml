@@ -15,7 +15,7 @@ jobs:
           paths: node_modules
       - persist_to_workspace:
           root: .
-          paths: node_modules
+          paths: .
 
   dot_build:
     docker:
