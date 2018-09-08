@@ -1,3 +1,4 @@
+// -- hyper-stylesheet-hash:72303a7f6424a480c68f98a6ed005fc1 --
 // Future versions of Hyper may add additional config options,
 // which will not automatically be merged into this file.
 // https://hyper.is#cfg
@@ -31,7 +32,7 @@ module.exports = {
     cursorShape: "BEAM",
 
     // set to `true` (without backticks and without quotes) for blinking cursor
-    cursorBlink: false,
+    cursorBlink: true,
 
     // color of the text
     foregroundColor: "whitesmoke",
@@ -163,6 +164,7 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
+    "hyper-stylesheet",
   ],
 
   // in development, you can create a directory under
