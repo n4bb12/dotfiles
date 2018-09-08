@@ -42,6 +42,16 @@ build() {
   if [ ! -f dist/package.json ]; then
     run cp src/package.json dist/package.json
   fi
+
+  pushd dist
+  run pwd
+  run source bash.sh
+  popd
+
+  pushd src/install
+  run pwd
+  run ./index.sh
+  popd
 }
 
 update() {
@@ -49,13 +59,7 @@ update() {
 
   pushd dist
   run pwd
-  run source bash.sh
   run yarn upgrade
-  popd
-
-  pushd src/install
-  run pwd
-  run ./index.sh
   popd
 }
 
