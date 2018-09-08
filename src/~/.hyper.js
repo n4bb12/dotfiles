@@ -48,7 +48,26 @@ module.exports = {
     borderColor: "#333",
 
     // custom CSS to embed in the main window
-    css: "",
+    css: `
+    .tab_textInner {
+      font-size: 14px;
+    }
+
+    .tab_icon {
+      right: 10px;
+      top: 12px;
+      width: 10px;
+      height: 10px;
+    }
+
+    .tab_shape {
+      left: 0;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      color: rgb(204, 204, 204);
+    }
+    `,
 
     // custom CSS to embed in the terminal window
     termCSS: "",
@@ -163,9 +182,7 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [
-    "hyper-stylesheet",
-  ],
+  plugins: [],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
