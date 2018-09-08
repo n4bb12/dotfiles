@@ -6,12 +6,13 @@ set -e
 ##################################################
 
 export PATH="$PATH:node_modules/.bin"
+export ROOT="$PWD"
 
 source src/bash/partials/colors.sh
 source src/bash/partials/env.sh
 
 run() {
-  echo "\$ $@"
+  echo "$@"
   "$@"
 }
 
@@ -43,24 +44,18 @@ build() {
     run cp src/package.json dist/package.json
   fi
 
-  pushd dist
-  run pwd
+  run cd "$ROOT/dist"
   run source bash.sh
-  popd
 
-  pushd src/install
-  run pwd
+  run cd "$ROOT/src/install"
   run ./index.sh
-  popd
 }
 
 update() {
   build
 
-  pushd dist
-  run pwd
+  run cd "$ROOT/dist"
   run yarn upgrade
-  popd
 }
 
 install() {
