@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  install:
+  yarn_install:
     docker:
       - image: circleci/node:8
     steps:
@@ -15,9 +15,9 @@ jobs:
           paths: node_modules
       - persist_to_workspace:
           root: .
-          paths: .
+          paths: node_modules
 
-  update:
+  dot_build:
     docker:
       - image: circleci/node:8
     steps:
@@ -27,15 +27,13 @@ jobs:
           keys:
             - dist-yarn-cache-{{ checksum "dist/yarn.lock" }}
             - dist-yarn-cache-
-      - run:
-          command: |
-            mkdir -p $HOME/.ssh
-      - run: ./dot update
+      - run: mkdir -p $HOME/.ssh
+      - run: ./dot build
       - save_cache:
           key: dist-yarn-cache-{{ checksum "dist/yarn.lock" }}
           paths: dist/node_modules
 
-  lint:
+  dot_lint:
     docker:
       - image: circleci/node:8
     steps:
@@ -47,10 +45,10 @@ workflows:
   version: 2
   default:
     jobs:
-      - install
-      - update:
+      - yarn_install
+      - dot_lint:
           requires:
-            - install
-      - lint:
+            - yarn_install
+      - dot_build:
           requires:
-            - install
+            - yarn_install
