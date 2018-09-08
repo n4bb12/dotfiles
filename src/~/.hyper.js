@@ -128,6 +128,34 @@ module.exports = {
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
 
+  // -----> Tools
+  // https://www.npmjs.com/package/config-hyperterm
+  // https://www.npmjs.com/package/themer
+
+  // -----> Productivity https://github.com/bnb/awesome-hyper#productivity
+  // https://www.npmjs.com/package/hyperterm-tabs - currently not possible due to an issue with mousedown
+  // https://www.npmjs.com/package/hyper-match - todo
+
+  // -----> Customization https://github.com/bnb/awesome-hyper#customization
+  // https://www.npmjs.com/package/hyper-pane - todo
+  // https://www.npmjs.com/package/hyperlayout - todo
+
+  // -----> Themes https://github.com/bnb/awesome-hyper#themes
+  // https://www.npmjs.com/package/hyper-chesterish
+  // https://www.npmjs.com/package/hyper-clean
+  // https://www.npmjs.com/package/hyper-firewatch
+  // https://www.npmjs.com/package/hyper-nord
+  // https://www.npmjs.com/package/hyper-oceans16
+  // https://www.npmjs.com/package/hyper-one-dark-vivid
+  // https://www.npmjs.com/package/hyper-relaxed
+  // https://www.npmjs.com/package/hyper-ramda
+  // https://www.npmjs.com/package/hyper-snazzy
+  // https://www.npmjs.com/package/hyperblue
+  // https://www.npmjs.com/package/hyperocean
+  // https://www.npmjs.com/package/hyperterm-base-16-ocean
+  // https://www.npmjs.com/package/hyperterm-firewatch
+  // https://www.npmjs.com/package/hyperterm-sourcerer
+
   // a list of plugins to fetch and install from npm
   // format: [@org/]project[#version]
   // examples:
@@ -135,45 +163,6 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    // TODO Productivity
-    // https://www.npmjs.com/package/hyperterm-summon
-    // https://github.com/bnb/awesome-hyper#customization
-    // https://www.npmjs.com/package/hyperterm-dibdabs
-    // https://www.npmjs.com/package/hyperterm-tabs
-    // https://www.npmjs.com/package/hyper-match
-    // https://www.npmjs.com/package/hyper-broadcast or https://www.npmjs.com/package/hyper-copycat
-    // https://www.npmjs.com/package/hyperterm-safepaste
-    // TODO Customization
-    // https://www.npmjs.com/package/hypertheme
-    // https://www.npmjs.com/package/hyper-blink
-    // https://www.npmjs.com/package/hyperterm-cursor
-    // https://www.npmjs.com/package/hyper-tab-icons or https://www.npmjs.com/package/hyper-tabs-enhanced
-    // https://www.npmjs.com/package/hyper-transparent
-    // https://www.npmjs.com/package/hyper-wal
-    // https://www.npmjs.com/package/hyper-pane
-    // https://www.npmjs.com/package/hyper-autoprofile
-    // https://www.npmjs.com/package/hyperlayout
-    // https://www.npmjs.com/package/hyper-stylesheet
-    // https://www.npmjs.com/package/hyper-hide-scroll
-    // https://www.npmjs.com/package/hypernasa
-    // TODO Tools
-    // https://www.npmjs.com/package/config-hyperterm
-    // https://www.npmjs.com/package/themer
-    // TODO Themes
-    // https://www.npmjs.com/package/hyper-chesterish
-    // https://www.npmjs.com/package/hyper-clean
-    // https://www.npmjs.com/package/hyper-firewatch
-    // https://www.npmjs.com/package/hyper-nord
-    // https://www.npmjs.com/package/hyper-oceans16
-    // https://www.npmjs.com/package/hyper-one-dark-vivid
-    // https://www.npmjs.com/package/hyper-relaxed
-    // https://www.npmjs.com/package/hyper-ramda
-    // https://www.npmjs.com/package/hyper-snazzy
-    // https://www.npmjs.com/package/hyperblue
-    // https://www.npmjs.com/package/hyperocean
-    // https://www.npmjs.com/package/hyperterm-base-16-ocean
-    // https://www.npmjs.com/package/hyperterm-firewatch
-    // https://www.npmjs.com/package/hyperterm-sourcerer
   ],
 
   // in development, you can create a directory under
