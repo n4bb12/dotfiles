@@ -676,9 +676,9 @@ chownr@^1.0.1, chownr@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
 
-ci-info@^1.3.0, ci-info@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.4.0.tgz#4841d53cad49f11b827b648ebde27a6e189b412f"
+ci-info@^1.4.0, ci-info@^1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-1.5.1.tgz#17e8eb5de6f8b2b6038f0cbb714d410bfa9f3030"
 
 cidr-regex@^2.0.8:
   version "2.0.9"
@@ -992,12 +992,6 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-debug@2.6.8:
-  version "2.6.8"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
-  dependencies:
-    ms "2.0.0"
-
 debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -1224,10 +1218,11 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
 event-stream@latest:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.5.tgz#e5dd8989543630d94c6cf4d657120341fa31636b"
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/event-stream/-/event-stream-3.3.6.tgz#cac1230890e07e73ec9cacd038f60a5b66173eef"
   dependencies:
     duplexer "^0.1.1"
+    flatmap-stream "^0.1.0"
     from "^0.1.7"
     map-stream "0.0.7"
     pause-stream "^0.0.11"
@@ -1470,6 +1465,10 @@ fkill@^5.2.0:
     pid-from-port "^1.0.0"
     process-exists "^3.1.0"
     taskkill "^2.0.0"
+
+flatmap-stream@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/flatmap-stream/-/flatmap-stream-0.1.0.tgz#ed54e01422cd29281800914fcb968d58b685d5f1"
 
 flush-write-stream@^1.0.0:
   version "1.0.3"
@@ -1804,7 +1803,7 @@ http-cache-semantics@^3.8.1:
 
 http-errors@~1.6.2:
   version "1.6.3"
-  resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.6.3.tgz#8b55680bb4be283a0b5bf4ea2e38580be1d9320d"
+  resolved "http://registry.npmjs.org/http-errors/-/http-errors-1.6.3.tgz#8b55680bb4be283a0b5bf4ea2e38580be1d9320d"
   dependencies:
     depd "~1.1.2"
     inherits "2.0.3"
@@ -2007,10 +2006,10 @@ is-builtin-module@^1.0.0:
     builtin-modules "^1.0.0"
 
 is-ci@^1.0.10:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.2.0.tgz#3f4a08d6303a09882cef3f0fb97439c5f5ce2d53"
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.2.1.tgz#e3779c8ee17fccf428488f6e281187f2e632841c"
   dependencies:
-    ci-info "^1.3.0"
+    ci-info "^1.5.0"
 
 is-cidr@^2.0.6:
   version "2.0.6"
@@ -2418,11 +2417,11 @@ load-json-file@^4.0.0:
     strip-bom "^3.0.0"
 
 localtunnel@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/localtunnel/-/localtunnel-1.9.0.tgz#8ffecdcf8c8a14f62df1056cf9d54acbb0bb9a8f"
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/localtunnel/-/localtunnel-1.9.1.tgz#1d1737eab658add5a40266d8e43f389b646ee3b1"
   dependencies:
     axios "0.17.1"
-    debug "2.6.8"
+    debug "2.6.9"
     openurl "1.1.1"
     yargs "6.6.0"
 
@@ -3551,8 +3550,8 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
 philemon@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/philemon/-/philemon-1.0.3.tgz#588b03076840b5da897b4706b318aae20f88c057"
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/philemon/-/philemon-1.0.5.tgz#33c3685f2ecc694e0f016b60fe132cb8e52a7abe"
 
 pid-from-port@^1.0.0, pid-from-port@^1.1.1:
   version "1.1.3"
