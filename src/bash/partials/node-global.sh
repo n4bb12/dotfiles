@@ -11,6 +11,7 @@ install-node-package() {
   (
     set -e
     cd "$DOT_ROOT"
+    which yarn
     yarn add "$module"
   )
 }
