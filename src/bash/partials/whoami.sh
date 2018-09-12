@@ -18,6 +18,7 @@ whoami() {
     echo "$USER";
   elif [ "$account" == git ]; then
     git config user.name "$@"
+    git config user.email "$@"
   elif [ "$account" == npm ]; then
     npm whoami "$@"
   elif [ "$account" == yarn ]; then
