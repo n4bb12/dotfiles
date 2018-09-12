@@ -12,17 +12,18 @@
     "fkill-cli": "^5.0.0",
     "get-port-cli": "^1.1.0",
     "live-server": "^1.2.0",
-    "localtunnel": "^1.9.0",
+    "localtunnel": "^1.9.1",
     "npm": "^6.4.1",
     "opn-cli": "^3.1.0",
-    "philemon": "^1.0.3",
-    "pnpm": "^2.15.0",
+    "philemon": "^1.0.6",
+    "pnpm": "^2.15.3",
     "sort-package-json": "^1.15.0",
     "superb-cli": "^1.0.0",
     "tldr": "^3.2.5",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "underscore-cli": "^0.2.19",
-    "urlencode-cli": "^2.0.0"
+    "urlencode-cli": "^2.0.0",
+    "yarn": "^1.9.4"
   }
 }
