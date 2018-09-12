@@ -51,11 +51,22 @@ build() {
   run ./index.sh
 }
 
+dot_yarn() {
+  if [ -z "$DOT_PATH" ]; then
+    echo This should only be called from within sourced dotfiles.
+    return
+  fi
+
+  export PATH="$SYSTEM_PATH"
+  cd "$DOT_ROOT"
+  which yarn
+  run yarn "$@"
+  export PATH="$DOT_PATH"
+}
+
 update() {
   build
-
-  run cd "$ROOT/dist"
-  run yarn upgrade
+  dot_yarn upgrade
 }
 
 install() {
