@@ -7,6 +7,7 @@ These need to be installed/imported manually.
 - [GitHub Code Folding](https://chrome.google.com/webstore/detail/github-code-folding/lefcpjbffalgdcdgidjdnmabfenecjdf)
 - [GitHub Issue Link Status](https://chrome.google.com/webstore/detail/github-issue-link-status/nbiddhncecgemgccalnoanpnenalmkic)
 - [GitHub Review Filter](https://chrome.google.com/webstore/detail/github-review-filter/gnpcfigiidmljgiidkhmmcgbfkolnacg)
+- [Github Turbo PR](https://chrome.google.com/webstore/detail/github-turbo-pr/bajlfgjogojcoiijmmjeppgmppcdbbfb)
 - [github-vscode-icons](https://chrome.google.com/webstore/detail/github-vscode-icons/hoccpcefjcgnabbmojbfoflggkecmpgd)
 - [OctoLinker](https://chrome.google.com/webstore/detail/octolinker/jlmafbaeoofdegohdhinkhilhclaklkp)
 - [OctoTern](https://chrome.google.com/webstore/detail/octotern/fhgodjaafcddpfdpfmoimnjpelemhnmm)
