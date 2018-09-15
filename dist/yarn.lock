@@ -2,38 +2,38 @@
 # yarn lockfile v1
 
 
-"@angular-devkit/architect@0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.8.1.tgz#fe7e7c09f61dcd694be288076e6ee7e36fde37a7"
+"@angular-devkit/architect@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.8.2.tgz#3c0a088a8cf3b38f674aab2690111f081af4bd33"
   dependencies:
-    "@angular-devkit/core" "0.8.1"
+    "@angular-devkit/core" "0.8.2"
     rxjs "~6.2.0"
 
-"@angular-devkit/core@0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.1.tgz#b664d9965894a471686d74f92c55128ab74b8c09"
+"@angular-devkit/core@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.2.tgz#ea3cc766d72786a1e299a556465d01a8f434c6cb"
   dependencies:
     ajv "~6.4.0"
     chokidar "^2.0.3"
     rxjs "~6.2.0"
     source-map "^0.5.6"
 
-"@angular-devkit/schematics@0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.1.tgz#114c53cdbb0b5da7e10da3505d12f351114d24b7"
+"@angular-devkit/schematics@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.2.tgz#70fe1a9cd47f54ee54d82d540b389682b9aa7177"
   dependencies:
-    "@angular-devkit/core" "0.8.1"
+    "@angular-devkit/core" "0.8.2"
     rxjs "~6.2.0"
 
 "@angular/cli@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.2.1.tgz#be53e02a73bd8584103d08e408cc4aae7f4b6488"
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.2.2.tgz#dab50dda4e5f763eda19413df7e53e5f50f95718"
   dependencies:
-    "@angular-devkit/architect" "0.8.1"
-    "@angular-devkit/core" "0.8.1"
-    "@angular-devkit/schematics" "0.8.1"
-    "@schematics/angular" "0.8.1"
-    "@schematics/update" "0.8.1"
+    "@angular-devkit/architect" "0.8.2"
+    "@angular-devkit/core" "0.8.2"
+    "@angular-devkit/schematics" "0.8.2"
+    "@schematics/angular" "0.8.2"
+    "@schematics/update" "0.8.2"
     json-schema-traverse "^0.4.1"
     opn "^5.3.0"
     rxjs "~6.2.0"
@@ -41,20 +41,20 @@
     symbol-observable "^1.2.0"
     yargs-parser "^10.0.0"
 
-"@schematics/angular@0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.8.1.tgz#30d15bf46d40f4694bf60d61516a137ea44427f0"
+"@schematics/angular@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.8.2.tgz#f75978f746a245826b70c214f11b15af7b249838"
   dependencies:
-    "@angular-devkit/core" "0.8.1"
-    "@angular-devkit/schematics" "0.8.1"
+    "@angular-devkit/core" "0.8.2"
+    "@angular-devkit/schematics" "0.8.2"
     typescript ">=2.6.2 <2.10"
 
-"@schematics/update@0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@schematics/update/-/update-0.8.1.tgz#9330dbb6946a12a5544ddf934ad4996507a3b49e"
+"@schematics/update@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@schematics/update/-/update-0.8.2.tgz#0fee9b523107649564bca0c867e32ba5706429c5"
   dependencies:
-    "@angular-devkit/core" "0.8.1"
-    "@angular-devkit/schematics" "0.8.1"
+    "@angular-devkit/core" "0.8.2"
+    "@angular-devkit/schematics" "0.8.2"
     npm-registry-client "^8.5.1"
     rxjs "~6.2.0"
     semver "^5.3.0"
@@ -1945,7 +1945,7 @@ inquirer@3.2.0:
 
 inquirer@^5.2.0:
   version "5.2.0"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-5.2.0.tgz#db350c2b73daca77ff1243962e9f22f099685726"
+  resolved "http://registry.npmjs.org/inquirer/-/inquirer-5.2.0.tgz#db350c2b73daca77ff1243962e9f22f099685726"
   dependencies:
     ansi-escapes "^3.0.0"
     chalk "^2.0.0"
@@ -2694,7 +2694,7 @@ micromatch@^2.1.5:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
-micromatch@^3.1.4:
+micromatch@^3.1.10, micromatch@^3.1.4:
   version "3.1.10"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.10.tgz#70859bc95c9840952f359a068a3fc49f9ecfac23"
   dependencies:
@@ -2734,7 +2734,7 @@ mimic-response@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-1.0.1.tgz#4923538878eef42063cb8a3e3b0798781487ab1b"
 
-minimatch@^3.0.2, minimatch@^3.0.4:
+minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:
@@ -3862,13 +3862,12 @@ readdir-scoped-modules@*, readdir-scoped-modules@^1.0.0:
     once "^1.3.0"
 
 readdirp@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-2.1.0.tgz#4ed0ad060df3073300c48440373f72d1cc642d78"
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-2.2.1.tgz#0e87622a3325aa33e892285caf8b4e846529a525"
   dependencies:
-    graceful-fs "^4.1.2"
-    minimatch "^3.0.2"
+    graceful-fs "^4.1.11"
+    micromatch "^3.1.10"
     readable-stream "^2.0.2"
-    set-immediate-shim "^1.0.1"
 
 redent@^1.0.0:
   version "1.0.0"
@@ -4130,10 +4129,6 @@ serve-index@^1.7.2:
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
-
-set-immediate-shim@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/set-immediate-shim/-/set-immediate-shim-1.0.1.tgz#4b2b1b27eb808a9f8dcc481a58e5e56f599f3f61"
 
 set-value@^0.4.3:
   version "0.4.3"
