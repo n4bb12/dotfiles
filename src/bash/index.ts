@@ -39,6 +39,7 @@ const partials = [
   "tunnel",
   "typescript",
   "underscore",
+  "ungit",
   "words",
   "yarn",
 
