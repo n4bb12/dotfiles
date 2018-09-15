@@ -1,11 +1,9 @@
-#  
-# 
-#   Simplifies working in environments with 
+#
+#
+#   Simplifies working in environments with
 #   multiple accounts.
-# 
+#
 # ================================================
-
-require-binary 'whoami'
 
 export USER=$(whoami)
 
