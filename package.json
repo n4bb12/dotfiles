@@ -18,6 +18,9 @@
   "files": [
     "dist"
   ],
+  "dependencies": {
+    "chalk": "^2.4.1"
+  },
   "devDependencies": {
     "@types/graceful-fs": "^4.1.2",
     "@types/node": "^10.10.1",
