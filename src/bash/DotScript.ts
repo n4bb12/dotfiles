@@ -19,7 +19,7 @@ export class DotScript extends BashScript {
 
   public outputTo = async (filenameAbs: string) => {
     const filename = path.basename(filenameAbs, path.extname(filenameAbs)) + ".sh"
-    const outFile = path.join(process.cwd(), "generated", "bash", "partials", filename)
+    const outFile = path.join(process.cwd(), "generated/bash-partials", filename)
     await writeFile(outFile, this.toString(), "utf8")
   }
 

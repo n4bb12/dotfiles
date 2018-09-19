@@ -8,8 +8,8 @@ set -e
 export PATH="$PATH:node_modules/.bin"
 export ROOT="$PWD"
 
-source src/bash/partials/colors.sh
-source src/bash/partials/env.sh
+source src/bash-partials/colors.sh
+source src/bash-partials/env.sh
 
 run() {
   echo "$@"
@@ -34,10 +34,10 @@ clean() {
 }
 
 build() {
-  run mkdir -p generated/bash/partials
+  run mkdir -p generated/bash-partials
   run ts-node src/bash/generate.ts
   run mkdir -p dist
-  run cp generated/bash/index.sh dist/bash.sh
+  run cp generated/bash-partials/index.sh dist/bash.sh
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
