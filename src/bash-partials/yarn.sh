@@ -5,11 +5,7 @@
 #
 # ================================================
 
-# (
-#   export PATH="$SYSTEM_PATH"
-#   require-node-package 'yarn'
-#   export PATH="$DOT_PATH"
-# )
+require-node-package 'yarn'
 
 alias            y='yarn'
 alias           ya='yarn add'
