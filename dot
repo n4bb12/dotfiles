@@ -60,7 +60,9 @@ dot_yarn() {
   export PATH="$SYSTEM_PATH"
   cd "$DOT_ROOT"
   which yarn
-  run yarn "$@"
+  (
+    run yarn "$@"
+  )
   export PATH="$DOT_PATH"
 }
 

@@ -32,12 +32,14 @@ function isDirectory(source: string) {
 async function gitFetchPrune() {
   console.log(chalk.dim.gray("Command:") + " " + chalk.yellow("git fetch --prune"))
   const root = join(process.env.HOME!, "GIT")
+
   console.log(chalk.dim.gray("Root:") + " " + chalk.yellow(root))
   const projects = searchRepositories(root)
 
   for (const dir of projects) {
-    const n = new Nehemiah(dir)
     console.log(chalk.dim.gray("Repository:") + " " + chalk.cyan(relative(root, dir)))
+    const n = new Nehemiah(dir)
+
     try {
       await n.run("git fetch --prune")
     } catch (error) {
