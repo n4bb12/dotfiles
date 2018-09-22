@@ -23,6 +23,7 @@ function findJsPartials(dir: string) {
     .map(name => join(dir, name))
     .filter(isFile)
     .filter(file => file.endsWith(".js"))
+    .map(util.filename)
 }
 
 function isFile(source: string) {
