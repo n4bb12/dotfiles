@@ -22,7 +22,6 @@ export default function generate() {
     styled:    "browser 'https://www.styled-components.com/docs'",
     tsconfig:  "browser 'https://www.typescriptlang.org/docs/handbook/compiler-options.html'",
     tslint:    "browser 'https://palantir.github.io/tslint/rules'",
-    types:     "browser 'https://microsoft.github.io/TypeSearch'",
     yarn:      "browser 'https://yarnpkg.com/en/docs/cli'",
 
     ng:  "ref angular",
