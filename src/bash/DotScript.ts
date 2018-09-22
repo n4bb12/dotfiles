@@ -1,10 +1,10 @@
 import fs from "graceful-fs"
 import path from "path"
-import pify from "pify"
+import { promisify } from "util"
 
 import { BashScript } from "./BashScript"
 
-const writeFile = pify(fs.writeFile)
+const writeFile = promisify(fs.writeFile)
 
 export class DotScript extends BashScript {
 

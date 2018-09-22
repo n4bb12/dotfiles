@@ -1,9 +1,9 @@
 import fs from "graceful-fs"
 import path from "path"
-import pify from "pify"
+import { promisify } from "util"
 
-const readFile = pify(fs.readFile)
-const writeFile = pify(fs.writeFile)
+const readFile = promisify(fs.readFile)
+const writeFile = promisify(fs.writeFile)
 
 const partials = [
   "header",
