@@ -1,7 +1,7 @@
 import chalk from "chalk"
 import { lstatSync, readdirSync } from "fs"
 import Nehemiah from "nehemiah"
-import { basename, join, relative } from "path"
+import { basename, join, relative, resolve } from "path"
 
 function searchRepositories(dir: string): string[] {
   const results: string[] = []
@@ -30,8 +30,12 @@ function isDirectory(source: string) {
 }
 
 async function gitFetchPrune() {
+  if (!process.env.REPOSITORY_HOME) {
+    throw new Error("Environment variable REPOSITORY_HOME must be set")
+  }
+
   console.log(chalk.dim.gray("Command:") + " " + chalk.yellow("git fetch --prune"))
-  const root = join(process.env.HOME!, "GIT")
+  const root = resolve(process.env.REPOSITORY_HOME)
 
   console.log(chalk.dim.gray("Root:") + " " + chalk.yellow(root))
   const projects = searchRepositories(root)
