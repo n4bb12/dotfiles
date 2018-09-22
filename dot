@@ -29,17 +29,23 @@ lint() {
 }
 
 clean() {
-  run rm -rf generated
   run rm -rf dist
 }
 
 build() {
-  run mkdir -p generated/bash-partials
+  run rm -rf dist/*.sh
+  run rm -rf dist/node
+  run rm -rf generated
+
+  run mkdir -p dist/node
   run mkdir -p generated/bash
-  run mkdir -p dist
+  run mkdir -p generated/bash-partials
+  run mkdir -p generated/node
+
   run tsc -p tsconfig.json
   run node generated/bash/generate.js
-  run cp -R generated/node dist/node
+
+  run cp -R generated/node/* dist/node/
   run cp generated/bash/index.sh dist/bash.sh
 
   # preserve existing package.json
