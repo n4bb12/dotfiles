@@ -31,18 +31,18 @@ lint() {
 build() {
   run rm -rf dist/*.sh
   run rm -rf dist/node
-  run rm -rf generated
+  run rm -rf build
 
   run mkdir -p dist/node
-  run mkdir -p generated/bash
-  run mkdir -p generated/bash-partials
-  run mkdir -p generated/node
+  run mkdir -p build/bash
+  run mkdir -p build/bash-partials
+  run mkdir -p build/node
 
   run tsc -p tsconfig.json
-  run node generated/bash/generate.js
+  run node build/bash/generate.js
 
-  run cp -R generated/node/* dist/node/
-  run cp generated/bash/index.sh dist/bash.sh
+  run cp -R build/node/* dist/node/
+  run cp build/bash/index.sh dist/bash.sh
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
