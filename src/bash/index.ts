@@ -1,6 +1,7 @@
 import fs from "graceful-fs"
-import path from "path"
 import { promisify } from "util"
+
+import util from "./util"
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -62,8 +63,8 @@ export default async function generateIndex() {
 
   for (const name of partials) {
     const filename = name + ".sh"
-    const srcFile = path.join(process.cwd(), "src/bash-partials", filename)
-    const generatedFile = path.join(process.cwd(), "generated/bash-partials", filename)
+    const srcFile = util.cwd("src/bash-partials", filename)
+    const generatedFile = util.cwd("generated/bash-partials", filename)
 
     if (fs.existsSync(srcFile)) {
       contents.push(await readScript(srcFile))
@@ -75,7 +76,7 @@ export default async function generateIndex() {
   }
 
   const combined = contents.join("\n")
-  const outFile = path.join(process.cwd(), "generated/bash/index.sh")
+  const outFile = util.cwd("generated/bash/index.sh")
 
   return writeFile(outFile, combined, "utf8")
 }
