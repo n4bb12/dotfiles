@@ -30,16 +30,18 @@ git clone https://github.com/n4bb12/dotfiles.git
 cd dotfiles
 
 # Comment out the parts you don't need
-code ./src/bash/index.sh
+code \
+  src/bash/load-order.ts \
+  src/install/index.sh
 
 # Install
-./dot install
+yarn dot install
 
 # Load it
 source dist/bash/index.sh
 
 # Rebuild dist and update dist node_modules
-./dot update
+yarn dot update
 ```
 
 #
