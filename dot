@@ -71,8 +71,8 @@ update() {
   run cd "$ROOT/dist"
   run source bash.sh
 
-  run cd "$ROOT/src/install"
-  run ./index.sh
+  run cd "$ROOT/build/install"
+  run node index.js
 
   dot_yarn upgrade --latest
 }
