@@ -39,6 +39,7 @@ build() {
   run mkdir -p dist
   run tsc -p tsconfig.json
   run node generated/bash/generate.js
+  run cp -R generated/node dist/node
   run cp generated/bash/index.sh dist/bash.sh
 
   # preserve existing package.json
