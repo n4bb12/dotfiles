@@ -1,7 +1,7 @@
 *.log
-generated
-ideas
-node_modules
+generated/
+ideas/
+node_modules/
 
 dist/*
 !dist/yarn.lock
