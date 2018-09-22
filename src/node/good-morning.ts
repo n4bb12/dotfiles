@@ -1,33 +1,7 @@
 import chalk from "chalk"
-import { lstatSync, readdirSync } from "fs"
 import Nehemiah from "nehemiah"
-import { basename, join, relative, resolve } from "path"
-
-function searchRepositories(dir: string): string[] {
-  const results: string[] = []
-  const subs = getSubDirectories(dir)
-  const subNames = subs.map(sub => basename(sub))
-
-  if (subNames.includes(".git")) {
-    results.push(dir)
-  } else {
-    subs.forEach(sub => {
-      searchRepositories(sub).forEach(result => results.push(result))
-    })
-  }
-
-  return results
-}
-
-function getSubDirectories(dir: string) {
-  return readdirSync(dir)
-    .map(name => join(dir, name))
-    .filter(isDirectory)
-}
-
-function isDirectory(source: string) {
-  return lstatSync(source).isDirectory()
-}
+import path from "path"
+import { relative, resolve } from "path"
 
 async function gitFetchPrune() {
   if (!process.env.REPOSITORY_HOME) {
@@ -38,16 +12,20 @@ async function gitFetchPrune() {
   const root = resolve(process.env.REPOSITORY_HOME)
 
   console.log(chalk.dim.gray("Root:") + " " + chalk.yellow(root))
-  const projects = searchRepositories(root)
+  const n = new Nehemiah(root)
+  const options = { onlyDirectories: true, deep: 1 }
+  const gitDirs = await n.find("**/.git", options)
+  const projects = gitDirs.map(dir => path.dirname(dir))
 
   for (const dir of projects) {
-    console.log(chalk.dim.gray("Repository:") + " " + chalk.cyan(relative(root, dir)))
-    const n = new Nehemiah(dir)
+    const prefix = chalk.dim.gray("Repository:") + " " + chalk.cyan(dir)
+    const project = new Nehemiah(resolve(root, dir))
+    console.log(prefix)
 
     try {
-      await n.run("git fetch --prune")
+      await project.run("git fetch --prune")
     } catch (error) {
-      console.log(chalk.dim.gray("Repository:") + " " + chalk.cyan(relative(root, dir)) + " " + chalk.red("Failed"))
+      console.log(prefix + " " + chalk.red("Failed"))
     }
   }
 }
