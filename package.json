@@ -20,7 +20,6 @@
   ],
   "scripts": {
     "build": "bash dot build",
-    "clean": "bash dot clean",
     "dot": "bash dot",
     "lint": "bash dot lint",
     "update": "bash dot update"
