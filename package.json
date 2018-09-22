@@ -18,6 +18,13 @@
   "files": [
     "dist"
   ],
+  "scripts": {
+    "build": "bash dot build",
+    "clean": "bash dot clean",
+    "dot": "bash dot",
+    "lint": "bash dot lint",
+    "update": "bash dot update"
+  },
   "dependencies": {
     "chalk": "^2.4.1"
   },
