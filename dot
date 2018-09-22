@@ -28,10 +28,6 @@ lint() {
     --fix
 }
 
-clean() {
-  run rm -rf dist
-}
-
 build() {
   run rm -rf dist/*.sh
   run rm -rf dist/node
@@ -70,7 +66,7 @@ dot_yarn() {
 }
 
 update() {
-  build
+  run rm -rf dist
 
   run cd "$ROOT/dist"
   run source bash.sh
