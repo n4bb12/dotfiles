@@ -52,12 +52,6 @@ build() {
   if [ ! -f dist/package.json ]; then
     run cp src/package.json dist/package.json
   fi
-
-  run cd "$ROOT/dist"
-  run source bash.sh
-
-  run cd "$ROOT/src/install"
-  run ./index.sh
 }
 
 dot_yarn() {
@@ -77,6 +71,13 @@ dot_yarn() {
 
 update() {
   build
+
+  run cd "$ROOT/dist"
+  run source bash.sh
+
+  run cd "$ROOT/src/install"
+  run ./index.sh
+
   dot_yarn upgrade --latest
 }
 
