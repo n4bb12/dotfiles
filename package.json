@@ -30,7 +30,7 @@
     "@types/node": "^10.10.3",
     "chalk": "^2.4.1",
     "graceful-fs": "^4.1.11",
-    "nehemiah": "^0.1.1",
+    "nehemiah": "^0.2.0",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1"
   },
