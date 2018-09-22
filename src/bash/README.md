@@ -1,1 +1,0 @@
-# Bash Functions and Aliases

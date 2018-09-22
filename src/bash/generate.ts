@@ -1,3 +1,4 @@
+import generateNodeAliases from "./node-aliases"
 import generateWebGoogle from "./web-google"
 import generateWebIds from "./web-ids"
 import generateWebRefs from "./web-refs"
@@ -9,6 +10,7 @@ import generateWebTools from "./web-tools"
 import generateIndex from "."
 
 async function generate() {
+  await generateNodeAliases()
   await generateWebGoogle()
   await generateWebIds()
   await generateWebRefs()

@@ -35,9 +35,11 @@ clean() {
 
 build() {
   run mkdir -p generated/bash-partials
-  run ts-node src/bash/generate.ts
+  run mkdir -p generated/bash
   run mkdir -p dist
-  run cp generated/bash-partials/index.sh dist/bash.sh
+  run tsc -p tsconfig.json
+  run node generated/bash/generate.js
+  run cp generated/bash/index.sh dist/bash.sh
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
