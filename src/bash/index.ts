@@ -31,6 +31,7 @@ const partials = [
   "free-port",
   "http-server",
   "kill",
+  "node-aliases",
   "nodemon",
   "npm-name-available",
   "npm",
@@ -74,7 +75,7 @@ export default async function generateIndex() {
   }
 
   const combined = contents.join("\n")
-  const outFile = path.join(process.cwd(), "generated/bash-partials/index.sh")
+  const outFile = path.join(process.cwd(), "generated/bash/index.sh")
 
   return writeFile(outFile, combined, "utf8")
 }
