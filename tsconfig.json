@@ -5,7 +5,7 @@
     "lib": ["esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "generated",
+    "outDir": "build",
     "rootDir": "src",
     "skipLibCheck": true,
     "strict": true,
