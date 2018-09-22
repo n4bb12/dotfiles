@@ -1,62 +1,11 @@
 import fs from "graceful-fs"
 import { promisify } from "util"
 
+import { partials } from "./load-order"
 import util from "./util"
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
-
-const partials = [
-  "header",
-
-  // --> header
-  "colors",
-  "explorer",
-  "fs",
-
-  // --> colors
-  "env",
-
-  // --> env
-  "git",
-  "node-global",
-  "whoami",
-
-  // --> node-global
-  "angular",
-  "bitly",
-  "browser",
-  "change-case",
-  "clipboard",
-  "docker",
-  "free-port",
-  "http-server",
-  "kill",
-  "node-aliases",
-  "nodemon",
-  "npm-name-available",
-  "npm",
-  "open",
-  "pnpm",
-  "sort-package-json",
-  "ssh-agent",
-  "tldr",
-  "tunnel",
-  "typescript",
-  "underscore",
-  "ungit",
-  "words",
-  "yarn",
-
-  // --> browser
-  "web-google",
-  "web-ids",
-  "web-refs",
-  "web-resources",
-  "web-search",
-  "web-sites",
-  "web-tools",
-]
 
 export default async function generateIndex() {
   const contents: string[] = []
