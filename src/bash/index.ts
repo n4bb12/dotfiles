@@ -6,10 +6,12 @@ const readFile = pify(fs.readFile)
 const writeFile = pify(fs.writeFile)
 
 const partials = [
-  "index",
-  "fs",
+  "header",
+
+  // --> header
   "colors",
   "explorer",
+  "fs",
 
   // --> colors
   "env",
