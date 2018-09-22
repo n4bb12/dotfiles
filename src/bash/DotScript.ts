@@ -1,8 +1,8 @@
 import fs from "graceful-fs"
-import path from "path"
 import { promisify } from "util"
 
 import { BashScript } from "./BashScript"
+import util from "./util"
 
 const writeFile = promisify(fs.writeFile)
 
@@ -18,8 +18,8 @@ export class DotScript extends BashScript {
   }
 
   public outputTo = async (filenameAbs: string) => {
-    const filename = path.basename(filenameAbs, path.extname(filenameAbs)) + ".sh"
-    const outFile = path.join(process.cwd(), "generated/bash-partials", filename)
+    const filename = util.filename(filenameAbs) + ".sh"
+    const outFile = util.cwd("generated/bash-partials", filename)
     await writeFile(outFile, this.toString(), "utf8")
   }
 

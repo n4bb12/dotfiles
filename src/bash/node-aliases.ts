@@ -2,9 +2,10 @@ import { lstatSync, readdirSync } from "fs"
 import { join } from "path"
 
 import { DotScript } from "./DotScript"
+import util from "./util"
 
 export default function generate() {
-  const jsRoot = join(process.cwd(), "generated/node")
+  const jsRoot = util.cwd("generated/node")
   const jsFiles = findJsPartials(jsRoot)
 
   const sh = new DotScript()
