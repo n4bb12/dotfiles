@@ -27,9 +27,10 @@ async function readScript(file: string) {
 }
 
 function combine(contents: string[]): string {
-  const isAlias = /^alias /
-  const isRequirement = /^require-(?:binary|node-package)[^()]+$/
   const isOnelineFunction = /^[\w-_]+\(\)\s+{.*?}$/
+  const isAlias = /^alias /
+  const isBinaryRequirement = /^require-binary[^()]+$/
+  const isYarnRequirement = /^require-node-package[^()]+$/
 
   const lines = contents
     .join("\n")
@@ -40,7 +41,8 @@ function combine(contents: string[]): string {
       return true
         && !isOnelineFunction.test(line)
         && !isAlias.test(line)
-        && !isRequirement.test(line)
+        && !isBinaryRequirement.test(line)
+        && !isYarnRequirement.test(line)
     })
 
   const onelineFunctions = lines
@@ -49,14 +51,18 @@ function combine(contents: string[]): string {
   const aliases = lines
     .filter(line => isAlias.test(line))
 
-  const requirements = lines
-    .filter(line => isRequirement.test(line))
+  const binaryRequirements = lines
+    .filter(line => isBinaryRequirement.test(line))
+
+  const yarnRequirements = lines
+      .filter(line => isYarnRequirement.test(line))
 
   return [
     ...remaining, "",
     ...onelineFunctions.sort(), "",
     ...aliases.sort(), "",
-    ...requirements.sort(),
+    ...binaryRequirements.sort(),
+    ...yarnRequirements.sort(),
   ].join("\n")
 }
 
