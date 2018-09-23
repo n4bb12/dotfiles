@@ -38,7 +38,7 @@ code \
 yarn dot install
 
 # Load it
-source dist/bash/index.sh
+source dist/bash.sh
 
 # Rebuild dist and update dist node_modules
 yarn dot update
