@@ -18,6 +18,7 @@
 
 ## Prerequisites
 
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [Bash](https://www.google.de/search?q=install+bash)
 - [Node.js](https://nodejs.org/en/download/)
 - [Yarn](https://yarnpkg.com/lang/en/docs/install/)
