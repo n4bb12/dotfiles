@@ -35,13 +35,13 @@ code \
   src/install/index.sh
 
 # Install
-yarn dot install
+bash dot install
 
 # Load it
 source dist/bash.sh
 
 # Rebuild dist and update dist node_modules
-yarn dot update
+bash dot update
 ```
 
 #
