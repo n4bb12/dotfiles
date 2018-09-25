@@ -21,7 +21,7 @@ git-branch() {
   git rev-parse --abbrev-ref HEAD
 }
 
-git-upstream() {
+git-set-upstream() {
   git branch --set-upstream-to origin/$(git-branch)
 }
 
@@ -45,6 +45,22 @@ git-pull() {
   git pull
 }
 
+git-rebase() {
+  if [ ! -z $1 ]; then
+    git rebase $1
+  else
+    git rebase origin/$(git-branch)
+  fi
+}
+
+git-rebase-interactive() {
+  if [ ! -z $1 ]; then
+    git rebase -i --autosquash $1
+  else
+    git rebase -i --autosquash origin/$(git-branch)
+  fi
+}
+
 # Aliases
 alias          add='git add -A'
 alias          eol='git rm --cached -r .'
@@ -54,7 +70,6 @@ alias         push='git push --follow-tags'
 alias         show='git --no-pager show'
 alias        amend='git commit --amend --no-edit'
 alias        fetch='git fetch --prune'
-alias        ibase='git rebase -i origin/$(git-branch)'
 alias        reset='git reset'
 alias       cherry='git cherry-pick'
 alias       commit='git commit'
@@ -77,11 +92,13 @@ alias         pick='cherry'
 alias         pull='git-pull'
 alias         repo='git-repo'
 alias         stat='status'
-alias         upst='upstream'
+alias         upst='git-set-upstream'
 alias         work='git-work'
 alias        diffs='diff --staged'
 alias        fpush='push --force-with-lease'
+alias        ibase='git-rebase-interactive'
 alias       branch='git-branch'
+alias       rebase='git-rebase'
 
 # Combos
 alias           pp='pull && push'
