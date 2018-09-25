@@ -45,15 +45,14 @@ git-pull() {
   git pull
 }
 
+# Aliases
 alias          add='git add -A'
 alias          eol='git rm --cached -r .'
 alias          fix='git commit --fixup'
-alias          log='log-all -16'
 alias         diff='git --no-pager diff'
 alias         push='git push --follow-tags'
 alias         show='git --no-pager show'
 alias        amend='git commit --amend --no-edit'
-alias        diffs='git --no-pager diff --staged'
 alias        fetch='git fetch --prune'
 alias        ibase='git rebase -i origin/$(git-branch)'
 alias        reset='git reset'
@@ -63,17 +62,16 @@ alias       gitmod='git update-index --chmod'
 alias       reflog='git reflog'
 alias       status='git --no-pager status'
 alias      log-all='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
-alias      noclone='git reset --hard && git clean -xdf'
 alias     branches='git branch -a'
 alias     checkout='git checkout'
-alias    add-white='git add -A && git diff --cached -w | git apply --cached -R'
 
+# Transitive Aliases
 alias           cm='git commit -m'
 alias           lg='log'
-alias           pp='pull && push'
 alias           st='status'
 alias          bra='branches'
 alias          lga='log'
+alias          log='log-all -16'
 alias          out='checkout'
 alias         pick='cherry'
 alias         pull='git-pull'
@@ -81,5 +79,11 @@ alias         repo='git-repo'
 alias         stat='status'
 alias         upst='upstream'
 alias         work='git-work'
+alias        diffs='diff --staged'
 alias       branch='git-branch'
 alias     upstream='git-upstream'
+
+# Combos
+alias           pp='pull && push'
+alias      noclone='git reset --hard && git clean -xdf'
+alias    add-white='git add -A && git diff --cached -w | git apply --cached -R'
