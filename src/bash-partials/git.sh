@@ -80,6 +80,7 @@ alias         stat='status'
 alias         upst='upstream'
 alias         work='git-work'
 alias        diffs='diff --staged'
+alias        fpush='push --force-with-lease'
 alias       branch='git-branch'
 alias     upstream='git-upstream'
 
