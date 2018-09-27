@@ -97,7 +97,9 @@ alias         work='git-work'
 alias        diffs='diff --staged'
 alias        fpush='push --force-with-lease'
 alias        ibase='git-rebase-interactive'
+alias        pfush='fpush'
 alias       branch='git-branch'
+alias       pfusch='fpush'
 alias       rebase='git-rebase'
 
 # Combos
