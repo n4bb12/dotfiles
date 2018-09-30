@@ -17,6 +17,7 @@ These need to be installed/imported manually.
 - [Hyper](https://hyper.is/#installation)
 
 ### Editors
+- [Boostnote](https://boostnote.io/#download)
 - [VS Code](https://code.visualstudio.com/#alt-downloads)
 
 ### Recording
