@@ -27,12 +27,12 @@
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/graceful-fs": "^4.1.2",
-    "@types/node": "^10.10.3",
+    "@types/node": "^10.11.4",
     "chalk": "^2.4.1",
     "graceful-fs": "^4.1.11",
     "nehemiah": "^0.2.0",
     "tslint": "^5.11.0",
-    "typescript": "^3.0.1"
+    "typescript": "^3.1.1"
   },
   "$schema": "http://json.schemastore.org/package"
 }
