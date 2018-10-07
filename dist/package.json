@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@angular/cli": "^6.2.3",
+    "@angular/cli": "^6.2.4",
     "all-the-package-names": "^1.3545.0",
     "available": "^2.1.0",
     "bitly-client": "^1.6.1",
@@ -17,7 +17,7 @@
     "npm": "^6.4.1",
     "opn-cli": "^3.1.0",
     "philemon": "^1.0.6",
-    "pnpm": "^2.16.1",
+    "pnpm": "^2.16.2",
     "sort-package-json": "^1.15.0",
     "superb-cli": "^1.0.0",
     "tldr": "^3.2.5",
@@ -26,6 +26,6 @@
     "underscore-cli": "^0.2.19",
     "ungit": "^1.4.32",
     "urlencode-cli": "^2.0.0",
-    "yarn": "^1.9.4"
+    "yarn": "^1.10.1"
   }
 }
