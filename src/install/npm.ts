@@ -16,5 +16,5 @@ export default () => {
     n.run(`npm config set git-tag-version true`),
     n.run(`npm config set progress true`),
     n.run(`npm config set shell bash`),
-  ])
+  ]).then(results => undefined)
 }
