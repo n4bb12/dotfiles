@@ -18,12 +18,11 @@
 
 ## Prerequisites
 
-- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Bash](https://www.google.de/search?q=install+bash)
-- [Node.js](https://nodejs.org/en/download/)
-- [Yarn](https://yarnpkg.com/lang/en/docs/install/)
+[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) &middot; [Bash](https://www.google.de/search?q=install+bash) &middot; [Node](https://nodejs.org/en/download) &middot; [Yarn](https://yarnpkg.com/lang/en/docs/install)
 
 ## Usage
+
+#### Install
 
 ```bash
 # Clone
@@ -31,17 +30,24 @@ git clone https://github.com/n4bb12/dotfiles.git
 cd dotfiles
 
 # Comment out the parts you don't need
-code \
-  src/bash/load-order.ts \
-  src/install/index.sh
+code src/bash/load-order.ts
+code src/install/index.ts
 
 # Install
-bash dot install
+./dot install
+```
 
-# Load it
+#### Load
+
+```bash
+# Import into the current terminal:
 source dist/bash.sh
+```
 
-# Rebuild dist and update dist node_modules
+#### Update
+
+```bash
+# Rebuild `dist` and update `dist/node_modules`:
 bash dot update
 ```
 
