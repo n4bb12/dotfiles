@@ -1,20 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tslint",
-  "defaultSeverity": "error",
-  "extends": ["tslint:recommended"],
-  "rules": {
-    "arrow-parens": [true, "ban-single-arg-parens"],
-    "interface-name": [true, "never-prefix"],
-    "no-console": false,
-    "object-literal-sort-keys": false,
-    "quotemark": [true, "double"],
-    "semicolon": [true, "never"],
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "always",
-        "singleline": "never"
-      }
-    ]
-  }
+  "extends": [
+    "@n4bb12/config-tslint"
+  ]
 }

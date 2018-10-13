@@ -10,6 +10,11 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@n4bb12/config-tslint@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@n4bb12/config-tslint/-/config-tslint-1.1.0.tgz#1c838edee4598e01ba17b4c8fe42c9a4406dfa9d"
+  integrity sha512-1r2+nfucg1V9WTNZwJZZNEcX8ovEOEljkrZ4loXFl9LSP6eRbsKRgNhi4GepKr/nGF+1oamkgGPsusPVq4TWYw==
+
 "@nodelib/fs.stat@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.2.tgz#54c5a964462be3d4d78af631363c18d6fa91ac26"
