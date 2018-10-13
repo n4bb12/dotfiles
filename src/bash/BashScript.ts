@@ -38,13 +38,18 @@ export class BashScript {
     return (more = "") => [name, more].join(" ").trim()
   }
 
-public function = (name: string, lines: string[]) => {
+  public function = (name: string, lines: string[]) => {
     this.add(`${name}() {`)
     lines.forEach(line => this.add(`  ${line}`))
     this.add(`}`)
   }
 
-  public switch   = (fnName: string, fallback: string, mapping: { [index: string]: string }) => {
+  public switch = (
+    fnName: string,
+    fallback: string,
+    mapping: { [index: string]: string },
+  ) => {
+
     this.add(`${fnName}() {`)
     this.add("  args=\"$@\"")
     this.add("  command=\"$1\"")
