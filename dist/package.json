@@ -10,6 +10,7 @@
     "change-case": "^3.0.2",
     "clipboard-cli": "^1.1.0",
     "fkill-cli": "^5.2.0",
+    "fx": "^3.0.3",
     "get-port-cli": "^2.0.0",
     "live-server": "^1.2.0",
     "localtunnel": "^1.9.1",
@@ -26,6 +27,6 @@
     "underscore-cli": "^0.2.19",
     "ungit": "^1.4.36",
     "urlencode-cli": "^2.0.0",
-    "yarn": "^1.12.1"
+    "yarn": "^1.12.3"
   }
 }
