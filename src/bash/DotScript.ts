@@ -8,16 +8,16 @@ const writeFile = promisify(fs.writeFile)
 
 export class DotScript extends BashScript {
 
-  public browse = (alias: string, url: string) => {
-    this.add(`${alias}() { browser '${url}' "$@"; }`)
+  browse = (name: string, url: string) => {
+    this.add(`function ${name}() { browser '${url}' "$@"; }`)
     return {
       alias: (...others: string[]) => {
-        others.forEach(other => this.alias(other, alias))
+        others.forEach(other => this.alias(other, name))
       },
     }
   }
 
-  public outputTo = async (filenameAbs: string) => {
+  outputTo = async (filenameAbs: string) => {
     const filename = util.filename(filenameAbs) + ".sh"
     const outFile = util.cwd("build/bash-partials", filename)
     await writeFile(outFile, this.toString(), "utf8")

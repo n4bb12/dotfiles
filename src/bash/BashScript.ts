@@ -1,31 +1,31 @@
 export class BashScript {
 
-  public readonly dirname = "$(cd \"$(dirname \"${BASH_SOURCE[0]}\")/..\" && pwd)"
-  public readonly shebang = "#!/usr/bin/env bash"
+  readonly dirname = "$(cd \"$(dirname \"${BASH_SOURCE[0]}\")/..\" && pwd)"
+  readonly shebang = "#!/usr/bin/env bash"
 
   private readonly lines: string[] = []
 
-  public add = (line = "") => {
+  add = (line = "") => {
     this.lines.push(line)
   }
 
-  public env = (key: string, value: string) => {
+  env = (key: string, value: string) => {
     this.add(`export ${key}="${value}"`)
   }
 
-  public prependEnv = (key: string, value: string) => {
+  prependEnv = (key: string, value: string) => {
     this.add(`export ${key}="${value}:$${key}"`)
   }
 
-  public appendEnv = (key: string, value: string) => {
+  appendEnv = (key: string, value: string) => {
     this.add(`export ${key}="$${key}:${value}"`)
   }
 
-  public comment = (line = "") => {
+  comment = (line = "") => {
     this.add(`# ${line}`)
   }
 
-  public section = (...lines: string[]) => {
+  section = (...lines: string[]) => {
     this.add(`#`)
     this.add(`#`)
     lines.forEach(line => this.add(`#   ${line}`))
@@ -33,24 +33,24 @@ export class BashScript {
     this.add(`# ==========================================================`)
   }
 
-  public alias = (name: string, replacement: string) => {
+  alias = (name: string, replacement: string) => {
     this.add(`alias ${name}='${replacement}'`)
     return (more = "") => [name, more].join(" ").trim()
   }
 
-  public function = (name: string, lines: string[]) => {
-    this.add(`${name}() {`)
+  function = (name: string, lines: string[]) => {
+    this.add(`function ${name}() {`)
     lines.forEach(line => this.add(`  ${line}`))
     this.add(`}`)
   }
 
-  public switch = (
-    fnName: string,
+  switch = (
+    name: string,
     fallback: string,
     mapping: { [index: string]: string },
   ) => {
 
-    this.add(`${fnName}() {`)
+    this.add(`function ${name}() {`)
     this.add("  args=\"$@\"")
     this.add("  command=\"$1\"")
     this.add("  shift")
@@ -69,7 +69,7 @@ export class BashScript {
     this.add("}")
   }
 
-  public toString = () => {
+  toString = () => {
     return this.lines.join("\n")
   }
 

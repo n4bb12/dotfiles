@@ -12,7 +12,7 @@
 
 require-node-package 'change-case'
 
-change-case() {
+function change-case() {
   input=$(cat -)
   module="$1"-case
   node-global -p "require(\"${module}\")(\"${input}\")"
