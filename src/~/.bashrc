@@ -9,15 +9,15 @@ export LC_NUMERIC="de_DE.UTF-8"
 export LC_TIME="de_DE.UTF-8"
 export LC_ALL="de_DE.UTF-8"
 
-rc() {
+function rc() {
   code ~/.bashrc
 }
 
-edit() {
+function edit() {
   code ~/aliases.sh
 }
 
-reload() {
+function reload() {
   previous_pwd=$(pwd)
   source ~/.bashrc
   cd "$previous_pwd"

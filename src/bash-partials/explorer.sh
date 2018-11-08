@@ -28,7 +28,7 @@
 # Open an Explorer window at 'My Documents'
 # ex /
 # 
-ex() {
+function ex() {
   path=${1:-.}
   explorer $path
 }

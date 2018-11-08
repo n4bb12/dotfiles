@@ -11,7 +11,7 @@ export ROOT="$PWD"
 source src/bash-partials/colors.sh
 source src/bash-partials/env.sh
 
-run() {
+function run() {
   echo "$@"
   "$@"
 }
@@ -20,7 +20,7 @@ run() {
 # Commands
 ##################################################
 
-lint() {
+function lint() {
   run tslint \
     --project tsconfig.json \
     --config tslint.json \
@@ -28,7 +28,7 @@ lint() {
     --fix
 }
 
-build() {
+function build() {
   run rm -rf dist/*.sh
   run rm -rf dist/node
   run rm -rf build
@@ -50,7 +50,7 @@ build() {
   fi
 }
 
-dot_yarn() {
+function dot_yarn() {
   if [ -z "$DOT_PATH" ]; then
     echo This should only be called from within sourced dotfiles.
     return
@@ -65,7 +65,7 @@ dot_yarn() {
   export PATH="$DOT_PATH"
 }
 
-update() {
+function update() {
   build
 
   run cd "$ROOT/dist"
@@ -77,7 +77,7 @@ update() {
   dot_yarn upgrade --latest
 }
 
-install() {
+function install() {
   run rm -rf dist
   update
 }

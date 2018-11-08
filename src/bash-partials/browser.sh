@@ -14,12 +14,12 @@
 require-node-package 'urlencode-cli'
 require-node-package 'opn-cli'
 
-url-encode() {
+function url-encode() {
   input=$(cat -)
   urlencode "$input"
 }
 
-browser() {
+function browser() {
   if [ ! -z $BROWSER ]; then
     browser="$BROWSER"
     require-binary "$BROWSER"

@@ -19,7 +19,7 @@
 require-node-package 'all-the-package-names'
 require-node-package 'available'
 
-npm-name() {
+function npm-name() {
   all-the-package-names | grep -E "^${1}$" > /dev/null
   status="$?"
 
