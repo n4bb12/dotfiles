@@ -34,7 +34,9 @@ function git-repo() {
   url=$(git config --get remote.origin.url)
   url=$(echo $url | sed -e 's|:|/|g')
   url=$(echo $url | sed -e 's|git@|https://|g')
+  url=$(echo $url | sed -e 's|https///|https://|g')
   url=$(echo $url | sed -e 's|.git$||g')
+  url=$(echo $url | sed -e 's|.git/$||g')
 
   opn $url/tree/$(git-branch)
 }
