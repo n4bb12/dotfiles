@@ -18,7 +18,7 @@
     "npm": "^6.4.1",
     "opn-cli": "^4.0.0",
     "philemon": "^1.0.6",
-    "pnpm": "^2.18.2",
+    "pnpm": "^2.19.2",
     "sort-package-json": "^1.16.0",
     "superb-cli": "^1.0.0",
     "tldr": "^3.2.5",
