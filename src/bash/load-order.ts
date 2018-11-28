@@ -31,6 +31,7 @@ export const partials = [
   "npm",
   "open",
   "pnpm",
+  "release-it",
   "sort-package-json",
   "ssh-agent",
   "tldr",
