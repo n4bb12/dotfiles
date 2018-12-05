@@ -28,12 +28,12 @@
     "@n4bb12/config-tslint": "^1.4.1",
     "@types/chalk": "^2.2.0",
     "@types/graceful-fs": "^4.1.2",
-    "@types/node": "^10.12.10",
+    "@types/node": "^10.12.12",
     "chalk": "^2.4.1",
     "graceful-fs": "^4.1.15",
     "nehemiah": "^0.3.0",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.2.1"
   },
   "$schema": "http://json.schemastore.org/package"
 }
