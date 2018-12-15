@@ -14,6 +14,7 @@ These need to be installed/imported manually.
 
 ## Others
 
+- [Bookmarks clean up](https://chrome.google.com/webstore/detail/bookmarks-clean-up/oncbjlgldmiagjophlhobkogeladjijl)
 - [FastString - String Operations](https://chrome.google.com/webstore/detail/faststring-string-operati/gpknmoniniacaobkeclmiiaekniaddnd)
 - [GIPHY](https://chrome.google.com/webstore/detail/giphy-for-chrome/jlleokkdhkflpmghiioglgmnminbekdi)
 - [Grammarly](https://chrome.google.com/webstore/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen)
