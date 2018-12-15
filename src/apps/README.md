@@ -21,10 +21,10 @@ These need to be installed/imported manually.
 - [VS Code](https://code.visualstudio.com/#alt-downloads)
 
 ### Recording
-- [PicPick](https://picpick.app/en/)
-- [PxKeystrokesForScreencasts](https://github.com/Phaiax/PxKeystrokesForScreencasts#download)
-- [ScreenToGif](https://www.screentogif.com/downloads.html)
 - [Instant Eyedropper](http://instant-eyedropper.com/downloads/)
+- [PicPick](https://picpick.app/en/)
+- [Screen Recorder](https://screencast-o-matic.com/screen-recorder)
+- [ScreenToGif](https://www.screentogif.com/downloads.html)
 
 ### Windows Modifications
 - [CopyQ](https://github.com/hluk/CopyQ/releases)
