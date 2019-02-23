@@ -4,11 +4,12 @@
   "private": true,
   "dependencies": {
     "@angular/cli": "^7.3.3",
-    "all-the-package-names": "^1.3651.0",
+    "all-the-package-names": "^1.3653.0",
     "available": "^2.1.0",
     "bitly-client": "^1.6.1",
     "change-case": "^3.1.0",
     "clipboard-cli": "^1.1.0",
+    "fast-cli": "^2.3.0",
     "fkill-cli": "^5.2.0",
     "fx": "^11.1.0",
     "get-port-cli": "^2.0.0",
