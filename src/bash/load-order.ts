@@ -21,6 +21,7 @@ export const partials = [
   "change-case",
   "clipboard",
   "docker",
+  "fast",
   "free-port",
   "fx",
   "http-server",
