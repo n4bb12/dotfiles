@@ -21,7 +21,6 @@ export default function generate() {
   sh.browse("pwned",        "https://haveibeenpwned.com")
   sh.browse("rmbg",         "http://editphotosforfree.com/photoapps/remove-background-from-image-online")
   sh.browse("slides",       "https://slides.google.com")
-  sh.browse("speedtest",    "http://speedtest.t-online.de").alias("speed")
   sh.browse("spritegen",    "http://css.spritegen.com").alias("sprites")
   sh.browse("strawpoll",    "https://www.strawpoll.me").alias("straw")
   sh.browse("tineye",       "https://labs.tineye.com/color")
