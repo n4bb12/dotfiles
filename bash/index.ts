@@ -68,7 +68,7 @@ function combine(contents: string[]): string {
 
 async function readPartial(name: string) {
   const filename = name + ".sh"
-  const srcFile = util.cwd("src/bash-partials", filename)
+  const srcFile = util.cwd("bash-partials", filename)
   const generatedFile = util.cwd("build/bash-partials", filename)
 
   if (fs.existsSync(srcFile)) {

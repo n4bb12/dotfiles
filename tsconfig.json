@@ -8,12 +8,14 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "build",
-    "rootDir": "src",
+    "rootDir": ".",
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext"
   },
   "include": [
-    "src"
+    "install",
+    "bash",
+    "node"
   ]
 }
