@@ -30,8 +30,8 @@ git clone https://github.com/n4bb12/dotfiles.git
 cd dotfiles
 
 # Comment out the parts you don't need
-code src/bash/load-order.ts
-code src/install/index.ts
+code bash/load-order.ts
+code install/index.ts
 
 # Install
 ./dot install

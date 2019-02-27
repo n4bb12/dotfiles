@@ -8,8 +8,8 @@ set -e
 export PATH="$PATH:node_modules/.bin"
 export ROOT="$PWD"
 
-source src/bash-partials/colors.sh
-source src/bash-partials/env.sh
+source bash-partials/colors.sh
+source bash-partials/env.sh
 
 function run() {
   echo "$@"
@@ -46,7 +46,7 @@ function build() {
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
-    run cp src/package.json dist/package.json
+    echo '{"name":"dotfiles","version":"1.0.0","private":true}' > dist/package.json
   fi
 }
 
