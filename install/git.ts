@@ -16,4 +16,5 @@ export default async () => {
   await n.run(`git config --global difftool.cmd "code --wait --diff $LOCAL $REMOTE"`)
   await n.run(`git config --global push.default current`)
   await n.run(`git config --global push.followTags true`)
+  await n.run(`git config --global log.date iso`)
 }
