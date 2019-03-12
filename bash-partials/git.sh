@@ -6,6 +6,10 @@
 # ==========================================================
 
 require-binary 'git'
+require-node-package 'commitizen'
+require-node-package 'cz-conventional-changelog'
+
+echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 
 function git-work() {
   branch=$(echo "$@" | slug)
@@ -64,6 +68,8 @@ function git-rebase-interactive() {
 }
 
 # Aliases
+alias           cm='git commit -m'
+alias           cz="git cz"
 alias          add='git add -A'
 alias          eol='git rm --cached -r .'
 alias          fix='git commit --fixup'
@@ -84,7 +90,6 @@ alias     branches='git branch -a'
 alias     checkout='git checkout'
 
 # Transitive Aliases
-alias           cm='git commit -m'
 alias           lg='log'
 alias           st='status'
 alias          bra='branches'
