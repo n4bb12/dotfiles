@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@angular/cli": "^7.3.5",
-    "all-the-package-names": "^1.3669.0",
+    "@angular/cli": "^7.3.6",
+    "all-the-package-names": "^1.3673.0",
     "available": "^2.1.0",
     "bitly-client": "^1.6.1",
     "change-case": "^3.1.0",
@@ -26,7 +26,7 @@
     "superb-cli": "^1.0.0",
     "tldr": "^3.2.7",
     "ts-node": "^8.0.3",
-    "tslint": "^5.13.1",
+    "tslint": "^5.14.0",
     "ungit": "^1.4.42",
     "urlencode-cli": "^2.0.0",
     "yarn": "^1.13.0"
