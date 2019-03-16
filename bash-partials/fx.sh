@@ -12,3 +12,5 @@
 require-node-package 'fx'
 
 alias      scripts='cat package.json | fx .scripts'
+alias         deps='cat package.json | fx .dependencies'
+alias        ddeps='cat package.json | fx .devDependencies'
