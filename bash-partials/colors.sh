@@ -16,12 +16,12 @@ magenta="\e[35m"
    gray="\e[37m"
   reset="\e[39m"
 
-function fail() {
+fail() {
   echo -e "${red}${@}${reset}"
   return 1
 }
 
-function warn() {
+warn() {
   echo -e "${yellow}${@}${reset}"
 }
 

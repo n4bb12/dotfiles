@@ -3,13 +3,13 @@
 
 SSH_ENV="$HOME/.ssh/environment"
 
-function run_ssh_env {
+run_ssh_env() {
   if [ -f "${SSH_ENV}" ]; then
-    . "${SSH_ENV}" > /dev/null
+    source "${SSH_ENV}" > /dev/null
   fi
 }
 
-function start_ssh_agent {
+start_ssh_agent() {
   echo 'Initializing new SSH agent...'
   ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
   chmod 600 "${SSH_ENV}"

@@ -7,7 +7,7 @@
 
 export USER=$(whoami)
 
-function whoami() {
+whoami() {
   account="$1"
   require-binary "$account"
   shift
