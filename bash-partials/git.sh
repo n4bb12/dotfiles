@@ -61,6 +61,14 @@ git-pull() {
   git pull
 }
 
+git-merge() {
+  if [ ! -z $1 ]; then
+    git merge $1
+  else
+    git merge origin/$(git-default-branch)
+  fi
+}
+
 git-rebase() {
   if [ ! -z $1 ]; then
     git rebase $1
@@ -116,6 +124,7 @@ alias         work='git-work'
 alias        diffs='diff --staged'
 alias        fpush='push --force-with-lease'
 alias        ibase='git-rebase-interactive'
+alias        merge='git-merge'
 alias        pfush='fpush'
 alias       branch='git-branch'
 alias       pfusch='fpush'
