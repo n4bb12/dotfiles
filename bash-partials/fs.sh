@@ -20,7 +20,7 @@ alias           ..4='cd ../../../..'
 alias           ..5='cd ../../../../..'
 
 # Create a new directory and enter it
-function mkd() {
+mkd() {
   mkdir -p "$@" && cd "$_";
 }
 
@@ -47,7 +47,7 @@ alias          lll='ls -lah' # in case of too many 'l's when typing 'll'
 # ================================================
 
 # Determine size of a file or total size of a directory
-function fs() {
+fs() {
   if du -b /dev/null > /dev/null 2>&1; then
     local arg=-sbh;
   else

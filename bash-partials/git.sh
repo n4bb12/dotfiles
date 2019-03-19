@@ -11,7 +11,7 @@ require-node-package 'cz-conventional-changelog'
 
 echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 
-function git-work() {
+git-work() {
   branch=$(echo "$@" | slug)
   if git rev-parse --verify "$branch" > /dev/null 2>&1; then
     git checkout "$branch"
@@ -21,25 +21,25 @@ function git-work() {
   code .
 }
 
-function git-wip() {
+git-wip() {
   git add -A
   git status
   git commit -m wip --no-verify
 }
 
-function git-branch() {
+git-branch() {
   git rev-parse --abbrev-ref HEAD
 }
 
-function git-default-branch() {
+git-default-branch() {
   git remote show origin | grep "HEAD branch" | cut -d ":" -f 2
 }
 
-function git-set-upstream() {
+git-set-upstream() {
   git branch --set-upstream-to origin/$(git-branch)
 }
 
-function git-repo() {
+git-repo() {
   if [ ! -d .git ]; then
     fail 'ERR: You are not inside a git repository'
     return 1
@@ -55,13 +55,13 @@ function git-repo() {
   opn $url/tree/$(git-branch)
 }
 
-function git-pull() {
+git-pull() {
   git fetch --prune
   git branch --set-upstream-to origin/$(git-branch)
   git pull
 }
 
-function git-rebase() {
+git-rebase() {
   if [ ! -z $1 ]; then
     git rebase $1
   else
@@ -69,7 +69,7 @@ function git-rebase() {
   fi
 }
 
-function git-rebase-interactive() {
+git-rebase-interactive() {
   if [ ! -z $1 ]; then
     git rebase -i --autosquash $1
   else

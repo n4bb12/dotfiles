@@ -1,11 +1,11 @@
-function require-env-var() {
+require-env-var() {
   if [[ ! -v "$1" ]]; then
     fail "Environment variable '$1' not found"
     return 1
   fi
 }
 
-function require-binary() {
+require-binary() {
   if ! command -v "$1" > /dev/null 2>&1; then
     fail "Command '$1' not found"
     return 1
