@@ -31,6 +31,10 @@ function git-branch() {
   git rev-parse --abbrev-ref HEAD
 }
 
+function git-default-branch() {
+  git remote show origin | grep "HEAD branch" | cut -d ":" -f 2
+}
+
 function git-set-upstream() {
   git branch --set-upstream-to origin/$(git-branch)
 }
@@ -61,7 +65,7 @@ function git-rebase() {
   if [ ! -z $1 ]; then
     git rebase $1
   else
-    git rebase origin/$(git-branch)
+    git rebase origin/$(git-default-branch)
   fi
 }
 
@@ -69,7 +73,7 @@ function git-rebase-interactive() {
   if [ ! -z $1 ]; then
     git rebase -i --autosquash $1
   else
-    git rebase -i --autosquash origin/$(git-branch)
+    git rebase -i --autosquash origin/$(git-default-branch)
   fi
 }
 
