@@ -21,6 +21,12 @@ function git-work() {
   code .
 }
 
+function git-wip() {
+  git add -A
+  git status
+  git commit -m wip --no-verify
+}
+
 function git-branch() {
   git rev-parse --abbrev-ref HEAD
 }
@@ -73,6 +79,7 @@ alias           cz="git cz"
 alias          add='git add -A'
 alias          eol='git rm --cached -r .'
 alias          fix='git commit --fixup'
+alias          wip='git-wip'
 alias         diff='git --no-pager diff'
 alias         push='git push --follow-tags --no-verify'
 alias         show='git --no-pager show'
