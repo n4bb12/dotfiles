@@ -1,33 +1,46 @@
 import chalk from "chalk"
 import Nehemiah from "nehemiah"
-import path from "path"
-import { relative, resolve } from "path"
+import { dirname, relative, resolve } from "path"
+import { inspect } from "util"
 
-async function gitFetchPrune() {
-  if (!process.env.REPOSITORY_HOME) {
+const rootDir = process.env.REPOSITORY_HOME!
+
+function announceRepo(repo: string) {
+  console.log(chalk.blue(relative(rootDir, repo)))
+}
+
+function handleError(error: Error) {
+  console.error(chalk.red(inspect(error)))
+}
+
+async function runCommand(n: Nehemiah, cmd: string) {
+  console.log(chalk.gray(`$ ${cmd}`))
+  return n.run("git fetch --prune")
+}
+
+async function updateRepo(repo: string) {
+  const cwd = resolve(rootDir, repo)
+  announceRepo(cwd)
+  const n = new Nehemiah(cwd)
+  runCommand(n, "git fetch --prune")
+}
+
+async function goodMorning() {
+  if (!rootDir) {
     throw new Error("Environment variable REPOSITORY_HOME must be set")
   }
 
-  console.log(chalk.dim.gray("Command:") + " " + chalk.yellow("git fetch --prune"))
-  const root = resolve(process.env.REPOSITORY_HOME)
+  const n = new Nehemiah(resolve(rootDir))
+  const dotGitDirs = await n.find("**/.git", { onlyDirectories: true, deep: 3 })
+  const repos = dotGitDirs.map(dotGit => dirname(dotGit))
 
-  console.log(chalk.dim.gray("Root:") + " " + chalk.yellow(root))
-  const n = new Nehemiah(root)
-  const options = { onlyDirectories: true, deep: 1 }
-  const gitDirs = await n.find("**/.git", options)
-  const projects = gitDirs.map(dir => path.dirname(dir))
-
-  for (const dir of projects) {
-    const prefix = chalk.dim.gray("Repository:") + " " + chalk.cyan(dir)
-    const project = new Nehemiah(resolve(root, dir))
-    console.log(prefix)
-
+  for (const repo of repos) {
     try {
-      await project.run("git fetch --prune")
+      await updateRepo(repo)
     } catch (error) {
-      console.log(prefix + " " + chalk.red("Failed"))
+      handleError(error)
     }
   }
 }
 
-gitFetchPrune()
+goodMorning().catch(handleError)
