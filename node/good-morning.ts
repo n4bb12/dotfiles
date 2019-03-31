@@ -21,8 +21,12 @@ async function runCommand(n: Nehemiah, cmd: string) {
 async function updateRepo(repo: string) {
   const cwd = resolve(rootDir, repo)
   announceRepo(cwd)
+
   const n = new Nehemiah(cwd)
-  runCommand(n, "git fetch --prune")
+
+  return Promise.all([
+    runCommand(n, "git fetch --prune"),
+  ])
 }
 
 async function goodMorning() {
