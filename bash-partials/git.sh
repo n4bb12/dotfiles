@@ -85,6 +85,22 @@ git-rebase-interactive() {
   fi
 }
 
+git-pending() {
+  echo "rebase"
+}
+
+git-continue() {
+  git $(git-pending) --continue
+}
+
+git-abort() {
+  git $(git-pending) --abort
+}
+
+git-skip() {
+  git $(git-pending) --skip
+}
+
 # Aliases
 alias           cm='git commit -m'
 alias           cz="git cz"
@@ -95,6 +111,8 @@ alias          wip='git-wip'
 alias         diff='git --no-pager diff'
 alias         push='git push --follow-tags --no-verify'
 alias         show='git --no-pager show'
+alias         skip='git-skip'
+alias        abort='git-abort'
 alias        amend='git commit --amend --no-edit --no-verify'
 alias        clean='git clean'
 alias        fetch='git fetch --prune'
@@ -107,6 +125,7 @@ alias      git-mod='git update-index --chmod'
 alias      log-all='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 alias     branches='git branch -a'
 alias     checkout='git checkout'
+alias     continue='git-continue'
 
 # Transitive Aliases
 alias           lg='log'
@@ -115,12 +134,14 @@ alias          bra='branches'
 alias          lga='log-all'
 alias          log='log-all -20'
 alias          out='checkout'
+alias         cont='continue'
 alias         pick='cherry'
 alias         pull='git-pull'
 alias         repo='git-repo'
 alias         stat='status'
 alias         upst='git-set-upstream'
 alias         work='git-work'
+alias        check='checkout'
 alias        diffs='diff --staged'
 alias        fpush='push --force-with-lease'
 alias        ibase='git-rebase-interactive'
