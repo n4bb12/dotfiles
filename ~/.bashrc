@@ -26,6 +26,6 @@ function reload() {
 alias rl="reload"
 
 source ~/aliases.sh
-source ~/GIT/github/dotfiles/dist/bash.sh
+source ~/GIT/n4bb12/dotfiles/dist/bash.sh
 
-cd /D/Projects/github
+cd /D/Projects
