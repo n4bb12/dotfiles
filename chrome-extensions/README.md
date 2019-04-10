@@ -12,6 +12,10 @@ These need to be installed/imported manually.
 - [OctoTern](https://chrome.google.com/webstore/detail/octotern/fhgodjaafcddpfdpfmoimnjpelemhnmm)
 - [Tab Size on GitHub](https://chrome.google.com/webstore/detail/tab-size-on-github/ofjbgncegkdemndciafljngjbdpfmbkn)
 
+## GitLab
+
+- [GitLab - Tree view for code](https://chrome.google.com/webstore/detail/gitlab-tree-view-for-code/pijacafkghdlolapcjpmiodgbnpinicn)
+
 ## Others
 
 - [Bookmarks clean up](https://chrome.google.com/webstore/detail/bookmarks-clean-up/oncbjlgldmiagjophlhobkogeladjijl)
