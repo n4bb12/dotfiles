@@ -126,6 +126,7 @@ alias      log-all='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%
 alias     branches='git branch -a'
 alias     checkout='git checkout'
 alias     continue='git-continue'
+alias     unmerged='git diff --name-only --diff-filter U | xargs code'
 
 # Transitive Aliases
 alias           lg='log'
