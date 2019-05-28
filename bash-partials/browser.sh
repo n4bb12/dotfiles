@@ -12,7 +12,7 @@
 # ==========================================================
 
 require-node-package 'urlencode-cli'
-require-node-package 'opn-cli'
+require-node-package 'open-cli'
 
 url-encode() {
   input=$(cat -)
@@ -28,7 +28,7 @@ browser() {
   elif command -v google-chrome > /dev/null 2>&1; then
     browser=google-chrome
   else
-    browser=opn
+    browser=open-cli
     warn 'Chrome is not on the $PATH. Falling back to default browser.'
     warn 'You can speed up the open time by setting \$BROWSER or by putting Chrome in the $PATH.'
   fi

@@ -3,16 +3,16 @@
 #   Open With System Default Program
 #
 #   Examples
-#     $ opn carbon.png
-#     $ opn example.com
-#     $ opn README.md
+#     $ open carbon.png
+#     $ open example.com
+#     $ open README.md
 #
-#   https://github.com/sindresorhus/opn-cli#usage
+#   https://github.com/sindresorhus/open-cli#usage
 #
 # ==========================================================
 
-require-node-package 'opn-cli'
+require-node-package 'open-cli'
 
 if ! command -v open > /dev/null 2>&1; then
-  alias       open='opn'
+  alias       open='open-cli'
 fi

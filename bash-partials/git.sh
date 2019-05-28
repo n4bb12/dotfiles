@@ -52,7 +52,7 @@ git-repo() {
   url=$(echo $url | sed -e 's|.git$||g')
   url=$(echo $url | sed -e 's|.git/$||g')
 
-  opn $url/tree/$(git-branch)
+  open-cli $url/tree/$(git-branch)
 }
 
 git-pull() {
