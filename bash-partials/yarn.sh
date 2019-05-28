@@ -5,7 +5,11 @@
 #
 # ================================================
 
-require-node-package 'yarn'
+# It's difficult to make this work properly.
+# Better install manually from
+# https://yarnpkg.com/en/docs/install
+#
+# require-node-package 'yarn'
 
 alias            y='yarn'
 alias           ya='yarn add'

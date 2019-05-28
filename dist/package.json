@@ -29,7 +29,6 @@
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
     "ungit": "^1.4.43",
-    "urlencode-cli": "^2.0.0",
-    "yarn": "^1.15.2"
+    "urlencode-cli": "^2.0.0"
   }
 }
