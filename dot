@@ -56,13 +56,11 @@ function dot_yarn() {
     return
   fi
 
-  export PATH="$SYSTEM_PATH"
   cd "$DOT_ROOT"
   which yarn
   (
     run yarn "$@"
   )
-  export PATH="$DOT_PATH"
 }
 
 function update() {
