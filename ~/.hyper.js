@@ -14,10 +14,10 @@ module.exports = {
     fontSize: 18,
 
     // font family with optional fallbacks
-    fontFamily: `Consolas`,
+    fontFamily: `'FuraCode Nerd Font Mono'`,
 
     // default font weight: "normal" or "bold"
-    fontWeight: "normal",
+    fontWeight: "100",
 
     // font weight for bold characters: "normal" or "bold"
     fontWeightBold: "bold",
@@ -118,7 +118,7 @@ module.exports = {
     //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
-    shell: "C:\\Program Files\\Git\\git-cmd.exe",
+    shell: "C:\\DEV_TOOLS\\Git\\git-cmd.exe",
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
@@ -147,34 +147,6 @@ module.exports = {
 
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
-
-  // -----> Tools
-  // https://www.npmjs.com/package/config-hyperterm
-  // https://www.npmjs.com/package/themer
-
-  // -----> Productivity https://github.com/bnb/awesome-hyper#productivity
-  // https://www.npmjs.com/package/hyperterm-tabs - currently not possible due to an issue with mousedown
-  // https://www.npmjs.com/package/hyper-match - todo
-
-  // -----> Customization https://github.com/bnb/awesome-hyper#customization
-  // https://www.npmjs.com/package/hyper-pane - todo
-  // https://www.npmjs.com/package/hyperlayout - todo
-
-  // -----> Themes https://github.com/bnb/awesome-hyper#themes
-  // https://www.npmjs.com/package/hyper-chesterish
-  // https://www.npmjs.com/package/hyper-clean
-  // https://www.npmjs.com/package/hyper-firewatch
-  // https://www.npmjs.com/package/hyper-nord
-  // https://www.npmjs.com/package/hyper-oceans16
-  // https://www.npmjs.com/package/hyper-one-dark-vivid
-  // https://www.npmjs.com/package/hyper-relaxed
-  // https://www.npmjs.com/package/hyper-ramda
-  // https://www.npmjs.com/package/hyper-snazzy
-  // https://www.npmjs.com/package/hyperblue
-  // https://www.npmjs.com/package/hyperocean
-  // https://www.npmjs.com/package/hyperterm-base-16-ocean
-  // https://www.npmjs.com/package/hyperterm-firewatch
-  // https://www.npmjs.com/package/hyperterm-sourcerer
 
   // a list of plugins to fetch and install from npm
   // format: [@org/]project[#version]
