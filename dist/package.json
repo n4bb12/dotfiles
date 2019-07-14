@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@angular/cli": "^8.0.6",
+    "@angular/cli": "^8.1.0",
     "all-the-package-names": "^1.3771.0",
     "available": "^2.1.0",
     "bitly-client": "^1.6.1",
