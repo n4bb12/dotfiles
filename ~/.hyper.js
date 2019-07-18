@@ -1,8 +1,7 @@
-// -- hyper-stylesheet-hash:72303a7f6424a480c68f98a6ed005fc1 --
 // Future versions of Hyper may add additional config options,
 // which will not automatically be merged into this file.
-// https://hyper.is#cfg
-// https://github.com/bnb/awesome-hyper#contents
+// See https://hyper.is#cfg for all currently supported options.
+// See https://github.com/bnb/awesome-hyper#contents for plugins.
 
 module.exports = {
   config: {
@@ -17,13 +16,19 @@ module.exports = {
     fontFamily: `'FuraCode Nerd Font Mono'`,
 
     // default font weight: "normal" or "bold"
-    fontWeight: "100",
+    fontWeight: "normal",
 
     // font weight for bold characters: "normal" or "bold"
     fontWeightBold: "bold",
 
+    // line height as a relative unit
+    lineHeight: 1,
+
+    // letter spacing as a relative unit
+    letterSpacing: 0,
+
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: "#FEED6C",
+    cursorColor: "whitesmoke",
 
     // terminal text color under BLOCK cursor
     cursorAccentColor: "black",
@@ -127,7 +132,10 @@ module.exports = {
     // for environment variables
     env: {
       TERM: "cygwin",
+      // TERM: "msys",
     },
+
+    windowSize: [1600, 900],
 
     // set to `false` for no bell
     bell: "SOUND",
@@ -142,8 +150,17 @@ module.exports = {
     // selection is present (`true` by default on Windows and disables the context menu feature)
     quickEdit: true,
 
+    // choose either `'vertical'`, if you want the column mode when Option key is hold during selection (Default)
+    // or `'force'`, if you want to force selection regardless of whether the terminal is in mouse events mode
+    // (inside tmux or vim with mouse mode enabled for example).
+    macOptionSelectionMode: "vertical",
+
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
+
+    // Whether to use the WebGL renderer. Set it to false to use canvas-based
+    // rendering (slower, but supports transparent backgrounds)
+    webGLRenderer: true,
 
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
