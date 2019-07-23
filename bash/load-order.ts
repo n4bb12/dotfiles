@@ -26,7 +26,6 @@ export const partials = [
   "fx",
   "http-server",
   "kill",
-  "netlify",
   "node-aliases",
   "nodemon",
   "npm-name-available",
