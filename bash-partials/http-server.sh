@@ -1,11 +1,11 @@
 #
 #
 #   Quickly serve files over HTTP
-#   https://github.com/tapio/live-server
+#   https://github.com/johnpapa/lite-server
 #
 # ================================================
 
-require-node-package 'live-server'
+require-node-package 'lite-server'
 
-alias        serve='live-server'
-alias  http-server='live-server'
+alias        serve='lite-server'
+alias  http-server='lite-server'
