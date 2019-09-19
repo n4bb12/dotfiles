@@ -14,6 +14,7 @@ These need to be installed/imported manually.
 
 ## Others
 
+- [WaveNet for Chrome](https://chrome.google.com/webstore/detail/wavenet-for-chrome/iefankigbnlnlaolflbcopliocibkffc)
 - [Show Apps in new tab](https://chrome.google.com/webstore/detail/show-apps-in-new-tab/nohbdifokmdgjcbbeobglcbaifinhfip)
 - [FastString - String Operations](https://chrome.google.com/webstore/detail/faststring-string-operati/gpknmoniniacaobkeclmiiaekniaddnd)
 - [JSONView](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc)
@@ -21,7 +22,6 @@ These need to be installed/imported manually.
 - [Grammarly](https://chrome.google.com/webstore/detail/grammarly-for-chrome/kbfnbcaeplbcioakkpcpgfkobkghlhen)
 - [User CSS](https://chrome.google.com/webstore/detail/user-css/okpjlejfhacmgjkmknjhadmkdbcldfcb)
 - [uBlock Origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)
-- [Adblock Plus](https://chrome.google.com/webstore/detail/adblock-plus-free-ad-bloc/cfhdojbkjhnklbpkdaibdccddilifddb)
 
 ## PW Managers
 
