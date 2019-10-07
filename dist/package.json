@@ -15,6 +15,7 @@
     "fkill-cli": "^5.2.0",
     "fx": "^14.0.1",
     "get-port-cli": "^2.0.0",
+    "jq": "^1.7.2",
     "lite-server": "^2.5.4",
     "live-server": "^1.2.1",
     "localtunnel": "^2.0.0",
