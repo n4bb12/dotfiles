@@ -21,6 +21,10 @@ whoami() {
     npm whoami "$@"
   elif [ "$account" == yarn ]; then
     yarn login "$@"
+  elif [ "$account" == heroku ]; then
+    heroku auth:whoami "$@"
+  elif [ "$account" == salesforce ] || [ "$account" == sf ] || [ "$account" == sfdx ]; then
+    sfdx force:org:list "$@"
   else
     fail "Unknown account: $account"
   fi
