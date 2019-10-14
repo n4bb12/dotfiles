@@ -32,11 +32,15 @@ git-branch() {
 }
 
 git-default-branch() {
-  git remote show origin | grep "HEAD branch" | cut -d ":" -f 2
+  git remote show origin | grep "HEAD branch" | cut -d ":" -f 2 | xargs
 }
 
 git-set-upstream() {
-  git branch --set-upstream-to origin/$(git-branch)
+  git branch --set-upstream-to "origin/$(git-branch)"
+}
+
+git-origin() {
+  git config --get remote.origin.url
 }
 
 git-repo() {
@@ -45,19 +49,19 @@ git-repo() {
     return 1
   fi
 
-  url=$(git config --get remote.origin.url)
+  url=$(git-origin)
   url=$(echo $url | sed -e 's|:|/|g')
   url=$(echo $url | sed -e 's|git@|https://|g')
   url=$(echo $url | sed -e 's|https///|https://|g')
   url=$(echo $url | sed -e 's|.git$||g')
   url=$(echo $url | sed -e 's|.git/$||g')
 
-  open-cli $url/tree/$(git-branch)
+  open-cli "$url/tree/$(git-branch)"
 }
 
 git-pull() {
   git fetch --prune
-  git branch --set-upstream-to origin/$(git-branch)
+  git-set-upstream
   git pull
 }
 
@@ -65,7 +69,7 @@ git-merge() {
   if [ ! -z $1 ]; then
     git merge $1
   else
-    git merge origin/$(git-default-branch)
+    git merge "origin/$(git-default-branch)"
   fi
 }
 
@@ -73,7 +77,7 @@ git-rebase() {
   if [ ! -z $1 ]; then
     git rebase $1
   else
-    git rebase origin/$(git-default-branch)
+    git rebase "origin/$(git-default-branch)"
   fi
 }
 
@@ -81,7 +85,7 @@ git-rebase-interactive() {
   if [ ! -z $1 ]; then
     git rebase -i --autosquash $1
   else
-    git rebase -i --autosquash origin/$(git-default-branch)
+    git rebase -i --autosquash "origin/$(git-default-branch)"
   fi
 }
 
