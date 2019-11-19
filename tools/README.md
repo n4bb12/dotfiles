@@ -3,11 +3,8 @@
 These need to be installed/imported manually.
 
 ### Runtimes
-- [Java](https://java.com/en/download/)
-- [Julia](https://julialang.org/downloads/)
 - [Node](https://nodejs.org/en/download/)
 - [Python](https://www.python.org/downloads/)
-- [Rust](https://www.rust-lang.org/en-US/install.html)
 
 ### Git
 - [Git](https://git-scm.com/downloads)
@@ -15,6 +12,7 @@ These need to be installed/imported manually.
 
 ### Terminal
 - [Hyper](https://hyper.is/#installation)
+- [cwrsync](https://www.itefix.net/cwrsync)
 
 ### Editors
 - [Boostnote](https://boostnote.io/#download)
