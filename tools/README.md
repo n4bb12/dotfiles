@@ -2,6 +2,10 @@
 
 These need to be installed/imported manually.
 
+### Windows Mods
+- [CopyQ](https://github.com/hluk/CopyQ/releases)
+- [SVG Explorer Extension](https://github.com/maphew/svg-explorer-extension/releases)
+
 ### Runtimes
 - [Node](https://nodejs.org/en/download/)
 - [Python](https://www.python.org/downloads/)
@@ -13,17 +17,21 @@ These need to be installed/imported manually.
 ### Terminal
 - [Hyper](https://hyper.is/#installation)
 - [cwrsync](https://www.itefix.net/cwrsync)
+- [gnuwin32](http://gnuwin32.sourceforge.net/packages.html)
 
 ### Editors
-- [Boostnote](https://boostnote.io/#download)
 - [VS Code](https://code.visualstudio.com/#alt-downloads)
+- [Beyond Compare](https://www.scootersoftware.com/download.php)
 
 ### Recording
+- [Greenshot](https://getgreenshot.org/)
+- [ScreenToGif](https://www.screentogif.com/downloads.html)
 - [Instant Eyedropper](http://instant-eyedropper.com/downloads/)
 - [PicPick](https://picpick.app/en/)
 - [Screen Recorder](https://screencast-o-matic.com/screen-recorder)
-- [ScreenToGif](https://www.screentogif.com/downloads.html)
 
-### Windows Modifications
-- [CopyQ](https://github.com/hluk/CopyQ/releases)
-- [SVG Viewer Extension](https://github.com/maphew/svg-explorer-extension/releases)
+### Image Editing
+- [GIMP](https://www.gimp24.de/)
+
+### Other Tools
+- [7-zip](https://7-zip.de/)
