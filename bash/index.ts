@@ -32,35 +32,33 @@ function combine(contents: string[]): string {
   const isBinaryRequirement = /^require-binary[^()]+$/
   const isYarnRequirement = /^require-node-package[^()]+$/
 
-  const lines = contents
-    .join("\n")
-    .split("\n")
+  const lines = contents.join("\n").split("\n")
 
-  const remaining = lines
-    .filter(line => {
-      return true
-        && !isOnelineFunction.test(line)
-        && !isAlias.test(line)
-        && !isBinaryRequirement.test(line)
-        && !isYarnRequirement.test(line)
-    })
+  const remaining = lines.filter(line => {
+    return (
+      true &&
+      !isOnelineFunction.test(line) &&
+      !isAlias.test(line) &&
+      !isBinaryRequirement.test(line) &&
+      !isYarnRequirement.test(line)
+    )
+  })
 
-  const onelineFunctions = lines
-    .filter(line => isOnelineFunction.test(line))
+  const onelineFunctions = lines.filter(line => isOnelineFunction.test(line))
 
-  const aliases = lines
-    .filter(line => isAlias.test(line))
+  const aliases = lines.filter(line => isAlias.test(line))
 
-  const binaryRequirements = lines
-    .filter(line => isBinaryRequirement.test(line))
+  const binaryRequirements = lines.filter(line => isBinaryRequirement.test(line))
 
-  const yarnRequirements = lines
-      .filter(line => isYarnRequirement.test(line))
+  const yarnRequirements = lines.filter(line => isYarnRequirement.test(line))
 
   return [
-    ...remaining, "",
-    ...onelineFunctions.sort(), "",
-    ...aliases.sort(), "",
+    ...remaining,
+    "",
+    ...onelineFunctions.sort(),
+    "",
+    ...aliases.sort(),
+    "",
     ...binaryRequirements.sort(),
     ...yarnRequirements.sort(),
   ].join("\n")

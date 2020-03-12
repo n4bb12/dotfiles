@@ -1,6 +1,5 @@
 export class BashScript {
-
-  readonly dirname = "$(cd \"$(dirname \"${BASH_SOURCE[0]}\")/..\" && pwd)"
+  readonly dirname = '$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)'
   readonly shebang = "#!/usr/bin/env bash"
 
   private readonly lines: string[] = []
@@ -44,17 +43,12 @@ export class BashScript {
     this.add(`}`)
   }
 
-  switch = (
-    name: string,
-    fallback: string,
-    mapping: { [index: string]: string },
-  ) => {
-
+  switch = (name: string, fallback: string, mapping: { [index: string]: string }) => {
     this.add(`function ${name}() {`)
-    this.add("  args=\"$@\"")
-    this.add("  command=\"$1\"")
+    this.add('  args="$@"')
+    this.add('  command="$1"')
     this.add("  shift")
-    this.add("  rest=\"$@\"")
+    this.add('  rest="$@"')
     this.add("")
     this.add("  if false; then echo false")
 
@@ -72,5 +66,4 @@ export class BashScript {
   toString = () => {
     return this.lines.join("\n")
   }
-
 }

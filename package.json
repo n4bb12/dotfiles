@@ -21,6 +21,7 @@
   "scripts": {
     "build": "bash dot build",
     "dot": "bash dot",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,scss,json,md,yml,html}\"",
     "lint": "bash dot lint",
     "update": "bash dot update"
   },
@@ -32,6 +33,7 @@
     "chalk": "^3.0.0",
     "graceful-fs": "^4.1.15",
     "nehemiah": "^1.0.7",
+    "prettier": "^1.19.1",
     "tslint": "^6.0.0",
     "typescript": "^3.4.5"
   },
