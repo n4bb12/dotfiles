@@ -7,7 +7,6 @@ import util from "./util"
 const writeFile = promisify(fs.writeFile)
 
 export class DotScript extends BashScript {
-
   browse = (name: string, url: string) => {
     this.add(`function ${name}() { browser '${url}' "$@"; }`)
     return {
@@ -22,5 +21,4 @@ export class DotScript extends BashScript {
     const outFile = util.cwd("build/bash-partials", filename)
     await writeFile(outFile, this.toString(), "utf8")
   }
-
 }

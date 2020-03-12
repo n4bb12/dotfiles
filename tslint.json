@@ -1,8 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/tslint",
-  "extends": [
-    "@n4bb12/config-tslint"
-  ],
+  "extends": ["@n4bb12/config-tslint"],
   "rules": {
     "max-line-length": {
       "options": 120
