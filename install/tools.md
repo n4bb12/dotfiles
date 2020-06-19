@@ -15,7 +15,7 @@ I install these tools manually.
 ### Windows Mods
 
 - [CopyQ](https://github.com/hluk/CopyQ/releases)
-- [PowerToys](https://github.com/microsoft/PowerToys/releases/tag/v0.18.2)
+- [PowerToys](https://github.com/microsoft/PowerToys/releases)
 - [SVG Explorer Extension](https://github.com/maphew/svg-explorer-extension/releases)
 
 ### Git
