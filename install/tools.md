@@ -36,6 +36,8 @@ I install these tools manually.
 - [Greenshot](https://getgreenshot.org/)
 - [Instant Eyedropper](http://instant-eyedropper.com/downloads/)
 - [ScreenToGif](https://www.screentogif.com/downloads.html)
+- [OBS Studio](https://obsproject.com/de/download)
+- [OBS VirtualCam](https://github.com/CatxFish/obs-virtual-cam/releases)
 
 ### Other Tools
 
