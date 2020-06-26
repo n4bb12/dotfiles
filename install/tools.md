@@ -42,3 +42,4 @@ I install these tools manually.
 ### Other Tools
 
 - [7-zip](https://7-zip.de/)
+- [Station](https://getstation.com/)
