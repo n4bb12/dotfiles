@@ -47,7 +47,7 @@ source dist/bash.sh
 #### Update
 
 ```bash
-# Rebuild `dist` and update `dist/node_modules`:
+# Rebuild `dist` and update `dist` dependencies:
 bash dot update
 ```
 

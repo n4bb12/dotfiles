@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node:
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:lts
 
 jobs:
   install:
@@ -25,20 +25,17 @@ jobs:
           paths: .
 
   lint:
-    docker:
-      - image: circleci/node:12
+    executor: node
     steps:
       - attach_workspace:
           at: .
       - run: yarn lint
 
   build:
-    docker:
-      - image: circleci/node:12
+    executor: node
     steps:
       - attach_workspace:
           at: .
-      - run: mkdir -p $HOME/.ssh
       - run: yarn build
 
 workflows:
