@@ -33,7 +33,8 @@ async function goodMorning() {
   }
 
   const n = new Nehemiah(resolve(rootDir))
-  const dotGitDirs = await n.find("**/.git", { onlyDirectories: true, deep: 3 })
+  const globbyOptions = { onlyDirectories: true, deep: 3 } as any // FIXME
+  const dotGitDirs = await n.find("**/.git", globbyOptions)
   const repos = dotGitDirs.map(dotGit => dirname(dotGit))
 
   for (const repo of repos) {

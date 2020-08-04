@@ -1,3 +1,5 @@
+.pnp.js
+.yarn/
 build/
 dist/
 node_modules/
