@@ -18,7 +18,8 @@ I install these tools manually.
 - [PowerToys](https://github.com/microsoft/PowerToys/releases)
 - [SVG Explorer Extension](https://github.com/maphew/svg-explorer-extension/releases)
 - [Windows10Debloater](https://github.com/Sycnex/Windows10Debloater)
-- [Setting up the perfect Windows 10 Installation | Faster, Lighter, and Functional](https://www.youtube.com/watch?v=nVy4GAtkh7Q)
+- [Faster, Lighter, and Functional](https://www.youtube.com/watch?v=nVy4GAtkh7Q)
+- [O&O ShutUp10](https://www.oo-software.com/de/shutup10)
 
 ### Git
 
