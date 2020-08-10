@@ -17,6 +17,7 @@ I install these tools manually.
 - [CopyQ](https://github.com/hluk/CopyQ/releases)
 - [PowerToys](https://github.com/microsoft/PowerToys/releases)
 - [SVG Explorer Extension](https://github.com/maphew/svg-explorer-extension/releases)
+- [Windows10Debloater](https://github.com/Sycnex/Windows10Debloater)
 
 ### Git
 
