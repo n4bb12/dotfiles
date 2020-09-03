@@ -7,7 +7,7 @@ import Nehemiah from "nehemiah"
 //
 // ================================================
 
-export default () => {
+export default async () => {
   const n = new Nehemiah()
 
   return Promise.all([

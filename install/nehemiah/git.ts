@@ -15,7 +15,9 @@ export default async () => {
   await n.run(`git config --global core.eol lf`)
   await n.run(`git config --global core.ignorecase false`)
   await n.run(`git config --global diff.tool "vs-code"`)
-  await n.run(`git config --global difftool.cmd "code --wait --diff $LOCAL $REMOTE"`)
+  await n.run(
+    `git config --global difftool.cmd "code --wait --diff $LOCAL $REMOTE"`,
+  )
   await n.run(`git config --global log.date iso`)
   await n.run(`git config --global pull.rebase true`)
   await n.run(`git config --global push.default current`)
