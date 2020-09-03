@@ -10,11 +10,9 @@ import Nehemiah from "nehemiah"
 export default async () => {
   const n = new Nehemiah()
 
-  return Promise.all([
-    n.run(`npm config set color always`),
-    n.run(`npm config set editor code`),
-    n.run(`npm config set git-tag-version true`),
-    n.run(`npm config set progress true`),
-    n.run(`npm config set shell bash`),
-  ]).then(results => undefined)
+  await n.run(`npm config set color always`)
+  await n.run(`npm config set editor code`)
+  await n.run(`npm config set git-tag-version true`)
+  await n.run(`npm config set progress true`)
+  await n.run(`npm config set shell bash`)
 }

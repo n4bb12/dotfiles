@@ -82,7 +82,7 @@
       "brightWhite": "#FFFFFF",
       "brightYellow": "#FFFA72",
       "cyan": "#56C2D6",
-      "foreground": "#bfbfbf",
+      "foreground": "#eee",
       "green": "#36D48B",
       "name": "Git Bash",
       "purple": "#FF5995",
