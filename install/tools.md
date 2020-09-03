@@ -29,6 +29,7 @@ I install these tools manually.
 ### Command Line
 
 - [Hyper](https://hyper.is/#installation)
+- [Windows Terminal](https://github.com/microsoft/terminal)
 - [Rsync for Windows](https://www.itefix.net/cwrsync)
 - [GnuWin Packages](http://gnuwin32.sourceforge.net/packages.html)
 - [Docker](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
