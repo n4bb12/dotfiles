@@ -23,7 +23,7 @@ I install these extensions manually.
 ## Staying Focused / Organized
 
 - [Bookmarks clean up](https://chrome.google.com/webstore/detail/bookmarks-clean-up/oncbjlgldmiagjophlhobkogeladjijl)
-- [uBlock Origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)
+- [uBlock Origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm) and [Twitch AdBlock](https://www.ginx.tv/en/twitch/easy-solution-how-to-block-unblockable-new-twitch-ads)
 - [Show Apps in new tab](https://chrome.google.com/webstore/detail/show-apps-in-new-tab/nohbdifokmdgjcbbeobglcbaifinhfip)
 - [User CSS](https://chrome.google.com/webstore/detail/user-css/okpjlejfhacmgjkmknjhadmkdbcldfcb)
 - [Pushbullet](https://chrome.google.com/webstore/detail/pushbullet/chlffgpmiacpedhhbkiomidkjlcfhogd)
