@@ -17,11 +17,5 @@ export default function generate() {
   sh.browse("wallpapers", "https://interfacelift.com/wallpaper/downloads/date/wide_16:9/3840x2160/")
   sh.browse("youtube", "https://www.youtube.com")
 
-  sh.alias("ci", "circleci")
-  sh.alias("gh", "github")
-  sh.alias("gl", "gitlab")
-  sh.alias("prs", "pull-requests")
-  sh.alias("yt", "youtube")
-
   return sh.outputTo(__filename)
 }

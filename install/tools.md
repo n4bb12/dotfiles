@@ -33,6 +33,7 @@ I install these tools manually.
 - [Rsync for Windows](https://www.itefix.net/cwrsync)
 - [GnuWin Packages](http://gnuwin32.sourceforge.net/packages.html)
 - [Docker](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
+- [GitHub CLI](https://cli.github.com)
 
 ### Recording / Capturing / Image / Design Tools
 
