@@ -29,7 +29,7 @@
     "@n4bb12/config-tslint": "^1.4.1",
     "@types/chalk": "^2.2.0",
     "@types/graceful-fs": "^4.1.4",
-    "@types/node": "^14.14.14",
+    "@types/node": "^14.14.16",
     "chalk": "^4.1.0",
     "graceful-fs": "^4.2.4",
     "nehemiah": "^1.0.8",
