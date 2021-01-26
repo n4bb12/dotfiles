@@ -22,4 +22,5 @@ export default async () => {
   await n.run(`git config --global core.editor 'code --wait'`)
   await n.run(`git config --global diff.tool 'code'`)
   await n.run(`git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'`)
+  await n.run(`git config --global alias.lg 'git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'`)
 }
