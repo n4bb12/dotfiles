@@ -18,6 +18,7 @@ export default async () => {
   await n.run(`git config --global push.followTags true`)
   await n.run(`git config --global fetch.prune true`)
   await n.run(`git config --global pull.rebase true`)
+  await n.run(`git config --global rebase.autosquash true`)
   await n.run(`git config --global core.editor 'code --wait'`)
   await n.run(`git config --global diff.tool 'code'`)
   await n.run(`git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'`)
