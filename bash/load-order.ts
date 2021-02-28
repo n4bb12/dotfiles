@@ -22,6 +22,7 @@ export const partials = [
   "clipboard",
   "docker",
   "fast",
+  "ffmpeg",
   "free-port",
   "fx",
   "http-server",
