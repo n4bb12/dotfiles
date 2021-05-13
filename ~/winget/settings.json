@@ -1,0 +1,19 @@
+{
+  // For documentation on these settings, see: https://aka.ms/winget-settings
+  "$schema": "https://aka.ms/winget-settings.schema.json",
+  "installBehavior": {
+    "preferences": {
+      "scope": "machine",
+      "locale": ["en-US", "de-DE"]
+    }
+  },
+  "experimentalFeatures": {
+    "experimentalCmd": true,
+    "experimentalArg": true,
+    "experimentalMSStore": true,
+    "list": true,
+    "upgrade": true,
+    "uninstall": true,
+    "restSource": true
+  }
+}

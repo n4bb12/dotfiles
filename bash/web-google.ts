@@ -1,6 +1,6 @@
 import { DotScript } from "./DotScript"
 
-export default function generate() {
+export async function generateWebGoogle() {
   const sh = new DotScript()
 
   sh.section("Google Search", "https://www.lifewire.com/advanced-google-search-3482174")

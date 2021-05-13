@@ -11,6 +11,10 @@
 #
 # require-node-package 'yarn'
 
+require-binary 'node'
+require-binary 'npm'
+require-binary 'yarn'
+
 alias            y='yarn'
 alias           ya='yarn add'
 alias           yg='yarn global'

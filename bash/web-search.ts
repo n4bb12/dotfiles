@@ -1,6 +1,6 @@
 import { DotScript } from "./DotScript"
 
-export default function generate() {
+export async function generateWebSearch() {
   const sh = new DotScript()
 
   sh.section("Other Search")
