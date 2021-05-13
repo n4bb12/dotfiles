@@ -15,7 +15,6 @@ export const partials = [
   "whoami",
 
   // --> node-global
-  "angular",
   "bitly",
   "browser",
   "change-case",
@@ -30,7 +29,6 @@ export const partials = [
   "node-aliases",
   "nodemon",
   "npm-name-available",
-  "npm",
   "open",
   "pnpm",
   "release-it",
@@ -39,7 +37,6 @@ export const partials = [
   "tldr",
   "tunnel",
   "typescript",
-  "ungit",
   "words",
   "yarn",
 

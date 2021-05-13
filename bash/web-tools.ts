@@ -1,6 +1,6 @@
 import { DotScript } from "./DotScript"
 
-export default function generate() {
+export async function generateWebTools() {
   const sh = new DotScript()
 
   sh.section("Tools")

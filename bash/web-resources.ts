@@ -1,6 +1,6 @@
 import { DotScript } from "./DotScript"
 
-export default function generate() {
+export async function generateWebResources() {
   const sh = new DotScript()
 
   sh.section("Resources")

@@ -7,7 +7,7 @@ import util from "./util"
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
-export default async function generateIndex() {
+export async function generateEntry() {
   const contents = await Promise.all(partials.map(readPartial))
   const combined = combine(contents)
   const outFile = util.cwd("build/bash/index.sh")

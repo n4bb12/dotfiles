@@ -20,28 +20,17 @@ function run() {
 # Commands
 ##################################################
 
-function lint() {
-  run tslint \
-    --project tsconfig.json \
-    --config tslint.json \
-    --format stylish \
-    --fix
-}
-
 function build() {
   run rm -rf dist/*.sh
-  run rm -rf dist/node
   run rm -rf build
 
-  run mkdir -p dist/node
+  run mkdir -p dist
   run mkdir -p build/bash
   run mkdir -p build/bash-partials
-  run mkdir -p build/node
 
   run tsc -p tsconfig.json
   run node build/bash/generate.js
 
-  run cp -R build/node/* dist/node/
   run cp build/bash/index.sh dist/bash.sh
 
   # preserve existing package.json
@@ -50,33 +39,17 @@ function build() {
   fi
 }
 
-function dot_yarn() {
-  if [ -z "$DOT_PATH" ]; then
-    echo This should only be called from within sourced dotfiles.
-    return
-  fi
-
-  cd "$DOT_ROOT"
-  which yarn
-  (
-    run yarn "$@"
-  )
-}
-
 function update() {
   build
 
   run cd "$ROOT/dist"
   run source bash.sh
-
-  run cd "$ROOT/build/install"
-  run node index.js
-
-  dot_yarn upgrade --latest
+  run yarn upgrade --latest
 }
 
 function install() {
   run rm -rf dist
+
   update
 }
 

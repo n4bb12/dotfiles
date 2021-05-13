@@ -1,0 +1,5 @@
+Discord.Discord
+EpicGames.EpicGamesLauncher
+Ubisoft.Connect
+Valve.Steam
+ElaborateBytes.VirtualCloneDrive

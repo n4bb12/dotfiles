@@ -1,6 +1,6 @@
 import { DotScript } from "./DotScript"
 
-export default function generate() {
+export async function generateWebIds() {
   const sh = new DotScript()
 
   sh.section("Profile Pages")
