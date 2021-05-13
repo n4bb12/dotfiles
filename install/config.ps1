@@ -26,18 +26,19 @@ Add-To-Path "D:\Tools\node-14"
 
 Set-PSDebug -Trace 1
 
+npm config set cache 'E:\npm\cache'
 npm config set color always
 npm config set editor code
 npm config set git-tag-version true
 npm config set msvs_version 2019
+npm config set prefix 'E:\npm\global'
 npm config set progress true
 npm config set python python2.7
 npm config set shell bash
-npm config set prefix 'E:\npm\global'
-npm config set cache 'E:\npm\cache'
 
-yarn config set global-folder 'E:\yarn\global'
+yarn config set prefix 'E:\yarn\bin'
 yarn config set cache-folder 'E:\yarn\cache'
+yarn config set global-folder 'E:\yarn\global'
 
 git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 git config --global core.autocrlf false
