@@ -13,7 +13,7 @@ GitHub.cli
 Glarysoft.GlaryUtilities
 gnupg.Gpg4win
 GnuWin32.Zip
-Google.ChromeDev
+Google.Chrome
 Greenshot.Greenshot
 Heroku.HerokuCLI
 Inkscape.Inkscape
@@ -27,16 +27,13 @@ Microsoft.Teams
 Microsoft.VisualStudio.BuildTools
 Microsoft.VisualStudioCode
 Microsoft.WindowsTerminal
-MongoDB Database Tools
-MongoDB Server
-MongoDB Shell
+MongoDB.DatabaseTools
+MongoDB.Shell
 Mozilla.FirefoxDeveloperEdition
 NickeManarin.ScreenToGif
 Notepad++.Notepad++
 OpenJS.NodeJSLTS
 PDFsam.PDFsam
-PostgreSQL.pgAdmin
-PostgreSQL.PostgreSQL
 Postman.Postman
 PuTTY.PuTTY
 Python.Python.2

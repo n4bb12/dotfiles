@@ -15,9 +15,13 @@ function Add-To-Path {
   }
 }
 
-Add-To-Path "C:\Program Files\PostgreSQL\13\bin"
 Add-To-Path "C:\Program Files (x86)\Yarn\bin"
 Add-To-Path "C:\Program Files\Git\bin"
+Add-To-Path "C:\Program Files\Google\Chrome\Application"
+Add-To-Path "C:\Program Files\MongoDB\CLI\bin"
+Add-To-Path "C:\Program Files\MongoDB\Shell\bin"
+Add-To-Path "C:\Program Files\MongoDB\Tools\100\bin"
+Add-To-Path "C:\Program Files\PostgreSQL\13\bin"
 Add-To-Path "D:\Tools\node-14"
 
 Set-PSDebug -Trace 1
@@ -25,10 +29,15 @@ Set-PSDebug -Trace 1
 npm config set color always
 npm config set editor code
 npm config set git-tag-version true
-npm config set python python2.7
 npm config set msvs_version 2019
 npm config set progress true
+npm config set python python2.7
 npm config set shell bash
+npm config set prefix 'E:\npm\global'
+npm config set cache 'E:\npm\cache'
+
+yarn config set global-folder 'E:\yarn\global'
+yarn config set cache-folder 'E:\yarn\cache'
 
 git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 git config --global core.autocrlf false
