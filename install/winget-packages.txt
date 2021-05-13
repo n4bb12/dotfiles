@@ -38,6 +38,7 @@ PDFsam.PDFsam
 Postman.Postman
 PuTTY.PuTTY
 Python.Python.2
+ScooterSoftware.BeyondCompare4
 SlackTechnologies.Slack
 StefanMalzner.Franz
 TimKosse.FileZillaClient
