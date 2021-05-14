@@ -23,6 +23,7 @@ export async function generateWebRefs() {
     tsconfig: "browser 'https://www.typescriptlang.org/docs/handbook/compiler-options.html'",
     tslint: "browser 'https://palantir.github.io/tslint/rules'",
     yarn: "browser 'https://yarnpkg.com/en/docs/cli'",
+    pnpm: "browser 'https://pnpm.io'",
 
     ng: "ref angular",
     pkg: "ref package",

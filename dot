@@ -44,7 +44,7 @@ function update() {
 
   run cd "$ROOT/dist"
   run source bash.sh
-  run yarn upgrade --latest
+  run pnpm update --latest
 }
 
 function install() {
@@ -62,7 +62,7 @@ function install() {
 # parameters to the function. If no such function exists, display usage info.
 #
 if [ -n "$1" ] && type $1 | grep -i function > /dev/null; then
-  yarn
+  pnpm i
   command="$1"
   shift
   $command ${@}
