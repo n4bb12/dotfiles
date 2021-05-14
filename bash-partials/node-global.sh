@@ -9,9 +9,9 @@ require-env-var DOT_ROOT
 install-node-package() {
   module="$1"
   cd "$DOT_ROOT"
-  which yarn
+  which pnpm
   (
-    yarn add "$module"
+    pnpm i "$module"
   )
 }
 

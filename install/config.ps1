@@ -10,6 +10,7 @@ function Add-To-Path {
     Write-Host "$PathToAdd already exists in Path"
   } else {
     $NewPath = "$OldPath;$PathToAdd"
+    $env:Path = "$NewPath"
     [Environment]::SetEnvironmentVariable("Path", "$NewPath", "Machine")
     Write-Host "$PathToAdd added to Path"
   }
@@ -23,6 +24,8 @@ Add-To-Path "C:\Program Files\MongoDB\Shell\bin"
 Add-To-Path "C:\Program Files\MongoDB\Tools\100\bin"
 Add-To-Path "C:\Program Files\PostgreSQL\13\bin"
 Add-To-Path "D:\Tools\node-14"
+Add-To-Path "E:\npm\global"
+Add-To-Path "E:\yarn\bin"
 
 Set-PSDebug -Trace 1
 
@@ -36,9 +39,14 @@ npm config set progress true
 npm config set python python2.7
 npm config set shell bash
 
-yarn config set prefix 'E:\yarn\bin'
+yarn config set prefix 'E:\yarn'
 yarn config set cache-folder 'E:\yarn\cache'
 yarn config set global-folder 'E:\yarn\global'
+
+npm i -g pnpm
+pnpm config set prefix 'D:\pnpm'
+pnpm config set store-dir 'D:\pnpm\cache'
+pnpm config set global-dir 'D:\pnpm\global'
 
 git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 git config --global core.autocrlf false

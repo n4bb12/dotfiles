@@ -21,6 +21,8 @@ whoami() {
     npm whoami "$@"
   elif [ "$account" == yarn ]; then
     yarn login "$@"
+  elif [ "$account" == pnpm ]; then
+    pnpm login "$@"
   elif [ "$account" == heroku ]; then
     heroku auth:whoami "$@"
   elif [ "$account" == salesforce ] || [ "$account" == sf ] || [ "$account" == sfdx ]; then

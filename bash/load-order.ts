@@ -29,8 +29,8 @@ export const partials = [
   "node-aliases",
   "nodemon",
   "npm-name-available",
+  "npm",
   "open",
-  "pnpm",
   "release-it",
   "sort-package-json",
   "ssh-agent",
@@ -38,7 +38,6 @@ export const partials = [
   "tunnel",
   "typescript",
   "words",
-  "yarn",
 
   // --> browser
   "web-google",
