@@ -52,6 +52,8 @@ git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(ye
 git config --global core.autocrlf false
 git config --global core.editor 'code --wait'
 git config --global core.eol lf
+git config --global core.excludesfile ~/.gitignore
+git config --global core.attributesFile ~/.gitattributes
 git config --global core.ignorecase false
 git config --global diff.tool 'code'
 git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'
