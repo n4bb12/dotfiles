@@ -8,7 +8,7 @@ I install these apps manually:
 - [Elgato Wave Link](https://www.elgato.com/en/downloads)
 - [EXIF Date Changer](https://www.relliksoftware.com/exifdatechanger/)
 - [GnuWin Packages](http://gnuwin32.sourceforge.net/packages.html)
-- [Make](http://gnuwin32.sourceforge.net/packages/make.htm)
+- [MicroSIP](https://www.microsip.org/downloads)
 - [O&O ShutUp10](https://www.oo-software.com/de/shutup10)
 - [OBS Studio](https://obsproject.com/de/download)
 - [OBS VirtualCam](https://github.com/CatxFish/obs-virtual-cam/releases)

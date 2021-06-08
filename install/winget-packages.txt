@@ -6,7 +6,6 @@ Amazon.AWSCLI
 Apache.OpenOffice
 ArtifexSoftware.GhostScript
 Atlassian.Sourcetree
-BelledonneCommunications.Linphone
 Docker.DockerDesktop
 elgato.wavelink
 Figma.fonthelper
