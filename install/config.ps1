@@ -30,6 +30,23 @@ Add-To-Path "E:\yarn\bin"
 
 Set-PSDebug -Trace 1
 
+git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
+git config --global color.ui auto
+git config --global core.attributesFile ~/.gitattributes
+git config --global core.autocrlf false
+git config --global core.editor 'code --wait'
+git config --global core.eol lf
+git config --global core.excludesfile ~/.gitignore
+git config --global core.ignorecase false
+git config --global diff.tool 'code'
+git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'
+git config --global fetch.prune true
+git config --global log.date iso
+git config --global pull.rebase true
+git config --global push.default current
+git config --global push.followTags true
+git config --global rebase.autosquash true
+
 npm config set cache 'E:\npm\cache'
 npm config set color always
 npm config set editor code
@@ -48,23 +65,6 @@ npm i -g pnpm
 pnpm config set prefix 'D:\pnpm'
 pnpm config set store-dir 'D:\pnpm\cache'
 pnpm config set global-dir 'D:\pnpm\global'
-
-git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
-git config --global color.ui auto
-git config --global core.attributesFile ~/.gitattributes
-git config --global core.autocrlf false
-git config --global core.editor 'code --wait'
-git config --global core.eol lf
-git config --global core.excludesfile ~/.gitignore
-git config --global core.ignorecase false
-git config --global diff.tool 'code'
-git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'
-git config --global fetch.prune true
-git config --global log.date iso
-git config --global pull.rebase true
-git config --global push.default current
-git config --global push.followTags true
-git config --global rebase.autosquash true
 
 Set-PSDebug -Trace 0
 
