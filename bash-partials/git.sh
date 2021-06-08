@@ -89,6 +89,10 @@ git-rebase-interactive() {
   fi
 }
 
+git-redate() {
+  LC_ALL=C GIT_COMMITTER_DATE="$(date)" git commit --amend --no-edit --reset-author --date "$(date)"
+}
+
 git-pending() {
   echo "rebase"
 }
