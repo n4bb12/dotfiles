@@ -10,7 +10,9 @@ export const partials = [
   "env",
 
   // --> env
+  "cleanup",
   "git",
+  "login",
   "node-global",
   "whoami",
 
