@@ -16,6 +16,7 @@ function Add-To-Path {
   }
 }
 
+Add-To-Path "C:\Users\Abraham\AppData\Local\Microsoft\WindowsApps"
 Add-To-Path "C:\Program Files (x86)\Yarn\bin"
 Add-To-Path "C:\Program Files\Git\bin"
 Add-To-Path "C:\Program Files\Google\Chrome\Application"
