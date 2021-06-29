@@ -2,14 +2,14 @@
 
 source "~/env.sh"
 
-export LANG="de_DE.UTF-8"
-export LC_COLLATE="de_DE.UTF-8"
-export LC_CTYPE="de_DE.UTF-8"
-export LC_MESSAGES="de_DE.UTF-8"
-export LC_MONETARY="de_DE.UTF-8"
-export LC_NUMERIC="de_DE.UTF-8"
-export LC_TIME="de_DE.UTF-8"
-export LC_ALL="de_DE.UTF-8"
+export LANG="en_US.UTF-8"
+export LC_COLLATE="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_MESSAGES="en_US.UTF-8"
+export LC_MONETARY="en_US.UTF-8"
+export LC_NUMERIC="en_US.UTF-8"
+export LC_TIME="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 
 export TERM=cygwin
 
