@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 set -ex
 
-brew install node
-
 brew tap homebrew/cask-fonts
 
-brew install --cask 1password
-brew install --cask font-fira-code
-brew install --cask franz
-brew install --cask google-chrome
-brew install --cask slack
-brew install --cask sourcetree
-brew install --cask visual-studio-code
+function brew-install() {
+  brew list "$1" || brew install "$1"
+}
+
+brew-install node
+
+function brew-install-cask() {
+  brew list "$1" || brew install --cask "$1"
+}
+
+brew-install-cask 1password
+brew-install-cask font-fira-code
+brew-install-cask franz
+brew-install-cask google-chrome
+brew-install-cask slack
+brew-install-cask sourcetree
+brew-install-cask unlox
+brew-install-cask visual-studio-code
