@@ -4,5 +4,5 @@ ideas/
 node_modules/
 
 dist/*
-!dist/pnpm-lock.yaml
+!dist/yarn.lock
 !dist/package.json

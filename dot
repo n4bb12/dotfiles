@@ -28,7 +28,7 @@ function build() {
   run mkdir -p build/bash
   run mkdir -p build/bash-partials
 
-  run pnpm tsc -p tsconfig.json
+  run yarn tsc -p tsconfig.json
   run node build/bash/generate.js
   run cp build/bash/index.sh dist/bash.sh
 
@@ -38,7 +38,7 @@ function build() {
   fi
 
   pushd dist
-  pnpm install
+  run yarn
   popd
 }
 
@@ -46,7 +46,7 @@ function update() {
   build
 
   pushd dist
-  run pnpm update --latest
+  run yarn upgrade --latest
   popd
 }
 
@@ -59,7 +59,7 @@ function update() {
 # parameters to the function. If no such function exists, display usage info.
 #
 if [ -n "$1" ] && type $1 | grep -i function > /dev/null; then
-  pnpm i
+  run yarn
   command="$1"
   shift
   $command ${@}
