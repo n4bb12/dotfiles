@@ -47,12 +47,6 @@ function update() {
   run pnpm update --latest
 }
 
-function install() {
-  run rm -rf dist
-
-  update
-}
-
 #
 # CLI
 ##################################################
