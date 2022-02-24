@@ -10,7 +10,7 @@ const writeFile = promisify(fs.writeFile)
 export async function generateEntry() {
   const contents = await Promise.all(partials.map(readPartial))
   const combined = combine(contents)
-  const outFile = util.cwd("build/bash/index.sh")
+  const outFile = util.cwd("build/src/index.sh")
 
   return writeFile(outFile, combined, "utf8")
 }

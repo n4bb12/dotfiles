@@ -25,12 +25,12 @@ function build() {
   run rm -rf build
 
   run mkdir -p dist
-  run mkdir -p build/bash
+  run mkdir -p build/src
   run mkdir -p build/bash-partials
 
   run yarn tsc -p tsconfig.json
-  run node build/bash/generate.js
-  run cp build/bash/index.sh dist/bash.sh
+  run node build/src/generate.js
+  run cp build/src/index.sh dist/bash.sh
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
