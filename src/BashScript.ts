@@ -1,5 +1,4 @@
 export class BashScript {
-  readonly dirname = '$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)'
   readonly shebang = "#!/usr/bin/env bash"
 
   private readonly lines: string[] = []
