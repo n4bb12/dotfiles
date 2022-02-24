@@ -6,9 +6,7 @@ set -e
 # Helpers
 ##################################################
 
-
-DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/$(basename ${BASH_SOURCE[0]})
-export PATH="$PATH:$DIR/node_modules/.bin"
+export PATH="$DIR/node_modules/.bin:$PATH"
 
 source bash-partials/colors.sh
 source bash-partials/env.sh
@@ -30,23 +28,26 @@ function build() {
   run mkdir -p build/bash
   run mkdir -p build/bash-partials
 
-  run tsc -p tsconfig.json
+  run pnpm tsc -p tsconfig.json
   run node build/bash/generate.js
-
   run cp build/bash/index.sh dist/bash.sh
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
     echo '{"name":"dotfiles","version":"1.0.0","private":true}' > dist/package.json
   fi
+
+  pushd dist
+  pnpm install
+  popd
 }
 
 function update() {
   build
 
-  run cd "$DIR/dist"
-  run source bash.sh
+  pushd dist
   run pnpm update --latest
+  popd
 }
 
 #
