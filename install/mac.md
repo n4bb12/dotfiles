@@ -4,3 +4,4 @@
 - [Enable option key as meta key](https://stackoverflow.com/questions/327664/mac-os-x-terminal-map-optiondelete-to-backward-delete-word)
 - [Use Multiple Monitors](https://www.howtogeek.com/443460/how-to-use-multiple-monitors-on-your-mac/)
 - [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+- [Install Homebrew](https://brew.sh/index_de)
