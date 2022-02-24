@@ -31,33 +31,17 @@ Add-To-Path 'D:\Tools\pnpm\global'
 
 Set-PSDebug -Trace 1
 
-git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
-git config --global color.ui auto
-git config --global core.attributesFile ~/.gitattributes
-git config --global core.autocrlf false
-git config --global core.editor 'code --wait'
-git config --global core.eol lf
-git config --global core.excludesfile ~/.gitignore
-git config --global core.ignorecase false
-git config --global diff.tool 'code'
-git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'
-git config --global fetch.prune true
-git config --global log.date iso
-git config --global pull.rebase true
-git config --global push.default current
-git config --global push.followTags true
-git config --global rebase.autosquash true
-
-npm config set cache 'D:\Tools\npm\cache'
 npm config set color always
 npm config set editor code
 npm config set git-tag-version true
-npm config set msvs_version 2019
-npm config set prefix 'D:\Tools\npm\global'
 npm config set progress true
 npm config set python python2.7
 npm config set shell bash
+npm config set msvs_version 2019
+npm config set prefix 'D:\Tools\npm\global'
+npm config set cache 'D:\Tools\npm\cache'
 
+npm i -g yarn
 yarn config set prefix 'D:\Tools\yarn'
 yarn config set cache-folder 'D:\Tools\yarn\cache'
 yarn config set global-folder 'D:\Tools\yarn\global'
