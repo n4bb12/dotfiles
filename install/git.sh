@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 set -ex
 
 git config --global --unset-all user.email || true
@@ -20,3 +21,5 @@ git config --global push.default current
 git config --global push.followTags true
 git config --global rebase.autosquash true
 git config --global user.name "Abraham Schilling"
+
+cp "$DIR/../config/git/.gitattributes" ~/
