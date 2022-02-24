@@ -12,13 +12,8 @@ export LC_TIME="en_US.UTF-8"
 
 export DOT_ROOT="$DIR"
 export PATH="$DIR/node_modules/.bin:$PATH"
-export SHELL_PROFILE="~/.shell_profile"
-
-function reload() {
-  previous_pwd=$(pwd)
-  source "$SHELL_PROFILE"
-  cd "$previous_pwd"
-}
+export USER_ENV="~/.env"
+export USER_ALIASES="~/.aliases"
 
 function scaffold() {
   if [[ -f "$1" ]]; then
@@ -30,10 +25,9 @@ function scaffold() {
   fi
 }
 
-scaffold "~/.env"
-scaffold "~/.aliases"
-scaffold "$SHELL_PROFILE"
+scaffold "$USER_ENV"
+scaffold "$USER_ALIASES"
 
-alias .env="code ~/env.sh"
-alias .aliases="code ~/aliases.sh"
-alias .profile="code $SHELL_PROFILE"
+alias .env='code $USER_ENV'
+alias .aliases='code $USER_ALIASES'
+alias .profile='code $SHELL_PROFILE'
