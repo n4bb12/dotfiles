@@ -15,6 +15,5 @@ login() {
       ;;
   esac
 
-  git config user.name
-  git config user.email
+  echo "$(git config user.name) <$(git config user.email)>"
 }
