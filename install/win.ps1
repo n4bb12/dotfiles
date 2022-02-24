@@ -29,29 +29,8 @@ Add-To-Path "D:\Tools\npm\global"
 Add-To-Path "D:\Tools\yarn\bin"
 Add-To-Path 'D:\Tools\pnpm\global'
 
-Set-PSDebug -Trace 1
-
-npm config set color always
-npm config set editor code
-npm config set git-tag-version true
-npm config set progress true
-npm config set python python2.7
-npm config set shell bash
-npm config set msvs_version 2019
-npm config set prefix 'D:\Tools\npm\global'
-npm config set cache 'D:\Tools\npm\cache'
-
-npm i -g yarn
-yarn config set prefix 'D:\Tools\yarn'
-yarn config set cache-folder 'D:\Tools\yarn\cache'
-yarn config set global-folder 'D:\Tools\yarn\global'
-
-npm i -g pnpm
-pnpm config set prefix 'D:\Tools\pnpm'
-pnpm config set store-dir 'D:\Tools\pnpm\cache'
-pnpm config set global-dir 'D:\Tools\pnpm\global'
-
-Set-PSDebug -Trace 0
+bash install/git.sh
+bash install/npm-windows.sh
 
 Write-Host "All apps were successfully configured."
 Read-Host -Prompt "Press any key to continue"
