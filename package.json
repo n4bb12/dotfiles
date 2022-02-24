@@ -22,7 +22,6 @@
   ],
   "scripts": {
     "build": "bash dot build",
-    "dot": "bash dot",
     "format": "prettier --write .",
     "update": "bash dot update"
   },
