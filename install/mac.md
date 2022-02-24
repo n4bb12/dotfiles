@@ -1,4 +1,5 @@
 - [Switching Input Language](https://www.netiq.com/documentation/advanced-authentication-63/server-user-guide/data/swtchng_kybrd_lng_mac.html)
+- [Fix Login Input Language](https://apple.stackexchange.com/questions/108144/mavericks-input-source-is-set-to-us-keyboard-in-login-screen)
 - [Prevent From Sleeping When Lid Is Closed](https://www.technadu.com/prevent-macbook-from-sleeping-when-lid-is-closed/248199/)
 - [Remapping Command & Option Keys](https://osxdaily.com/2018/01/31/use-windows-pc-keyboard-mac-remap-option-command-keys/)
 - [Use Multiple Monitors](https://www.howtogeek.com/443460/how-to-use-multiple-monitors-on-your-mac/)
