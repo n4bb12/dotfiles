@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/$(basename ${BASH_SOURCE[0]})
+DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -25,7 +25,7 @@ function scaffold() {
     source "$1"
   else
     echo '#!/usr/bin/env bash' > "$1"
-    echo 'DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/$(basename ${BASH_SOURCE[0]})' >> "$1"
+    echo 'DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)' >> "$1"
     echo 'set -e' >> "$1"
   fi
 }
