@@ -26,12 +26,15 @@
 git clone https://github.com/n4bb12/dotfiles.git
 cd dotfiles
 
-# Comment out the parts you don't need
-code bash/load-order.ts
-code install/index.ts
+# Run install script for mac/win
+bash install/mac.sh
+bash install/win.sh
 
-# Install
+# Build bash utils
 bash dot build
+
+# Source bash utils in your shell profile
+source ~/git/n4bb12/dotfiles/dist/bash.sh
 ```
 
 #### Load
