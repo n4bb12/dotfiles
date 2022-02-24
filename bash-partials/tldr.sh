@@ -12,7 +12,5 @@
 
 require-node-package 'tldr'
 
-alias            ?='tldr'
 alias          man='tldr'
-alias         how2='tldr'
 alias        howto='tldr'
