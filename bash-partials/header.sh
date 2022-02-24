@@ -12,8 +12,8 @@ export LC_TIME="en_US.UTF-8"
 
 export DOT_ROOT="$DIR"
 export PATH="$DIR/node_modules/.bin:$PATH"
-export USER_ENV="~/.env"
-export USER_ALIASES="~/.aliases"
+export USER_ENV="$HOME/.env"
+export USER_ALIASES="$HOME/.aliases"
 
 function scaffold() {
   if [[ -f "$1" ]]; then
