@@ -20,9 +20,9 @@ async function readScript(file: string) {
   return text
     .replace(/[\r\n]+/, "\n")
     .split("\n")
-    .filter(line => line.trim())
-    .map(line => line.replace(/alias\s+/, "alias "))
-    .filter(line => !line.startsWith("#"))
+    .filter((line) => line.trim())
+    .map((line) => line.replace(/alias\s+/, "alias "))
+    .filter((line) => !line.startsWith("#"))
     .join("\n")
 }
 
@@ -34,7 +34,7 @@ function combine(contents: string[]): string {
 
   const lines = contents.join("\n").split("\n")
 
-  const remaining = lines.filter(line => {
+  const remaining = lines.filter((line) => {
     return (
       true &&
       !isOnelineFunction.test(line) &&
@@ -44,13 +44,13 @@ function combine(contents: string[]): string {
     )
   })
 
-  const onelineFunctions = lines.filter(line => isOnelineFunction.test(line))
+  const onelineFunctions = lines.filter((line) => isOnelineFunction.test(line))
 
-  const aliases = lines.filter(line => isAlias.test(line))
+  const aliases = lines.filter((line) => isAlias.test(line))
 
-  const binaryRequirements = lines.filter(line => isBinaryRequirement.test(line))
+  const binaryRequirements = lines.filter((line) => isBinaryRequirement.test(line))
 
-  const yarnRequirements = lines.filter(line => isYarnRequirement.test(line))
+  const yarnRequirements = lines.filter((line) => isYarnRequirement.test(line))
 
   return [
     ...remaining,

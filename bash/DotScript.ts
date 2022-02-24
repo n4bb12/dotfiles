@@ -11,7 +11,7 @@ export class DotScript extends BashScript {
     this.add(`function ${name}() { browser '${url}' "$@"; }`)
     return {
       alias: (...others: string[]) => {
-        others.forEach(other => this.alias(other, name))
+        others.forEach((other) => this.alias(other, name))
       },
     }
   }

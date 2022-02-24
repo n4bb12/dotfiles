@@ -11,7 +11,7 @@ export async function generateNodeAliases() {
   const sh = new DotScript()
   sh.section("Node Aliases")
 
-  fileNames.forEach(name => {
+  fileNames.forEach((name) => {
     sh.alias(name, `node "$DOT_ROOT/node/${name}.js"`)
   })
 

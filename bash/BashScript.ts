@@ -27,7 +27,7 @@ export class BashScript {
   section = (...lines: string[]) => {
     this.add(`#`)
     this.add(`#`)
-    lines.forEach(line => this.add(`#   ${line}`))
+    lines.forEach((line) => this.add(`#   ${line}`))
     this.add(`#`)
     this.add(`# ==========================================================`)
   }
@@ -39,7 +39,7 @@ export class BashScript {
 
   function = (name: string, lines: string[]) => {
     this.add(`function ${name}() {`)
-    lines.forEach(line => this.add(`  ${line}`))
+    lines.forEach((line) => this.add(`  ${line}`))
     this.add(`}`)
   }
 
@@ -52,7 +52,7 @@ export class BashScript {
     this.add("")
     this.add("  if false; then echo false")
 
-    Object.keys(mapping).forEach(key => {
+    Object.keys(mapping).forEach((key) => {
       this.add(`  elif [ "$command" == "${key}" ]; then`)
       this.add(`    ${mapping[key]} "$rest"`)
     })
