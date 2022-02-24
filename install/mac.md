@@ -1,0 +1,4 @@
+- [Switching Input Language](https://www.netiq.com/documentation/advanced-authentication-63/server-user-guide/data/swtchng_kybrd_lng_mac.html)
+- https://www.technadu.com/prevent-macbook-from-sleeping-when-lid-is-closed/248199/
+- https://www.howtogeek.com/443460/how-to-use-multiple-monitors-on-your-mac/
+- https://www.intowindows.com/how-to-enable-ctrlc-ctrlv-keyboard-shortcuts-on-mac/
