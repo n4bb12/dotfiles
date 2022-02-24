@@ -12,7 +12,7 @@ source bash-partials/colors.sh
 source bash-partials/env.sh
 
 function run() {
-  echo "$@"
+  echo "[dot] $@"
   "$@"
 }
 
@@ -64,5 +64,5 @@ if [ -n "$1" ] && type $1 | grep -i function > /dev/null; then
   shift
   $command ${@}
 else
-  fail "No such command: $1"
+  fail "[dot] No such command: $1"
 fi
