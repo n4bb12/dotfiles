@@ -1,7 +1,6 @@
 - [Switching Input Language](https://www.netiq.com/documentation/advanced-authentication-63/server-user-guide/data/swtchng_kybrd_lng_mac.html)
 - [Prevent From Sleeping When Lid Is Closed](https://www.technadu.com/prevent-macbook-from-sleeping-when-lid-is-closed/248199/)
-- [Swap Command and Control keys](https://karabiner-elements.pqrs.org/)
-- [Enable option key as meta key](https://stackoverflow.com/questions/327664/mac-os-x-terminal-map-optiondelete-to-backward-delete-word)
+- [Remapping Command & Option Keys](https://osxdaily.com/2018/01/31/use-windows-pc-keyboard-mac-remap-option-command-keys/)
 - [Use Multiple Monitors](https://www.howtogeek.com/443460/how-to-use-multiple-monitors-on-your-mac/)
 - [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 - [Install Homebrew](https://brew.sh/index_de)
