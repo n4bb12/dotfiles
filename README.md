@@ -31,7 +31,7 @@ code bash/load-order.ts
 code install/index.ts
 
 # Install
-./dot install
+bash dot build
 ```
 
 #### Load
