@@ -17,12 +17,12 @@ magenta="\e[35m"
   reset="\e[39m"
 
 fail() {
-  echo -e "${red}${@}${reset}"
+  printf "${red}${@}${reset}\n"
   return 1
 }
 
 warn() {
-  echo -e "${yellow}${@}${reset}"
+  printf "${yellow}${@}${reset}\n"
 }
 
 alias           cl='clear'
