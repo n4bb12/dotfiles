@@ -1,5 +1,5 @@
 require-env-var() {
-  if [[ ! -v "$1" ]]; then
+  if [[ -z "$1" ]]; then
     fail "Environment variable '$1' not found"
     return 1
   fi
