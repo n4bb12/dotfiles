@@ -7,14 +7,15 @@ login() {
   case $1 in
     foobar)
       git config user.email "abraham@foobar.agency"
-      git config user.name "Abraham Schilling"
+      ;;
+    senacor)
+      git config user.email "abraham.schilling@senacor.com"
       ;;
     *)
       git config user.email "AbrahamSchilling@gmail.com"
-      git config user.name "Abraham Schilling"
       ;;
   esac
 
-  git config user.name
+  git config user.name "Abraham Schilling"
   git config user.email
 }
