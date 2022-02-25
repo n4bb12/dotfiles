@@ -32,6 +32,8 @@ function build() {
   run node build/src/generate.js
   run cp build/src/index.sh dist/bash.sh
 
+  run rm -rf build
+
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
     echo '{"name":"dotfiles","version":"1.0.0","private":true}' > dist/package.json
