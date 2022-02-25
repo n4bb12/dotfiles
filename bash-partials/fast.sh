@@ -5,7 +5,7 @@
 #
 # ================================================
 
-require-node-package 'fast-cli'
+require-node-module 'fast-cli'
 
 alias        speed='fast-cli --upload'
 alias       updown='fast-cli --upload'

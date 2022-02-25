@@ -10,7 +10,7 @@
 #
 # ================================================
 
-require-node-package 'tldr'
+require-node-module 'tldr'
 
 alias          man='tldr'
 alias        howto='tldr'

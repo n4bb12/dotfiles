@@ -6,7 +6,7 @@
 
 require-env-var DOT_ROOT
 
-install-node-package() {
+install-node-module() {
   module="$1"
   cd "$DOT_ROOT"
   which yarn
@@ -15,7 +15,7 @@ install-node-package() {
   )
 }
 
-require-node-package() {
+require-node-module() {
   module="$1"
   if [ ! -d "${DOT_ROOT}/node_modules/${module}" ]; then
     warn "$module not found, installing..."

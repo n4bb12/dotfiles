@@ -1,4 +1,4 @@
-require-node-package 'typescript'
-require-node-package '@types/node'
-require-node-package 'ts-node'
-require-node-package 'eslint'
+require-node-module 'typescript'
+require-node-module '@types/node'
+require-node-module 'ts-node'
+require-node-module 'eslint'

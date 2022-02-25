@@ -16,8 +16,8 @@
 #
 # ==========================================================
 
-require-node-package 'all-the-package-names'
-require-node-package 'available'
+require-node-module 'all-the-package-names'
+require-node-module 'available'
 
 npm-name() {
   all-the-package-names | grep -E "^${1}$" > /dev/null

@@ -30,7 +30,7 @@ function combine(contents: string[]): string {
   const isOnelineFunction = /^[\w-_]+\(\)\s+{.*?}$/
   const isAlias = /^alias /
   const isBinaryRequirement = /^require-binary[^()]+$/
-  const isYarnRequirement = /^require-node-package[^()]+$/
+  const isYarnRequirement = /^require-node-module[^()]+$/
 
   const lines = contents.join("\n").split("\n")
 

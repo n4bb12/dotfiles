@@ -5,4 +5,4 @@
 #
 # ================================================
 
-require-node-package 'release-it'
+require-node-module 'release-it'

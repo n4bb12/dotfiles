@@ -5,4 +5,4 @@
 #
 # ================================================
 
-require-node-package '@marp-team/marp-cli'
+require-node-module '@marp-team/marp-cli'
