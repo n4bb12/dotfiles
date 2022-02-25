@@ -21,5 +21,3 @@ git config --global push.default current
 git config --global push.followTags true
 git config --global rebase.autosquash true
 git config --global user.name "Abraham Schilling"
-
-cp "$DIR/../config/git/.gitattributes" ~/

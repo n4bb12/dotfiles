@@ -11,7 +11,11 @@ source "$DIR/brew.sh"
 # Show hidden files
 defaults write com.apple.Finder AppleShowAllFiles true
 
-# Set sign-in keyboard profile to 'German - Standard'
+# Copy home files
+cp ${DIR}/../config/home ~/
+cp ${DIR}/../config/shell/.zprofile ~/
+
+# Restore preferences
 for home in /Users/*/; do
-  sudo cp -R ${DIR}/../config/Library/* ${home}Library/
+  sudo cp -R ${DIR}/../config/Library/Preferences/* ${home}Library/Preferences/
 done
