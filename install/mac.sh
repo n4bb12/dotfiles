@@ -12,8 +12,8 @@ source "$DIR/brew.sh"
 defaults write com.apple.Finder AppleShowAllFiles true
 
 # Copy home files
-cp ${DIR}/../config/home ~/
-cp ${DIR}/../config/shell/.zprofile ~/
+cp -R ${DIR}/../config/home ~/
+cp    ${DIR}/../config/shell/.zprofile ~/
 
 # Restore preferences
 for home in /Users/*/; do
