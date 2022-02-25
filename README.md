@@ -35,6 +35,8 @@ bash dot build
 
 # Source bash utils in your shell profile
 # See config/shell for example files
+# Example:
+cp ~/git/n4bb12/dotfiles/config/shell/.zprofile ~/.zprofile
 ```
 
 #### Load
