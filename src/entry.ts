@@ -22,7 +22,7 @@ async function readScript(file: string) {
     .split("\n")
     .filter((line) => line.trim())
     .map((line) => line.replace(/alias\s+/, "alias "))
-    .filter((line) => !line.startsWith("#"))
+    .filter((line) => !line.startsWith("# "))
     .join("\n")
 }
 
