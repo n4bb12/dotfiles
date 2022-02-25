@@ -12,7 +12,7 @@ export async function generateNodeAliases() {
   sh.section("Node Aliases")
 
   fileNames.forEach((name) => {
-    sh.alias(name, `node "$DOT_ROOT/node/${name}.js"`)
+    sh.alias(name, `node "$DOT_REPO/dist/node/${name}.js"`)
   })
 
   return sh.outputTo(__filename)
