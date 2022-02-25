@@ -1,12 +1,29 @@
 #!/usr/bin/env bash
 set -ex
 
+brew update
+brew upgrade
+
 brew tap homebrew/cask-fonts
 
 function brew-install() {
   brew list "$1" || brew install "$1"
 }
 
+brew install bash
+brew install bash-completion@2
+brew install coreutils
+brew install findutils
+brew install git
+brew install git-lfs
+brew install gmp
+brew install gnu-sed
+brew install gnupg
+brew install grep
+brew install moreutils
+brew install openssh
+brew install screen
+brew install wget
 brew-install node
 
 function brew-install-cask() {
@@ -23,3 +40,5 @@ brew-install-cask sourcetree
 brew-install-cask timeular
 brew-install-cask unlox
 brew-install-cask visual-studio-code
+
+brew cleanup
