@@ -15,7 +15,7 @@ require-node-package 'change-case'
 change-case() {
   input=$(cat -)
   module="$1"-case
-  node-global -p "require(\"${module}\")(\"${input}\")"
+  node -p "require(\"${module}\")(\"${input}\")"
 }
 
 alias           no='change-case no'
