@@ -1,8 +1,10 @@
-set -o magicequalsubst
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export SHELL_PROFILE=~/.zprofile
 export GIT_HOME=~/git
-export DOT_REPO=$GIT_HOME/n4bb12/dotfiles
+export DOT_REPO="$GIT_HOME/n4bb12/dotfiles"
+export PATH="$PATH:$(brew --prefix gnu-sed)/libexec/gnubin"
+export PATH="$PATH:$(brew --prefix coreutils)/libexec/gnubin"
 
 function backup-prefs() {
   for file in $(find ~/Library/Preferences -name "com.apple.*" -print); do
@@ -10,7 +12,6 @@ function backup-prefs() {
   done
 }
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
 cd $GIT_HOME
 source $DOT_REPO/dist/bash.sh
 
