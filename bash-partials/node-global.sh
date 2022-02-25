@@ -15,11 +15,6 @@ install-node-package() {
   )
 }
 
-node-global() {
-  NODE_PATH="${DOT_ROOT}/node_modules" \
-    node "$@"
-}
-
 require-node-package() {
   module="$1"
   if [ ! -d "${DOT_ROOT}/node_modules/${module}" ]; then

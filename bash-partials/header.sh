@@ -12,6 +12,7 @@ export LC_TIME="en_US.UTF-8"
 
 export DOT_ROOT="$DIR"
 export PATH="$DIR/node_modules/.bin:$PATH"
+export NODE_PATH="$DIR/node_modules:$NODE_PATH"
 export USER_ENV="$HOME/.env"
 export USER_ALIASES="$HOME/.aliases"
 
