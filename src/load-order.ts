@@ -7,9 +7,9 @@ export const partials = [
   "fs",
 
   // --> colors
-  "env",
+  "require",
 
-  // --> env
+  // --> require
   "cleanup",
   "git",
   "login",
