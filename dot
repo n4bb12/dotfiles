@@ -36,7 +36,7 @@ function build() {
 
   # preserve existing package.json
   if [ ! -f dist/package.json ]; then
-    echo '{"name":"dotfiles","version":"1.0.0","private":true}' > dist/package.json
+    echo '{"name":"dotfiles","version":"1.0.0","private":true,"license":"UNLICENSED"}' > dist/package.json
   fi
 
   pushd dist
