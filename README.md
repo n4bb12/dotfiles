@@ -34,7 +34,7 @@ bash install/win.sh
 bash dot build
 
 # Source bash utils in your shell profile
-source ~/git/n4bb12/dotfiles/dist/bash.sh
+# See config/shell for example files
 ```
 
 #### Load

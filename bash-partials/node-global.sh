@@ -4,21 +4,23 @@
 #
 # ==========================================================
 
-require-env-var DOT_ROOT
+require-env-var DOT_REPO
 
 install-node-module() {
   module="$1"
-  cd "$DOT_ROOT"
-  which yarn
   (
+    echo "$DOT_REPO/dist"
+    cd "$DOT_REPO/dist"
     yarn add "$module"
   )
 }
 
 require-node-module() {
   module="$1"
-  if [ ! -d "${DOT_ROOT}/node_modules/${module}" ]; then
+  module_path="$DOT_REPO/dist/node_modules/$module"
+
+  if [ ! -d "$module_path" ]; then
     warn "$module not found, installing..."
-    install-node-package "$module"
+    install-node-module "$module"
   fi
 }

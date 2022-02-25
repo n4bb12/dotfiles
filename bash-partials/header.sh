@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
+
+# Variables set by entry file:
+# SHELL_PROFILE
+# GIT_HOME
+# DOT_REPO
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -10,9 +14,8 @@ export LC_MONETARY="en_US.UTF-8"
 export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 
-export DOT_ROOT="$DIR"
-export PATH="$DIR/node_modules/.bin:$PATH"
-export NODE_PATH="$DIR/node_modules:$NODE_PATH"
+export PATH="$DOT_REPO/dist/node_modules/.bin:$PATH"
+export NODE_PATH="$DOT_REPO/dist/node_modules:$NODE_PATH"
 export USER_ENV="$HOME/.env"
 export USER_ALIASES="$HOME/.aliases"
 
