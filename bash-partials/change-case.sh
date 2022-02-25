@@ -10,7 +10,7 @@
 #
 # ==========================================================
 
-require-node-package 'change-case'
+require-node-module 'change-case'
 
 change-case() {
   input=$(cat -)

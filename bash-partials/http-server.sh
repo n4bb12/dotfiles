@@ -5,4 +5,4 @@
 #
 # ================================================
 
-require-node-package 'serve'
+require-node-module 'serve'

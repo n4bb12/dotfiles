@@ -9,7 +9,7 @@
 # Better install manually from
 # https://yarnpkg.com/en/docs/install
 #
-# require-node-package 'yarn'
+# require-node-module 'yarn'
 
 require-binary 'node'
 require-binary 'npm'

@@ -13,6 +13,6 @@
 #
 # ==========================================================
 
-require-node-package 'fkill-cli'
+require-node-module 'fkill-cli'
 
 alias         kill='fkill --force'

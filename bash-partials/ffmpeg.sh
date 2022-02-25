@@ -5,4 +5,4 @@
 #
 # ================================================
 
-require-node-package '@ffmpeg-installer/ffmpeg'
+require-node-module '@ffmpeg-installer/ffmpeg'

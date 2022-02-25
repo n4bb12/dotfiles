@@ -9,10 +9,10 @@
 #
 # ================================================
 
-require-node-package 'fx'
+require-node-module 'fx'
 
 # just install this for other tools that need it, we're not using it in aliases
-require-node-package 'jq'
+require-node-module 'jq'
 
 alias      scripts='cat package.json | fx .scripts'
 alias         deps='cat package.json | fx .dependencies'

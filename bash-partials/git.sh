@@ -6,8 +6,8 @@
 # ==========================================================
 
 require-binary 'git'
-require-node-package 'commitizen'
-require-node-package 'cz-conventional-changelog'
+require-node-module 'commitizen'
+require-node-module 'cz-conventional-changelog'
 
 echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 

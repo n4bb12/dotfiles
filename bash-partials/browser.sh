@@ -11,8 +11,8 @@
 #
 # ==========================================================
 
-require-node-package 'urlencode-cli'
-require-node-package 'open-cli'
+require-node-module 'urlencode-cli'
+require-node-module 'open-cli'
 
 url-encode() {
   input=$(cat -)

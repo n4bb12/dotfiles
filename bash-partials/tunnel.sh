@@ -12,6 +12,6 @@
 #
 # ================================================
 
-require-node-package 'localtunnel'
+require-node-module 'localtunnel'
 
 alias       tunnel='lt --print-requests --open --port'

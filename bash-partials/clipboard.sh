@@ -9,7 +9,7 @@
 #
 # ==========================================================
 
-require-node-package 'clipboard-cli'
+require-node-module 'clipboard-cli'
 
 alias           cb='clipboard'
 alias         clip='clipboard'

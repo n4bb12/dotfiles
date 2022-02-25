@@ -11,7 +11,7 @@
 #
 # ==========================================================
 
-require-node-package 'open-cli'
+require-node-module 'open-cli'
 
 if ! command -v open > /dev/null 2>&1; then
   alias       open='open-cli'

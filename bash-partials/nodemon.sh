@@ -5,4 +5,4 @@
 #
 # ================================================
 
-require-node-package 'nodemon'
+require-node-module 'nodemon'
