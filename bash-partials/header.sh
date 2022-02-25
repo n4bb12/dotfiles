@@ -14,17 +14,17 @@ export LC_MONETARY="en_US.UTF-8"
 export LC_NUMERIC="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 
-export PATH="$DOT_REPO/dist/node_modules/.bin:$PATH"
-export NODE_PATH="$DOT_REPO/dist/node_modules:$NODE_PATH"
+export PATH="$PATH:$DOT_REPO/dist/node_modules/.bin"
+export NODE_PATH="$NODE_PATH:$DOT_REPO/dist/node_modules"
 export USER_ENV="$HOME/.env"
 export USER_ALIASES="$HOME/.aliases"
 
 function scaffold() {
-  if [[ -f "$1" ]]; then
+  if [ -f "$1" ]; then
     source "$1"
   else
     echo '#!/usr/bin/env bash' > "$1"
-    echo 'DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)' >> "$1"
+    echo 'DIR=$(cd $(dirname $0) && pwd)' >> "$1"
     echo '' >> "$1"
   fi
 }

@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
-DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
-set -e
+DIR=$(cd $(dirname $0) && pwd)
+# set -e
+
+echo "DIR=$DIR"
 
 #
 # Helpers
 ##################################################
 
-export PATH="$DIR/node_modules/.bin:$PATH"
+export PATH="$PATH:$DIR/node_modules/.bin"
 
 source bash-partials/colors.sh
 source bash-partials/require.sh
