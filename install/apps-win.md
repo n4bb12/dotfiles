@@ -1,6 +1,6 @@
 # Apps
 
-I install these apps manually:
+On Windows install these apps manually:
 
 - [Audible](https://www.microsoft.com/de-de/p/audible-horbuch-und-horspiel-app/9wzdncrfj1cr?activetab=pivot:overviewtab)
 - [CopyQ](https://github.com/hluk/CopyQ/releases)
