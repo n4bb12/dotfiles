@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+*~
+
+# Windows
+[Dd]esktop.ini
+*.cab
+*.lnk
+*.msi
+*.msix
+*.msm
+*.msp
+$RECYCLE.BIN/
+ehthumbs_vista.db
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+
+# Shared
+*.stackdump
