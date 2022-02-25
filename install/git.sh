@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
+DIR=$(cd $(dirname $0) && pwd)
 set -ex
 
 git config --global --unset-all user.email || true

@@ -1,3 +1,5 @@
+set -o magicequalsubst
+
 export SHELL_PROFILE=~/.zprofile
 export GIT_HOME=~/git
 export DOT_REPO=$GIT_HOME/n4bb12/dotfiles
