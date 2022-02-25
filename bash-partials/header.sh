@@ -25,7 +25,7 @@ function scaffold() {
   else
     echo '#!/usr/bin/env bash' > "$1"
     echo 'DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)' >> "$1"
-    echo 'set -e' >> "$1"
+    echo '' >> "$1"
   fi
 }
 
