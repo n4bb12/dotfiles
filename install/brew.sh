@@ -14,10 +14,12 @@ function brew-install-cask() {
 }
 
 brew-install-cask 1password
+brew-install-cask docker
 brew-install-cask font-fira-code
 brew-install-cask franz
 brew-install-cask google-chrome
 brew-install-cask slack
 brew-install-cask sourcetree
+brew-install-cask timeular
 brew-install-cask unlox
 brew-install-cask visual-studio-code
