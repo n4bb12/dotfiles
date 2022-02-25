@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
+npm i -g yarn pnpm
+
 npm config delete cache
 npm config delete msvs_version
 npm config delete prefix
@@ -12,12 +14,10 @@ npm config set git-tag-version true
 npm config set progress true
 npm config set shell bash
 
-npm i -g yarn
 yarn config delete prefix
 yarn config delete cache-folder
 yarn config delete global-folder
 
-npm i -g pnpm
 pnpm config delete prefix
 pnpm config delete store-dir
 pnpm config delete global-dir
