@@ -9,7 +9,7 @@ set -e
 export PATH="$DIR/node_modules/.bin:$PATH"
 
 source bash-partials/colors.sh
-source bash-partials/env.sh
+source bash-partials/require.sh
 
 function run() {
   echo "[dot] $@"
