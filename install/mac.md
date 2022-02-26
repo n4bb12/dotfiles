@@ -4,5 +4,6 @@
 - [Remapping Command & Option Keys](https://osxdaily.com/2018/01/31/use-windows-pc-keyboard-mac-remap-option-command-keys/)
 - [Use Multiple Monitors](https://www.howtogeek.com/443460/how-to-use-multiple-monitors-on-your-mac/)
 - [Configure Dock](https://apple.stackexchange.com/questions/224236/is-there-a-way-to-prevent-apps-from-staying-in-dock-after-quitting)
+- [Enable Hibernate](https://apple.stackexchange.com/questions/51725/do-macbooks-have-a-true-hibernate-option)
 - [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 - [Install Homebrew](https://brew.sh/index_de)
