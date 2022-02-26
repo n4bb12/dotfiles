@@ -3,6 +3,7 @@
 On Windows install these apps manually:
 
 - [Audible](https://www.microsoft.com/de-de/p/audible-horbuch-und-horspiel-app/9wzdncrfj1cr?activetab=pivot:overviewtab)
+- [Bluetooth Command Line Tools](https://bluetoothinstaller.com/bluetooth-command-line-tools)
 - [CopyQ](https://github.com/hluk/CopyQ/releases)
 - [Cygwin](https://www.cygwin.com/)
 - [Elgato Wave Link](https://www.elgato.com/en/downloads)
