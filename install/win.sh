@@ -4,4 +4,3 @@ set -ex
 
 source "$DIR/git.sh"
 source "$DIR/npm-win.sh"
-source "$DIR/path-win.sh"
