@@ -23,14 +23,12 @@ function scaffold() {
   if [ -f "$1" ]; then
     source "$1"
   else
-    echo '#!/usr/bin/env bash' > "$1"
-    echo 'DIR=$(cd $(dirname $0) && pwd)' >> "$1"
-    echo '' >> "$1"
+    cp "$2" "$1"
   fi
 }
 
-scaffold "$USER_ENV"
-scaffold "$USER_ALIASES"
+scaffold "$USER_ENV"     "$DOT_REPO/config/templates/.env"
+scaffold "$USER_ALIASES" "$DOT_REPO/config/templates/.aliases"
 
 alias .env='code $USER_ENV'
 alias .aliases='code $USER_ALIASES'
