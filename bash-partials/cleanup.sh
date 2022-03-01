@@ -4,7 +4,7 @@ cleanup() {
   command="$1"
   shift
 
-  if [ "$command" == "docker" ]; then
+  if [ "$command" = "docker" ]; then
     docker system prune -a "$@"
   fi
 }

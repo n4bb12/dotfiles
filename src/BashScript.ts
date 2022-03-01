@@ -52,7 +52,7 @@ export class BashScript {
     this.add("  if false; then echo false")
 
     Object.keys(mapping).forEach((key) => {
-      this.add(`  elif [ "$command" == "${key}" ]; then`)
+      this.add(`  elif [ "$command" = "${key}" ]; then`)
       this.add(`    ${mapping[key]} "$rest"`)
     })
 

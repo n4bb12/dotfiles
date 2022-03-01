@@ -14,18 +14,18 @@ whoami() {
 
   if [ -z "$account" ]; then
     echo "$USER";
-  elif [ "$account" == git ]; then
+  elif [ "$account" = git ]; then
     git config user.name "$@"
     git config user.email "$@"
-  elif [ "$account" == npm ]; then
+  elif [ "$account" = npm ]; then
     npm whoami "$@"
-  elif [ "$account" == yarn ]; then
+  elif [ "$account" = "yarn" ]; then
     yarn login "$@"
-  elif [ "$account" == pnpm ]; then
+  elif [ "$account" = "pnpm" ]; then
     pnpm login "$@"
-  elif [ "$account" == heroku ]; then
+  elif [ "$account" = "heroku" ]; then
     heroku auth:whoami "$@"
-  elif [ "$account" == salesforce ] || [ "$account" == sf ] || [ "$account" == sfdx ]; then
+  elif [ "$account" = "salesforce" ] || [ "$account" = "sf" ] || [ "$account" = "sfdx" ]; then
     sfdx force:org:list "$@"
   else
     fail "Unknown account: $account"
