@@ -6,3 +6,4 @@ node_modules/
 dist/*
 !dist/yarn.lock
 !dist/package.json
+.DS_Store
