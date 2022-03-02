@@ -13,6 +13,7 @@ function brew-install() {
 brew-install bash
 brew-install bash-completion@2
 brew-install coreutils
+brew-install docker-compose
 brew-install findutils
 brew-install git
 brew-install git-lfs
@@ -21,10 +22,10 @@ brew-install gnu-sed
 brew-install gnupg
 brew-install grep
 brew-install moreutils
+brew-install node
 brew-install openssh
 brew-install screen
 brew-install wget
-brew-install node
 
 function brew-install-cask() {
   brew list "$1" || brew install --cask "$1"
