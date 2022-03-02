@@ -32,6 +32,7 @@ function brew-install-cask() {
   brew list "$1" || brew install --cask "$1"
 }
 
+brew install-cask iterm2
 brew-install-cask 1password
 brew-install-cask docker
 brew-install-cask font-fira-code
