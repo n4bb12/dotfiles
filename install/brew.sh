@@ -15,6 +15,7 @@ brew-install bash-completion@2
 brew-install coreutils
 brew-install docker-compose
 brew-install findutils
+brew-install gh
 brew-install git
 brew-install git-lfs
 brew-install gmp
