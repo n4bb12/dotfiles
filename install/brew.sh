@@ -25,7 +25,6 @@ brew-install grep
 brew-install moreutils
 brew-install node
 brew-install openssh
-brew-install python
 brew-install screen
 brew-install wget
 
@@ -46,5 +45,3 @@ brew-install-cask unlox
 brew-install-cask visual-studio-code
 
 brew cleanup
-
-python -m ensurepip --upgrade
