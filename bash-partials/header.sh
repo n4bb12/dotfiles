@@ -20,15 +20,16 @@ export USER_ENV="$HOME/.env"
 export USER_ALIASES="$HOME/.aliases"
 
 function scaffold() {
-  if [ -f "$1" ]; then
-    source "$1"
-  else
+  if [ ! -f "$1" ]; then
     cp "$2" "$1"
   fi
 }
 
 scaffold "$USER_ENV"     "$DOT_REPO/config/templates/.env"
 scaffold "$USER_ALIASES" "$DOT_REPO/config/templates/.aliases"
+
+source "$USER_ENV"
+source "$USER_ALIASES"
 
 alias .env='code $USER_ENV'
 alias .aliases='code $USER_ALIASES'
