@@ -15,3 +15,9 @@ function backup-prefs() {
 cd $GIT_HOME
 source $DOT_REPO/dist/bash.sh
 
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi

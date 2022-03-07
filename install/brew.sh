@@ -27,6 +27,7 @@ brew-install node
 brew-install openssh
 brew-install screen
 brew-install wget
+brew-install zsh-completions
 
 function brew-install-cask() {
   brew list "$1" || brew install --cask "$1"
@@ -45,3 +46,5 @@ brew-install-cask unlox
 brew-install-cask visual-studio-code
 
 brew cleanup
+
+compaudit | xargs chmod g-w
