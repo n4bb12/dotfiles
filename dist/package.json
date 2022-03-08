@@ -20,6 +20,7 @@
     "jq": "^1.7.2",
     "localtunnel": "^2.0.2",
     "nodemon": "^2.0.15",
+    "npm-check-updates": "^12.5.2",
     "open-cli": "^7.0.1",
     "release-it": "^14.12.4",
     "serve": "^13.0.2",
