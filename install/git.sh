@@ -16,6 +16,7 @@ git config --global diff.tool 'code'
 git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'
 git config --global fetch.prune true
 git config --global log.date iso
+git config --global pager.branch false
 git config --global pull.rebase true
 git config --global push.default current
 git config --global push.followTags true
