@@ -74,6 +74,14 @@ export const rules: Rule[] = [
     from: { modifiers: { mandatory: [key.left_command] }, key_code: key.e },
     to: { key_code: key.f7 },
   },
+  {
+    from: { modifiers: { mandatory: [key.option], optional: [key.any] }, key_code: key.tab },
+    to: { modifiers: [key.left_command], key_code: key.tab },
+  },
+  {
+    from: { modifiers: { mandatory: [key.option, key.left_shift], optional: [key.any] }, key_code: key.tab },
+    to: { modifiers: [key.left_command, key.left_shift], key_code: key.tab },
+  },
 
   // FUNCTION KEYS
 
