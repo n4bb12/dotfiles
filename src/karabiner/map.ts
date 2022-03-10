@@ -116,48 +116,6 @@ function buildForwardRules(rules: Rule[]) {
   })
 }
 
-function buildBackwardRules(rules: Rule[]) {
-  const reversedRules = rules
-    .map((rule) => {
-      const { from, to, to_if_alone, to_if_held_down, conditions } = rule
-
-      if (!to?.key_code && !to_if_alone?.key_code && !to_if_held_down?.key_code) {
-        return
-      }
-
-      const reverseTo: RuleTo = {
-        modifiers: from.modifiers?.mandatory,
-        key_code: from.key_code,
-        pointing_button: from?.pointing_button,
-      }
-
-      const reversed: Rule = {
-        ...rule,
-        from: {
-          modifiers: {
-            optional: from?.modifiers?.optional,
-            mandatory: to?.modifiers,
-          },
-          key_code: to?.key_code,
-          pointing_button: to?.pointing_button,
-          simultaneous_options: from.simultaneous_options,
-        },
-        to: to ? reverseTo : undefined,
-        to_if_alone: to_if_alone ? reverseTo : undefined,
-        to_if_held_down: to_if_held_down ? reverseTo : undefined,
-        conditions,
-      }
-      return reversed
-    })
-    .filter(Boolean) as Rule[]
-
-  return buildForwardRules(reversedRules)
-}
-
 export function buildRules(rules: Rule[]) {
-  return [
-    //
-    ...buildForwardRules(rules),
-    ...buildBackwardRules(rules),
-  ]
+  return buildForwardRules(rules)
 }

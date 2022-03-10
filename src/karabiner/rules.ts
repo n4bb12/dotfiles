@@ -12,6 +12,10 @@ export const rules: Rule[] = [
     from: { modifiers: { mandatory: [key.left_control], optional: [key.any] }, key_code: character as Key },
     to: { modifiers: [key.left_command], key_code: character as Key },
   })),
+  ...[...alphabet].map((character) => ({
+    from: { modifiers: { mandatory: [key.left_command], optional: [key.any] }, key_code: character as Key },
+    to: { modifiers: [key.left_control], key_code: character as Key },
+  })),
 
   // TEXT NAVIGATION
 
