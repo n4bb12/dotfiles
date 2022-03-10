@@ -54,14 +54,13 @@ function combine(contents: string[]): string {
 
   return [
     ...remaining,
-    "",
     ...onelineFunctions.sort(),
-    "",
     ...aliases.sort(),
-    "",
     ...binaryRequirements.sort(),
     ...yarnRequirements.sort(),
-  ].join("\n")
+  ]
+    .filter((line) => line.trim() && !line.startsWith("#"))
+    .join("\n")
 }
 
 async function readPartial(name: string) {
