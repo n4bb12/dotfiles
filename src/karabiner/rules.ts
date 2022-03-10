@@ -96,7 +96,7 @@ export const rules: Rule[] = [
     to: { modifiers: [key.left_command], key_code: key.q },
   },
   {
-    from: { key_code: key.f5 },
+    from: { modifiers: { optional: [key.any] }, key_code: key.f5 },
     to: { modifiers: [key.left_command], key_code: key.r },
   },
 
