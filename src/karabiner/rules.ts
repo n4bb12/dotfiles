@@ -101,7 +101,7 @@ export const rules: Rule[] = [
   //   to_if_held_down: { key_code: key.left_command },
   // },
   {
-    from: { modifiers: { mandatory: [key.left_control] }, pointing_button: button.left },
+    from: { modifiers: { mandatory: [key.left_control], optional: [key.any] }, pointing_button: button.left },
     to: { modifiers: [key.left_command], pointing_button: button.left },
   },
 
