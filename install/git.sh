@@ -18,6 +18,7 @@ git config --global fetch.prune true
 git config --global init.defaultBranch main
 git config --global log.date iso
 git config --global pager.branch false
+git config --global pager.grep false
 git config --global pager.log false
 git config --global pull.rebase true
 git config --global push.default current
