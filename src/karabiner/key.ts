@@ -63,6 +63,7 @@ export const key = {
   number9: "9",
   number0: "0",
 
+  at: "@",
   a: "a",
   b: "b",
   c: "c",
