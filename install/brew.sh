@@ -34,6 +34,7 @@ function brew-install-cask() {
 }
 
 brew install-cask iterm2
+brew install-cask meetingbar
 brew-install-cask 1password
 brew-install-cask docker
 brew-install-cask font-fira-code
