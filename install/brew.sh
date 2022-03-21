@@ -24,6 +24,7 @@ brew-install gnupg
 brew-install grep
 brew-install moreutils
 brew-install node
+brew-install nvm
 brew-install openssh
 brew-install screen
 brew-install wget

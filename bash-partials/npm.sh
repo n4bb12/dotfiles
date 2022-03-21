@@ -16,7 +16,6 @@ require-binary 'npm'
 require-binary 'yarn'
 require-binary 'pnpm'
 require-node-module 'npm-check-updates'
-require-node-module 'nvm'
 
 alias y='yarn'
 alias ya='yarn add'
