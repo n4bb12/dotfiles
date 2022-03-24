@@ -40,6 +40,7 @@ brew-install-cask docker
 brew-install-cask font-fira-code
 brew-install-cask franz
 brew-install-cask google-chrome
+brew-install-cask google-cloud-sdk
 brew-install-cask intellij-idea-ce
 brew-install-cask iterm2
 brew-install-cask meetingbar
