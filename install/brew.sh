@@ -36,6 +36,7 @@ function brew-install-cask() {
 }
 
 brew-install-cask 1password
+brew-install-cask beyond-compare
 brew-install-cask docker
 brew-install-cask font-fira-code
 brew-install-cask franz
