@@ -4,7 +4,7 @@ login() {
   git config --unset-all user.name
   git config --unset-all user.email
 
-  git config user.email "Abraham Schilling"
+  git config user.name "Abraham Schilling"
 
   case $1 in
     foobar)
