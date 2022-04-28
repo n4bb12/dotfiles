@@ -20,5 +20,5 @@ On Windows install these apps manually:
 - [Speed Up Windows 10 in 2020](https://www.youtube.com/watch?v=8E6OT_QcHaU)
 - [SVG Explorer Extension](https://github.com/maphew/svg-explorer-extension/releases)
 - [Timeular](https://timeular.com/download/)
-- [toptoi Manager](https://www.ravensburger.de/entdecken/ravensburger-marken/tiptoi/tiptoi-manager/index.html)
+- [tiptoi Manager](https://www.ravensburger.de/entdecken/ravensburger-marken/tiptoi/tiptoi-manager/index.html)
 - [Windows10Debloater](https://github.com/Sycnex/Windows10Debloater)
