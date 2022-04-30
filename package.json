@@ -23,9 +23,9 @@
   "scripts": {
     "build": "bash dot build",
     "format": "prettier --write .",
-    "update": "bash dot update",
     "keymap": "ts-node src/karabiner/build.ts",
-    "keymap:watch": "nodemon --watch src/karabiner --ext ts --exec yarn keymap"
+    "keymap:watch": "nodemon --watch src/karabiner --ext ts --exec yarn keymap",
+    "update": "bash dot update"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
