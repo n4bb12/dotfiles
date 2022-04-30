@@ -7,3 +7,4 @@
 - [Enable Hibernate](https://apple.stackexchange.com/questions/51725/do-macbooks-have-a-true-hibernate-option)
 - [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 - [Install Homebrew](https://brew.sh/index_de)
+- [Install WARP](https://1.1.1.1/)
