@@ -8,5 +8,7 @@ function winget {
   cmd.exe /c "winget $1 $2 $3"
 }
 
+alias idea="idea64"
+
 cd "$GIT_HOME"
 source "$DOT_REPO"/dist/bash.sh
