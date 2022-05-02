@@ -18,7 +18,7 @@ __metadata:
   dependencies:
     "@types/chalk": ^2.2.0
     "@types/graceful-fs": ^4.1.5
-    "@types/node": ^15.14.9
+    "@types/node": ^17.0.31
     chalk: ^4.1.2
     graceful-fs: ^4.2.8
     nehemiah: ^1.0.8
@@ -151,10 +151,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^15.14.9":
-  version: 15.14.9
-  resolution: "@types/node@npm:15.14.9"
-  checksum: 49f7f0522a3af4b8389aee660e88426490cd54b86356672a1fedb49919a8797c00d090ec2dcc4a5df34edc2099d57fc2203d796c4e7fbd382f2022ccd789eee7
+"@types/node@npm:^17.0.31":
+  version: 17.0.31
+  resolution: "@types/node@npm:17.0.31"
+  checksum: 704618350f8420d5c47db0f7778398e821b7724369946f5c441a7e6b9343295553936400eb8309f0b07d5e39c240988ab3456b983712ca86265dabc9aee4ad3d
   languageName: node
   linkType: hard
 
