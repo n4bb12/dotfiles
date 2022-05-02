@@ -1,9 +1,22 @@
+# directories
 *.log
 build/
 ideas/
 node_modules/
 
+# files
+.DS_Store
+
+# dist
 dist/*
 !dist/yarn.lock
 !dist/package.json
-.DS_Store
+
+# yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
