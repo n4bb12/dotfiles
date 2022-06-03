@@ -16,6 +16,7 @@ git config --global diff.tool 'code'
 git config --global difftool.code.cmd 'code --wait --diff $LOCAL $REMOTE'
 git config --global fetch.prune true
 git config --global grep.extendRegexp true
+git config --global grep.lineNumber true
 git config --global init.defaultBranch main
 git config --global log.date iso
 git config --global pager.branch false
