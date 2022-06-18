@@ -1,4 +1,4 @@
-# Apps
+# Manual App Installs — Mac
 
 On macOS install these apps manually:
 
