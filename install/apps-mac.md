@@ -1,5 +1,5 @@
-# Manual App Installs — Mac
+# Mac Apps
 
-On macOS install these apps manually:
+Apps I use on Mac:
 
 - [Elgato Wave Link](https://www.elgato.com/en/downloads)
