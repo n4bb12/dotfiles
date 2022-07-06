@@ -14,3 +14,18 @@ jobs:
       - run: yarn install --immutable
       - run: yarn prettier --check .
       - run: yarn build
+
+  custom-status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: LouisBrunner/checks-action@v1.1.1
+        if: always()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Apollo Studio
+          conclusion: ${{ job.status }}
+          details_url: https://studio.apollographql.com/graph/feop-c6kp1/home?variant=pr-${{ github.event.pull_request.number }}
+          output: |
+            {"summary":"Apollo Studio"}
+          images: |
+            [{"image_url":"https://avatars.githubusercontent.com/u/17189275?s=280&v=4", "alt":"Apollo Studio"}]
