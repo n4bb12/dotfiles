@@ -50,7 +50,7 @@ function update() {
   build
 
   pushd dist
-  run yarn upgrade --latest
+  run yarn up
   popd
 }
 
