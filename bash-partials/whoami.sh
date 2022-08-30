@@ -29,6 +29,10 @@ whoami() {
     heroku auth:whoami "$@"
   elif [ "$account" = "salesforce" ] || [ "$account" = "sf" ] || [ "$account" = "sfdx" ]; then
     sfdx force:org:list "$@"
+  elif [ "$account" = "gcloud" ] || [ "$account" = "gcp" ]; then
+    gcloud auth list "$@"
+  elif [ "$account" = "kubectl" ]; then
+    kubectl config current-context "$@"
   else
     fail "Unknown account: $account"
   fi
