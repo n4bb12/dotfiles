@@ -30,7 +30,8 @@ whoami() {
   elif [ "$account" = "salesforce" ] || [ "$account" = "sf" ] || [ "$account" = "sfdx" ]; then
     sfdx force:org:list "$@"
   elif [ "$account" = "gcloud" ] || [ "$account" = "gcp" ]; then
-    gcloud auth list "$@"
+    gcloud auth list
+    gcloud config get project
   elif [ "$account" = "kubectl" ]; then
     kubectl config current-context "$@"
   else
