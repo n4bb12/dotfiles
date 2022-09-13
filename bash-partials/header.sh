@@ -31,6 +31,6 @@ scaffold "$USER_ALIASES" "$DOT_REPO/config/templates/.aliases"
 source "$USER_ENV"
 source "$USER_ALIASES"
 
-alias .env='code $USER_ENV'
-alias .aliases='code $USER_ALIASES'
-alias .profile='code $SHELL_PROFILE'
+alias .env="code $USER_ENV"
+alias .aliases="code $USER_ALIASES"
+alias .profile="code $SHELL_PROFILE"
