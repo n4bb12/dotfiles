@@ -23,8 +23,6 @@
   "scripts": {
     "build": "bash dot build",
     "format": "prettier --write .",
-    "keymap": "ts-node src/karabiner/build.ts",
-    "keymap:watch": "nodemon --watch src/karabiner --ext ts --exec yarn keymap",
     "update": "bash dot update"
   },
   "devDependencies": {
