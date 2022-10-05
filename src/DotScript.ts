@@ -1,10 +1,6 @@
-import fs from "graceful-fs"
-import { promisify } from "util"
-
+import { writeFile } from "fs/promises"
 import { BashScript } from "./BashScript"
 import util from "./util"
-
-const writeFile = promisify(fs.writeFile)
 
 export class DotScript extends BashScript {
   browse = (name: string, url: string) => {
