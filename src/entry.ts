@@ -1,11 +1,7 @@
-import fs from "graceful-fs"
-import { promisify } from "util"
-
+import { existsSync } from "fs"
+import { readFile, writeFile } from "fs/promises"
 import { partials } from "./load-order"
 import util from "./util"
-
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
 
 export async function generateEntry() {
   const contents = await Promise.all(partials.map(readPartial))
@@ -68,9 +64,9 @@ async function readPartial(name: string) {
   const srcFile = util.cwd("bash-partials", filename)
   const generatedFile = util.cwd("build/bash-partials", filename)
 
-  if (fs.existsSync(srcFile)) {
+  if (existsSync(srcFile)) {
     return readScript(srcFile)
-  } else if (fs.existsSync(generatedFile)) {
+  } else if (existsSync(generatedFile)) {
     return readScript(generatedFile)
   } else {
     throw new Error("Bash partial does not exist: " + name)
