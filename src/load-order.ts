@@ -19,6 +19,7 @@ export const partials = [
   // --> node-global
   "bitly",
   "browser",
+  "bundlephobia",
   "change-case",
   "clipboard",
   "docker",
