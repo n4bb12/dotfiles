@@ -8,6 +8,7 @@
     "all-the-package-names": "^2.0.796",
     "available": "^2.2.1",
     "bitly-client": "^2.0.1",
+    "bundle-phobia-cli": "^0.14.14",
     "change-case": "^4.1.2",
     "clipboard-cli": "^3.0.0",
     "commitizen": "^4.3.0",

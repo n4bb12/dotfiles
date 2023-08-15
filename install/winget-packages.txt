@@ -37,6 +37,7 @@ Microsoft.WindowsTerminal
 MongoDB.DatabaseTools
 MongoDB.Shell
 Mozilla.FirefoxDeveloperEdition
+nektos.act
 NickeManarin.ScreenToGif
 Notepad++.Notepad++
 NVAccess.NVDA
