@@ -1,0 +1,1 @@
+alias idea="idea64"

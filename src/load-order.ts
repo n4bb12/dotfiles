@@ -5,6 +5,7 @@ export const partials = [
   "colors",
   "explorer",
   "fs",
+  "idea",
 
   // --> colors
   "require",
