@@ -15,4 +15,4 @@
 
 require-node-module 'fkill-cli'
 
-alias         kill='fkill --force'
+alias kill='fkill --force'
