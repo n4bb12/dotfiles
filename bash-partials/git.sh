@@ -65,6 +65,14 @@ git-pull() {
   git pull
 }
 
+git-commit() {
+  if [ $# -eq 0 ]; then
+    git commit
+  else
+    git commit -m "$@"
+  fi
+}
+
 git-merge() {
   if [ ! -z $1 ]; then
     git merge $1
@@ -110,7 +118,7 @@ git-skip() {
 }
 
 # Aliases
-alias           cm='git commit -m'
+alias           cm='git-commit'
 alias           cz="git cz"
 alias          add='git add -A'
 alias          eol='git rm --cached -r .'
