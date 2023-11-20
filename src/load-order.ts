@@ -28,6 +28,7 @@ export const partials = [
   "ffmpeg",
   "free-port",
   "fx",
+  "github",
   "http-server",
   "kill",
   "node-aliases",

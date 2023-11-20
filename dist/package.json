@@ -5,6 +5,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@githubnext/github-copilot-cli": "^0.1.33",
     "all-the-package-names": "^2.0.1152",
     "available": "^2.2.1",
     "bitly-client": "^2.0.1",
