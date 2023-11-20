@@ -7,7 +7,6 @@ npm config delete cache
 npm config delete msvs_version
 npm config delete prefix
 npm config delete python
-
 npm config set color always
 npm config set editor code
 npm config set git-tag-version true
