@@ -5,6 +5,7 @@ set -ex
 git config --global --unset-all user.email || true
 git config --global --unset-all user.name || true
 git config --global alias.lg 'log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
+git config --global alias.ref 'reflog --pretty="%C(auto)%h %<|(20)%gd %C(blue)%cr%C(reset) %gs (%s)"'
 git config --global color.ui auto
 git config --global core.attributesFile ~/.gitattributes
 git config --global core.autocrlf false
