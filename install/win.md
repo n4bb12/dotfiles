@@ -8,7 +8,6 @@ Development / Work
 - [Rsync for Windows](https://www.itefix.net/cwrsync), requires [Cygwin](https://www.cygwin.com/)
 - [Snip & Sketch](https://www.microsoft.com/en-us/p/snip-sketch/9mz95kl8mr0l)
 - [SVG Explorer Extension](https://github.com/maphew/svg-explorer-extension/releases)
-- [Timeular](https://timeular.com/download/)
 - [WARP](https://1.1.1.1/)
 - [StartAllBack](https://www.startallback.com/)
 - [nvm](https://github.com/coreybutler/nvm-windows)
