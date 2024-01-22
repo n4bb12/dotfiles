@@ -10,7 +10,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
-          cache: yarn
       - run: yarn install --immutable
       - run: yarn prettier --check .
       - run: yarn build
