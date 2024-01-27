@@ -46,11 +46,12 @@
       "keys": "ctrl+t"
     }
   ],
+  "alwaysShowNotificationIcon": false,
   "centerOnLaunch": false,
   "copyFormatting": "none",
   "copyOnSelect": true,
   "defaultProfile": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-  "disableAnimations": false,
+  "disableAnimations": true,
   "initialCols": 160,
   "initialPosition": ",",
   "initialRows": 40,
@@ -62,15 +63,23 @@
   ],
   "profiles": {
     "defaults": {
+      "antialiasingMode": "cleartype",
+      "bellStyle": ["window", "taskbar"],
+      "colorScheme": "Git Bash",
       "font": {
         "size": 10.0
       },
+      "historySize": 9999,
       "startingDirectory": "D:\\Projects"
     },
     "list": [
       {
         "colorScheme": "Git Bash",
         "commandline": "wsl.exe -d Ubuntu",
+        "font": {
+          "face": "Fira Code Retina",
+          "size": 12.0
+        },
         "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
         "hidden": false,
         "name": "Ubuntu",
@@ -84,7 +93,7 @@
         "cursorShape": "bar",
         "font": {
           "face": "Fira Code Retina",
-          "size": 11.0
+          "size": 12.0
         },
         "guid": "{00000000-0000-0000-0000-000000012345}",
         "hidden": false,
