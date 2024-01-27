@@ -8,5 +8,11 @@ source /etc/profile.d/bash_completion.sh
 # "$(wslpath -w "$PWD")"'
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
 
-alias reload="source ~/.profile"
+# host binaries
+alias clip="clip.exe"
+alias explorer="explorer.exe"
 
+# aliases
+alias copy="clip"
+alias ex="explorer"
+alias reload="source ~/.profile"
