@@ -1,1 +1,0 @@
-alias idea="idea64"

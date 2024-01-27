@@ -1,6 +1,5 @@
 # directories
 *.log
-build/
 ideas/
 node_modules/
 

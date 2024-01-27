@@ -4,8 +4,8 @@ set -ex
 
 xcode-select --install || true
 
-source "$DIR/git.sh"
-source "$DIR/npm-mac.sh"
+source "$DIR/../git.sh"
+source "$DIR/npm.sh"
 source "$DIR/brew.sh"
 
 # Show hidden files
