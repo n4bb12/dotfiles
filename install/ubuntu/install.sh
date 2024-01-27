@@ -78,6 +78,7 @@ packages=(
   fx
   jq
   nodemon
+  npm-check-updates
   open-cli
   prettier
   release-it
