@@ -13,9 +13,8 @@ npm config set git-tag-version true
 npm config set progress true
 npm config set shell bash
 
-yarn config delete prefix
-yarn config delete cache-folder
-yarn config delete global-folder
+yarn config unset cacheFolder
+yarn config unset globalFolder
 
 pnpm config delete prefix
 pnpm config delete store-dir
