@@ -26,7 +26,7 @@ warn() {
 # NAVIGATION ===========================
 
 alias l='ls'
-alias ll='ls -aFhl'
+alias ll='ls -aFhl --group-directories-first'
 
 alias ~='cd ~'
 alias ..='cd ..'
