@@ -108,6 +108,7 @@ TODO              text
 .gitconfig        text
 .htaccess         text
 *.lock            text -diff
+*.lockb           binary
 package.json      text eol=lf
 package-lock.json text -diff
 pnpm-lock.yaml    text eol=lf -diff
