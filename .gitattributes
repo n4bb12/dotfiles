@@ -13,7 +13,7 @@
 ##   Handle line endings automatically for files detected as
 ##   text and leave all files detected as binary untouched.
 ##   This will handle all files NOT defined below.
-*                 text=auto
+*                 text=lf
 
 # Source code
 *.bash            text eol=lf
@@ -82,6 +82,7 @@ TODO              text
 # Templates
 *.dot             text
 *.ejs             text
+*.erb             text
 *.haml            text
 *.handlebars      text
 *.hbs             text
@@ -91,6 +92,7 @@ TODO              text
 *.mustache        text
 *.njk             text
 *.phtml           text
+*.svelte          text
 *.tmpl            text
 *.tpl             text
 *.twig            text
@@ -106,9 +108,11 @@ TODO              text
 .gitconfig        text
 .htaccess         text
 *.lock            text -diff
+*.lockb           binary
 package.json      text eol=lf
 package-lock.json text -diff
 pnpm-lock.yaml    text eol=lf -diff
+.prettierrc       text
 yarn.lock         text -diff
 *.toml            text
 *.yaml            text
@@ -163,6 +167,7 @@ Procfile          text
 *.as              binary
 *.asf             binary
 *.asx             binary
+*.avi             binary
 *.fla             binary
 *.flv             binary
 *.m4v             binary
