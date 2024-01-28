@@ -48,10 +48,6 @@ curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo 
 && sudo apt update \
 && sudo apt install gh -y
 
-if ! grep -q 'gh completion -s bash' ~/.bashrc; then
-  echo 'gh completion -s bash' >> ~/.bashrc
-fi
-
 if ! gh auth status &> /dev/null; then
   gh auth login
 fi
@@ -64,12 +60,8 @@ if [ ! -d ~/git/n4bb12/dotfiles ]; then
   git clone git@github.com:n4bb12/dotfiles.git
   popd
 fi
-if [ ! -L ~/.aliases ]; then
-  ln -s ~/git/n4bb12/dotfiles/config/~/.aliases/ ~/.aliases
-fi
-if [ ! -L ~/install.sh ]; then
-  ln -s ~/git/n4bb12/dotfiles/install/ubuntu/install.sh ~/install.sh
-fi
+ln -s -f ~/git/n4bb12/dotfiles/config/~/.aliases/ ~/.aliases
+ln -s -f ~/git/n4bb12/dotfiles/install/ubuntu/install.sh ~/install.sh
 
 # nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
