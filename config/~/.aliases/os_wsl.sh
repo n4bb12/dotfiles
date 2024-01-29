@@ -8,9 +8,6 @@ source /etc/profile.d/bash_completion.sh
 # "$(wslpath -w "$PWD")"'
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
 
-# vscode
-export PATH="/mnt/c/Users/ACS/AppData/Local/Programs/Microsoft VS Code/bin:$PATH"
-
 # vcxsrv
 export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
 export XCURSOR_SIZE=64
