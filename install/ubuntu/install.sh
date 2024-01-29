@@ -21,20 +21,33 @@ fi
 sudo apt update
 sudo apt upgrade
 
+# bash completion
+# https://www.cyberciti.biz/faq/add-bash-auto-completion-in-ubuntu-linux/
+sudo apt install bash-completion
+source /etc/profile.d/bash_completion.sh
+
 # apt packages
 packages=(
+  bat
   ca-certificates
   curl
+  fd-find
+  fzf
   git
+  gum
+  hyperfine
+  python3
   unzip
   wget
 )
 sudo apt install ${packages[@]}
 
-# bash completion
-# https://www.cyberciti.biz/faq/add-bash-auto-completion-in-ubuntu-linux/
-sudo apt install bash-completion
-source /etc/profile.d/bash_completion.sh
+# gum
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+sudo apt update
+sudo apt install gum
 
 # git config
 curl https://raw.githubusercontent.com/n4bb12/dotfiles/main/install/git.sh | bash
@@ -151,4 +164,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 # Verify that the Docker Engine installation is successful by running the hello-world image.
 sudo docker run hello-world
 
-# chrome
+# Maybe?
+# doctl      https://github.com/digitalocean/doctl
+# go         https://go.dev/
+# op         https://developer.1password.com/docs/cli/get-started/
+# railway    https://docs.railway.app/guides/cli
