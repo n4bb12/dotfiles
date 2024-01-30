@@ -15,12 +15,15 @@ export GDK_SCALE=0.67
 export GDK_DPI_SCALE=1.5
 
 # host binaries
-alias clip="clip.exe"
-alias explorer="explorer.exe"
+alias clip='clip.exe'
+alias explorer='explorer.exe'
 
 # aliases
-alias copy="clip"
-alias ex="explorer"
-alias reload="source ~/.profile"
-alias bat="batcat"
-alias fd="fdfind"
+alias bat='batcat'
+alias copy='clip'
+alias ex='explorer'
+alias fd='fdfind'
+
+# commands
+alias f='code "$(fzf)"'
+alias reload='source ~/.profile'
