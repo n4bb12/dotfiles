@@ -202,7 +202,7 @@ alias cz='git cz'
 alias commit='git commit'
 alias amend='git commit --amend --no-edit --no-verify'
 alias empty='git commit -m "Trigger CI" --allow-empty'
-alias fix='git commit --fixup --no-verify'
+alias fix='git commit --no-verify --fixup'
 alias squash='git commit --squash'
 
 alias show='git --no-pager show'
