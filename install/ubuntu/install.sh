@@ -144,6 +144,12 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 rm kubectl kubectl.sha256
 kubectl version --client
 
+# kustomize
+curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+sudo install -o root -g root -m 0755 kustomize /usr/local/bin/kustomize
+rm kustomize
+kustomize --version
+
 # docker
 # Uninstall old versions
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
