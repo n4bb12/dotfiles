@@ -69,6 +69,9 @@ alias kill='fkill --force'
 
 alias clip='clip.exe'
 
+alias ncuui='ncu -u -i'
+alias deps='ncuui'
+
 # FUNCTIONS ============================
 
 # Create a new directory and enter it
