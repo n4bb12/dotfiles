@@ -145,6 +145,16 @@ git-switch() {
   echo "$(git config user.name) <$(git config user.email)>"
 }
 
+git-lg() {
+  git lg -20 "$@"
+  echo
+}
+
+git-lga() {
+  git lg "$@"
+  echo
+}
+
 # Functions
 alias abort='git-abort'
 alias branch='git-current-branch'
@@ -178,8 +188,8 @@ alias reset='git reset'
 alias resetf='git reset --hard'
 alias freset='resetf'
 
-alias lg='git lg -20 && echo'
-alias lga='git lg && echo'
+alias lg='git-lg'
+alias lga='git-lga'
 
 alias cherry='git cherry-pick'
 alias pick='git cherry-pick'
