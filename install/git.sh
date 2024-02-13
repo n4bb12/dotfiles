@@ -17,6 +17,7 @@ git config --global core.ignorecase false
 git config --global diff.tool vscode
 git config --global difftool.vscode.cmd 'code --wait --reuse-window --diff $LOCAL $REMOTE'
 git config --global fetch.prune true
+git config --global gpg.format ssh
 git config --global grep.extendRegexp true
 git config --global grep.lineNumber true
 git config --global init.defaultBranch main
@@ -30,4 +31,6 @@ git config --global pull.rebase true
 git config --global push.default current
 git config --global push.followTags true
 git config --global rebase.autosquash true
+git config --global rerere.enabled true
 git config --global user.name "Abraham Schilling"
+git config --global user.signingkey ~/.ssh/id_ed25519.pub

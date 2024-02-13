@@ -122,19 +122,23 @@ git-redate() {
 git-switch() {
 	user="$1"
 
+  git maintenance start
   git config --unset-all user.name
   git config --unset-all user.email
   git config --global user.name 'Abraham Schilling'
 
   case $user in
+    crossload)
+      git config user.email 'n4bb12@users.noreply.gitlab.crossload.org'
+      ;;
     senacor)
-      git config user.email 'abraham.schilling@senacor.com'
+      git config user.email '6810177+n4bb12@users.noreply.github.com.'
       ;;
     elvent)
-      git config user.email 'abraham@elvent.de'
+      git config user.email '6810177+n4bb12@users.noreply.github.com.'
       ;;
     n4bb12|default)
-      git config user.email 'AbrahamSchilling@gmail.com'
+      git config user.email '6810177+n4bb12@users.noreply.github.com.'
       ;;
     *)
     	echo -e "Unknown git user: ${red}${user}${reset}"
@@ -179,9 +183,9 @@ alias bra='git branch -a'
 alias checkout='git checkout'
 alias ch='git checkout'
 
-alias clean='git clean'
-alias cleanf='git clean -dfx'
-alias fclean='cleanf'
+alias clean='git clean -df'
+alias cleanx='git clean -dfx'
+alias cleani='git clean -dfxi'
 alias eol='git rm --cached -r .'
 
 alias reset='git reset'
@@ -198,11 +202,15 @@ alias status='git --no-pager status'
 alias stat='status'
 alias st='status'
 
-alias diff='git --no-pager diff'
+alias diff='git --no-pager diff --word-diff=color'
 alias diffs='diff --staged'
+alias diffns='diff --name-status'
+alias difft='diff --stat'
 alias unmerged='git diff --name-only --diff-filter U | xargs code'
 
-alias stash='git stash'
+alias blame="git blame -w -C -C -C --date relative --color-lines --color-by-age"
+
+alias stash='git stash --all'
 alias pop='git stash pop'
 
 alias add='git add -A'
