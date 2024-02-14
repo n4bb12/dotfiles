@@ -33,7 +33,6 @@ packages=(
   curl
   fd-find
   fzf
-  git
   gum
   hyperfine
   python3
@@ -41,6 +40,11 @@ packages=(
   wget
 )
 sudo apt install ${packages[@]}
+
+# git
+sudo add-apt-repository -y ppa:git-core/ppa
+sudo apt-get update
+sudo apt-get install git -y
 
 # gum
 sudo mkdir -p /etc/apt/keyrings

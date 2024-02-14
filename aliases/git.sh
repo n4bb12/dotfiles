@@ -202,7 +202,7 @@ alias status='git --no-pager status'
 alias stat='status'
 alias st='status'
 
-alias diff='git --no-pager diff --word-diff=color'
+alias diff='git --no-pager diff'
 alias diffs='diff --staged'
 alias diffns='diff --name-status'
 alias difft='diff --stat'
