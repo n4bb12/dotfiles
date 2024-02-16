@@ -1,6 +1,7 @@
 # bash completion
 # https://www.cyberciti.biz/faq/add-bash-auto-completion-in-ubuntu-linux/
 source /etc/profile.d/bash_completion.sh
+source /usr/share/bash-completion/completions/git
 
 # Preserve WSL path
 # https://learn.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory#wsl
