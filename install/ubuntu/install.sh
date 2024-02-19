@@ -29,8 +29,8 @@ source /etc/profile.d/bash_completion.sh
 # apt packages
 packages=(
   bat
+  build-essential
   ca-certificates
-  cargo
   curl
   fd-find
   fzf
@@ -123,6 +123,12 @@ corepack enable
 # bun
 # https://bun.sh/
 curl -fsSL https://bun.sh/install | bash
+if ! grep -q 'export PATH=$BUN_INSTALL/bin:$PATH' ~/.bashrc; then
+  echo >> ~/.bashrc
+  echo '# bun' >> ~/.bashrc
+  echo 'export BUN_INSTALL="$HOME/.bun"' >> ~/.bashrc
+  echo 'export PATH=$BUN_INSTALL/bin:$PATH' >> ~/.bashrc
+fi
 
 # heroku cli
 # https://devcenter.heroku.com/articles/heroku-cli#standalone-installation-with-a-tarball
@@ -200,3 +206,16 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 # go         https://go.dev/
 # op         https://developer.1password.com/docs/cli/get-started/
 # railway    https://docs.railway.app/guides/cli
+
+# Rust
+# https://rustup.rs/
+apt autoremove rustc cargo
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+if ! grep -q 'source "$HOME/.cargo/env"' ~/.bashrc; then
+  echo >> ~/.bashrc
+  echo '# cargo' >> ~/.bashrc
+  echo 'source "$HOME/.cargo/env"' >> ~/.bashrc
+fi
+
+# ast-grep
+cargo install ast-grep
