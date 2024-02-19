@@ -30,6 +30,7 @@ source /etc/profile.d/bash_completion.sh
 packages=(
   bat
   ca-certificates
+  cargo
   curl
   fd-find
   fzf
