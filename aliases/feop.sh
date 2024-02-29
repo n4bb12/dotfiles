@@ -7,7 +7,7 @@ alias format="npx prettier@latest --write ."
 backend() {
   set -x
   export SPRING_PROFILES_ACTIVE=local,local-override,skip-auth
-  ./gradlew clean :application:assemble :application:bootRun
+  ./gradlew :application:assemble :application:bootRun
   set +x
 }
 
