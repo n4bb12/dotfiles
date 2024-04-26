@@ -129,7 +129,7 @@ git-switch() {
 
   case $user in
     crossload)
-      git config user.email 'n4bb12@users.noreply.gitlab.crossload.org'
+      git config user.email '39-n4bb12@users.noreply.gitlab.crossload.org'
       ;;
     senacor)
       git config user.email '6810177+n4bb12@users.noreply.github.com.'
