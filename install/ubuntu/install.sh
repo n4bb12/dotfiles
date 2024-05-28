@@ -123,11 +123,11 @@ corepack enable
 # bun
 # https://bun.sh/
 curl -fsSL https://bun.sh/install | bash
-if ! grep -q 'export PATH=$BUN_INSTALL/bin:$PATH' ~/.bashrc; then
+
+if ! grep -q 'export PATH=~/.bun/bin:$PATH' ~/.bashrc; then
   echo >> ~/.bashrc
   echo '# bun' >> ~/.bashrc
-  echo 'export BUN_INSTALL="$HOME/.bun"' >> ~/.bashrc
-  echo 'export PATH=$BUN_INSTALL/bin:$PATH' >> ~/.bashrc
+  echo 'export PATH=~/.bun/bin:$PATH' >> ~/.bashrc
 fi
 
 # heroku cli
@@ -219,3 +219,21 @@ fi
 
 # ast-grep
 cargo install ast-grep
+
+# zsh
+sudo apt install zsh
+sudo chsh -s $(which zsh) $(whoami)
+curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+
+# go
+sudo apt install golang-go
+
+if ! grep -q 'export PATH=~/go/bin:$PATH' ~/.bashrc; then
+  echo >> ~/.bashrc
+  echo '# go' >> ~/.bashrc
+  echo 'export PATH=~/go/bin:$PATH' >> ~/.bashrc
+fi
+
+# go tools
+go install github.com/six-ddc/plow@latest
