@@ -31,6 +31,7 @@ git config --global pager.branch false
 git config --global pager.grep false
 git config --global pager.log false
 git config --global pull.rebase true
+git config --global push.autoSetupRemote true
 git config --global push.default current
 git config --global push.followTags true
 git config --global rebase.autosquash true
