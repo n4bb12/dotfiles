@@ -8,13 +8,3 @@ node_modules/
 
 # dist
 dist/*
-!dist/yarn.lock
-!dist/package.json
-
-# yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions

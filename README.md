@@ -15,7 +15,7 @@
 
 ## Prerequisites
 
-[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) &middot; [Bash](https://www.google.de/search?q=install+bash) &middot; [Node](https://nodejs.org/en/download) &middot; [Yarn](https://yarnpkg.com/lang/en/docs/install)
+[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) &middot; [Bash](https://www.google.de/search?q=install+bash) &middot; [Node](https://nodejs.org/en/download) &middot; [Bun](https://bun.sh/)
 
 ## Usage
 
