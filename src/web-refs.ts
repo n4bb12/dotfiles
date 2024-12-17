@@ -21,6 +21,7 @@ export async function generateWebRefs() {
     selectors: "browser 'https://www.w3schools.com/cssref/css_selectors.asp'",
     tsconfig: "browser 'https://www.typescriptlang.org/docs/handbook/compiler-options.html'",
     yarn: "browser 'https://yarnpkg.com/cli'",
+    bun: "browser 'https://bun.sh'",
 
     ng: "ref angular",
     pkg: "ref package",
