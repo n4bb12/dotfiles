@@ -119,6 +119,14 @@ git-redate() {
   LC_ALL=C GIT_COMMITTER_DATE="$(date)" git commit --amend --no-edit --reset-author --date "$(date)"
 }
 
+git-reauthor() {
+  git commit --amend --no-edit --reset-author
+}
+
+git-reauthor-all() {
+  git rebase -r --root --exec "git commit --amend --no-edit --reset-author"
+}
+
 git-switch() {
 	user="$1"
 
