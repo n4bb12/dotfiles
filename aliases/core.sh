@@ -144,6 +144,18 @@ cleanup() {
   echo "Cleanup complete. Space available before: $before, after: $after"
 }
 
+zerofill() {
+  set -x
+  sudo dd if=/dev/zero of=zero.fill bs=1M
+  sudo rm zero.fill
+  set +x
+
+  echo "To optimize the VHDX file, run in PowerShell:"
+  echo "wsl --shutdown"
+  echo "wsl -l -v"
+  echo "Optimize-VHD -Path "C:\wsl\Ubuntu\ext4.vhdx" -Mode Full"
+}
+
 # Why did I need this?
 #
 # aws_login() {
