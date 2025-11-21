@@ -36,7 +36,7 @@ alias ..3='cd ../../..'
 alias ..4='cd ../../../..'
 alias ..5='cd ../../../../..'
 
-# NPM/YARN/PNPM ========================
+# NPM/YARN/PNPM/BUN ========================
 
 alias npm="corepack npm"
 alias npx="corepack npx"
@@ -50,6 +50,8 @@ alias yup='yarn upgrade'
 alias yupi='yarn upgrade-interactive'
 alias yupl='yarn upgrade --latest'
 alias yupil='yarn upgrade-interactive --latest'
+
+alias bui="bun update --interactive"
 
 # MORE ALIASES =========================
 
