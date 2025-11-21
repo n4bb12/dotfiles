@@ -276,3 +276,12 @@ who() {
     echo -e "Unknown account: ${red}${account}${reset}"
   fi
 }
+
+# TYPESCRIPT =========================
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+function useclient() {
+  bun run "$SCRIPT_DIR/use-client.ts" "$@"
+  bun format
+}
