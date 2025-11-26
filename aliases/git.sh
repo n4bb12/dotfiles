@@ -132,10 +132,11 @@ git-switch() {
 
   git maintenance start
   git config --global user.name 'Abraham Schilling'
+  git config --global user.email '6810177+n4bb12@users.noreply.github.com'
 
   case $user in
     default)
-      git config --global user.email '6810177+n4bb12@users.noreply.github.com'
+      git config user.email '6810177+n4bb12@users.noreply.github.com'
       ;;
     crossload)
       git config user.email '39-n4bb12@users.noreply.gitlab.crossload.org'
