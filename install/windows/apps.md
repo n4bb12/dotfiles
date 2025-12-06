@@ -1,6 +1,6 @@
 # Apps
 
-- [StartAllBack](https://www.startallback.com/) (Windows 11)
+- [StartAllBack](https://www.startallback.com/)
 - [Fira Core Font](https://github.com/tonsky/FiraCode/blob/master/README.md)
 - [NVIDIA Broadcast Software](https://www.nvidia.com/de-de/geforce/broadcasting/broadcast-sdk/resources/)
 - [Elgato Software](https://www.elgato.com/en/downloads)
