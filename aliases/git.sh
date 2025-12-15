@@ -1,3 +1,5 @@
+source /usr/share/bash-completion/completions/git
+
 git-workon() {
   branch=$(echo "$@" | slug)
 
