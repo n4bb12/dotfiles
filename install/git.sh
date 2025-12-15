@@ -5,7 +5,7 @@ set -ex
 git config --global user.name 'Abraham Schilling'
 git config --global user.email '6810177+n4bb12@users.noreply.github.com'
 git config --global --add safe.directory "*"
-git config --global alias.lg 'log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr | %ad) %C(bold blue)<%an>%Creset\" --abbrev-commit --date=iso'
+git config --global alias.lg "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --decorate=full"
 git config --global alias.ref 'reflog --pretty="%C(auto)%h %<|(20)%gd %C(blue)%cr%C(reset) %gs (%s)"'
 git config --global color.ui auto
 git config --global core.attributesFile ~/.gitattributes
