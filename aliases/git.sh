@@ -1,7 +1,7 @@
 source /usr/share/bash-completion/completions/git
 
 git-workon() {
-  branch=$(echo "$@" | slug)
+  local branch=$(echo "$@" | slug)
 
 	if [ -z "$branch" ]; then
 		echo 'No branch name given'
@@ -42,7 +42,7 @@ git-repo() {
     return 1
   fi
 
-  url=$(git-origin)
+  local url=$(git-origin)
   url=$(echo $url | sed -e 's|:|/|g')
   url=$(echo $url | sed -e 's|git@|https://|g')
   url=$(echo $url | sed -e 's|https///|https://|g')
@@ -64,6 +64,23 @@ git-commit() {
   else
     git commit -m "$@"
   fi
+}
+
+git-commit-copilot() {
+  # 1. Fetch suggestion from AI
+  local suggestion=$(copilot -p "write a concise git commit message for my staged changes" --allow-tool 'shell(git)')
+
+  # 2. Extract the message inside the quotes using sed
+  local msg=$(echo "$suggestion" | sed -n 's/.*-m "\(.*\)".*/\1/p')
+
+  if [ -z "$msg" ]; then
+    echo "Error: Could not extract commit message from AI output."
+    return 1
+  fi
+
+  # 3. Execute git commit with the AI message and any extra flags ($@)
+  echo -e "Generated message: \033[0;32m$msg\033[0m"
+  git commit -m "$msg" "$@"
 }
 
 git-merge() {
@@ -130,7 +147,7 @@ git-reauthor-all() {
 }
 
 git-switch() {
-	user="$1"
+	local user="$1"
 
   git maintenance start
   git config --global user.name 'Abraham Schilling'
@@ -165,6 +182,7 @@ git-lga() {
 # Functions
 alias abort='git-abort'
 alias commit='git-commit'
+alias commit='git-commit-copilot'
 alias continue='git-continue'
 alias merge='git-merge'
 alias pull='git-pull'
@@ -272,7 +290,8 @@ alias git-mod='git update-index --chmod'
 
 # Shorthands
 alias ch='checkout'
-alias cm='commit'
+alias cm='git-commit'
+alias cmc='git-commit-copilot'
 alias cont='continue'
 alias fpush='pushf'
 alias pfusch='pushf'
