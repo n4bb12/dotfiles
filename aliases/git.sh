@@ -67,19 +67,18 @@ git-commit() {
 }
 
 git-commit-copilot() {
-  # 1. Fetch suggestion from AI
-  local suggestion=$(copilot -p "write a concise git commit message for my staged changes" --allow-tool 'shell(git)')
+  local msg=$(bun run "$SCRIPT_DIR/git-commit-ai.ts" "$@")
+  local ret=$?
 
-  # 2. Extract the message inside the quotes using sed
-  local msg=$(echo "$suggestion" | sed -n 's/.*-m "\(.*\)".*/\1/p')
+  if [ $ret -ne 0 ]; then
+    return $ret
+  fi
 
   if [ -z "$msg" ]; then
-    echo "Error: Could not extract commit message from AI output."
+    # errors are logged in the script
     return 1
   fi
 
-  # 3. Execute git commit with the AI message and any extra flags ($@)
-  echo -e "Generated message: \033[0;32m$msg\033[0m"
   git commit -m "$msg" "$@"
 }
 
