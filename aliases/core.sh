@@ -279,9 +279,9 @@ who() {
 
 # TYPESCRIPT =========================
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 
-function useclient() {
+function fix-use-client() {
   bun run "$SCRIPT_DIR/use-client.ts" "$@"
   bun format
 }
