@@ -28,8 +28,8 @@
     "ai": "^6.0.29"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "prettier": "^3.6.2",
+    "@types/node": "^25.0.6",
+    "prettier": "^3.7.4",
     "typescript": "^5.9.3"
   }
 }
