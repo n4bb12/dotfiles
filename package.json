@@ -23,6 +23,10 @@
   "scripts": {
     "format": "prettier --write ."
   },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.6",
+    "ai": "^6.0.29"
+  },
   "devDependencies": {
     "@types/node": "^24.10.1",
     "prettier": "^3.6.2",
