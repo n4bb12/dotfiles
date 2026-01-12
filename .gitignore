@@ -1,10 +1,7 @@
 # directories
-*.log
 ideas/
 node_modules/
 
 # files
 .DS_Store
-
-# dist
-dist/*
+*.log
