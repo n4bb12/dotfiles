@@ -24,9 +24,31 @@ try {
   const { text } = await generateText({
     model: gateway("google/gemini-2.5-flash-lite"),
     prompt: `
+    ### Task
     Write a concise one-line conventional git commit message for the following changes.
-    Return ONLY the commit message, no quotes, no explanations.
+    Return only the commit message, no quotes, no explanations.
 
+    ### Format
+    \`<type>[optional scope]: <description>\`
+
+    [optional body]
+
+    [optional footer(s)]
+
+    ### Rules
+    - **Types**:
+      - \`feat\`: New feature (maps to SemVer \`MINOR\`).
+      - \`fix\`: Bug fix (maps to SemVer \`PATCH\`).
+      - \`docs\`, \`style\`, \`refactor\`, \`perf\`, \`test\`, \`build\`, \`ci\`, \`chore\`, \`revert\`.
+    - **Scope**: Optional noun describing the area of change (e.g., \`feat(ui):\`, \`fix(auth):\`).
+    - **Description**: Use imperative, present tense (e.g., "add", not "added"). No period at the end.
+    - **Breaking Changes**: Append a \`!\` after type/scope (e.g., \`feat!:\`) and/or include \`BREAKING CHANGE:\` in the footer.
+    - **Body/Footer**: Use the body for "why" and footers for issue tracking (e.g., \`Fixes: #123\`).
+
+    ### Example
+    \`feat(convex): add mutation for user profile updates\`
+
+    ### Changes
     ${diff}
 
     `.trim(),
