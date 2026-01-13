@@ -22,7 +22,7 @@ try {
 
   // 3. Generate commit message
   const { text } = await generateText({
-    model: gateway("google/gemini-2.5-flash-lite"),
+    model: gateway("google/gemini-2.5-flash"),
     temperature: 0,
     prompt: `
     ### Task
