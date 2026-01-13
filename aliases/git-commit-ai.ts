@@ -23,6 +23,7 @@ try {
   // 3. Generate commit message
   const { text } = await generateText({
     model: gateway("google/gemini-2.5-flash-lite"),
+    temperature: 0,
     prompt: `
     ### Task
     Write a concise one-line conventional git commit message for the following changes.
