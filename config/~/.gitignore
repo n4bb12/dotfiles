@@ -1,0 +1,9 @@
+# directories
+node_modules/
+
+# files
+.DS_Store
+*:Zone.Identifier
+*.log
+.env
+.env.local
