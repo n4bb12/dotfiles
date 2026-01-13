@@ -5,67 +5,62 @@ import { gateway, generateText } from "ai"
 
 const execAsync = promisify(exec)
 
-try {
-  const apiKey = process.env.AI_GATEWAY_API_KEY
-  if (!apiKey) {
-    console.error("Error: AI_GATEWAY_API_KEY environment variable is not set.")
-    process.exit(1)
-  }
+const model = gateway("google/gemini-3-flash-preview")
+const temperature = 0
+const providerOptions = {
+  // https://ai-sdk.dev/providers/ai-sdk-providers/google-generative-ai#thinking
+  thinkingConfig: {
+    thinkingLevel: "minimal",
+    includeThoughts: false,
+  },
+} satisfies GoogleGenerativeAIProviderOptions
 
-  // 1. Get staged changes
-  const { stdout: diff } = await execAsync("git diff --cached")
+const instructions = `
+### Task
+Write a concise one-line conventional git commit message for the changes below.
+Return only the commit message, no quotes, no explanations.
+Take into account the context of the changes to determine what was changed.
 
-  if (!diff.trim()) {
-    console.error("No staged changes found. Please stage your changes before committing.")
-    process.exit(1)
-  }
+### Format
+\`<type>[optional scope]: <description>\`
 
-  // 3. Generate commit message
-  const { text } = await generateText({
-    model: gateway("google/gemini-2.5-flash"),
-    temperature: 0,
-    prompt: `
-    ### Task
-    Write a concise one-line conventional git commit message for the following changes.
-    Return only the commit message, no quotes, no explanations.
+### Rules
+- **Types**:
+  - \`feat\`: New feature (maps to SemVer \`MINOR\`).
+  - \`fix\`: Bug fix (maps to SemVer \`PATCH\`).
+  - \`docs\`, \`style\`, \`refactor\`, \`perf\`, \`test\`, \`build\`, \`ci\`, \`chore\`, \`revert\`.
+- **Scope**: Optional noun describing the area of change (e.g., \`feat(ui):\`, \`fix(auth):\`).
+- **Description**: Use imperative, present tense (e.g., "add", not "added"). No period at the end.
 
-    ### Format
-    \`<type>[optional scope]: <description>\`
+### Example
+\`feat(convex): add mutation for user profile updates\`
 
-    [optional body]
+### Changes
+`.trim()
 
-    [optional footer(s)]
-
-    ### Rules
-    - **Types**:
-      - \`feat\`: New feature (maps to SemVer \`MINOR\`).
-      - \`fix\`: Bug fix (maps to SemVer \`PATCH\`).
-      - \`docs\`, \`style\`, \`refactor\`, \`perf\`, \`test\`, \`build\`, \`ci\`, \`chore\`, \`revert\`.
-    - **Scope**: Optional noun describing the area of change (e.g., \`feat(ui):\`, \`fix(auth):\`).
-    - **Description**: Use imperative, present tense (e.g., "add", not "added"). No period at the end.
-    - **Breaking Changes**: Append a \`!\` after type/scope (e.g., \`feat!:\`) and/or include \`BREAKING CHANGE:\` in the footer.
-    - **Body/Footer**: Use the body for "why" and footers for issue tracking (e.g., \`Fixes: #123\`).
-
-    ### Example
-    \`feat(convex): add mutation for user profile updates\`
-
-    ### Changes
-    ${diff}
-
-    `.trim(),
-    providerOptions: {
-      google: {
-        thinkingConfig: {
-          thinkingBudget: 0,
-          includeThoughts: false,
-        },
-      } satisfies GoogleGenerativeAIProviderOptions,
-    },
-  })
-
-  // 4. Output the message
-  console.log(text.trim())
-} catch (error) {
-  console.error("Error generating commit message:", error)
-  process.exit(1)
+const apiKey = process.env.AI_GATEWAY_API_KEY
+if (!apiKey) {
+  throw new Error("Error: AI_GATEWAY_API_KEY environment variable is not set.")
 }
+
+// 1. Get staged changes
+const { stdout: diff } = await execAsync("git diff --cached")
+
+if (!diff.trim()) {
+  throw new Error("No staged changes found. Please stage your changes before committing.")
+}
+
+const prompt = [instructions, diff].join("\n\n")
+
+// 3. Generate commit message
+const { text } = await generateText({
+  model: model,
+  temperature: temperature,
+  prompt: prompt,
+  providerOptions: {
+    google: providerOptions,
+  },
+})
+
+// 4. Output the message
+console.log(text.trim())
