@@ -1,11 +1,12 @@
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 import type { GoogleGenerativeAIProviderOptions } from "@ai-sdk/google"
-import { gateway, generateText } from "ai"
+import { createOpenRouter } from "@openrouter/ai-sdk-provider"
+import { type GatewayModelId, gateway, generateText } from "ai"
 
 const execAsync = promisify(exec)
 
-const model = gateway("google/gemini-3-flash-preview")
+const model: GatewayModelId = "google/gemini-3-flash-preview"
 const temperature = 0
 const providerOptions = {
   // https://ai-sdk.dev/providers/ai-sdk-providers/google-generative-ai#thinking
@@ -38,9 +39,22 @@ Take into account the context of the changes to determine what was changed.
 ### Changes
 `.trim()
 
-const apiKey = process.env.AI_GATEWAY_API_KEY
-if (!apiKey) {
-  throw new Error("Error: AI_GATEWAY_API_KEY environment variable is not set.")
+function getModel() {
+  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
+
+  if (OPENROUTER_API_KEY) {
+    return createOpenRouter({ apiKey: OPENROUTER_API_KEY })(model)
+  }
+
+  const AI_GATEWAY_API_KEY = process.env.AI_GATEWAY_API_KEY
+
+  if (AI_GATEWAY_API_KEY) {
+    return gateway(model)
+  }
+
+  throw new Error(
+    "Error: No AI API key found. Please set either OPENROUTER_API_KEY or AI_GATEWAY_API_KEY environment variable.",
+  )
 }
 
 // 1. Get staged changes
@@ -54,7 +68,7 @@ const prompt = [instructions, diff].join("\n\n")
 
 // 3. Generate commit message
 const { text } = await generateText({
-  model: model,
+  model: getModel(),
   temperature: temperature,
   prompt: prompt,
   providerOptions: {
