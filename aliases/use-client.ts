@@ -51,8 +51,7 @@ for (const file of files) {
 
   if (environment === "client") {
     if (!lines.some((line) => line === '"use client"')) {
-      // biome-ignore lint/style/useTemplate: <explanation>
-      const newContent = '"use client"\n\n' + content
+      const newContent = `"use client"\n\n${content}`
       writeFileSync(file, newContent)
       console.log(`Added "use client" to ${file}`)
     }
