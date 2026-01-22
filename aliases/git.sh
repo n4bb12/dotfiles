@@ -178,6 +178,10 @@ git-lga() {
   echo
 }
 
+git-back() {
+  git reset HEAD~1
+}
+
 # Functions
 alias abort='git-abort'
 alias commit='git-commit'
@@ -288,6 +292,7 @@ alias blame="git blame -w -C -C -C --date relative --color-lines --color-by-age"
 alias git-mod='git update-index --chmod'
 
 # Shorthands
+alias back='git-back'
 alias ch='checkout'
 alias cm='git-commit'
 alias cmc='git-commit-copilot'
