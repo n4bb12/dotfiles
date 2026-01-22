@@ -1,7 +1,7 @@
 # directories
 .cache/
-ideas/
 node_modules/
+notes/
 
 # files
 .DS_Store
