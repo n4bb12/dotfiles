@@ -196,46 +196,28 @@ alias switch='git-switch'
 alias set-upstream='git-set-upstream'
 alias wip='git-wip'
 alias workon='git-workon'
-__git_complete commit _git_commit
-__git_complete merge _git_merge
-__git_complete pull _git_pull
-__git_complete rebase _git_rebase
 
 # Aliases
 alias fetch='git fetch --prune'
-__git_complete fetch _git_fetch
 
 alias bra='git branch -a'
-__git_complete bra _git_branch
 
 alias checkout='git checkout'
-__git_complete checkout _git_checkout
 
 alias clean='git clean -df'
 alias cleanx='git clean -dfx'
 alias cleani='git clean -dfxi'
 alias eol='git rm --cached -r .'
-__git_complete clean _git_clean
-__git_complete cleanx _git_clean
-__git_complete cleani _git_clean
-__git_complete eol _git_rm
 
 alias reset='git reset'
 alias resetf='git reset --hard'
 alias freset='resetf'
-__git_complete reset _git_reset
-__git_complete resetf _git_reset
-__git_complete freset _git_reset
 
 alias lg='git-lg'
 alias lga='git-lga'
-__git_complete lg _git_log
-__git_complete lga _git_log
 
 alias cherry='git cherry-pick'
 alias pick='git cherry-pick'
-__git_complete cherry _git_cherry_pick
-__git_complete pick _git_cherry_pick
 
 alias status='git --no-pager status'
 alias st='status'
@@ -245,46 +227,27 @@ alias diff='git --no-pager diff'
 alias diffs='diff --staged'
 alias diffns='diff --name-status'
 alias difft='diff --stat'
-__git_complete diff _git_diff
-__git_complete diffs _git_diff
-__git_complete diffns _git_diff
-__git_complete difft _git_diff
 
 alias stash='git stash --all'
 alias pop='git stash pop'
-__git_complete stash _git_stash
-__git_complete pop _git_stash
 
 alias add='git add -A'
-__git_complete add _git_add
 
 alias amend='git commit --amend --no-edit --no-verify'
 alias empty='git commit -m "Trigger CI" --allow-empty'
 alias fix='git commit --no-verify --fixup'
 alias squash='git commit --squash'
-__git_complete amend _git_commit
-__git_complete empty _git_commit
-__git_complete fix _git_commit
-__git_complete squash _git_commit
 
 alias show='git --no-pager show'
 alias showns='git --no-pager show --name-status'
-__git_complete show _git_show
-__git_complete showns _git_show
 
 alias push='git push --follow-tags --no-verify'
 alias pushf='push --force-with-lease'
-__git_complete push _git_push
-__git_complete pushf _git_push
 
 alias bisect='git bisect'
 alias reflog='git ref'
 alias revert='git revert'
 alias tag='git tag'
-__git_complete bisect _git_bisect
-__git_complete reflog _git_reflog
-__git_complete revert _git_revert
-__git_complete tag _git_tag
 
 alias cz='git cz'
 alias blame="git blame -w -C -C -C --date relative --color-lines --color-by-age"
@@ -300,11 +263,6 @@ alias fpush='pushf'
 alias pfusch='pushf'
 alias pfush='pushf'
 alias upst='set-upstream'
-__git_complete ch _git_checkout
-__git_complete cm _git_commit
-__git_complete fpush _git_push
-__git_complete pfusch _git_push
-__git_complete pfush _git_push
 
 # Combos
 alias add-white='git add -A && git diff --cached -w | git apply --cached -R'
