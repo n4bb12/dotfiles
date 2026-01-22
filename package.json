@@ -21,7 +21,8 @@
     "dist"
   ],
   "scripts": {
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check": "tsgo --noEmit"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.6",
@@ -29,8 +30,9 @@
     "ai": "^6.0.29"
   },
   "devDependencies": {
-    "@types/node": "^25.0.6",
-    "prettier": "^3.7.4",
+    "@types/node": "^25.0.10",
+    "@typescript/native-preview": "^7.0.0-dev.20260122.3",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3"
   }
 }
