@@ -1,7 +1,9 @@
 # directories
+.cache/
 ideas/
 node_modules/
 
 # files
 .DS_Store
 *.log
+*.tsbuildinfo
