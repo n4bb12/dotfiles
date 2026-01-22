@@ -239,8 +239,7 @@ __git_complete pick _git_cherry_pick
 
 alias status='git --no-pager status'
 alias st='status'
-__git_complete status _git_status
-__git_complete st _git_status
+alias sts='status --short'
 
 alias diff='git --no-pager diff'
 alias diffs='diff --staged'
