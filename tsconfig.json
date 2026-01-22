@@ -2,7 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
@@ -12,6 +11,7 @@
     "moduleResolution": "Node",
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
+    "paths": { "*": ["./*"] },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
