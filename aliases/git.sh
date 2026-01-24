@@ -217,8 +217,13 @@ git-worktree-add() {
     fi
   done
 
-  cd "$target"
-  bun install
+  local ignore_line="$target/"
+  if [ -f .gitignore ] && ! grep -q -F "$ignore_line" .gitignore; then
+    echo "$ignore_line" >> .gitignore
+    echo "✅ Added $ignore_line to .gitignore"
+  fi
+
+  (cd "$target" && bun install)
 
   echo "🚀 Worktree ready at $target"
 }
@@ -245,6 +250,8 @@ alias bra='git branch -a'
 
 alias wt='git worktree'
 alias wta='git-worktree-add'
+alias wtl='git worktree list'
+alias wtp='git worktree prune'
 
 alias checkout='git checkout'
 
