@@ -63,6 +63,8 @@ alias clip='clip.exe'
 alias ncuui='ncu -u -i'
 alias deps='ncuui'
 
+alias codi='code-insiders'
+
 # FUNCTIONS ============================
 
 # Create a new directory and enter it
