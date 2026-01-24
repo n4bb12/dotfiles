@@ -54,10 +54,6 @@ alias scripts='cat package.json | fx .scripts'
 alias deps='cat package.json | fx .dependencies'
 alias devdeps='cat package.json | fx .devDependencies'
 
-alias bp='bundle-phobia'
-alias psize='bundle-phobia'
-alias phobia='bundle-phobia'
-
 alias idea="idea64"
 
 alias kill='fkill --force'
@@ -278,4 +274,3 @@ function fix-use-client() {
   bun run "$SCRIPT_DIR/use-client.ts" "$@"
   bun format
 }
-
