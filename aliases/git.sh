@@ -252,6 +252,7 @@ alias wt='git worktree'
 alias wta='git-worktree-add'
 alias wtl='git worktree list'
 alias wtp='git worktree prune'
+alias wtr='git worktree remove'
 
 alias checkout='git checkout'
 
