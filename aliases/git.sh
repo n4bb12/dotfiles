@@ -250,8 +250,8 @@ alias bra='git branch -a'
 
 alias wt='git worktree'
 alias wta='git-worktree-add'
-alias wtl='git worktree list'
-alias wtp='git worktree prune'
+alias wtl='git worktree prune && git worktree list'
+alias wtp='git worktree prune && git worktree list'
 alias wtr='git worktree remove'
 
 alias checkout='git checkout'
