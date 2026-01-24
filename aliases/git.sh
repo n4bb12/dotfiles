@@ -186,6 +186,15 @@ git-worktree() {
   local branch=$1
   local target="../wt-$branch"
 
+  if [ -z "$branch" ]; then
+    echo "ERR: No branch name given"
+    return 1
+  fi
+  if [ -d "$target" ]; then
+    echo "ERR: Target worktree already exists: $target"
+    return 1
+  fi
+
   git worktree add "$target" "$branch"
 
   if [ -f ".env.local" ]; then
