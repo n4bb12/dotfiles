@@ -182,7 +182,7 @@ git-back() {
   git reset HEAD~1
 }
 
-git-worktree() {
+git-worktree-add() {
   local branch=$1
   local target="../$(basename $PWD)-wt-$branch"
 
@@ -195,12 +195,27 @@ git-worktree() {
     return 1
   fi
 
-  git worktree add "$target" "$branch"
-
-  if [ -f ".env.local" ]; then
-    cp ".env.local" "$target/.env.local"
-    echo "✅ .env.local copied"
+  if git show-ref --verify --quiet refs/heads/"$branch"; then
+    git worktree add "$target" "$branch"
+  else
+    git worktree add -b "$branch" "$target"
   fi
+  if [ $? -ne 0 ]; then
+    echo "Failed to create worktree for branch '$branch'"
+    return 1
+  fi
+
+  local env_files=(".env" ".env.local")
+
+  for env_file in "${env_files[@]}"; do
+    if [ -f "$env_file" ]; then
+      if cp "$env_file" "$target/$env_file"; then
+        echo "✅ $env_file copied"
+      else
+        echo "Failed to copy $env_file"
+      fi
+    fi
+  done
 
   cd "$target"
   bun install
@@ -222,12 +237,14 @@ alias switch='git-switch'
 alias set-upstream='git-set-upstream'
 alias wip='git-wip'
 alias workon='git-workon'
-alias worktree='git-worktree'
 
 # Aliases
 alias fetch='git fetch --prune'
 
 alias bra='git branch -a'
+
+alias wt='git worktree'
+alias wta='git-worktree-add'
 
 alias checkout='git checkout'
 
@@ -290,7 +307,6 @@ alias fpush='pushf'
 alias pfusch='pushf'
 alias pfush='pushf'
 alias upst='git-set-upstream'
-alias wt='git-worktree'
 
 # Combos
 alias add-white='git add -A && git diff --cached -w | git apply --cached -R'
