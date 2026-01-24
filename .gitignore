@@ -7,3 +7,4 @@ notes/
 .DS_Store
 *.log
 *.tsbuildinfo
+.env.local
