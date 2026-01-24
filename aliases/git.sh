@@ -182,6 +182,23 @@ git-back() {
   git reset HEAD~1
 }
 
+git-worktree() {
+  local branch=$1
+  local target="../wt-$branch"
+
+  git worktree add "$target" "$branch"
+
+  if [ -f ".env.local" ]; then
+    cp ".env.local" "$target/.env.local"
+    echo "✅ .env.local copied"
+  fi
+
+  cd "$target"
+  bun install
+
+  echo "🚀 Worktree ready at $target"
+}
+
 # Functions
 alias abort='git-abort'
 alias commit='git-commit'
@@ -196,6 +213,7 @@ alias switch='git-switch'
 alias set-upstream='git-set-upstream'
 alias wip='git-wip'
 alias workon='git-workon'
+alias worktree='git-worktree'
 
 # Aliases
 alias fetch='git fetch --prune'
@@ -255,14 +273,15 @@ alias git-mod='git update-index --chmod'
 
 # Shorthands
 alias back='git-back'
-alias ch='checkout'
+alias ch='git-checkout'
 alias cm='git-commit'
 alias cmc='git-commit-copilot'
-alias cont='continue'
+alias cont='git-continue'
 alias fpush='pushf'
 alias pfusch='pushf'
 alias pfush='pushf'
-alias upst='set-upstream'
+alias upst='git-set-upstream'
+alias wt='git-worktree'
 
 # Combos
 alias add-white='git add -A && git diff --cached -w | git apply --cached -R'
