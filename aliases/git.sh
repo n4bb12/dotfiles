@@ -219,7 +219,10 @@ git-worktree-add() {
 
   local ignore_line="worktrees/"
   if [ -f .gitignore ] && ! grep -q -F "$ignore_line" .gitignore; then
-    printf '%s\n' "$ignore_line" >> .gitignore
+    if [ -n "$(tail -c1 .gitignore | tr -d '\n')" ]; then
+      echo >> .gitignore
+    fi
+    echo "$ignore_line" >> .gitignore
     echo "✅ Added $ignore_line to .gitignore"
   fi
 
