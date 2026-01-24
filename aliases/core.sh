@@ -38,13 +38,6 @@ alias ..5='cd ../../../../..'
 
 # NPM/YARN/PNPM/BUN ========================
 
-alias npm="corepack npm"
-alias npx="corepack npx"
-alias pnpm="corepack pnpm"
-alias pnpx="corepack pnpx"
-alias yarn="corepack yarn"
-alias yarnpkg="corepack yarnpkg"
-
 alias yip='yarn install --production --ignore-scripts --prefer-offline'
 alias yup='yarn upgrade'
 alias yupi='yarn upgrade-interactive'
@@ -285,3 +278,4 @@ function fix-use-client() {
   bun run "$SCRIPT_DIR/use-client.ts" "$@"
   bun format
 }
+
