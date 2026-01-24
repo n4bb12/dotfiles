@@ -48,22 +48,21 @@ alias bui="bun update --interactive"
 
 # MORE ALIASES =========================
 
+alias clip='clip.exe'
+alias codi='code-insiders'
+alias idea="idea64"
+alias kill='fkill --force'
 alias open='open-cli'
 
 alias scripts='cat package.json | fx .scripts'
 alias deps='cat package.json | fx .dependencies'
 alias devdeps='cat package.json | fx .devDependencies'
 
-alias idea="idea64"
-
-alias kill='fkill --force'
-
-alias clip='clip.exe'
-
 alias ncuui='ncu -u -i'
 alias deps='ncuui'
 
-alias codi='code-insiders'
+
+alias rand='openssl rand -hex 32'
 
 # FUNCTIONS ============================
 
