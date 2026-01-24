@@ -184,7 +184,7 @@ git-back() {
 
 git-worktree() {
   local branch=$1
-  local target="../wt-$branch"
+  local target="../$(basename $PWD)-wt-$branch"
 
   if [ -z "$branch" ]; then
     echo "ERR: No branch name given"
