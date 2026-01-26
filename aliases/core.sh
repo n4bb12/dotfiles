@@ -49,9 +49,10 @@ alias bui="bun update --interactive"
 # MORE ALIASES =========================
 
 alias clip='clip.exe'
-alias codi='code-insiders'
+alias codei='code-insiders'
 alias idea="idea64"
 alias kill='fkill --force'
+alias oc='opencode'
 alias open='open-cli'
 
 alias scripts='cat package.json | fx .scripts'
