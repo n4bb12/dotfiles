@@ -1,6 +1,7 @@
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
 import type { GoogleGenerativeAIProviderOptions } from "@ai-sdk/google"
+import { createGoogleGenerativeAI } from "@ai-sdk/google"
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import { type GatewayModelId, gateway, generateText } from "ai"
 
@@ -40,10 +41,16 @@ Take into account the context of the changes to determine what was changed.
 `.trim()
 
 function getModel() {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY
+
+  if (GEMINI_API_KEY) {
+    return createGoogleGenerativeAI({ apiKey: GEMINI_API_KEY }).languageModel(model.split("/").pop()!)
+  }
+
   const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
 
   if (OPENROUTER_API_KEY) {
-    return createOpenRouter({ apiKey: OPENROUTER_API_KEY })(model)
+    return createOpenRouter({ apiKey: OPENROUTER_API_KEY }).languageModel(model)
   }
 
   const AI_GATEWAY_API_KEY = process.env.AI_GATEWAY_API_KEY
@@ -53,7 +60,7 @@ function getModel() {
   }
 
   throw new Error(
-    "Error: No AI API key found. Please set either OPENROUTER_API_KEY or AI_GATEWAY_API_KEY environment variable.",
+    "Error: No AI API key found. Please set GEMINI_API_KEY, OPENROUTER_API_KEY, or AI_GATEWAY_API_KEY environment variable.",
   )
 }
 
