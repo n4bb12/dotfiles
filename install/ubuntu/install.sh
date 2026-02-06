@@ -59,17 +59,17 @@ curl https://raw.githubusercontent.com/n4bb12/dotfiles/main/install/git.sh | bas
 
 # github cli
 # https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian
-(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
+(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) &&
+  sudo mkdir -p -m 755 /etc/apt/keyrings &&
+  out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg &&
+  cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
+  sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg &&
+  sudo mkdir -p -m 755 /etc/apt/sources.list.d &&
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null &&
+  sudo apt update &&
+  sudo apt install gh -y
 
-if ! gh auth status &> /dev/null; then
+if ! gh auth status &>/dev/null; then
   gh auth login
 fi
 
@@ -102,7 +102,7 @@ npm config set progress true
 npm config set shell bash
 
 # npm packages
-  # @ffmpeg-installer/ffmpeg
+# @ffmpeg-installer/ffmpeg
 packages=(
   bundle-phobia-cli
   fkill-cli
@@ -131,9 +131,9 @@ corepack enable
 curl -fsSL https://bun.sh/install | bash
 
 if ! grep -q 'export PATH=~/.bun/bin:$PATH' ~/.bashrc; then
-  echo >> ~/.bashrc
-  echo '# bun' >> ~/.bashrc
-  echo 'export PATH=~/.bun/bin:$PATH' >> ~/.bashrc
+  echo >>~/.bashrc
+  echo '# bun' >>~/.bashrc
+  echo 'export PATH=~/.bun/bin:$PATH' >>~/.bashrc
 fi
 
 # heroku cli
@@ -183,8 +183,8 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc
 # Add the repository to Apt sources:
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
+  sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 sudo apt-get update
 # Install the Docker packages.
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
@@ -218,9 +218,9 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 apt autoremove rustc cargo
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 if ! grep -q 'source "$HOME/.cargo/env"' ~/.bashrc; then
-  echo >> ~/.bashrc
-  echo '# cargo' >> ~/.bashrc
-  echo 'source "$HOME/.cargo/env"' >> ~/.bashrc
+  echo >>~/.bashrc
+  echo '# cargo' >>~/.bashrc
+  echo 'source "$HOME/.cargo/env"' >>~/.bashrc
 fi
 
 # ast-grep
@@ -236,9 +236,9 @@ curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw
 sudo apt install golang-go
 
 if ! grep -q 'export PATH=~/go/bin:$PATH' ~/.bashrc; then
-  echo >> ~/.bashrc
-  echo '# go' >> ~/.bashrc
-  echo 'export PATH=~/go/bin:$PATH' >> ~/.bashrc
+  echo >>~/.bashrc
+  echo '# go' >>~/.bashrc
+  echo 'export PATH=~/go/bin:$PATH' >>~/.bashrc
 fi
 
 # go tools

@@ -10,7 +10,7 @@ source /usr/share/bash-completion/completions/git
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
 
 # vcxsrv
-export DISPLAY=$(ip route|awk '/^default/{print $3}'):0.0
+export DISPLAY=$(ip route | awk '/^default/{print $3}'):0.0
 export XCURSOR_SIZE=64
 export GDK_SCALE=0.67
 export GDK_DPI_SCALE=1.5
