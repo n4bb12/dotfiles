@@ -59,8 +59,10 @@ alias scripts='cat package.json | fx .scripts'
 alias deps='cat package.json | fx .dependencies'
 alias devdeps='cat package.json | fx .devDependencies'
 
-alias ncuui='ncu -u -i'
+alias ncuui='ncu -u -i --install never'
 alias deps='ncuui'
+alias fixbun='git checkout HEAD~1 -- bun.lock && bun i'
+alias bunfix='fixbun'
 
 alias rand='openssl rand -hex 32'
 
