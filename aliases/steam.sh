@@ -11,16 +11,16 @@ rust-server() {
 
   cd /d/Spiele/SteamCmd/steamapps/common/rust_dedicated
 
-    # +rcon.password k4gl9 \
-    # +server.hostname "hostname" \
-    # +server.description "description" \
-    # +server.headerimage "https://i.imgur.com/qIZ0NKg.jpg" \
-    # +server.url "https://n4bb12.dev" \
+  # +rcon.password k4gl9 \
+  # +server.hostname "hostname" \
+  # +server.description "description" \
+  # +server.headerimage "https://i.imgur.com/qIZ0NKg.jpg" \
+  # +server.url "https://n4bb12.dev" \
   RustDedicated -batchmode \
     +rcon.port 28016 \
     +rcon.web 1 \
     +server.port 28015 \
-    +server.maxplayers 1  \
+    +server.maxplayers 1 \
     +server.level "Procedural Map" \
     +server.seed ${seed} \
     +server.worldsize ${size} \

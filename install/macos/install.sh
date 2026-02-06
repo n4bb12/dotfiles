@@ -13,7 +13,7 @@ defaults write com.apple.Finder AppleShowAllFiles true
 
 # Copy home files
 cp -R ${DIR}/../config/home ~/
-cp    ${DIR}/../config/shell/.zprofile ~/
+cp ${DIR}/../config/shell/.zprofile ~/
 
 # Restore preferences
 for home in /Users/*/; do

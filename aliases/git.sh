@@ -3,9 +3,9 @@ source /usr/share/bash-completion/completions/git
 git-workon() {
   local branch=$(echo "$@" | slug)
 
-	if [ -z "$branch" ]; then
-		echo 'No branch name given'
-  elif git rev-parse --verify "$branch" > /dev/null 2>&1; then
+  if [ -z "$branch" ]; then
+    echo 'No branch name given'
+  elif git rev-parse --verify "$branch" >/dev/null 2>&1; then
     git checkout "$branch"
   else
     git checkout -b "$branch"
@@ -108,17 +108,17 @@ git-rebase-interactive() {
 
 # determine whether we're rebasing or merging or cherry-picking, etc.
 git-pending() {
-	if [ -d "$(git rev-parse --git-path rebase-merge)" ]; then
-		echo rebase
-	elif [ -d "$(git rev-parse --git-path rebase-apply)" ]; then
-		echo rebase
-	elif [ -f "$(git rev-parse --git-path MERGE_HEAD)" ]; then
-		echo merge
-	elif [ -f "$(git rev-parse --git-path CHERRY_PICK_HEAD)" ]; then
-		echo cherry-pick
-	elif [ -f "$(git rev-parse --git-path REVERT_HEAD)" ]; then
-		echo revert
-	fi
+  if [ -d "$(git rev-parse --git-path rebase-merge)" ]; then
+    echo rebase
+  elif [ -d "$(git rev-parse --git-path rebase-apply)" ]; then
+    echo rebase
+  elif [ -f "$(git rev-parse --git-path MERGE_HEAD)" ]; then
+    echo merge
+  elif [ -f "$(git rev-parse --git-path CHERRY_PICK_HEAD)" ]; then
+    echo cherry-pick
+  elif [ -f "$(git rev-parse --git-path REVERT_HEAD)" ]; then
+    echo revert
+  fi
 }
 
 git-continue() {
@@ -146,23 +146,23 @@ git-reauthor-all() {
 }
 
 git-switch() {
-	local user="$1"
+  local user="$1"
 
   git maintenance start
   git config --global user.name 'Abraham Schilling'
   git config --global user.email '6810177+n4bb12@users.noreply.github.com'
 
   case $user in
-    default)
-      git config user.email '6810177+n4bb12@users.noreply.github.com'
-      ;;
-    crossload)
-      git config user.email '39-n4bb12@users.noreply.gitlab.crossload.org'
-      ;;
-    *)
-    	echo -e "Unknown git user: ${red}${user}${reset}"
-      return
-      ;;
+  default)
+    git config user.email '6810177+n4bb12@users.noreply.github.com'
+    ;;
+  crossload)
+    git config user.email '39-n4bb12@users.noreply.gitlab.crossload.org'
+    ;;
+  *)
+    echo -e "Unknown git user: ${red}${user}${reset}"
+    return
+    ;;
   esac
 
   echo "$(git config user.name) <$(git config user.email)>"
@@ -220,9 +220,9 @@ git-worktree-add() {
   local ignore_line="worktrees/"
   if [ -f .gitignore ] && ! grep -q -F "$ignore_line" .gitignore; then
     if [ -n "$(tail -c1 .gitignore | tr -d '\n')" ]; then
-      echo >> .gitignore
+      echo >>.gitignore
     fi
-    echo "$ignore_line" >> .gitignore
+    echo "$ignore_line" >>.gitignore
     echo "✅ Added $ignore_line to .gitignore"
   fi
 
