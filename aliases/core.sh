@@ -64,14 +64,17 @@ alias deps='ncuui'
 alias fixbun='git checkout HEAD~1 -- bun.lock && bun i'
 alias bunfix='fixbun'
 
-alias rand='openssl rand -hex 32'
-
 # FUNCTIONS ============================
 
 # Create a new directory and enter it
 mkcd() {
   mkdir -p "$@"
   cd "$_"
+}
+
+random() {
+  local length="${1:-32}"
+  openssl rand -hex $length
 }
 
 size() {
