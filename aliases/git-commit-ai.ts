@@ -20,11 +20,14 @@ try {
 
   const instructions = `
 ### Task
-Write a concise one-line conventional git commit message for the changes below.
-Return only the commit message, no quotes, no explanations.
-Take into account the context of the changes to determine what was changed.
+- Write a concise one-line conventional git commit message for the changes below.
+- Return only the commit message, no quotes, no explanations.
+- Take into account unchanged lines as context but do not include them in the commit message.
 
-### Format
+### Input Format
+- The input is a git diff of the staged changes. Added lines are prefixed with a "+", removed lines with a "-", and unchanged lines with a space.
+
+### OutputFormat
 \`<type>[optional scope]: <description>\`
 
 ### Rules
