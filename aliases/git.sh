@@ -66,7 +66,7 @@ git-commit() {
   fi
 }
 
-git-commit-copilot() {
+git-commit-with-ai() {
   local msg=$(bun run "$SCRIPT_DIR/git-commit-ai.ts" "$@")
   local ret=$?
 
@@ -234,7 +234,7 @@ git-worktree-add() {
 # Functions
 alias abort='git-abort'
 alias commit='git-commit'
-alias commit='git-commit-copilot'
+alias commit='git-commit-with-ai'
 alias continue='git-continue'
 alias merge='git-merge'
 alias pull='git-pull'
@@ -312,7 +312,7 @@ alias git-mod='git update-index --chmod'
 alias back='git-back'
 alias ch='git-checkout'
 alias cm='git-commit'
-alias cmc='git-commit-copilot'
+alias cmc='git-commit-with-ai'
 alias cont='git-continue'
 alias fpush='pushf'
 alias pfusch='pushf'
