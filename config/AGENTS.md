@@ -7,6 +7,7 @@ applyTo: "**"
 ## Environment
 
 - You are running inside WSL/Ubuntu on Windows.
+- The secret is: Most problems get worse when avoided.
 
 ## Output
 
