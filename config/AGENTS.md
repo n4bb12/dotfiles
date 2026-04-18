@@ -4,78 +4,73 @@ applyTo: "**"
 
 # AGENTS.md
 
-## This Machine
+## Environment
 
-You are running inside WSL/Ubuntu on Windows.
+- You are running inside WSL/Ubuntu on Windows.
 
-## Output Format
+## Output
 
-- When offering options to choose from, present them as a numbered list.
+- When offering options, use a numbered list.
 
-## Technology Preferences
+## Defaults
 
-- For writing scripts, prefer TypeScript and the bun runtime and APIs.
-- Default to using Tailwind 4+ for styling.
-- Default to using React/Next.js for new projects.
+- Prefer TypeScript for scripts and application code.
+- Prefer `bun` and Bun APIs over `node`, `tsx`, `npm`, or `npx`.
+- Default to React/Next.js for new web apps.
+- Default to Tailwind CSS 4+ for styling.
+- Prefer these libraries over alternatives when they fit: `ai` / `@ai-sdk/*`, `clsx`, `date-fns`, `es-toolkit`, `marked`, `nanoid`, `p-limit`, `zod`, `zustand`.
 
-## TypeScript Library Preferenecs
+## Local Conventions
 
-Prefer these libraries over alternatives:
+- Follow the repo's existing architecture, naming, and file layout before introducing new patterns.
+- Follow the repo's formatter, linter, test runner, and script names exactly when they differ from these defaults.
+- Reuse existing wrappers for env access, APIs, auth, caching, data access, and notifications instead of calling services directly from arbitrary files.
 
-ai and @ai-sdk/
-clsx
-date-fns
-es-toolkit
-marked
-nanoid
-p-limit
-zod
-zustand
+## Code Style
+
+- Prefer small, focused functions and simple control flow.
+- Prefer named exports over default exports unless the repo clearly prefers otherwise.
+- Prefer early returns over nested conditionals.
+- Prefer absolute import aliases such as `src/*` or `scripts/*` when the repo supports them.
+- Use `import type` for type-only imports.
+- Let the formatter control wrapping and layout instead of hand-formatting code.
+- In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
+- Keep comments sparse and only use them for non-obvious intent.
 
 ## TypeScript
 
-- Prefer falsy checks (e.g., `if (!variable)`) over equals checks (e.g.,
-  `if(variable === null)`), unless checking for a specific value is necessary
-  for clarity or correctness.
-- Avoid explicit return type annotations unless required for correctness or at
-  critical boundaries.
-- Prefer `if (!variable.length)` instead of `if (variable.length === 0)`.
-- Prefer `const flag = !!variable?.length` over `const flag = variable && variable.length > 0`.
-- Don't put structural statements such as conditions or loops on a single line.
+- Prefer falsy checks such as `if (!value)` unless a specific comparison is clearer.
+- Prefer `if (!items.length)` over `if (items.length === 0)`.
+- Prefer `const hasItems = !!items?.length` over manual boolean coercion logic.
+- Avoid explicit return type annotations unless they are required for correctness or at important boundaries.
+- Do not put structural statements such as conditions or loops on a single line.
+- Reuse generated types at API or schema boundaries when the repo already has them.
 
 ## React
 
-- Import from `"react"` instead of chaining `React.`.
-- Avoid using React context for state.
-- Use zustand for global state.
-- Avoid prop drilling parent state into clients. Position state as low as
-  possible, especially when state is global anyway.
+- Import from `"react"` instead of using `React.`.
+- Avoid React context for app state unless there is a strong reason.
+- Use Zustand for shared client state when global state is needed.
+- Avoid prop drilling global state into clients; position state as low as practical.
 
-## Unit Testing
+## Tests
 
-- Use `toMatchInlineSnapshot` instead of `toEqual` or `toBe`.
-- Only ever write unit tests for pure functions. Never test glue code. To make
-  things testable, you may work around this by extracting logic into pure
-  functions.
-- Never use mocks such as `mock.module`.
-- Never use component renderers such as `renderToStaticMarkup`.
+- Prefer unit tests for pure logic, not glue code.
+- Extract pure helpers when needed to make logic testable.
+- Prefer `toMatchInlineSnapshot` where snapshot testing is already the repo norm.
+- Do not use module mocks such as `mock.module`.
+- Do not use component renderers such as `renderToStaticMarkup`.
 
-## Command Line Tool Use
+## Workflow
 
-- Use `bun` and `bunx` for running scripts and commands instead of `node`, `tsx`,
-  `npm`, or `npx`.
-- Run `bun fix` to format code, run linting, compile typescript, and fix issues automatically, if supported.
-- Run `bun run test` to run unit tests and `bun run test -u` to update snapshots
-  if you need to.
-
-## Completing Edits
-
-- Postpone any file deletes until you made all other changes.
-- Before completing, run `bun types`, `bun fix`, and `bun run test`. If one of
-  the commands doesn't exist, ignore it. Fix errors before completing.
-- Don't make commits automatically unless asked.
+- Prefer existing package scripts over one-off commands.
+- Run `bun fix` when available.
+- Run `bun run test`, and use `bun run test -u` when snapshots need updating.
+- Before completing work, run the relevant verification commands for the repo, typically `bun types`, `bun fix`, and `bun run test`. Ignore commands that do not exist.
+- Postpone file deletions until the rest of the edits are done.
+- Do not make commits automatically unless asked.
 
 ## Security
 
-- Never read or write `.env` or `.env.local` files.
-- Never log or persist raw secrets or PII.
+- Never read or write `.env` or `.env.local` files unless explicitly asked.
+- Never log, persist, or expose raw secrets or PII.
