@@ -53,6 +53,8 @@ applyTo: "**"
 - Avoid React context for app state unless there is a strong reason.
 - Use Zustand for shared client state when global state is needed.
 - Avoid prop drilling global state into clients; position state as low as practical.
+- Move complex useEffect, useCallback, useMemo, and derived data logic into custom hooks.
+- Keep JSX clean of complex expressions and logic; move them into variables or custom hooks.
 
 ## Tests
 
@@ -69,7 +71,7 @@ applyTo: "**"
 - Run `bun run test`, and use `bun run test -u` when snapshots need updating.
 - Before completing work, run the relevant verification commands for the repo, typically `bun types`, `bun fix`, and `bun run test`. Ignore commands that do not exist.
 - Postpone file deletions until the rest of the edits are done.
-- Do not make commits automatically unless asked.
+- Do not make commits automatically unless asked. Do not stage changes automatically unless asked.
 
 ## Security
 
