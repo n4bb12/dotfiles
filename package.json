@@ -26,14 +26,14 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.6",
-    "@openrouter/ai-sdk-provider": "^1.5.4",
-    "ai": "^6.0.29"
+    "@ai-sdk/google": "^3.0.64",
+    "@openrouter/ai-sdk-provider": "^2.8.1",
+    "ai": "^6.0.168"
   },
   "devDependencies": {
-    "@types/node": "^25.0.10",
-    "@typescript/native-preview": "^7.0.0-dev.20260122.3",
-    "prettier": "^3.8.1",
-    "typescript": "^5.9.3"
+    "@types/node": "^25.6.0",
+    "@typescript/native-preview": "^7.0.0-dev.20260428.1",
+    "prettier": "^3.8.3",
+    "typescript": "^6.0.3"
   }
 }
