@@ -1,6 +1,6 @@
 ---
-name: fallow-code-health
-description: Run Fallow code-health checks sequentially, fix findings, and re-run each command until clean before moving on.
+name: fallow
+description: Run Fallow code-health checks sequentially to inspect repo health, dead code, duplicate code, and hotspots. Fix findings and re-run each command until clean before moving on.
 ---
 
 # Fallow Code Health Skill
