@@ -1,2 +1,4 @@
 dist/
 node_modules/
+config/~/.agents/skills/linear-cli
+config/~/.agents/skills/playwright-cli
