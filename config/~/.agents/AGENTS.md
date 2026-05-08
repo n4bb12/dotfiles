@@ -12,6 +12,7 @@ applyTo: "**"
 ## Output
 
 - When offering options, use a numbered list.
+- For user-visible UI text, use proper localized characters. In German UI copy, use umlauts such as `ä`, `ö`, and `ü` instead of ASCII substitutions like `ae`, `oe`, and `ue` unless a technical constraint requires ASCII.
 
 ## Defaults
 
