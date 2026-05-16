@@ -3,6 +3,9 @@
 source /etc/profile.d/bash_completion.sh
 source /usr/share/bash-completion/completions/git
 
+# Copy global agent file (due to symlink issues)
+cp ~/git/n4bb12/dotfiles/config/~/.agents/AGENTS.md /mnt/c/Users/der_a/AppData/Roaming/Code/User/prompts/global.instructions.md
+
 # Preserve WSL path
 # https://learn.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory#wsl
 # PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\"
