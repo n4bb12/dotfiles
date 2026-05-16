@@ -64,6 +64,8 @@ applyTo: "**"
 - Prefer `toMatchInlineSnapshot` where snapshot testing is already the repo norm.
 - Do not use module mocks such as `mock.module`.
 - Do not use component renderers such as `renderToStaticMarkup`.
+- Do not write unit tests for trivial code.
+- Do not write unit tests to verify constants or the presence of certain code in a code file.
 
 ## Workflow
 
