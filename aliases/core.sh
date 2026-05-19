@@ -281,6 +281,7 @@ function fix-use-client() {
   bun format
 }
 
-# SKILLS ============================
+# SKILLS/AGENTS=======================
 
 alias skills='bunx skills'
+alias ai='codex e --skip-git-repo-check'
