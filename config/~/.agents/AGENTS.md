@@ -11,7 +11,7 @@ applyTo: "**"
 
 ## Skills
 
-Use Matt Pocock’s Skills, not superpowers or any other skill framework. Reference:
+Use Matt Pocock’s Skills https://github.com/mattpocock/skills, not superpowers or any other skill framework. Skills reference:
 
 ### Engineering
 
