@@ -280,3 +280,7 @@ function fix-use-client() {
   bun run "$SCRIPT_DIR/use-client.ts" "$@"
   bun format
 }
+
+# SKILLS ============================
+
+alias skills='bunx skills'
