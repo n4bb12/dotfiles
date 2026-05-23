@@ -13,7 +13,7 @@ try {
   const providerOptions = {
     // https://ai-sdk.dev/providers/ai-sdk-providers/google-generative-ai#thinking
     thinkingConfig: {
-      thinkingLevel: "minimal",
+      thinkingBudget: 0,
       includeThoughts: false,
     },
   } satisfies GoogleGenerativeAIProviderOptions
@@ -48,7 +48,8 @@ try {
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY
 
     if (GEMINI_API_KEY) {
-      return createGoogleGenerativeAI({ apiKey: GEMINI_API_KEY }).languageModel(model.split("/").pop()!)
+      const modelName = model.split("/").pop()!
+      return createGoogleGenerativeAI({ apiKey: GEMINI_API_KEY }).languageModel(modelName)
     }
 
     const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
