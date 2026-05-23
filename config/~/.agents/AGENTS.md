@@ -76,6 +76,13 @@ General workflow tools, not code-specific.
 - Do not put structural statements such as conditions or loops on a single line.
 - Reuse generated types at API or schema boundaries when the repo already has them.
 
+### Type assertions
+
+- Avoid type assertions such as `value as SomeType` and non-null assertions (`!`) by default. Do not use them to silence errors.
+- Prefer `satisfies` when you need to check a value against a type while preserving its inferred type.
+- If a value does not match the expected type, fix the mismatch — narrow with guards, parse or validate at boundaries, or update the type — instead of casting.
+- `!` is allowed when a value is provably defined but TypeScript cannot narrow it. Examples: `str.split(sep).pop()!` (split always returns at least one element), or checking `array.length` then using `array[0]!` on the next line when the guard is not carried through. Prefer a guard or explicit check first; use `!` only when that logic is already clear.
+
 ## React
 
 - Import from `"react"` instead of using `React.`.
