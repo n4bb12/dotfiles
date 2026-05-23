@@ -281,7 +281,14 @@ function fix-use-client() {
   bun format
 }
 
-# SKILLS/AGENTS=======================
+# EDITOR =============================
+
+# used by sanity cli for example
+export EDITOR="cursor --wait"
+
+alias code='cursor'
+
+# SKILLS/AGENTS ======================
 
 alias skills='bunx skills'
 alias ai='codex e --skip-git-repo-check'
