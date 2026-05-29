@@ -115,3 +115,7 @@ General workflow tools, not code-specific.
 
 - Never read or write `.env` or `.env.local` files unless explicitly asked.
 - Never log, persist, or expose raw secrets or PII.
+
+## Writing README.md
+
+- Don't repeat lists of things that are in the code. Instead, point to where something is found.
