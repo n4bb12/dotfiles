@@ -285,6 +285,8 @@ function fix-use-client() {
 
 # used by sanity cli for example
 export EDITOR="cursor --wait"
+export GIT_SEQUENCE_EDITOR="$EDITOR"
+export SEQUENCE_EDITOR="$EDITOR"
 
 alias code='cursor'
 
