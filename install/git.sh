@@ -34,7 +34,6 @@ git config --global push.default current
 git config --global push.followTags true
 git config --global rebase.autosquash true
 git config --global rerere.enabled true
-git config --global sequence.editor "code --wait"
 git config --global user.email '6810177+n4bb12@users.noreply.github.com'
 git config --global user.name 'Abraham Schilling'
 git config --global user.signingkey ~/.ssh/id_ed25519.pub
