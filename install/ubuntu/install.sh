@@ -215,7 +215,7 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 
 # Rust
 # https://rustup.rs/
-apt autoremove rustc cargo
+sudo apt autoremove rustc cargo
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 if ! grep -q 'source "$HOME/.cargo/env"' ~/.bashrc; then
   echo >>~/.bashrc
