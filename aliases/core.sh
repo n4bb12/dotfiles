@@ -288,6 +288,12 @@ export EDITOR="cursor --wait"
 export GIT_SEQUENCE_EDITOR="$EDITOR"
 export SEQUENCE_EDITOR="$EDITOR"
 
+VSCODE_BIN="$(command -v code)"
+
+vscode() {
+  "$VSCODE_BIN" "$@"
+}
+
 alias code='cursor'
 
 # SKILLS/AGENTS ======================
