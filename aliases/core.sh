@@ -291,7 +291,7 @@ vscode() {
 
 alias code='cursor'
 
-export EDITOR="vscode --wait"
+export EDITOR="code --wait --reuse-window"
 export GIT_SEQUENCE_EDITOR="$EDITOR"
 export SEQUENCE_EDITOR="$EDITOR"
 
