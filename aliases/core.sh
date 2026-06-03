@@ -283,11 +283,6 @@ function fix-use-client() {
 
 # EDITOR =============================
 
-# used by sanity cli for example
-export EDITOR="cursor --wait"
-export GIT_SEQUENCE_EDITOR="$EDITOR"
-export SEQUENCE_EDITOR="$EDITOR"
-
 VSCODE_BIN="$(command -v code)"
 
 vscode() {
@@ -295,6 +290,10 @@ vscode() {
 }
 
 alias code='cursor'
+
+export EDITOR="vscode --wait"
+export GIT_SEQUENCE_EDITOR="$EDITOR"
+export SEQUENCE_EDITOR="$EDITOR"
 
 # SKILLS/AGENTS ======================
 
