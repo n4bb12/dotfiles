@@ -11,8 +11,8 @@ describe("detectEnvironment", () => {
       detect(
         "src/app/page.tsx",
         `export default function Page() {
-  return <main>Hello</main>
-}`,
+          return <main>Hello</main>
+        }`,
       ),
     ).toBe(false)
   })
@@ -23,10 +23,10 @@ describe("detectEnvironment", () => {
         "src/components/counter.tsx",
         `import { useState } from "react"
 
-export function Counter() {
-  const [count, setCount] = useState(0)
-  return <button onClick={() => setCount(count + 1)}>{count}</button>
-}`,
+        export function Counter() {
+          const [count, setCount] = useState(0)
+          return <button onClick={() => setCount(count + 1)}>{count}</button>
+        }`,
       ),
     ).toBe(true)
   })
@@ -36,8 +36,8 @@ export function Counter() {
       detect(
         "src/components/button.tsx",
         `export function Button() {
-  return <button type="button" onClick={() => {}}>Click</button>
-}`,
+          return <button type="button" onClick={() => {}}>Click</button>
+        }`,
       ),
     ).toBe(true)
   })
@@ -47,12 +47,12 @@ export function Counter() {
       detect(
         "src/components/types.tsx",
         `type Props = {
-  onClick?: () => void
-}
+          onClick?: () => void
+        }
 
-export function Box(props: Props) {
-  return <div>{props.children}</div>
-}`,
+        export function Box(props: Props) {
+          return <div>{props.children}</div>
+        }`,
       ),
     ).toBe(false)
   })
@@ -63,10 +63,10 @@ export function Box(props: Props) {
         "src/components/profile.tsx",
         `import { useProfile } from "src/hooks/use-profile"
 
-export function Profile() {
-  const profile = useProfile()
-  return <p>{profile.name}</p>
-}`,
+        export function Profile() {
+          const profile = useProfile()
+          return <p>{profile.name}</p>
+        }`,
       ),
     ).toBe(true)
   })
@@ -77,10 +77,10 @@ export function Profile() {
         "src/components/label.tsx",
         `import { useId } from "react"
 
-export function Label() {
-  const id = useId()
-  return <label htmlFor={id}>Name</label>
-}`,
+        export function Label() {
+          const id = useId()
+          return <label htmlFor={id}>Name</label>
+        }`,
       ),
     ).toBe(false)
   })
@@ -91,10 +91,10 @@ export function Label() {
         "src/components/user.tsx",
         `import { use } from "react"
 
-export function User({ userPromise }: { userPromise: Promise<User> }) {
-  const user = use(userPromise)
-  return <p>{user.name}</p>
-}`,
+        export function User({ userPromise }: { userPromise: Promise<User> }) {
+          const user = use(userPromise)
+          return <p>{user.name}</p>
+        }`,
       ),
     ).toBe(false)
   })
@@ -105,26 +105,61 @@ export function User({ userPromise }: { userPromise: Promise<User> }) {
         "src/app/actions.ts",
         `import { cookies } from "next/headers"
 
-export async function getSession() {
-  return cookies().get("session")
-}`,
+        export async function getSession() {
+          return cookies().get("session")
+        }`,
       ),
     ).toBe(false)
   })
 
-  test("ignores custom hooks in ts files", () => {
+  test("marks ts files that import hooks as client", () => {
+    expect(
+      detect(
+        "src/hooks/index.ts",
+        `import { useThing } from "./use-thing"
+
+        export { useThing }`,
+      ),
+    ).toBe(true)
+  })
+
+  test("marks multiline hook imports as client", () => {
+    expect(
+      detect(
+        "src/hooks/index.ts",
+        `import {
+          useThing,
+        } from "./use-thing"
+
+        export { useThing }`,
+      ),
+    ).toBe(true)
+  })
+
+  test("does not mark type-only hook imports as client", () => {
+    expect(
+      detect(
+        "src/lib/profile-types.ts",
+        `import type { Profile } from "./profile"
+
+        export type { Profile }`,
+      ),
+    ).toBe(false)
+  })
+
+  test("marks custom hooks in ts files as client", () => {
     expect(
       detect(
         "src/hooks/use-thing.ts",
         `import { useEffect, useState } from "react"
 
-export function useThing() {
-  const [value, setValue] = useState("")
-  useEffect(() => {}, [])
-  return value
-}`,
+        export function useThing() {
+          const [value, setValue] = useState("")
+          useEffect(() => {}, [])
+          return value
+        }`,
       ),
-    ).toBe(false)
+    ).toBe(true)
   })
 
   test('does not treat "document" string literals as client', () => {
@@ -132,11 +167,33 @@ export function useThing() {
       detect(
         "src/schemaTypes/sections/featureComparison.tsx",
         `export const featureComparisonType = defineType({
-  name: "featureComparison",
-  type: "document",
-})`,
+          name: "featureComparison",
+          type: "document",
+        })`,
       ),
     ).toBe(false)
+  })
+
+  test("marks window access as client", () => {
+    expect(
+      detect(
+        "src/lib/redirect.ts",
+        `export function redirectToLogin() {
+          window.location.href = "/login"
+        }`,
+      ),
+    ).toBe(true)
+  })
+
+  test("marks localStorage access as client", () => {
+    expect(
+      detect(
+        "src/lib/storage.ts",
+        `export function getToken() {
+          return localStorage.getItem("token")
+        }`,
+      ),
+    ).toBe(true)
   })
 
   test("marks document property access as client", () => {
@@ -144,8 +201,8 @@ export function useThing() {
       detect(
         "src/components/theme.tsx",
         `export function ThemeColor() {
-  return document.documentElement.dataset.theme
-}`,
+          return document.documentElement.dataset.theme
+        }`,
       ),
     ).toBe(true)
   })
@@ -155,8 +212,8 @@ export function useThing() {
       detect(
         "src/lib/format.ts",
         `export function formatName(name: string) {
-  return name.trim()
-}`,
+          return name.trim()
+        }`,
       ),
     ).toBe(false)
   })
