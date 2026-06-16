@@ -17,6 +17,7 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "ESNext",
-    "types": ["node"]
-  }
+    "types": ["bun-types", "node"]
+  },
+  "include": ["**/*.ts"]
 }
