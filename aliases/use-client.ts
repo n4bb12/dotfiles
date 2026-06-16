@@ -84,6 +84,10 @@ function hasBrowserGlobal(code: string): boolean {
       return /\bwindow\s*[.[]/.test(code)
     }
 
+    if (global === "document") {
+      return /\bdocument\s*\./.test(code)
+    }
+
     return new RegExp(`\\b${global}\\b`).test(code)
   })
 }
@@ -121,17 +125,15 @@ export function isClientCode(file: string, content: string, lines: string[]): bo
     return false
   }
 
-  const isComponentFile = file.endsWith(".tsx") || file.endsWith(".ts")
+  // only component files need to become client code
+  const isComponentFile = file.endsWith(".tsx")
   if (!isComponentFile) {
     return false
   }
 
+  // server only files are always server code
   if (file.includes("/server/")) {
     return false
-  }
-
-  if (file.endsWith("error.tsx")) {
-    return true
   }
 
   if (hasUseServerDirective(content)) {
@@ -143,6 +145,11 @@ export function isClientCode(file: string, content: string, lines: string[]): bo
   }
 
   if (importsFrom(content, CLIENT_IMPORTS)) {
+    return true
+  }
+
+  // nextjs error components are always client code
+  if (file.endsWith("error.tsx")) {
     return true
   }
 

@@ -98,7 +98,7 @@ export async function getSession() {
     ).toBe(false)
   })
 
-  test("marks custom hook files as client", () => {
+  test("ignores custom hooks in ts files", () => {
     expect(
       detect(
         "src/hooks/use-thing.ts",
@@ -108,6 +108,29 @@ export function useThing() {
   const [value, setValue] = useState("")
   useEffect(() => {}, [])
   return value
+}`,
+      ),
+    ).toBe(false)
+  })
+
+  test('does not treat "document" string literals as client', () => {
+    expect(
+      detect(
+        "src/schemaTypes/sections/featureComparison.tsx",
+        `export const featureComparisonType = defineType({
+  name: "featureComparison",
+  type: "document",
+})`,
+      ),
+    ).toBe(false)
+  })
+
+  test("marks document property access as client", () => {
+    expect(
+      detect(
+        "src/components/theme.tsx",
+        `export function ThemeColor() {
+  return document.documentElement.dataset.theme
 }`,
       ),
     ).toBe(true)
