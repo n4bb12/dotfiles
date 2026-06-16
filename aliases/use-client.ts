@@ -2,52 +2,36 @@ import { globSync, readFileSync, writeFileSync } from "node:fs"
 
 const SOURCE_GLOB = "**/src/**/*.{ts,tsx}"
 
-const SKIP_FILE_SUFFIXES = [".types.ts", ".test.ts", ".spec.ts", "types.ts"]
+const SKIP_FILE_SUFFIXES = [".types.ts", ".test.ts", ".test.tsx", ".spec.ts", ".spec.tsx", "types.ts"]
 
 const SERVER_IMPORTS = ["next/cache", "next/headers", "next/server", "server-only"] as const
 
 const CLIENT_IMPORTS = ["client-only"] as const
 
-const CLIENT_HOOKS = [
-  "useActionState",
-  "useCallback",
-  "useContext",
-  "useDebugValue",
-  "useDeferredValue",
-  "useEffect",
-  "useFormStatus",
-  "useImperativeHandle",
-  "useInsertionEffect",
-  "useLayoutEffect",
-  "useMemo",
-  "useOptimistic",
-  "useParams",
-  "usePathname",
-  "useReducer",
-  "useRef",
-  "useRouter",
-  "useSearchParams",
-  "useSelectedLayoutSegment",
-  "useSelectedLayoutSegments",
-  "useState",
-  "useSyncExternalStore",
-  "useTransition",
-] as const
+const CLIENT_HOOK_PATTERN = /\buse[A-Z].*?[<(]/
+const JSX_EVENT_HANDLER_PATTERN = /\bon[A-Z]\w*\s*=/
+const ZUSTAND_SELECTOR_PATTERN = /Store\(\)/i
+const ZUSTAND_SELECTOR_WITH_STATE_PATTERN = /Store\(\(state\)/
+const CLASS_COMPONENT_PATTERN = /\bextends\s+(?:React\.)?Component\b/
+const SSR_FALSE_PATTERN = /\bssr:\s*false\b/
+const WINDOW_PATTERN = /\bwindow\s*[.[]/
+const DOCUMENT_PATTERN = /\bdocument\s*\./
+const LOCAL_STORAGE_PATTERN = /\blocalStorage\b/
+const MATCH_MEDIA_PATTERN = /\bmatchMedia\b/
+const NAVIGATOR_PATTERN = /\bnavigator\b/
+const SESSION_STORAGE_PATTERN = /\bsessionStorage\b/
 
-const CLIENT_APIS = ["createContext", "forwardRef"] as const
-
-const BROWSER_GLOBALS = ["document", "localStorage", "matchMedia", "navigator", "sessionStorage", "window"] as const
+const CLIENT_API_PATTERNS = [/\bcreateContext\s*[<(]/, /\bforwardRef\s*[<(]/] as const
 
 const USE_CLIENT_DIRECTIVE = /^\s*["']use client["']\s*;?\s*$/
 const USE_SERVER_DIRECTIVE = /["']use server["']/
 
 function shouldSkipFile(file: string): boolean {
-  const lower = file.toLowerCase()
-
-  if (lower.includes("generated")) {
+  if (file.includes("generated")) {
     return true
   }
 
+  const lower = file.toLowerCase()
   return SKIP_FILE_SUFFIXES.some((suffix) => lower.endsWith(suffix))
 }
 
@@ -70,53 +54,54 @@ function importsFrom(content: string, modules: readonly string[]): boolean {
   return modules.some((module) => content.includes(`from "${module}"`))
 }
 
-function hasClientHook(code: string): boolean {
-  return CLIENT_HOOKS.some((hook) => new RegExp(`\\b${hook}\\s*[<(]`).test(code))
+function hasBrowserGlobal(code: string): boolean {
+  return (
+    WINDOW_PATTERN.test(code) ||
+    DOCUMENT_PATTERN.test(code) ||
+    LOCAL_STORAGE_PATTERN.test(code) ||
+    MATCH_MEDIA_PATTERN.test(code) ||
+    NAVIGATOR_PATTERN.test(code) ||
+    SESSION_STORAGE_PATTERN.test(code)
+  )
 }
 
 function hasClientApi(code: string): boolean {
-  return CLIENT_APIS.some((api) => new RegExp(`\\b${api}\\s*[<(]`).test(code))
+  return CLIENT_API_PATTERNS.some((pattern) => pattern.test(code))
 }
 
-function hasBrowserGlobal(code: string): boolean {
-  return BROWSER_GLOBALS.some((global) => {
-    if (global === "window") {
-      return /\bwindow\s*[.[]/.test(code)
+function analyzeLines(lines: string[]): boolean {
+  const strippedLines: string[] = []
+
+  for (const line of lines) {
+    const stripped = stripLineForAnalysis(line)
+    if (!stripped || stripped.startsWith("*")) {
+      continue
     }
 
-    if (global === "document") {
-      return /\bdocument\s*\./.test(code)
+    if (CLIENT_HOOK_PATTERN.test(stripped) && !stripped.includes("useId")) {
+      return true
     }
 
-    return new RegExp(`\\b${global}\\b`).test(code)
-  })
-}
+    if (JSX_EVENT_HANDLER_PATTERN.test(stripped)) {
+      return true
+    }
 
-function hasJsxEventHandler(code: string): boolean {
-  return /\bon[A-Z]\w*\s*=/.test(code)
-}
+    strippedLines.push(stripped)
+  }
 
-function hasZustandSelector(code: string): boolean {
-  return /Store\(\)/i.test(code) || /Store\(\(state\)/i.test(code)
-}
+  if (!strippedLines.length) {
+    return false
+  }
 
-function hasClassComponent(code: string): boolean {
-  return /\bextends\s+(?:React\.)?Component\b/.test(code)
-}
+  const code = strippedLines.join("\n")
 
-function hasClientOnlyDynamicImport(code: string): boolean {
-  return /\bssr:\s*false\b/.test(code)
-}
-
-function analyzeCode(code: string): boolean {
   return (
-    hasClientHook(code) ||
     hasClientApi(code) ||
     hasBrowserGlobal(code) ||
-    hasJsxEventHandler(code) ||
-    hasZustandSelector(code) ||
-    hasClassComponent(code) ||
-    hasClientOnlyDynamicImport(code)
+    ZUSTAND_SELECTOR_PATTERN.test(code) ||
+    ZUSTAND_SELECTOR_WITH_STATE_PATTERN.test(code) ||
+    CLASS_COMPONENT_PATTERN.test(code) ||
+    SSR_FALSE_PATTERN.test(code)
   )
 }
 
@@ -125,13 +110,6 @@ export function isClientCode(file: string, content: string, lines: string[]): bo
     return false
   }
 
-  // only component files need to become client code
-  const isComponentFile = file.endsWith(".tsx")
-  if (!isComponentFile) {
-    return false
-  }
-
-  // server only files are always server code
   if (file.includes("/server/")) {
     return false
   }
@@ -148,21 +126,11 @@ export function isClientCode(file: string, content: string, lines: string[]): bo
     return true
   }
 
-  // nextjs error components are always client code
   if (file.endsWith("error.tsx")) {
     return true
   }
 
-  const analyzed = lines
-    .map(stripLineForAnalysis)
-    .filter((line) => line.length > 0 && !line.startsWith("*"))
-    .join("\n")
-
-  if (analyzeCode(analyzed)) {
-    return true
-  }
-
-  return false
+  return analyzeLines(lines)
 }
 
 function removeUseClientDirective(content: string): string {
@@ -180,11 +148,16 @@ if (import.meta.main) {
     const content = readFileSync(file, "utf-8")
     const lines = content.split("\n")
 
-    if (isClientCode(file, content, lines)) {
-      if (hasUseServerDirective(content)) {
-        throw new Error(`"use client" and "use server" cannot coexist in ${file}`)
+    if (!file.endsWith(".tsx")) {
+      if (hasUseClientDirective(lines)) {
+        writeFileSync(file, removeUseClientDirective(content))
+        console.log(`Removed "use client" from ${file}`)
       }
 
+      continue
+    }
+
+    if (isClientCode(file, content, lines)) {
       if (!hasUseClientDirective(lines)) {
         writeFileSync(file, addUseClientDirective(content))
         console.log(`Added "use client" to ${file}`)

@@ -57,6 +57,20 @@ export function Box(props: Props) {
     ).toBe(false)
   })
 
+  test("marks custom hook usage as client", () => {
+    expect(
+      detect(
+        "src/components/profile.tsx",
+        `import { useProfile } from "src/hooks/use-profile"
+
+export function Profile() {
+  const profile = useProfile()
+  return <p>{profile.name}</p>
+}`,
+      ),
+    ).toBe(true)
+  })
+
   test("keeps useId on the server", () => {
     expect(
       detect(
