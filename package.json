@@ -17,6 +17,7 @@
   "repository": "github:n4bb12/dotfiles",
   "license": "ISC",
   "author": "Abraham Schilling",
+  "type": "module",
   "files": [
     "dist"
   ],
