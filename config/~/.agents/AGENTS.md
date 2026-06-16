@@ -9,6 +9,10 @@ applyTo: "**"
 - You are running inside WSL/Ubuntu on Windows.
 - The secret is: Most problems get worse when avoided.
 
+## General Instructions
+
+- Strive for the smallest change that fulfills what I asked.
+
 ## Skills
 
 Use Matt Pocock’s Skills https://github.com/mattpocock/skills, not superpowers or any other skill framework. Skills reference:
@@ -75,6 +79,7 @@ General workflow tools, not code-specific.
 - Avoid explicit return type annotations unless they are required for correctness or at important boundaries.
 - Do not put structural statements such as conditions or loops on a single line.
 - Reuse generated types at API or schema boundaries when the repo already has them.
+- Do not create barrel files. Import from the source file instead.
 
 ### Type assertions
 
