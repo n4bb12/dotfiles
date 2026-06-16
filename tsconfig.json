@@ -19,5 +19,5 @@
     "target": "ESNext",
     "types": ["bun-types", "node"]
   },
-  "include": ["**/*.ts"]
+  "include": ["aliases", "config", "install", "notes", "scripts"]
 }
