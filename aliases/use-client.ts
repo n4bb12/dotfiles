@@ -30,7 +30,9 @@ function detectEnvironment(file: string, content: string, lines: string[]): "cli
     }
 
     if (/\buse[A-Z].*?[<(]/.test(line) || /Store\(\)/i.test(line) || /Store\(\(state\) =>/i.test(line)) {
-      return "client"
+      if (!line.includes("useId")) {
+        return "client"
+      }
     }
     if (file.endsWith(".tsx") && /\bon[A-Z]\w*\b/.test(line)) {
       return "client"
