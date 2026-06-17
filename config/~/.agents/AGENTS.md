@@ -41,6 +41,10 @@ General workflow tools, not code-specific.
 - **handoff** — Compact the current conversation into a handoff document so another agent can continue the work.
 - **write-a-skill** — Create new skills with proper structure, progressive disclosure, and bundled resources.
 
+## Cursor
+
+- Write plans to the repo .cursor/plans/ folder by default.
+
 ## Output
 
 - When offering options, use a numbered list.
