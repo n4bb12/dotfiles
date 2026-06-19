@@ -5,13 +5,15 @@ const SOURCE_GLOB = "**/*.{ts,tsx}"
 const CONCURRENCY = 64
 
 const SKIP_FILE_SUFFIXES = [".types.ts", ".test.ts", ".test.tsx", ".spec.ts", ".spec.tsx", "types.ts"]
+const CLIENT_FILE_SUFFIXES = [".client.ts", ".client.tsx"] as const
+const SERVER_FILE_SUFFIXES = [".server.ts", ".server.tsx"] as const
 const SERVER_IMPORTS = ["next/cache", "next/headers", "next/server", "server-only"] as const
 const CLIENT_IMPORTS = ["client-only"] as const
 
 const CLIENT_HOOK_PATTERN = /\buse[A-Z]/
 const JSX_EVENT_HANDLER_PATTERN = /\bon[A-Z]\w*\s*=/
-const ZUSTAND_SELECTOR_PATTERN = /Store\(\)/i
-const ZUSTAND_SELECTOR_WITH_STATE_PATTERN = /Store\(\(state\)/
+const ZUSTAND_SELECTOR_PATTERN = /\wStore\s*\(|createStore\s*\(/i
+const ZUSTAND_SELECTOR_WITH_STATE_PATTERN = /Store\s*\(\s*\(?\s*state\b/
 const CLASS_COMPONENT_PATTERN = /\bextends\s+(?:React\.)?Component\b/
 const SSR_FALSE_PATTERN = /\bssr:\s*false\b/
 const WINDOW_PATTERN = /\bwindow\s*[.[]/
@@ -21,10 +23,11 @@ const MATCH_MEDIA_PATTERN = /\bmatchMedia\b/
 const NAVIGATOR_PATTERN = /\bnavigator\b/
 const SESSION_STORAGE_PATTERN = /\bsessionStorage\b/
 const CLIENT_API_PATTERNS = [/\bcreateContext\s*[<(]/, /\bforwardRef\s*[<(]/] as const
+const COMPONENT_PROP_PATTERN = /\s[A-Z][a-zA-Z0-9]*=\{[A-Z][a-zA-Z0-9]+\}/
 const USE_CLIENT_DIRECTIVE = /^\s*["']use client["']\s*;?\s*$/
 const USE_SERVER_DIRECTIVE = /["']use server["']/
 const MAYBE_CLIENT_PATTERN =
-  /\buse[A-Z]\w*|on[A-Z]\w*\s*=|window\s*[.[]|document\s*\.|localStorage|matchMedia|navigator|sessionStorage|createContext\s*[<(]|forwardRef\s*[<(]|Store\(\)|extends\s+(?:React\.)?Component|ssr:\s*false/
+  /\buse[A-Z]\w*|on[A-Z]\w*\s*=|window\s*[.[]|document\s*\.|localStorage|matchMedia|navigator|sessionStorage|createContext\s*[<(]|forwardRef\s*[<(]|\wStore\s*\(|createStore\s*\(|extends\s+(?:React\.)?Component|ssr:\s*false/
 
 function shouldSkipFile(file: string): boolean {
   if (file.includes("/node_modules/")) {
@@ -37,6 +40,58 @@ function shouldSkipFile(file: string): boolean {
 
   const lower = file.toLowerCase()
   return SKIP_FILE_SUFFIXES.some((suffix) => lower.endsWith(suffix))
+}
+
+function hasClientFileSuffix(file: string): boolean {
+  const lower = file.toLowerCase()
+  return CLIENT_FILE_SUFFIXES.some((suffix) => lower.endsWith(suffix))
+}
+
+function hasServerFileSuffix(file: string): boolean {
+  const lower = file.toLowerCase()
+  return SERVER_FILE_SUFFIXES.some((suffix) => lower.endsWith(suffix))
+}
+
+function importsClientModule(content: string): boolean {
+  let inImport = false
+
+  for (const line of content.split("\n")) {
+    const stripped = stripLineForAnalysis(line).trim()
+
+    if (!stripped) {
+      continue
+    }
+
+    if (stripped.startsWith("import type ")) {
+      continue
+    }
+
+    if (stripped.startsWith("import ")) {
+      inImport = true
+
+      if (/["'][^"']*\.client["']/.test(stripped)) {
+        return true
+      }
+
+      if (!stripped.includes("{") || stripped.includes("}")) {
+        inImport = false
+      }
+
+      continue
+    }
+
+    if (inImport) {
+      if (/["'][^"']*\.client["']/.test(stripped)) {
+        return true
+      }
+
+      if (stripped.includes("}")) {
+        inImport = false
+      }
+    }
+  }
+
+  return false
 }
 
 function stripLineForAnalysis(line: string): string {
@@ -122,8 +177,24 @@ function hasClientApi(code: string): boolean {
   return CLIENT_API_PATTERNS.some((pattern) => pattern.test(code))
 }
 
+function hasComponentPropReference(content: string): boolean {
+  for (const line of content.split("\n")) {
+    const stripped = stripLineForAnalysis(line)
+
+    if (/\w<[A-Z]/.test(stripped)) {
+      continue
+    }
+
+    if (COMPONENT_PROP_PATTERN.test(stripped)) {
+      return true
+    }
+  }
+
+  return false
+}
+
 function analyzeContent(content: string): boolean {
-  if (!MAYBE_CLIENT_PATTERN.test(content)) {
+  if (!MAYBE_CLIENT_PATTERN.test(content) && !hasComponentPropReference(content)) {
     return false
   }
 
@@ -183,6 +254,14 @@ function analyzeContent(content: string): boolean {
       return true
     }
 
+    if (/\w<[A-Z]/.test(stripped)) {
+      continue
+    }
+
+    if (COMPONENT_PROP_PATTERN.test(stripped)) {
+      return true
+    }
+
     if (hasBrowserGlobalInLine(stripped)) {
       return true
     }
@@ -210,7 +289,7 @@ export function isClientCode(file: string, content: string): boolean {
     return false
   }
 
-  if (file.includes("/server/")) {
+  if (hasServerFileSuffix(file) || file.includes("/server/")) {
     return false
   }
 
@@ -220,6 +299,10 @@ export function isClientCode(file: string, content: string): boolean {
 
   if (importsFrom(content, SERVER_IMPORTS)) {
     return false
+  }
+
+  if (hasClientFileSuffix(file) || importsClientModule(content)) {
+    return true
   }
 
   if (importsFrom(content, CLIENT_IMPORTS)) {

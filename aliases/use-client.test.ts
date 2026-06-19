@@ -217,4 +217,85 @@ describe("detectEnvironment", () => {
       ),
     ).toBe(false)
   })
+
+  test("marks .client.ts setup modules as client", () => {
+    expect(
+      detect(
+        "src/integrations/setup.client.ts",
+        `import { configureGoogleClient } from "@dorkas/google/client/context"
+
+        configureGoogleClient({
+          getUserId: () => undefined,
+        })`,
+      ),
+    ).toBe(true)
+  })
+
+  test("marks files that side-effect import .client modules as client", () => {
+    expect(
+      detect(
+        "src/client/integrations/Integrations.tsx",
+        `import "src/integrations/setup.client"
+
+        export const Integrations = () => {
+          return <div />
+        }`,
+      ),
+    ).toBe(true)
+  })
+
+  test("marks .server.ts files as server even with hooks", () => {
+    expect(
+      detect(
+        "src/integrations/setup.server.ts",
+        `import { useState } from "react"
+
+        export function setup() {
+          const [value] = useState("")
+          return value
+        }`,
+      ),
+    ).toBe(false)
+  })
+
+  test("marks components that pass component props as client", () => {
+    expect(
+      detect(
+        "src/client/components/layout/bottom/PaymentMethodIcons.tsx",
+        `import { ProviderIcons } from "@dorkas/ui/footer"
+        import { PaymentIcon } from "src/client/components/generic/PaymentIcon"
+
+        export const PaymentMethodIcons = () => {
+          return <ProviderIcons Icon={PaymentIcon} items={[]} size="sm" />
+        }`,
+      ),
+    ).toBe(true)
+  })
+
+  test("keeps server pages that only render client children as server", () => {
+    expect(
+      detect(
+        "src/app/(shop)/(checkout)/warenkorb/page.tsx",
+        `import { CartPage } from "src/client/components/(checkout)/cart/components/CartPage"
+
+        export default async function Page() {
+          return <CartPage />
+        }`,
+      ),
+    ).toBe(false)
+  })
+
+  test("marks zustand store selectors as client", () => {
+    expect(
+      detect(
+        "src/client/components/support/shared/SupportOptions.tsx",
+        `import { supportInputStore } from "../state"
+
+        export const SupportOptions = () => {
+          const selectedValue = supportInputStore((state) => state.selectedSupportOption)
+          return <div>{selectedValue}</div>
+        }`,
+      ),
+    ).toBe(true)
+  })
 })
