@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test"
 import { isClientCode } from "./use-client.js"
 
 function detect(file: string, content: string) {
-  return isClientCode(file, content, content.split("\n"))
+  return isClientCode(file, content)
 }
 
 describe("detectEnvironment", () => {
