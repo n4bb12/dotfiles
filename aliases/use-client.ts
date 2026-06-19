@@ -1,6 +1,8 @@
-import { glob, readFile, writeFile } from "node:fs/promises"
+import { Glob } from "bun"
 
-const SOURCE_GLOB = "**/src/**/*.{ts,tsx}"
+const SOURCE_GLOB = "**/*.{ts,tsx}"
+
+const CONCURRENCY = 64
 
 const SKIP_FILE_SUFFIXES = [".types.ts", ".test.ts", ".test.tsx", ".spec.ts", ".spec.tsx", "types.ts"]
 const SERVER_IMPORTS = ["next/cache", "next/headers", "next/server", "server-only"] as const
@@ -21,8 +23,14 @@ const SESSION_STORAGE_PATTERN = /\bsessionStorage\b/
 const CLIENT_API_PATTERNS = [/\bcreateContext\s*[<(]/, /\bforwardRef\s*[<(]/] as const
 const USE_CLIENT_DIRECTIVE = /^\s*["']use client["']\s*;?\s*$/
 const USE_SERVER_DIRECTIVE = /["']use server["']/
+const MAYBE_CLIENT_PATTERN =
+  /\buse[A-Z]\w*|on[A-Z]\w*\s*=|window\s*[.[]|document\s*\.|localStorage|matchMedia|navigator|sessionStorage|createContext\s*[<(]|forwardRef\s*[<(]|Store\(\)|extends\s+(?:React\.)?Component|ssr:\s*false/
 
 function shouldSkipFile(file: string): boolean {
+  if (file.includes("/node_modules/")) {
+    return true
+  }
+
   if (file.includes("generated")) {
     return true
   }
@@ -38,8 +46,28 @@ function stripLineForAnalysis(line: string): string {
     .trim()
 }
 
-function hasUseClientDirective(lines: string[]): boolean {
-  return lines.some((line) => USE_CLIENT_DIRECTIVE.test(line))
+function hasUseClientDirective(content: string): boolean {
+  let lineStart = 0
+  let lineCount = 0
+
+  while (lineCount < 15 && lineStart < content.length) {
+    const lineEnd = content.indexOf("\n", lineStart)
+    const line = lineEnd === -1 ? content.slice(lineStart) : content.slice(lineStart, lineEnd)
+
+    if (USE_CLIENT_DIRECTIVE.test(line)) {
+      return true
+    }
+
+    lineCount++
+
+    if (lineEnd === -1) {
+      break
+    }
+
+    lineStart = lineEnd + 1
+  }
+
+  return false
 }
 
 function hasUseServerDirective(content: string): boolean {
@@ -79,10 +107,30 @@ function hasHookNameInImportLine(line: string): boolean {
   return hasHookNameInImportSpecifier(line)
 }
 
-function hasHookImport(lines: string[]): boolean {
-  let inImport = false
+function hasBrowserGlobalInLine(line: string): boolean {
+  return (
+    WINDOW_PATTERN.test(line) ||
+    DOCUMENT_PATTERN.test(line) ||
+    LOCAL_STORAGE_PATTERN.test(line) ||
+    MATCH_MEDIA_PATTERN.test(line) ||
+    NAVIGATOR_PATTERN.test(line) ||
+    SESSION_STORAGE_PATTERN.test(line)
+  )
+}
 
-  for (const line of lines) {
+function hasClientApi(code: string): boolean {
+  return CLIENT_API_PATTERNS.some((pattern) => pattern.test(code))
+}
+
+function analyzeContent(content: string): boolean {
+  if (!MAYBE_CLIENT_PATTERN.test(content)) {
+    return false
+  }
+
+  let inImport = false
+  const strippedLines: string[] = []
+
+  for (const line of content.split("\n")) {
     const stripped = stripLineForAnalysis(line)
 
     if (!stripped) {
@@ -115,45 +163,15 @@ function hasHookImport(lines: string[]): boolean {
           return true
         }
       }
+
       if (stripped.includes("}")) {
         inImport = false
       }
-    }
-  }
 
-  return false
-}
-
-function hasBrowserGlobalInLine(line: string): boolean {
-  return (
-    WINDOW_PATTERN.test(line) ||
-    DOCUMENT_PATTERN.test(line) ||
-    LOCAL_STORAGE_PATTERN.test(line) ||
-    MATCH_MEDIA_PATTERN.test(line) ||
-    NAVIGATOR_PATTERN.test(line) ||
-    SESSION_STORAGE_PATTERN.test(line)
-  )
-}
-
-function hasClientApi(code: string): boolean {
-  return CLIENT_API_PATTERNS.some((pattern) => pattern.test(code))
-}
-
-function analyzeLines(lines: string[]): boolean {
-  if (hasHookImport(lines)) {
-    return true
-  }
-
-  const strippedLines: string[] = []
-
-  for (const line of lines) {
-    const stripped = stripLineForAnalysis(line)
-
-    if (!stripped || stripped.startsWith("*")) {
       continue
     }
 
-    if (stripped.startsWith("import ")) {
+    if (stripped.startsWith("*")) {
       continue
     }
 
@@ -187,7 +205,7 @@ function analyzeLines(lines: string[]): boolean {
   )
 }
 
-export function isClientCode(file: string, content: string, lines: string[]): boolean {
+export function isClientCode(file: string, content: string): boolean {
   if (shouldSkipFile(file)) {
     return false
   }
@@ -216,7 +234,7 @@ export function isClientCode(file: string, content: string, lines: string[]): bo
     return true
   }
 
-  return analyzeLines(lines)
+  return analyzeContent(content)
 }
 
 function removeUseClientDirective(content: string): string {
@@ -227,21 +245,76 @@ function addUseClientDirective(content: string): string {
   return `"use client"\n\n${content}`
 }
 
-if (import.meta.main) {
-  const files = glob(SOURCE_GLOB, { exclude: ["**/node_modules/**"] })
+async function collectSourceFiles(): Promise<string[]> {
+  const files: string[] = []
+  const glob = new Glob(SOURCE_GLOB)
 
-  for await (const file of files) {
-    const content = await readFile(file, "utf-8")
-    const lines = content.split("\n")
+  for await (const file of glob.scan({ cwd: ".", onlyFiles: true, dot: false })) {
+    if (!file.includes("node_modules/")) {
+      files.push(file)
+    }
+  }
 
-    if (isClientCode(file, content, lines)) {
-      if (!hasUseClientDirective(lines)) {
-        await writeFile(file, addUseClientDirective(content))
-        console.log(`Added "use client" to ${file}`)
+  return files
+}
+
+async function mapPool<T, R>(items: readonly T[], concurrency: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const results = new Array<R>(items.length)
+  let index = 0
+
+  async function worker() {
+    while (true) {
+      const current = index++
+
+      if (current >= items.length) {
+        return
       }
-    } else if (hasUseClientDirective(lines)) {
-      await writeFile(file, removeUseClientDirective(content))
-      console.log(`Removed "use client" from ${file}`)
+
+      const item = items[current]
+
+      if (item === undefined) {
+        return
+      }
+
+      results[current] = await fn(item)
+    }
+  }
+
+  const workers = Math.min(concurrency, items.length)
+
+  if (!workers) {
+    return results
+  }
+
+  await Promise.all(Array.from({ length: workers }, () => worker()))
+  return results
+}
+
+async function processFile(file: string): Promise<string | null> {
+  const content = await Bun.file(file).text()
+  const isClient = isClientCode(file, content)
+  const hasDirective = hasUseClientDirective(content)
+
+  if (isClient && !hasDirective) {
+    await Bun.write(file, addUseClientDirective(content))
+    return `Added "use client" to ${file}`
+  }
+
+  if (!isClient && hasDirective) {
+    await Bun.write(file, removeUseClientDirective(content))
+    return `Removed "use client" from ${file}`
+  }
+
+  return null
+}
+
+if (import.meta.main) {
+  const files = await collectSourceFiles()
+  const messages = await mapPool(files, CONCURRENCY, processFile)
+
+  for (const message of messages) {
+    if (message) {
+      console.log(message)
     }
   }
 }
