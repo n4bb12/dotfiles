@@ -1,4 +1,4 @@
-import { globSync, readFileSync, writeFileSync } from "node:fs"
+import { glob, readFile, writeFile } from "node:fs/promises"
 
 const SOURCE_GLOB = "**/src/**/*.{ts,tsx}"
 
@@ -228,19 +228,19 @@ function addUseClientDirective(content: string): string {
 }
 
 if (import.meta.main) {
-  const files = globSync(SOURCE_GLOB)
+  const files = glob(SOURCE_GLOB, { exclude: ["**/node_modules/**"] })
 
-  for (const file of files) {
-    const content = readFileSync(file, "utf-8")
+  for await (const file of files) {
+    const content = await readFile(file, "utf-8")
     const lines = content.split("\n")
 
     if (isClientCode(file, content, lines)) {
       if (!hasUseClientDirective(lines)) {
-        writeFileSync(file, addUseClientDirective(content))
+        await writeFile(file, addUseClientDirective(content))
         console.log(`Added "use client" to ${file}`)
       }
     } else if (hasUseClientDirective(lines)) {
-      writeFileSync(file, removeUseClientDirective(content))
+      await writeFile(file, removeUseClientDirective(content))
       console.log(`Removed "use client" from ${file}`)
     }
   }
