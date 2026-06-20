@@ -37,7 +37,7 @@ git-origin() {
 }
 
 git-repo() {
-  if [ ! -d .git ]; then
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     fail 'ERR: You are not inside a git repository'
     return 1
   fi
