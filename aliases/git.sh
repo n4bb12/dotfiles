@@ -49,7 +49,17 @@ git-repo() {
   url=$(echo $url | sed -e 's|.git$||g')
   url=$(echo $url | sed -e 's|.git/$||g')
 
-  open-cli "$url/tree/$(git-current-branch)"
+  local prefix
+  prefix=$(git rev-parse --show-prefix)
+  prefix=${prefix%/}
+
+  local tree_url="$url/tree/$(git-current-branch)"
+
+  if [ -n "$prefix" ]; then
+    tree_url="$tree_url/$prefix"
+  fi
+
+  open-cli "$tree_url"
 }
 
 git-pull() {
