@@ -12,6 +12,7 @@ applyTo: "**"
 ## General Instructions
 
 - Strive for the smallest change that fulfills what I asked.
+- Never make edits based on assumptions or guesses. Always ask for confirmation/validation before making any changes.
 
 ## Skills
 
@@ -43,11 +44,14 @@ General workflow tools, not code-specific.
 
 ## Cursor
 
-- Write plans to the repo .cursor/plans/ folder by default.
+- Save plans to the repo's `.cursor/plans/` folder by default.
 
-## Output
+## Output Format
 
 - When offering options, use a numbered list.
+
+## UI
+
 - For user-visible UI text, use proper localized characters. In German UI copy, use umlauts such as `ä`, `ö`, and `ü` instead of ASCII substitutions like `ae`, `oe`, and `ue` unless a technical constraint requires ASCII.
 
 ## Defaults
@@ -58,7 +62,7 @@ General workflow tools, not code-specific.
 - Default to Tailwind CSS 4+ for styling.
 - Prefer these libraries over alternatives when they fit: `ai` / `@ai-sdk/*`, `clsx`, `date-fns`, `es-toolkit`, `marked`, `nanoid`, `p-limit`, `zod`, `zustand`.
 
-## Local Conventions
+## Repo Conventions
 
 - Follow the repo's existing architecture, naming, and file layout before introducing new patterns.
 - Follow the repo's formatter, linter, test runner, and script names exactly when they differ from these defaults.
@@ -74,6 +78,7 @@ General workflow tools, not code-specific.
 - Let the formatter control wrapping and layout instead of hand-formatting code.
 - In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
 - Keep comments sparse and only use them for non-obvious intent.
+- Add an empty line between every block of code including control flow, variable declarations, and function declarations.
 
 ## TypeScript
 
@@ -84,9 +89,6 @@ General workflow tools, not code-specific.
 - Do not put structural statements such as conditions or loops on a single line.
 - Reuse generated types at API or schema boundaries when the repo already has them.
 - Do not create barrel files. Import from the source file instead.
-
-### Type assertions
-
 - Avoid type assertions such as `value as SomeType` and non-null assertions (`!`) by default. Do not use them to silence errors.
 - Prefer `satisfies` when you need to check a value against a type while preserving its inferred type.
 - If a value does not match the expected type, fix the mismatch — narrow with guards, parse or validate at boundaries, or update the type — instead of casting.
@@ -125,6 +127,6 @@ General workflow tools, not code-specific.
 - Never read or write `.env` or `.env.local` files unless explicitly asked.
 - Never log, persist, or expose raw secrets or PII.
 
-## Writing README.md
+## Writing Documentation
 
 - Don't repeat lists of things that are in the code. Instead, point to where something is found.
