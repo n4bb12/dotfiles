@@ -82,9 +82,11 @@ General workflow tools, not code-specific.
 
 ## TypeScript
 
-- Prefer falsy checks such as `if (!value)` unless a specific comparison is clearer.
+- No `==` or `!=` — only `===` / `!==`.
+- Don't compare against a specific falsy sentinel (`null`, `undefined`, `""`). Types change; `value !== null` goes stale when `undefined` is added. Express intent with shape checks: `typeof value === "number"`, `typeof value === "string"`, `Array.isArray(value)`. Use `!value` / `!!value` when any falsy means absent.
 - Prefer `if (!items.length)` over `if (items.length === 0)`.
-- Prefer `const hasItems = !!items?.length` over manual boolean coercion logic.
+- Prefer `const hasItems = !!items?.length` over manual boolean coercion.
+- Partial updates: use `"key" in update` to detect presence, not `update.key !== undefined`.
 - Avoid explicit return type annotations unless they are required for correctness or at important boundaries.
 - Do not put structural statements such as conditions or loops on a single line.
 - Reuse generated types at API or schema boundaries when the repo already has them.
@@ -107,7 +109,7 @@ General workflow tools, not code-specific.
 
 - Prefer unit tests for pure logic, not glue code.
 - Extract pure helpers when needed to make logic testable.
-- Prefer `toMatchInlineSnapshot` where snapshot testing is already the repo norm.
+- Always prefer `toMatchInlineSnapshot` over `toEqual`.
 - Do not use module mocks such as `mock.module`.
 - Do not use component renderers such as `renderToStaticMarkup`.
 - Do not write unit tests for trivial code.
