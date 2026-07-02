@@ -1,7 +1,3 @@
----
-applyTo: "**"
----
-
 # AGENTS.md
 
 ## Environment
@@ -12,37 +8,14 @@ applyTo: "**"
 ## General Instructions
 
 - Strive for the smallest change that fulfills what I asked.
-- Never make edits based on assumptions or guesses. Always ask for confirmation/validation before making any changes.
+- When uncertain about intent or facts, verify in the codebase or ask — don't guess. Changes that follow directly from the request don't need confirmation.
 
 ## Skills
 
-Use Matt Pocock’s Skills https://github.com/mattpocock/skills, not superpowers or any other skill framework. Skills reference:
+- Use Matt Pocock's Skills (https://github.com/mattpocock/skills), not superpowers or any other skill framework.
+- Skills live in `~/.claude/skills/<name>/SKILL.md`. When I reference a skill or type `/<name>`, read and follow that file.
 
-### Engineering
-
-Skills I use daily for code work.
-
-- **diagnose** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
-- **grill-with-docs** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
-- **triage** — Triage issues through a state machine of triage roles.
-- **improve-codebase-architecture** — Find deepening opportunities in a codebase, informed by the domain language in `CONTEXT.md` and the decisions in `docs/adr/`.
-- **setup-matt-pocock-skills** — Scaffold the per-repo config (issue tracker, triage label vocabulary, domain doc layout) that the other engineering skills consume. Run once per repo before using `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out`.
-- **tdd** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **to-issues** — Break any plan, spec, or PRD into independently-grabbable GitHub issues using vertical slices.
-- **to-prd** — Turn the current conversation context into a PRD and submit it as a GitHub issue. No interview — just synthesizes what you've already discussed.
-- **zoom-out** — Tell the agent to zoom out and give broader context or a higher-level perspective on an unfamiliar section of code.
-- **prototype** — Build a throwaway prototype to flesh out a design — either a runnable terminal app for state/business-logic questions, or several radically different UI variations toggleable from one route.
-
-### Productivity
-
-General workflow tools, not code-specific.
-
-- **caveman** — Ultra-compressed communication mode. Cuts token usage ~75% by dropping filler while keeping full technical accuracy.
-- **grill-me** — Get relentlessly interviewed about a plan or design until every branch of the decision tree is resolved.
-- **handoff** — Compact the current conversation into a handoff document so another agent can continue the work.
-- **write-a-skill** — Create new skills with proper structure, progressive disclosure, and bundled resources.
-
-## Cursor
+## Plans
 
 - Save plans to the repo's `.cursor/plans/` folder by default.
 
@@ -86,7 +59,7 @@ General workflow tools, not code-specific.
 - Don't compare against a specific falsy sentinel (`null`, `undefined`, `""`). Types change; `value !== null` goes stale when `undefined` is added. Express intent with shape checks: `typeof value === "number"`, `typeof value === "string"`, `Array.isArray(value)`. Use `!value` / `!!value` when any falsy means absent.
 - Prefer `if (!items.length)` over `if (items.length === 0)`.
 - Prefer `const hasItems = !!items?.length` over manual boolean coercion.
-- Partial updates: `update.key || current.key` — not `update.key !== undefined` or `"key" in update`.
+- Partial updates: `update.key ?? current.key` — not `update.key !== undefined` or `"key" in update`. Use `||` only when falsy is never a valid update.
 - Avoid explicit return type annotations unless they are required for correctness or at important boundaries.
 - Do not put structural statements such as conditions or loops on a single line.
 - Reuse generated types at API or schema boundaries when the repo already has them.
