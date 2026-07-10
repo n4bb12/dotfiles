@@ -299,3 +299,50 @@ export SEQUENCE_EDITOR="$EDITOR"
 
 alias skills='bunx skills'
 alias ai='codex e --skip-git-repo-check'
+
+# URL-encode a string (percent-encoding for query values, etc.)
+# Pure Bash, no external tools.
+urlencode() {
+  local s="$1" b result=""
+  for ((i = 0; i < ${#s}; i++)); do
+    b="${s:i:1}"
+    case "$b" in
+      [a-zA-Z0-9.~_-]) result+="$b" ;;
+      *) printf -v hex '%%%02X' "'$b"; result+="$hex" ;;
+    esac
+  done
+  printf '%s\n' "$result"
+}
+
+app() {
+  # Open the Codex app.
+  #   app       -> open the app with no specific path
+  #   app .     -> open current directory (like code .)
+  #   app path  -> open the given path
+  local url
+
+  if [ $# -eq 0 ]; then
+    url="codex://"
+  else
+    local target="$1"
+
+    # Expand ~
+    if [[ "$target" == ~* ]]; then
+      target="${target/#\~/$HOME}"
+    fi
+
+    # Make relative paths absolute (based on current shell dir)
+    if [[ "$target" != /* ]]; then
+      target="$PWD/$target"
+    fi
+
+    local p
+    p="$(wslpath -w "$target")"
+    url="codex://new?path=$(urlencode "$p")"
+  fi
+
+  # Run cmd.exe from a safe non-UNC directory (/mnt/c) so that
+  # Windows CMD doesn't print the "UNC paths are not supported"
+  # warning + current directory noise.
+  (cd /mnt/c 2>/dev/null || cd /; cmd.exe /c start "" "$url") >/dev/null 2>&1
+}
