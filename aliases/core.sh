@@ -289,7 +289,7 @@ vscode() {
   "$VSCODE_BIN" "$@"
 }
 
-# alias code='cursor'
+alias code='cursor'
 
 export EDITOR="code --wait --reuse-window"
 export GIT_SEQUENCE_EDITOR="$EDITOR"
