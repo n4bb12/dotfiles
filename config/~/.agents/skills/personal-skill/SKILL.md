@@ -16,7 +16,7 @@ The description field is the only thing the agent harness sees when deciding to 
 2. Pick a kebab-case name.
 3. Create dir only in `dotfiles/config/~/.agents/skills/<name>/`.
 4. Write SKILL.md there with short description (what + "Use when...") and agent instructions.
-5. Symlink the skill dir from `~/.agents/skills/`, `~/.claude/skills/`, `~/.grok/skills/` (and optionally cursor) directly to that dir.
+5. Symlink the skill dir from `~/.agents/skills/`, `~/.codex/skills/`, `~/.claude/skills/`, `~/.grok/skills/` (and optionally cursor) directly to that dir.
 6. Verify symlinks and test the skill.
 
 See detailed steps and template below. Follow `write-a-skill` guidelines for structure and review.
@@ -24,7 +24,7 @@ See detailed steps and template below. Follow `write-a-skill` guidelines for str
 ## Core Rules
 
 - **One real file only**: the SKILL.md must live in the dotfiles repo under `config/~/.agents/skills/<name>/SKILL.md`.
-- Live locations (~/.agents/skills/, ~/.claude/skills/, ~/.grok/skills/, optionally ~/.cursor/skills/) are **direct symlinks** only.
+- Live locations (~/.agents/skills/, ~/.codex/skills/, ~/.claude/skills/, ~/.grok/skills/, optionally ~/.cursor/skills/) are **direct symlinks** only.
 - Never write the real file in work repos, ~/.agents/skills/, or other live dirs.
 - Follow progressive disclosure: keep main SKILL.md concise (<100 lines if possible). Split complex content into REFERENCE.md, EXAMPLES.md, or scripts/.
 - Writing skills follows TDD: create pressure scenarios (with subagents) that fail without the skill first, then write the minimal skill that makes them pass, then refactor to close loopholes. Never write the skill before seeing the failure.
@@ -44,6 +44,7 @@ Typical on this machine: `/home/n4bb12/git/n4bb12/dotfiles/config/~/.agents/skil
 Create direct symlinks (use `ln -sfn`):
 
 - `~/.agents/skills/<name>` → canonical dir
+- `~/.codex/skills/<name>` → canonical dir
 - `~/.claude/skills/<name>` → canonical dir
 - `~/.grok/skills/<name>` → canonical dir
 - (optional) `~/.cursor/skills/<name>`
@@ -87,6 +88,7 @@ Point them directly at the skill directory containing the real SKILL.md.
 5. **Create direct live symlinks**
    ```bash
    ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.agents/skills/$NAME
+   ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.codex/skills/$NAME
    ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.claude/skills/$NAME
    ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.grok/skills/$NAME
    # optional
@@ -127,6 +129,7 @@ See REFERENCE.md for details if needed.
 EOF
 
 ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.agents/skills/$NAME
+ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.codex/skills/$NAME
 ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.claude/skills/$NAME
 ln -sfn "$DOTFILES/config/~/.agents/skills/$NAME" ~/.grok/skills/$NAME
 

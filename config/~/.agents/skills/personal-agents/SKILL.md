@@ -16,8 +16,8 @@ When the user says "add to my personal agent file", "edit the global AGENTS.md",
 2. Edit the canonical source: `dotfiles/config/~/.agents/AGENTS.md`
 3. Verify or recreate symlinks if needed:
    - `~/AGENTS.md` → dotfiles source (absolute)
-   - `~/.agents/AGENTS.md` → config/~/.agents/AGENTS.md (relative)
-   - `~/.claude/AGENTS.md` → same
+   - `~/.agents/AGENTS.md` → dotfiles source (absolute)
+   - `~/.claude/AGENTS.md` → dotfiles source (absolute)
 4. Make precise, minimal edits that follow the existing structure.
 5. Test by having the agent (in a fresh context) acknowledge the change.
 
