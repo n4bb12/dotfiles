@@ -84,6 +84,10 @@
 - Move complex useEffect, useCallback, useMemo, and derived data logic into custom hooks.
 - Keep JSX clean of complex expressions and logic; move them into variables or custom hooks.
 
+## Next.js
+
+- Do not use Server Actions for data loading because client-invoked Server Actions are processed sequentially. Use Server Components for server-rendered reads and Route Handlers, API endpoints, or the app's query client for client-side reads. Reserve Server Actions for mutations.
+
 ## Tests
 
 - Prefer unit tests for pure logic, not glue code.
