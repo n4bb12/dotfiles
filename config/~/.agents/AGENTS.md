@@ -57,6 +57,7 @@
 - Let the formatter control wrapping and layout instead of hand-formatting code.
 - In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
 - Keep comments sparse and only use them for non-obvious intent.
+- Do not respond to the user through code comments. Respond in chat. Code comments (if any) must be written for future readers without any context about the current conversation.
 - Add an empty line between every block of code including control flow, variable declarations, and function declarations.
 
 ## TypeScript
