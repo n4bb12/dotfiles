@@ -33,6 +33,13 @@
 
 - For user-visible UI text, use proper localized characters. In German UI copy, use umlauts such as `ä`, `ö`, and `ü` instead of ASCII substitutions like `ae`, `oe`, and `ue` unless a technical constraint requires ASCII.
 
+## Communication
+
+- Respond and provide feedback only in chat.
+- Do not respond via code comments or via visual UI built by the agent.
+- UI and code must be free of any verbal reaction to requests made in chat.
+- All such reactions would be out of context for someone else or for a future reader.
+
 ## Defaults
 
 - Prefer TypeScript for scripts and application code.
@@ -60,8 +67,7 @@
 - Use `import type` for type-only imports.
 - Let the formatter control wrapping and layout instead of hand-formatting code.
 - In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
-- Keep comments sparse and only use them for non-obvious intent.
-- Do not respond to the user through code comments. Respond in chat. Code comments (if any) must be written for future readers without any context about the current conversation.
+- Keep comments sparse and only use them for non-obvious intent. Code comments must be written for future readers without any context from the current conversation.
 - Add an empty line between every block of code including control flow, variable declarations, and function declarations.
 
 ## TypeScript
