@@ -45,28 +45,13 @@ try {
 `.trim()
 
   function getModel() {
-    const GEMINI_API_KEY = process.env.GEMINI_API_KEY
-
-    if (GEMINI_API_KEY) {
-      const modelName = model.split("/").pop() || ""
-      return createGoogleGenerativeAI({ apiKey: GEMINI_API_KEY }).languageModel(modelName)
-    }
-
-    const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
-
-    if (OPENROUTER_API_KEY) {
-      return createOpenRouter({ apiKey: OPENROUTER_API_KEY }).languageModel(model)
-    }
-
     const AI_GATEWAY_API_KEY = process.env.AI_GATEWAY_API_KEY
 
     if (AI_GATEWAY_API_KEY) {
       return gateway(model)
     }
 
-    throw new Error(
-      "Error: No AI API key found. Please set GEMINI_API_KEY, OPENROUTER_API_KEY, or AI_GATEWAY_API_KEY environment variable.",
-    )
+    throw new Error("Please set AI_GATEWAY_API_KEY")
   }
 
   // 1. Get staged changes
