@@ -1,22 +1,12 @@
 import { exec } from "node:child_process"
 import { promisify } from "node:util"
-import type { GoogleGenerativeAIProviderOptions } from "@ai-sdk/google"
-import { createGoogleGenerativeAI } from "@ai-sdk/google"
-import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import { type GatewayModelId, gateway, generateText } from "ai"
 
 try {
   const execAsync = promisify(exec)
 
-  const model: GatewayModelId = "google/gemini-3-flash-preview"
+  const model: GatewayModelId = "openai/gpt-5.4-nano"
   const temperature = 0
-  const providerOptions = {
-    // https://ai-sdk.dev/providers/ai-sdk-providers/google-generative-ai#thinking
-    thinkingConfig: {
-      thinkingBudget: 0,
-      includeThoughts: false,
-    },
-  } satisfies GoogleGenerativeAIProviderOptions
 
   const instructions = `
 ### Task
@@ -66,11 +56,9 @@ try {
   // 3. Generate commit message
   const { text } = await generateText({
     model: getModel(),
+    reasoning: "none",
     temperature: temperature,
     prompt: prompt,
-    providerOptions: {
-      google: providerOptions,
-    },
   })
 
   // 4. Output the message
