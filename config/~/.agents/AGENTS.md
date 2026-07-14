@@ -41,6 +41,10 @@
 - Default to Tailwind CSS 4+ for styling.
 - Prefer these libraries over alternatives when they fit: `ai` / `@ai-sdk/*`, `clsx`, `date-fns`, `es-toolkit`, `marked`, `nanoid`, `p-limit`, `zod`, `zustand`.
 
+## Styling
+
+- Avoid one-off Tailwind classes in favor of using the closest standard Tailwind classes or defining theme variables for custom values such as colors.
+
 ## Repo Conventions
 
 - Follow the repo's existing architecture, naming, and file layout before introducing new patterns.
