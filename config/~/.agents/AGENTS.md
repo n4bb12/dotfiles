@@ -50,7 +50,8 @@
 
 ## Styling
 
-- Avoid one-off Tailwind classes in favor of using the closest standard Tailwind classes or defining theme variables for custom values such as colors.
+- Avoid one-off Tailwind classes such as `text-[12px]`. Prefer the closest default or existing theme class (e.g. `text-xs` for 12px). For 11px also use `text-xs`; for 13px use `text-xs` or `text-sm` depending on context.
+- For custom values such as colors, define theme variables instead of one-off arbitrary classes.
 
 ## Repo Conventions
 
