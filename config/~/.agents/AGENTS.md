@@ -47,6 +47,7 @@
 - Default to React/Next.js for new web apps.
 - Default to Tailwind CSS 4+ for styling.
 - Prefer these libraries over alternatives when they fit: `ai` / `@ai-sdk/*`, `clsx`, `date-fns`, `es-toolkit`, `marked`, `nanoid`, `p-limit`, `zod`, `zustand`.
+- When using shadcn, if not specified otherwise, use preset `b6Z8GIMhE` with pointer cursor on buttons and Base UI.
 
 ## Styling
 
