@@ -93,7 +93,9 @@
 - Avoid React context for app state unless there is a strong reason.
 - Use Zustand for shared client state when global state is needed.
 - Avoid prop drilling global state into clients; position state as low as practical.
-- Move complex useEffect, useCallback, useMemo, and derived data logic into custom hooks.
+- When building React components, extract large custom-hook logic (`useEffect`, `useState`, derived data, and similar) into separate files and expose a custom hook that encapsulates that complexity so components stay lean and understandable.
+- Prefer `useEventCallback` over `useCallback`. It keeps a stable callback identity while always calling the latest implementation (ref-updated each render, returned via `useCallback` with `[]`). Use or add a small shared helper for this pattern rather than inlining it.
+- Avoid fallbacks inside components that create a new object or array on every render (for example `value ?? []` or `value ?? {}`). A fresh reference each render can cause unnecessary re-renders or infinite loops. Prefer leaving the value undefined, or extract a module-level stable empty value (e.g. `const EMPTY_ARRAY: never[] = []`) and use that as the fallback.
 - Keep JSX clean of complex expressions and logic; move them into variables or custom hooks.
 
 ## Next.js
