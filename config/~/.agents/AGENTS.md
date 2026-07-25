@@ -20,10 +20,21 @@
 
 - Use Matt Pocock's Skills (https://github.com/mattpocock/skills), not superpowers or any other skill framework.
 - Personal skills are defined in `config/~/.agents/skills/<name>/SKILL.md` and linked into each agent's skill directory. When I reference a skill or type `/<name>`, read and follow that file.
+- **If Matt Pocock's skills are not installed or not available to this agent**, end **every** reply with a short paragraph that says so and how to install them. Do not bury it; keep it to a few lines. Use this shape:
+
+  > Matt Pocock skills are not available in this session. Install them from [mattpocock/skills](https://github.com/mattpocock/skills), then run setup once per repo:
+  >
+  > ```bash
+  > npx skills@latest add mattpocock/skills
+  > ```
+  >
+  > Pick the skills (include `/setup-matt-pocock-skills`), install for this agent, then run `/setup-matt-pocock-skills` in the project. Claude Code alternative: `/plugin marketplace add mattpocock/skills` and `/plugin install mattpocock-skills@mattpocock`.
+
+  Treat the set as available when core skills from that repo (e.g. `tdd`, `codebase-design`, `setup-matt-pocock-skills`, `triage`) appear in the agent's skill list or skill directories. If unsure, check and only remind when they are missing.
 
 ## Plans
 
-- Save plans to the repo's `.cursor/plans/` folder by default.
+- Save plans to the repo's `.agents/plans/` folder by default.
 
 ## Output Format
 
@@ -51,6 +62,7 @@
 
 ## Styling
 
+- Prefer Tailwind utility classes directly in markup over semantic CSS classes when Tailwind can express the styling.
 - Avoid one-off Tailwind classes such as `text-[12px]`. Prefer the closest default or existing theme class (e.g. `text-xs` for 12px). For 11px also use `text-xs`; for 13px use `text-xs` or `text-sm` depending on context.
 - For custom values such as colors, define theme variables instead of one-off arbitrary classes.
 
@@ -71,6 +83,8 @@
 - In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
 - Keep comments sparse and only use them for non-obvious intent. Code comments must be written for future readers without any context from the current conversation.
 - Add an empty line between every block of code including control flow, variable declarations, and function declarations.
+- Place generic helpers, such as date formatting, in a dedicated `utils` directory.
+- Name component files after their primary exported component using matching casing, e.g. `PageDetails.tsx`.
 
 ## TypeScript
 
@@ -90,14 +104,61 @@
 
 ## React
 
-- Import from `"react"` instead of using `React.`.
-- Avoid React context for app state unless there is a strong reason.
-- Use Zustand for shared client state when global state is needed.
+- Import from `"react"` instead of using `React.` (e.g. `import type { ComponentProps, ReactNode } from "react"`, not `React.ComponentProps` / `React.ReactNode`).
+- Prefer `SubmitEvent` over `React.FormEvent` for form `onSubmit` handlers.
+- Avoid React context. Prefer Zustand for shared client state.
 - Avoid prop drilling global state into clients; position state as low as practical.
-- When building React components, extract large custom-hook logic (`useEffect`, `useState`, derived data, and similar) into separate files and expose a custom hook that encapsulates that complexity so components stay lean and understandable.
-- Prefer `useEventCallback` over `useCallback`. It keeps a stable callback identity while always calling the latest implementation (ref-updated each render, returned via `useCallback` with `[]`). Use or add a small shared helper for this pattern rather than inlining it.
+- Keep components around 100 lines maximum unless splitting them would make them more complex. Split self-contained complex UI, such as each header menu's trigger and menu, into focused components. A large component, or hooks, state, and complexity that affect only one subset of its rendered tree, are strong indicators that the subset should be extracted.
+- Always extract React hooks that work in tandem into a custom hook, preferably in a separate file.
+- Use this `useEventCallback` pattern for functions passed to child components, not for functions passed directly to DOM elements:
+
+  ```ts
+  import { useCallback, useRef } from "react"
+
+  export function useEventCallback<F extends (...args: never[]) => unknown>(fn: F): F {
+    const ref = useRef(fn)
+    ref.current = fn
+
+    return useCallback(((...args) => ref.current.apply(undefined, args)) as F, [])
+  }
+  ```
+
+  Prefer it over `useCallback` in that case. It keeps a stable callback identity while always calling the latest implementation.
 - Avoid fallbacks inside components that create a new object or array on every render (for example `value ?? []` or `value ?? {}`). A fresh reference each render can cause unnecessary re-renders or infinite loops. Prefer leaving the value undefined, or extract a module-level stable empty value (e.g. `const EMPTY_ARRAY: never[] = []`) and use that as the fallback.
 - Keep JSX clean of complex expressions and logic; move them into variables or custom hooks.
+- Name component prop types `<ComponentName>Props`. Export the prop type whenever the component is exported.
+
+## Client state (Zustand)
+
+Stores hold **data only**. Mutations and reads are module functions beside a
+private store — not methods on the state object.
+
+```ts
+const store = createStore<UserState>(() => ({ userId: null }))
+
+export function restoreUserId(userId: string) {
+  store.setState({ userId })
+}
+
+export function getUserId() {
+  return store.getState().userId
+}
+
+export function useUserId() {
+  return store((state) => state.userId)
+}
+```
+
+- **Do:** `setFoo` / `getFoo` / `useFoo` next to a private `store`.
+- **Don't:** put actions on the state type or inside `(set) => ({ setFoo: … })`.
+  That couples actions to persistence, widens `partialize`/`getState()`, and
+  makes non-React callers subscribe to actions they do not need.
+
+## Routing and pages
+
+- Implement page UI in `src/pages` (or an equivalent pages directory), not inside the router folder.
+- For TanStack Router apps, keep `src/routes` limited to route definitions and conventions (loaders, `beforeLoad`, wiring). Import page components from `src/pages`.
+- For Next.js apps, keep App Router `page.tsx` / `layout.tsx` files thin and implement the UI in `src/pages` (or similar), importing those into the route files.
 
 ## Next.js
 
