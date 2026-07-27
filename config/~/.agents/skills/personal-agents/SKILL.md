@@ -14,12 +14,15 @@ When the user says "add to my personal agent file", "edit the global AGENTS.md",
 
 1. Locate the dotfiles repo (usually `~/git/n4bb12/dotfiles`).
 2. Edit the canonical source: `dotfiles/config/~/.agents/AGENTS.md`
-3. Verify or recreate symlinks if needed:
+3. Check whether the same rule is applicable to the Dorkas monorepo. If it is,
+   add or update the equivalent rule in that repo's root `AGENTS.md` as part of
+   the same task.
+4. Verify or recreate symlinks if needed:
    - `~/AGENTS.md` → dotfiles source (absolute)
    - `~/.agents/AGENTS.md` → dotfiles source (absolute)
    - `~/.claude/AGENTS.md` → dotfiles source (absolute)
-4. Make precise, minimal edits that follow the existing structure.
-5. Test by having the agent (in a fresh context) acknowledge the change.
+5. Make precise, minimal edits that follow the existing structure.
+6. Test by having the agent (in a fresh context) acknowledge the change.
 
 ## Canonical Location
 
@@ -77,7 +80,18 @@ Always edit the source in dotfiles, then ensure the symlinks point correctly. Us
    - Add new global rules under the appropriate heading.
    - If adding a new top-level section, place it logically.
 
-5. **Verify symlinks**
+5. **Sync applicable rules to Dorkas**
+   Inspect the root `AGENTS.md` in the Dorkas monorepo (usually
+   `~/git/work/dorkas/AGENTS.md`) whenever a global rule is added or changed.
+   - If the rule applies to the repo's technologies or workflows, add or update
+     the equivalent project rule in the same task.
+   - Do not copy rules that are inherently global, machine-specific, or about
+     dotfiles and personal-agent setup.
+   - Avoid duplication when the project file already expresses the rule, and
+     preserve any more specific project wording.
+   - If the repo is unavailable, report that the project sync was not performed.
+
+6. **Verify symlinks**
    ```bash
    ls -l ~/AGENTS.md ~/.agents/AGENTS.md ~/.claude/AGENTS.md
    readlink -f ~/AGENTS.md
@@ -90,7 +104,7 @@ Always edit the source in dotfiles, then ensure the symlinks point correctly. Us
    ln -sfn "$DOTFILES/config/~/.agents/AGENTS.md" ~/.claude/AGENTS.md
    ```
 
-6. **Test the change**
+7. **Test the change**
    - Start a fresh agent session.
    - Ask it to summarize the global instructions or acknowledge the new content.
    - Confirm it sees the update (agents reload on file change in many setups).
@@ -133,6 +147,8 @@ Place it under the most relevant existing top-level section, or create a new one
 - [ ] Description of the change is minimal and targeted
 - [ ] Symlinks still point to the dotfiles version
 - [ ] New content is appropriate for global (not project-specific)
+- [ ] The changed rule was added to Dorkas when technologically applicable, or
+      intentionally left global-only
 - [ ] Tested in a fresh agent session
 - [ ] Follows existing style and terminology of the file
 
