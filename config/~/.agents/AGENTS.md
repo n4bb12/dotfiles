@@ -83,6 +83,8 @@
 - In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
 - Keep comments sparse and only use them for non-obvious intent. Code comments must be written for future readers without any context from the current conversation.
 - Add an empty line between every block of code including control flow, variable declarations, and function declarations.
+- In JSX, add an empty line between sibling blocks. A block is any element, fragment, or expression that spans 2 or more lines (e.g. between a multi-line `button` and a multi-line `input`).
+- Treat a line with a comment directly above it, or a statement that wraps onto multiple lines, as a code block: put an empty line above and below it when it sits next to other code.
 - Place generic helpers, such as date formatting, in a dedicated `utils` directory.
 - Name component files after their primary exported component using matching casing, e.g. `PageDetails.tsx`.
 
