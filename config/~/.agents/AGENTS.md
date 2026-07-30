@@ -20,17 +20,7 @@
 
 - Use Matt Pocock's Skills (https://github.com/mattpocock/skills), not superpowers or any other skill framework.
 - Personal skills are defined in `config/~/.agents/skills/<name>/SKILL.md` and linked into each agent's skill directory. When I reference a skill or type `/<name>`, read and follow that file.
-- **If Matt Pocock's skills are not installed or not available to this agent**, end **every** reply with a short paragraph that says so and how to install them. Do not bury it; keep it to a few lines. Use this shape:
-
-  > Matt Pocock skills are not available in this session. Install them from [mattpocock/skills](https://github.com/mattpocock/skills), then run setup once per repo:
-  >
-  > ```bash
-  > npx skills@latest add mattpocock/skills
-  > ```
-  >
-  > Pick the skills (include `/setup-matt-pocock-skills`), install for this agent, then run `/setup-matt-pocock-skills` in the project. Claude Code alternative: `/plugin marketplace add mattpocock/skills` and `/plugin install mattpocock-skills@mattpocock`.
-
-  Treat the set as available when core skills from that repo (e.g. `tdd`, `codebase-design`, `setup-matt-pocock-skills`, `triage`) appear in the agent's skill list or skill directories. If unsure, check and only remind when they are missing.
+- Install reminders for Matt Pocock skills belong only in the Dorkas repo `AGENTS.md`. Do not invent or repeat that nudge from this global file.
 
 ## Plans
 
