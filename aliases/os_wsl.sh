@@ -12,6 +12,9 @@ cp ~/git/n4bb12/dotfiles/config/~/.agents/AGENTS.md /mnt/c/Users/der_a/AppData/R
 # "$(wslpath -w "$PWD")"'
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
 
+# env
+echo 'export BROWSER=wslview' >> ~/.bashrc
+
 # vcxsrv
 export DISPLAY=$(ip route | awk '/^default/{print $3}'):0.0
 export XCURSOR_SIZE=64
