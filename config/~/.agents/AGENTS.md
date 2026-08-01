@@ -33,6 +33,7 @@
 ## UI
 
 - For user-visible UI text, use proper localized characters. In German UI copy, use umlauts such as `ä`, `ö`, and `ü` instead of ASCII substitutions like `ae`, `oe`, and `ue` unless a technical constraint requires ASCII.
+- Preview / comparison switchers (fonts, colors, layout variants, etc.) should stay open when an option is selected so the user can click through options without reopening the menu each time.
 
 ## Communication
 
