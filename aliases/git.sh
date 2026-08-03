@@ -36,6 +36,35 @@ git-origin() {
   git config --get remote.origin.url
 }
 
+git-pr() {
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    fail 'ERR: You are not inside a git repository'
+    return 1
+  fi
+
+  local selector=${1:-$(git-current-branch)}
+  local url=$(git-origin)
+
+  case "$url" in
+    *://gitlab.*/* | *://*.gitlab.*/* | git@gitlab.*:* | git@*.gitlab.*:*)
+      if ! command -v glab >/dev/null 2>&1; then
+        fail 'ERR: glab is required to open GitLab merge requests'
+        return 1
+      fi
+
+      glab mr view "$selector" --web
+      ;;
+    *)
+      if ! command -v gh >/dev/null 2>&1; then
+        fail 'ERR: gh is required to open GitHub pull requests'
+        return 1
+      fi
+
+      gh pr view "$selector" --web
+      ;;
+  esac
+}
+
 git-repo() {
   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     fail 'ERR: You are not inside a git repository'
@@ -256,6 +285,7 @@ alias commit='git-commit-with-ai'
 alias continue='git-continue'
 alias merge='git-merge'
 alias pull='git-pull'
+alias pr='git-pr'
 alias rebase='git-rebase'
 alias repo='git-repo'
 alias skip='git-skip'
