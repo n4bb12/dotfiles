@@ -73,6 +73,12 @@ if ! gh auth status &>/dev/null; then
   gh auth login
 fi
 
+# gitlab cli
+glab_version=1.109.0
+glab_package=$(mktemp --suffix=.deb)
+curl -fsSL -o "$glab_package" "https://gitlab.com/gitlab-org/cli/-/releases/v${glab_version}/downloads/glab_${glab_version}_linux_amd64.deb"
+sudo apt install "$glab_package" -y
+
 # copilot cli
 curl -fsSL https://gh.io/copilot-install | bash
 
