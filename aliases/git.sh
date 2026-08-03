@@ -53,7 +53,15 @@ git-repo() {
   prefix=$(git rev-parse --show-prefix)
   prefix=${prefix%/}
 
-  local tree_url="$url/tree/$(git-current-branch)"
+  local tree_path='tree'
+
+  case "$url" in
+    *://gitlab.*/* | *://*.gitlab.*/*)
+      tree_path='-/tree'
+      ;;
+  esac
+
+  local tree_url="$url/$tree_path/$(git-current-branch)"
 
   if [ -n "$prefix" ]; then
     tree_url="$tree_url/$prefix"
