@@ -115,7 +115,7 @@ Always edit the source in dotfiles, then ensure the symlinks point correctly. Us
 - Environment (WSL, OS, etc.)
 - General principles (smallest change, verify instead of guess)
 - Skills configuration (which skill frameworks to prefer, where skills live)
-- Plan storage defaults (e.g., `.cursor/plans/`)
+- Plan storage (always the repo's `.agents/plans/`, never only `.cursor/plans/`)
 - Output/UI conventions that are personal
 - Cross-cutting rules you always want
 
