@@ -86,7 +86,7 @@ current repository so later readers and later sessions can find them.
 - Use `import type` for type-only imports.
 - Let the formatter control wrapping and layout instead of hand-formatting code.
 - In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
-- Keep comments sparse and only use them for non-obvious intent. Code comments must be written for future readers without any context from the current conversation.
+- Keep comments sparse and only use them for non-obvious intent. Code comments must be written for future readers without any context from the current conversation. Explain why the code is the way it is. Do not narrate a past failure, a fix, or chat context ("this used to X", "Y didn't work", "we changed this because").
 - Add an empty line between every block of code including control flow, variable declarations, and function declarations.
 - In JSX, add an empty line between sibling blocks. A block is any element, fragment, or expression that spans 2 or more lines (e.g. between a multi-line `button` and a multi-line `input`).
 - Treat a line with a comment directly above it, or a statement that wraps onto multiple lines, as a code block: put an empty line above and below it when it sits next to other code.
@@ -194,7 +194,37 @@ export function useUserId() {
 
 - Never read or write `.env` or `.env.local` files unless explicitly asked.
 - Never log, persist, or expose raw secrets or PII.
+- Before deleting a directory (including `git rm -r` / `rm -rf`), check for
+  unversioned secret files such as `.env.local`, `.env`, credential JSON, or
+  other gitignored secrets inside it. Those files are not in git and will be
+  destroyed with the tree. Preserve or move them first, or ask before deleting.
 
 ## Writing Documentation
 
-- Don't repeat lists of things that are in the code. Instead, point to where something is found.
+Default: **don't write documentation.** Most of what people ask to "document"
+is already in the code, package manifests, env templates, or enforced tests.
+Point there instead of copying it into Markdown.
+
+Write a living doc only if an agent that has **this file, the project
+`AGENTS.md`, the code, and the project's env/package entrypoints** would still
+get the decision wrong. That is three cases:
+
+- **Human wayfinder** — first clone, which app or package to open, PR and
+  access. Includes a non-technical person directing an agent. One onboarding
+  path in the repo, not a README per workspace.
+- **Why** — goals, trade-offs, conventions that only emerge from a large read.
+  An ADR or a short note next to the exception, not a setup guide.
+- **Agent contract** — non-standard working rules that must be followed.
+  Project `AGENTS.md`, or a workspace `AGENTS.md` only where that app diverges.
+
+Do not add per-app install/dev READMEs, package or app inventories, vendor-doc
+link dumps, or runbooks that restate scripts. A tool README is allowed when
+invoking the tool is not the project's normal start command.
+
+Dated investigations go in `.agents/research/` (sources and a date) when the
+repo uses `.agents/`. Do not copy them into living docs wholesale. Promote only
+facts that must stay true; archive the rest. Plans stay in `.agents/plans/`
+(see Plans above).
+
+If the project `AGENTS.md` names concrete paths (onboarding, ADRs, tracking),
+those win over this section for placement. The test above still applies.
