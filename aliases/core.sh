@@ -346,3 +346,20 @@ app() {
   # warning + current directory noise.
   (cd /mnt/c 2>/dev/null || cd /; cmd.exe /c start "" "$url") >/dev/null 2>&1
 }
+
+# AI
+
+cask() {
+  cursor-agent -p --output-format text \
+    "Do not modify files. Answer this question: $*"
+}
+
+gask() {
+  grok --sandbox read-only -p "$*"
+}
+
+oask() {
+  codex exec --sandbox read-only "$*"
+}
+
+alias ask='oask'
