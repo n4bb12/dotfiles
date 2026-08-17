@@ -24,12 +24,19 @@
 
 ## Plans
 
-Plans are **git history**, not session scratch. Always persist them in the
-current repository so later readers and later sessions can find them.
+Plans are **git history**, not session scratch. Persist a plan in the current
+repository only when it was:
 
-- Write every plan as Markdown under the repo's `.agents/plans/` (create the
-  folder if needed). Do this by default — do not wait to be asked, and do not
-  treat the work as done until that file exists in the repo.
+- Created through plan mode.
+- Explicitly requested in chat.
+- Created by using a planning skill such as `grilling`.
+
+Do not create plan files for ordinary prompts or implementation work that did
+not use one of those planning paths. For plans that do qualify:
+
+- Write the plan as Markdown under the repo's `.agents/plans/` (create the
+  folder if needed), and do not treat the planning work as done until that file
+  exists in the repo.
 - A Cursor/editor plan (`.cursor/plans/` or the plan UI) is **not** the
   archive. Copy or write the same content into `.agents/plans/` before you
   stop. Leaving a plan only in `.cursor/plans/` or in chat is incomplete.
