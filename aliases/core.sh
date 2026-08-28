@@ -51,7 +51,6 @@ alias bui="bun update --interactive"
 alias clip='clip.exe'
 alias codei='code-insiders'
 alias idea="idea64"
-alias kill='fkill --force'
 alias oc='opencode'
 alias open='open-cli'
 
@@ -65,6 +64,30 @@ alias fixbun='git checkout HEAD~1 -- bun.lock && bun i'
 alias bunfix='fixbun'
 
 # FUNCTIONS ============================
+
+# Kill by TCP port or process name. `kill 4020`, `kill :4020`, `kill node`.
+unalias kill 2>/dev/null
+kill() {
+  local arg
+  local status=0
+
+  for arg in "$@"; do
+    case "$arg" in
+      -f | --force | -9) ;;
+      :*)
+        killport "${arg#:}" || status=$?
+        ;;
+      *[!0-9]*)
+        pkill -9 -- "$arg" || status=$?
+        ;;
+      *)
+        killport "$arg" || status=$?
+        ;;
+    esac
+  done
+
+  return "$status"
+}
 
 # Create a new directory and enter it
 mkcd() {
