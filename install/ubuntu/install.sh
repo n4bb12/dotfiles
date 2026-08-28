@@ -111,7 +111,6 @@ npm config set shell bash
 # @ffmpeg-installer/ffmpeg
 packages=(
   bundle-phobia-cli
-  fkill-cli
   fx
   jq
   nodemon
@@ -231,6 +230,10 @@ fi
 
 # ast-grep
 cargo install ast-grep
+
+# killport (kill process by port: `kill 4020`)
+# https://github.com/jkfran/killport
+cargo install killport
 
 # zsh
 sudo apt install zsh

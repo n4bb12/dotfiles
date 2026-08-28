@@ -22,6 +22,7 @@ brew-install gmp
 brew-install gnu-sed
 brew-install gnupg
 brew-install grep
+brew-install killport
 brew-install moreutils
 brew-install node
 brew-install nvm
