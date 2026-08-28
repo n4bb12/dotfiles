@@ -49,6 +49,7 @@ not use one of those planning paths. For plans that do qualify:
 ## Output Format
 
 - When offering options, use a numbered list.
+- Do not use em dashes. Use commas, parentheses, colons, or periods instead.
 
 ## UI
 
