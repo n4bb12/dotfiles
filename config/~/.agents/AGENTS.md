@@ -20,7 +20,6 @@
 
 - Use Matt Pocock's Skills (https://github.com/mattpocock/skills), not superpowers or any other skill framework.
 - Personal skills are defined in `config/~/.agents/skills/<name>/SKILL.md` and linked into each agent's skill directory. When I reference a skill or type `/<name>`, read and follow that file.
-- Install reminders for Matt Pocock skills belong only in the Dorkas repo `AGENTS.md`. Do not invent or repeat that nudge from this global file.
 
 ## Plans
 
