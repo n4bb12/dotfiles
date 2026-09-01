@@ -12,8 +12,20 @@ cp ~/git/n4bb12/dotfiles/config/~/.agents/AGENTS.md /mnt/c/Users/der_a/AppData/R
 # "$(wslpath -w "$PWD")"'
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
 
-# env
-echo 'export BROWSER=wslview' >> ~/.bashrc
+# Sets the window title.
+set_title() {
+  local DIR="${PWD}"
+  # Check for match ignoring case (useful for Windows)
+  if [[ "${DIR,,}" == "${HOME,,}"* ]]; then
+    # Replace the prefix with ~
+    DIR="~${DIR:${#HOME}}"
+  fi
+  echo -ne "\033]0;${DIR}\007"
+}
+export PROMPT_COMMAND=set_title
+
+# This fixes convex oauth login getting stuck in WSL. It will open the default browser in Windows instead of WSL.
+export BROWSER=wslview
 
 # vcxsrv
 export DISPLAY=$(ip route | awk '/^default/{print $3}'):0.0
@@ -33,4 +45,4 @@ alias fd='fdfind'
 
 # commands
 alias f='code "$(fzf)"'
-alias reload='source ~/.profile'
+alias reload='source ~/.bashrc'
