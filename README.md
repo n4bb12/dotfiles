@@ -30,9 +30,6 @@ cd dotfiles
 bash install/mac.sh
 bash install/win.sh
 
-# Build bash utils
-bash dot build
-
 # Source bash utils in your shell profile
 # See config/shell for example files
 # Example:
@@ -46,13 +43,6 @@ cp ~/git/n4bb12/dotfiles/config/shell/.zprofile ~/.zprofile
 source dist/bash.sh
 ```
 
-#### Update
-
-```bash
-# Rebuild `dist` and update `dist` dependencies:
-bash dot update
-```
-
-#
+---
 
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
