@@ -50,20 +50,20 @@ app() {
 
 # AI
 
-cask() {
+ask-cursor() {
   cursor-agent -p --output-format text \
     "Do not modify files. Answer this question: $*"
 }
 
-gask() {
+ask-grok() {
   grok --sandbox read-only -p "$*"
 }
 
-oask() {
+ask-codex() {
   codex exec --sandbox read-only "$*"
 }
 
-oask-silent() {
+ask-codex-silent() {
   local output status
   output="$(mktemp)" || return 1
 
@@ -82,17 +82,15 @@ oask-silent() {
   return "$status"
 }
 
-oask-app-server() {
-  local script_dir
-  script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-  bun run "$script_dir/oask-app-server.ts" "$@"
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
+ask-codex-app-server() {
+  bun run "$script_dir/ask-codex-app-server.ts" "$@"
 }
 
-oask-ai-sdk() {
-  local script_dir
-  script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-  bun run "$script_dir/oask-ai-sdk.ts" "$@"
+ask-ai-sdk() {
+  bun run "$script_dir/ask-ai-sdk.ts" "$@"
 }
 
-alias ask='oask-app-server'
+alias ask='ask-ai-sdk'
 alias ?=ask

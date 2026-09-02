@@ -144,7 +144,7 @@ const tools = {
 }
 
 try {
-  const model = (process.env.OASK_MODEL ?? "openai/gpt-5.4-nano") as GatewayModelId
+  const model = (process.env.ASK_MODEL ?? "openai/gpt-5.4-nano") as GatewayModelId
   const result = streamText({
     model: gateway(model),
     system: [
