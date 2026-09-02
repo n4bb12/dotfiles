@@ -5,6 +5,8 @@ import { type GatewayModelId, gateway, jsonSchema, stepCountIs, streamText, tool
 const maxToolOutput = 50_000
 const maxFiles = 5_000
 const ignoredDirectories = new Set([".cache", ".git", ".next", "build", "coverage", "dist", "node_modules"])
+const reasoningLevels = ["provider-default", "none", "low", "medium", "high", "xhigh"] as const
+type ReasoningLevel = (typeof reasoningLevels)[number]
 const prompt = process.argv.slice(2).join(" ").trim()
 const root = await realpath(process.cwd())
 
@@ -15,6 +17,12 @@ if (!prompt) {
 
 if (!process.env.AI_GATEWAY_API_KEY) {
   console.error("Please set AI_GATEWAY_API_KEY")
+  process.exit(1)
+}
+
+const reasoning = (process.env.ASK_REASONING ?? "provider-default") as ReasoningLevel
+if (!reasoningLevels.some((level) => level === reasoning)) {
+  console.error(`ASK_REASONING must be one of: ${reasoningLevels.join(", ")}`)
   process.exit(1)
 }
 
@@ -153,6 +161,7 @@ try {
       "Answer directly and do not claim to have modified files.",
     ].join(" "),
     prompt,
+    reasoning,
     tools,
     stopWhen: stepCountIs(10),
     onError: () => {},
