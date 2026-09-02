@@ -96,6 +96,7 @@ const tools = {
     execute: async ({ query, glob }) => {
       const expression = new RegExp(query, "u")
       const matches: string[] = []
+      let outputLength = 0
 
       for (const path of await listRepoFiles()) {
         if (!matchesGlob(path, glob)) continue
@@ -106,8 +107,12 @@ const tools = {
 
           for (const [index, line] of contents.toString("utf8").split("\n").entries()) {
             expression.lastIndex = 0
-            if (expression.test(line)) matches.push(`${path}:${index + 1}:${line}`)
-            if (matches.join("\n").length >= maxToolOutput) return clip(matches.join("\n"))
+            if (!expression.test(line)) continue
+
+            const match = `${path}:${index + 1}:${line}`
+            matches.push(match)
+            outputLength += match.length + 1
+            if (outputLength >= maxToolOutput) return clip(matches.join("\n"))
           }
         } catch {
           // Ignore unreadable and transient files.
@@ -153,19 +158,20 @@ try {
     onError: () => {},
   })
 
-  let wroteOutput = false
   let outputEndsWithNewline = true
 
-  for await (const part of result.fullStream) {
+  for await (const part of result.stream) {
     if (part.type === "error") throw part.error
     if (part.type !== "text-delta") continue
 
-    process.stdout.write(part.text.replaceAll("\r", ""))
-    wroteOutput = true
-    outputEndsWithNewline = part.text.endsWith("\n") || part.text.endsWith("\r")
+    const text = part.text.replaceAll("\r", "")
+    if (!text) continue
+
+    process.stdout.write(text)
+    outputEndsWithNewline = text.endsWith("\n")
   }
 
-  if (wroteOutput && !outputEndsWithNewline) process.stdout.write("\n")
+  if (!outputEndsWithNewline) process.stdout.write("\n")
 } catch (error) {
   console.error(getErrorMessage(error))
   process.exitCode = 1

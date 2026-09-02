@@ -34,11 +34,8 @@ const pending = new Map<number, PendingRequest>()
 const messagePhases = new Map<string, string | null>()
 const streamedMessageIds = new Set<string>()
 let nextRequestId = 0
-let activeTurnId: string | null = null
-let resolveTurn: ((value: JsonObject) => void) | null = null
-let rejectTurn: ((error: Error) => void) | null = null
+let turnFinished: PromiseWithResolvers<JsonObject> | undefined
 let serverError = ""
-let wroteOutput = false
 let outputEndsWithNewline = true
 let shuttingDown = false
 
@@ -63,14 +60,30 @@ function request<T>(method: string, params: JsonObject): Promise<T> {
   })
 }
 
+function writeOutput(value: string) {
+  const normalized = value.replaceAll("\r", "")
+  if (!normalized) return
+
+  process.stdout.write(normalized)
+  outputEndsWithNewline = normalized.endsWith("\n")
+}
+
+function fail(error: Error) {
+  for (const handler of pending.values()) handler.reject(error)
+  pending.clear()
+  turnFinished?.reject(error)
+}
+
 function completeTurn(turn: JsonObject) {
+  if (!turnFinished) return
+
   if (turn.status === "failed") {
     const error = isObject(turn.error) ? turn.error.message : undefined
-    rejectTurn?.(new Error(typeof error === "string" ? error : "Codex turn failed"))
+    turnFinished.reject(new Error(typeof error === "string" ? error : "Codex turn failed"))
   } else if (turn.status === "interrupted") {
-    rejectTurn?.(new Error("Codex turn was interrupted"))
+    turnFinished.reject(new Error("Codex turn was interrupted"))
   } else {
-    resolveTurn?.(turn)
+    turnFinished.resolve(turn)
   }
 }
 
@@ -115,17 +128,14 @@ lines.on("line", (line) => {
   }
 
   if (message.method === "item/agentMessage/delta" && isObject(message.params)) {
-    const { delta, itemId, turnId } = message.params
+    const { delta, itemId } = message.params
     if (
       typeof delta === "string" &&
       typeof itemId === "string" &&
-      (activeTurnId === null || turnId === activeTurnId) &&
       (!finalOnly || messagePhases.get(itemId) !== "commentary")
     ) {
-      process.stdout.write(delta.replaceAll("\r", ""))
+      writeOutput(delta)
       streamedMessageIds.add(itemId)
-      wroteOutput = true
-      outputEndsWithNewline = delta.endsWith("\n") || delta.endsWith("\r")
     }
     return
   }
@@ -147,25 +157,18 @@ lines.on("line", (line) => {
 
   if (message.method === "turn/completed" && isObject(message.params)) {
     const turn = message.params.turn
-    if (isObject(turn) && typeof turn.id === "string" && turn.id === activeTurnId) {
-      completeTurn(turn)
-    }
+    if (isObject(turn)) completeTurn(turn)
   }
 })
 
 server.on("error", (error) => {
-  for (const handler of pending.values()) handler.reject(error)
-  pending.clear()
-  rejectTurn?.(error)
+  fail(error)
 })
 
 server.on("close", (code) => {
   if (shuttingDown) return
   const details = serverError.trim()
-  const error = new Error(details || `Codex App Server exited with status ${code ?? "unknown"}`)
-  for (const handler of pending.values()) handler.reject(error)
-  pending.clear()
-  rejectTurn?.(error)
+  fail(new Error(details || `Codex App Server exited with status ${code ?? "unknown"}`))
 })
 
 async function main() {
@@ -186,18 +189,15 @@ async function main() {
     ephemeral: true,
   })
 
-  const turnFinished = new Promise<JsonObject>((resolve, reject) => {
-    resolveTurn = resolve
-    rejectTurn = reject
-  })
+  const completion = Promise.withResolvers<JsonObject>()
+  turnFinished = completion
 
-  const response = await request<{ turn: { id: string } }>("turn/start", {
+  await request("turn/start", {
     threadId: thread.thread.id,
     input: [{ type: "text", text: prompt }],
   })
-  activeTurnId = response.turn.id
 
-  await turnFinished
+  await completion.promise
 }
 
 try {
@@ -206,7 +206,7 @@ try {
   console.error(getErrorMessage(error))
   process.exitCode = 1
 } finally {
-  if (wroteOutput && !outputEndsWithNewline) process.stdout.write("\n")
+  if (!outputEndsWithNewline) process.stdout.write("\n")
   shuttingDown = true
   lines.close()
   server.stdin.end()
