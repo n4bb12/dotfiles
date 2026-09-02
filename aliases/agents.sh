@@ -82,5 +82,17 @@ oask-silent() {
   return "$status"
 }
 
-alias ask='oask-silent'
+oask-app-server() {
+  local script_dir
+  script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+  bun run "$script_dir/oask-app-server.ts" "$@"
+}
+
+oask-ai-sdk() {
+  local script_dir
+  script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+  bun run "$script_dir/oask-ai-sdk.ts" "$@"
+}
+
+alias ask='oask-app-server'
 alias ?=ask
