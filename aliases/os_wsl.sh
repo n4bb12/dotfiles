@@ -22,7 +22,8 @@ set_title() {
   fi
   echo -ne "\033]0;${DIR}\007"
 }
-export PROMPT_COMMAND=set_title
+PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}set_title
+export PROMPT_COMMAND
 
 # This fixes convex oauth login getting stuck in WSL. It will open the default browser in Windows instead of WSL.
 export BROWSER=wslview
