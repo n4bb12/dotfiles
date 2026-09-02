@@ -385,4 +385,23 @@ oask() {
   codex exec --sandbox read-only "$*"
 }
 
-alias ask='oask'
+oask-silent() {
+  local output status
+  output="$(mktemp)" || return 1
+
+  codex exec --sandbox read-only \
+    --output-last-message "$output" \
+    "$*" >/dev/null 2>&1
+  status=$?
+
+  if (( status == 0 )); then
+    # Codex may omit the final newline, which lets the shell prompt overwrite
+    # part of the response. Also normalize CRLF output when running in WSL.
+    command awk '{ sub(/\r$/, ""); print }' "$output"
+  fi
+
+  command rm -f "$output"
+  return "$status"
+}
+
+alias ask='oask-silent'
