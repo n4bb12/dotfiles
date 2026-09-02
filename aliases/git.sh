@@ -282,7 +282,7 @@ git-worktree-add() {
 alias abort='git-abort'
 alias commit='git-commit'
 alias commit='git-commit-with-ai'
-alias continue='git-continue'
+alias cont='git-continue'
 alias merge='git-merge'
 alias pull='git-pull'
 alias pr='git-pr'
