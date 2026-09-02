@@ -16,8 +16,8 @@ function getErrorMessage(error: unknown): string {
 }
 
 const prompt = process.argv.slice(2).join(" ").trim()
-const debug = process.env.OASK_DEBUG === "1"
-const finalOnly = process.env.OASK_FINAL_ONLY === "1"
+const debug = process.env.ASK_DEBUG === "1"
+const finalOnly = process.env.ASK_FINAL_ONLY === "1"
 const startedAt = performance.now()
 
 if (!prompt) {
@@ -174,8 +174,8 @@ server.on("close", (code) => {
 async function main() {
   await request("initialize", {
     clientInfo: {
-      name: "oask_app_server",
-      title: "oask App Server",
+      name: "n4bb12_ask_app_server",
+      title: "n4bb12a Ask App Server",
       version: "1.0.0",
     },
     capabilities: null,
