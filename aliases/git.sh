@@ -358,7 +358,7 @@ alias git-mod='git update-index --chmod'
 
 # Shorthands
 alias back='git-back'
-alias ch='git-checkout'
+alias ch='git checkout'
 alias cm='git-commit'
 alias cmc='git-commit-with-ai'
 alias cont='git-continue'
