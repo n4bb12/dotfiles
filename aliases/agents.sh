@@ -51,8 +51,33 @@ app() {
 # AI
 
 ask-cursor() {
-  cursor-agent -p --output-format text \
+  cursor-agent -p --model "${ASK_CURSOR_MODEL:-auto}" --output-format text \
     "Do not modify files. Answer this question: $*"
+}
+
+ask-cursor-streamed() {
+  local -a pipeline_status
+
+  cursor-agent --print --mode=ask --model "${ASK_CURSOR_MODEL:-auto}" --output-format stream-json "$*" |
+    command bun -e '
+      import { createInterface } from "node:readline"
+
+      for await (const line of createInterface({ input: process.stdin })) {
+        const event = JSON.parse(line)
+        if (event.type !== "assistant") continue
+
+        for (const part of event.message?.content ?? []) {
+          if (part.type === "text") process.stdout.write(part.text)
+        }
+      }
+    '
+  pipeline_status=("${PIPESTATUS[@]}")
+
+  # Cursor deltas generally omit a final newline.
+  printf '\n'
+
+  (( pipeline_status[0] != 0 )) && return "${pipeline_status[0]}"
+  return "${pipeline_status[1]}"
 }
 
 ask-grok() {
@@ -65,5 +90,5 @@ ask-codex() {
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-alias ask='ask-cursor'
+alias ask='ask-cursor-streamed'
 alias ?=ask
