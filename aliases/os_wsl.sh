@@ -47,3 +47,4 @@ alias fd='fdfind'
 # commands
 alias f='code "$(fzf)"'
 alias reload='source ~/.bashrc'
+alias bashrc='code ~/.bashrc'
