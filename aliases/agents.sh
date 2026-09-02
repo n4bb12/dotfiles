@@ -63,34 +63,7 @@ ask-codex() {
   codex exec --sandbox read-only "$*"
 }
 
-ask-codex-silent() {
-  local output status
-  output="$(mktemp)" || return 1
-
-  codex exec --sandbox read-only \
-    --output-last-message "$output" \
-    "$*" >/dev/null 2>&1
-  status=$?
-
-  if (( status == 0 )); then
-    # Codex may omit the final newline, which lets the shell prompt overwrite
-    # part of the response. Also normalize CRLF output when running in WSL.
-    command awk '{ sub(/\r$/, ""); print }' "$output"
-  fi
-
-  command rm -f "$output"
-  return "$status"
-}
-
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-ask-codex-app-server() {
-  bun run "$script_dir/ask-codex-app-server.ts" "$@"
-}
-
-ask-ai-sdk() {
-  bun run "$script_dir/ask-ai-sdk.ts" "$@"
-}
-
-alias ask='ask-ai-sdk'
+alias ask='ask-cursor'
 alias ?=ask
