@@ -88,7 +88,9 @@ ask-codex() {
   codex exec --sandbox read-only "$*"
 }
 
-script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+ask-pi() {
+  pi -p "$*"
+}
 
-alias ask='ask-cursor-streamed'
+alias ask='ask-pi'
 alias ?=ask
