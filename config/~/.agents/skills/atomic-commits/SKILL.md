@@ -15,7 +15,7 @@ Turn the repository's current uncommitted work into a fine-grained sequence of c
 2. Inspect the complete diffs and enough surrounding code to understand intent, dependencies, and behavior. Treat staged changes as input, not as a required commit boundary.
 3. Treat all current changes as in scope unless the user narrowed the scope. If ownership or scope is genuinely ambiguous, stop before committing and ask.
 
-Never discard or overwrite working-tree changes. Never read secret files merely because they are untracked.
+Never discard or overwrite working-tree changes. Never stash (`git stash`, `stash push`, `stash pop`, `stash apply`, `stash -u`) to isolate commit groups: leave remaining work on disk and select each group only through the index. Never read secret files merely because they are untracked.
 
 ## Design the Commit Sequence
 
@@ -35,7 +35,7 @@ Plan the groups and their dependency order internally. Do not require the user t
 
 For each group:
 
-1. Arrange the index so it contains only that group. Existing staged changes may be safely unstaged for regrouping without altering the working tree.
+1. Arrange the index so it contains only that group. Existing staged changes may be safely unstaged for regrouping without altering the working tree. Do not stash, hide, or temporarily remove remaining changes while committing a group.
 2. Stage explicit paths when the whole file belongs to the group. When one file contains multiple concerns, stage selected hunks or construct and apply a precise cached patch. Never use broad staging commands such as `git add .` or `git add -A`.
 3. Review `git diff --cached --stat` and `git diff --cached`. Confirm the commit is complete, contains no unrelated hunks, and leaves the repository structurally valid for the next commit.
 4. Run focused, inexpensive checks when they materially reduce risk. Do not test every historical intermediate commit unless the user asks; use dependency-aware judgment to preserve a buildable sequence by construction.
