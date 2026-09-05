@@ -25,7 +25,7 @@
     "check": "tsgo --noEmit",
     "fix": "bun format && bun check",
     "format": "biome check --write --unsafe .",
-    "skills:install": "bunx skills add ./config/~/.agents/skills --global --all",
+    "skills": "bun scripts/install-skills.ts",
     "test": "bun test"
   },
   "dependencies": {
