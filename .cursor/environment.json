@@ -1,0 +1,4 @@
+{
+  "name": "dotfiles",
+  "install": "bash .cursor/install.sh"
+}
