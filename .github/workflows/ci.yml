@@ -10,3 +10,4 @@ jobs:
       - uses: ./.github/actions/setup-bun
       - run: bun install --frozen-lockfile
       - run: bun biome ci .
+      - run: bun test

@@ -153,16 +153,7 @@ Fix anything that is in scope for your task.
 
 This satisfies "the change to be complete in the sense that it compiles now, with all the current changes being on disk."
 
-If you want to be extra rigorous that *your commit alone* does not introduce breakage (when other parallel changes are not present):
-
-```bash
-git stash push --keep-index -m "other-agents-inflight"
-# At this point index == your staged changes only
-bun fix && bun run test
-git stash pop
-```
-
-If the stashed test fails, your change has an undeclared dependency on another agent's edit. Re-scope the tasks.
+If you want to be extra rigorous that *your commit alone* does not introduce breakage (when other parallel changes are not present), use commit-my instead of stashing. Never stash in a shared working tree: it would hide or conflict with other agents' in-flight work.
 
 ### 8. Commit (or hand off)
 
