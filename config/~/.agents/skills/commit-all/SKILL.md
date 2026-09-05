@@ -1,13 +1,15 @@
 ---
-name: atomic-commits
-description: Use when the user wants existing uncommitted repository changes analyzed, split into logical atomic commits, staged, and committed without prescribing the grouping.
+name: commit-all
+description: Use when the user wants all existing uncommitted repository changes analyzed, split into logical atomic commits, staged, and committed without prescribing the grouping, or asks for /commit-all or atomic commits.
 argument-hint: "optional scope or commit-message convention"
 compatibility: Requires git
 ---
 
-# Atomic Commits
+# Commit All
 
-Turn the repository's current uncommitted work into a fine-grained sequence of coherent commits. Invoking this skill authorizes staging and committing the in-scope changes; do not ask the user to design the split.
+Turn the repository's current uncommitted work into a fine-grained sequence of coherent commits. Invoking this skill authorizes staging and committing the in-scope changes. Do not ask the user to design the split.
+
+If other agents have parallel uncommitted work in this working tree, use commit-my instead. This skill commits from the shared tree and is for when every dirty change is in scope.
 
 ## Understand the Change Set
 
@@ -23,7 +25,7 @@ Each commit should represent one reason to change the code: independently unders
 
 - Group changes by semantic purpose, not by file, directory, or time of editing.
 - Keep the same mechanical or configuration change across multiple packages together.
-- Separate distinct concerns even when they touch the same component or file—for example, visual styling, animation, and form behavior.
+- Separate distinct concerns even when they touch the same component or file, for example visual styling, animation, and form behavior.
 - Keep implementation with the tests, types, schemas, migrations, generated artifacts, and documentation required for that implementation.
 - Avoid artificial splits such as committing a helper and its sole use separately when they form one feature.
 - Order genuinely independent prerequisites before their consumers when that produces useful commits.
@@ -38,7 +40,7 @@ For each group:
 1. Arrange the index so it contains only that group. Existing staged changes may be safely unstaged for regrouping without altering the working tree. Do not stash, hide, or temporarily remove remaining changes while committing a group.
 2. Stage explicit paths when the whole file belongs to the group. When one file contains multiple concerns, stage selected hunks or construct and apply a precise cached patch. Never use broad staging commands such as `git add .` or `git add -A`.
 3. Review `git diff --cached --stat` and `git diff --cached`. Confirm the commit is complete, contains no unrelated hunks, and leaves the repository structurally valid for the next commit.
-4. Run focused, inexpensive checks when they materially reduce risk. Do not test every historical intermediate commit unless the user asks; use dependency-aware judgment to preserve a buildable sequence by construction.
+4. Run focused, inexpensive checks when they materially reduce risk. Do not test every historical intermediate commit unless the user asks. Use dependency-aware judgment to preserve a buildable sequence by construction.
 5. Commit with the repository's message convention and a message describing this commit's single intent. Do not bypass hooks.
 6. Reinspect status because hooks may modify files, then continue with the remaining groups.
 
