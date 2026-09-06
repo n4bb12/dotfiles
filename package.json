@@ -30,15 +30,14 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@ai-sdk/google": "^4.0.62",
     "@openrouter/ai-sdk-provider": "^3.0.0",
-    "ai": "^7.0.90"
+    "ai": "^7.0.93"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.11",
+    "@biomejs/biome": "^2.5.12",
     "@types/bun": "^1.4.1",
     "@types/node": "^26.4.1",
-    "bun-types": "^1.4.0",
+    "bun-types": "^1.4.2",
     "prettier": "^3.9.6",
     "typescript": "^7.0.2"
   }
