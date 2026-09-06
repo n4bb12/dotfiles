@@ -1,5 +1,5 @@
 ---
-name: n4bb12-personal-agents
+name: n4bb12-edit-personal-instructions
 description: Use when editing the global or personal AGENTS.md (or CLAUDE.md) that lives in the dotfiles repo and is symlinked for availability across agents. Distinguish from any project-local AGENTS.md in a repository root.
 argument-hint: "instructions or changes to add to the global agent configuration"
 ---

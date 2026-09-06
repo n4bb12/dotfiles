@@ -129,9 +129,9 @@ git-commit-with-ai() {
   git commit -m "$msg" "$@"
 }
 
-commit-my() {
+git-commit-my() {
   local here="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}"
-  bun run "$here/../config/~/.agents/skills/commit-my/scripts/commit-my.ts" "$@"
+  bun run "$here/../config/~/.agents/skills/n4bb12-commit-my/scripts/commit-my.ts" "$@"
 }
 
 git-merge() {
