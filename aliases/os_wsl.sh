@@ -55,8 +55,13 @@ alias explorer='explorer.exe'
 alias copy='clip'
 alias ex='explorer'
 
-alias bat='batcat'
-alias fd='fdfind'
+if ! command -v bat >/dev/null 2>&1 && command -v batcat >/dev/null 2>&1; then
+  alias bat='batcat'
+fi
+
+if ! command -v fd >/dev/null 2>&1 && command -v fdfind >/dev/null 2>&1; then
+  alias fd='fdfind'
+fi
 
 alias f='code "$(fzf)"'
 alias reload='source ~/.bashrc'

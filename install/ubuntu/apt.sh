@@ -8,13 +8,12 @@ sudo apt install -y bash-completion
 source /etc/profile.d/bash_completion.sh
 
 packages=(
-  bat
   build-essential
   ca-certificates
   curl
-  fd-find
-  fzf
-  hyperfine
+  file
+  git
+  procps
   python3
   unzip
   wget
