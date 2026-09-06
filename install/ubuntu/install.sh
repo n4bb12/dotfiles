@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DIR="$(cd "$(dirname "$0")" && pwd)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Comment out a line to skip that tool. Uncomment to include it.
 
@@ -9,6 +9,7 @@ source "$DIR/os.sh"
 source "$DIR/hushlogin.sh"
 source "$DIR/network.sh"
 source "$DIR/apt.sh"
+source "$DIR/brew.sh"
 source "$DIR/git.sh"
 source "$DIR/gum.sh"
 source "$DIR/gh.sh"
