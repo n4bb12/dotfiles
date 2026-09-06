@@ -23,6 +23,7 @@
     "fix": "bun format && bun types",
     "format": "biome check --write --unsafe .",
     "mr": "bun scripts/mr/cli.ts",
+    "config": "bun scripts/config.ts",
     "skills": "bun scripts/install-skills.ts",
     "test": "bun test ./scripts './config/~/.agents'",
     "types": "tsc --noEmit"

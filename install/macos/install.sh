@@ -11,11 +11,6 @@ source "$DIR/brew.sh"
 # Show hidden files
 defaults write com.apple.Finder AppleShowAllFiles true
 
-# Copy home files
-cp -R ${DIR}/../config/home ~/
-cp ${DIR}/../config/shell/.zprofile ~/
-
-# Restore preferences
-for home in /Users/*/; do
-  sudo cp -R ${DIR}/../config/Library/Preferences/* ${home}Library/Preferences/
-done
+# Copy home files from config/~
+config_home="$DIR/../../config/~"
+cp -a "$config_home/." ~/

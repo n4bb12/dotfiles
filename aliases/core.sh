@@ -47,6 +47,11 @@ mkcd() {
 
 alias open='open-cli'
 
+config() {
+  local here="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}"
+  bun run "$here/../scripts/config.ts" "$@"
+}
+
 # Kill by TCP port or process name. `kill 4020`, `kill :4020`, `kill node`.
 unalias kill 2>/dev/null
 kill() {
