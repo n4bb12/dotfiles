@@ -1,6 +1,8 @@
 # GIT ==================================
 
-source /usr/share/bash-completion/completions/git
+if [[ -f /usr/share/bash-completion/completions/git ]]; then
+  source /usr/share/bash-completion/completions/git
+fi
 
 git-workon() {
   local branch=$(echo "$@" | slug)
@@ -143,24 +145,24 @@ git-merge-request() {
 }
 
 git-merge() {
-  if [ ! -z $1 ]; then
-    git merge $1
+  if [ -n "$1" ]; then
+    git merge "$1"
   else
     git merge "origin/$(git-default-branch)"
   fi
 }
 
 git-rebase() {
-  if [ ! -z $1 ]; then
-    git rebase $1
+  if [ -n "$1" ]; then
+    git rebase "$1"
   else
     git rebase "origin/$(git-default-branch)"
   fi
 }
 
 git-rebase-interactive() {
-  if [ ! -z $1 ]; then
-    git rebase -i --autosquash $1
+  if [ -n "$1" ]; then
+    git rebase -i --autosquash "$1"
   else
     git rebase -i --autosquash "origin/$(git-default-branch)"
   fi
