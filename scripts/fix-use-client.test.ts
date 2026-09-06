@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { isClientCode } from "./use-client.js"
+import { isClientCode } from "./fix-use-client.js"
 
 function detect(file: string, content: string) {
   return isClientCode(file, content)

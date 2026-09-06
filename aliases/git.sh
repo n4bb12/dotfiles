@@ -114,7 +114,8 @@ git-commit() {
 }
 
 git-commit-with-ai() {
-  local msg=$(bun run "$SCRIPT_DIR/git-commit-ai.ts" "$@")
+  local here="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}"
+  local msg=$(bun run "$here/../scripts/git-commit-ai.ts" "$@")
   local ret=$?
 
   if [ $ret -ne 0 ]; then
