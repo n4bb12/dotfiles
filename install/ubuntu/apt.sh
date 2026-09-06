@@ -13,9 +13,15 @@ packages=(
   curl
   file
   git
+  mysql-client
+  postgresql-client
   procps
   python3
+  python3-pip
+  redis-tools
   unzip
   wget
+  xz-utils
+  zip
 )
 sudo apt install -y "${packages[@]}"
