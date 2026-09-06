@@ -1,3 +1,3 @@
 # Configuration Files
 
-Some of these need to be installed manually into the appropriate locations.
+The config files must manually be manually into the appropriate locations.
