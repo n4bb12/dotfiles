@@ -188,11 +188,16 @@ function testIo(repo: string, logs: string[]) {
     warn: (message: string) => logs.push(message),
     stdinTty: false,
     which: (name: string) => (["git", "bun"].includes(name) ? `/bin/${name}` : null),
-    runner: (input: Parameters<typeof defaultRunner>[0]) =>
-      defaultRunner({
+    runner: async (input: Parameters<typeof defaultRunner>[0]) => {
+      if (input.argv[0] !== "git") {
+        return { code: 1, stdout: "", stderr: `${input.argv[0]} is not available in tests` }
+      }
+
+      return defaultRunner({
         ...input,
         env: { ...gitEnv, ...input.env },
-      }),
+      })
+    },
     choose: async () => {
       throw new Error("choose should not run")
     },
