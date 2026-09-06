@@ -17,12 +17,12 @@ gray="\e[37m"
 reset="\e[39m"
 
 fail() {
-  printf "${red}${@}${reset}\n"
+  printf '%b\n' "${red}${*}${reset}"
   return 1
 }
 
 warn() {
-  printf "${yellow}${@}${reset}\n"
+  printf '%b\n' "${yellow}${*}${reset}"
 }
 
 # NAVIGATION ===========================
