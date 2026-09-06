@@ -1,6 +1,7 @@
 # directories
 .cache/
 .fallow/
+.merge-request/
 node_modules/
 notes/
 
