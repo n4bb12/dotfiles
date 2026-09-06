@@ -2,7 +2,7 @@ import { afterEach, describe, expect, test } from "bun:test"
 import { dirname, join } from "node:path"
 import { $ } from "bun"
 
-import { CommitMyError, run } from "./cli"
+import { GitCommitThreadError, run } from "./cli"
 
 type Repo = {
   root: string
@@ -40,7 +40,7 @@ afterEach(async () => {
   }
 })
 
-describe("commit-my", () => {
+describe("git-commit-thread", () => {
   test("copies dirty files into a sandbox and leaves the shared tree unchanged", async () => {
     const { repo } = await createRepo()
 
@@ -195,7 +195,7 @@ fi
       failed = error
     }
 
-    expect(failed).toBeInstanceOf(CommitMyError)
+    expect(failed).toBeInstanceOf(GitCommitThreadError)
     expect(String(failed)).toContain("Rebase conflict")
     expect(await git(repo, ["rev-parse", "HEAD"])).toBe(beforeHead)
     expect(await readFile(join(repo, "app.js"), "utf8")).toBe("mine\n")
@@ -316,7 +316,7 @@ fi
       join(repo, "package.json"),
       `${JSON.stringify(
         {
-          name: "commit-my-test",
+          name: "git-commit-thread-test",
           private: true,
           scripts: {
             prepare: "sh prepare-hooks.sh",
@@ -338,7 +338,7 @@ if grep -q THEIRS_BROKEN other.js 2>/dev/null; then
   echo "HOOK_SAW_OTHER_AGENT" >&2
   exit 1
 fi
-touch "$(git rev-parse --git-common-dir)/COMMIT_MY_HOOK_RAN"
+touch "$(git rev-parse --git-common-dir)/GIT_COMMIT_THREAD_HOOK_RAN"
 HOOK
 chmod +x "$dir/pre-commit"
 `,
@@ -351,7 +351,7 @@ chmod +x "$dir/pre-commit"
 
     await run(["-m", "mine", "--", "app.js"], { cwd: repo, log: () => undefined, warn: () => undefined })
 
-    expect(await pathExists(join(repo, ".git/COMMIT_MY_HOOK_RAN"))).toBe(true)
+    expect(await pathExists(join(repo, ".git/GIT_COMMIT_THREAD_HOOK_RAN"))).toBe(true)
     expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("mine")
     expect(await readFile(join(repo, "other.js"), "utf8")).toBe("THEIRS_BROKEN\n")
   })
@@ -369,7 +369,7 @@ chmod +x "$dir/pre-commit"
       failed = error
     }
 
-    expect(failed).toBeInstanceOf(CommitMyError)
+    expect(failed).toBeInstanceOf(GitCommitThreadError)
     expect(String(failed)).toContain("Refusing to stage")
     expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("init")
   })
@@ -391,7 +391,7 @@ chmod +x "$dir/pre-commit"
       failed = error
     }
 
-    expect(failed).toBeInstanceOf(CommitMyError)
+    expect(failed).toBeInstanceOf(GitCommitThreadError)
     expect(String(failed)).toContain("HOOK_FAILED")
     expect(await git(repo, ["rev-parse", "HEAD"])).toBe(head)
     expect(await readFile(join(repo, "app.js"), "utf8")).toBe("mine\n")
@@ -411,13 +411,13 @@ chmod +x "$dir/pre-commit"
       failed = error
     }
 
-    expect(failed).toBeInstanceOf(CommitMyError)
+    expect(failed).toBeInstanceOf(GitCommitThreadError)
     expect(String(failed)).toContain("detached HEAD")
   })
 })
 
 async function createRepo() {
-  const root = await mkdtemp("commit-my-test-")
+  const root = await mkdtemp("git-commit-thread-test-")
   const repo = join(root, "repo")
 
   repos.push(root)

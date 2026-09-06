@@ -5,7 +5,7 @@ argument-hint: "then -m \"message\" -- path or --patch"
 compatibility: Requires git
 ---
 
-# Commit My
+# Git Commit Thread
 
 Commit only your changes from a shared working tree. Invoking this skill authorizes staging and committing your in-scope work. Do not ask the user to design the split. Do not modify, restore, stash, or clean the shared working tree. Forgotten work stays there.
 
@@ -26,7 +26,7 @@ git-commit-thread -m "subject" --patch /tmp/yours.diff
 
 Paths and `--patch` can go in the same commit. Never `.` or `-A`.
 
-If `git-commit-thread` is not on `PATH`, run this skill's `scripts/git-commit-thread.ts` with bun.
+If `git-commit-thread` is not on `PATH`, run this skill's `scripts/cli.ts` with bun.
 
 ## What to commit
 
