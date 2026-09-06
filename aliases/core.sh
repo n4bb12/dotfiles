@@ -300,7 +300,7 @@ who() {
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 function fix-use-client() {
-  bun run "$SCRIPT_DIR/use-client.ts" "$@"
+  bun run "$SCRIPT_DIR/../scripts/fix-use-client.ts" "$@"
   bun format
 }
 
