@@ -3,11 +3,11 @@
 import { dirname, isAbsolute, join, relative } from "node:path"
 import { $ } from "bun"
 
-const STATE_NAME = "commit-my-state.json"
+const STATE_NAME = "state.json"
 
-const USAGE = `Usage: commit-my
-       commit-my -m <message> [--patch <file>] [--] <path>...
-       commit-my <command> [sandbox] [--json]
+const USAGE = `Usage: git-commit-thread
+       git-commit-thread -m <message> [--patch <file>] [--] <path>...
+       git-commit-thread <command> [sandbox] [--json]
 
 With no arguments, print every dirty change in the shared working tree.
 Then commit your files and/or a hunk patch. Other dirty files stay put.
@@ -160,7 +160,7 @@ function parseArgs(argv: string[]) {
   }
 
   if (patch && !messages.length) {
-    throw new CommitMyError("commit-my --patch requires -m")
+    throw new CommitMyError("git-commit-thread --patch requires -m")
   }
 
   if (messages.length) {
@@ -279,12 +279,12 @@ async function start(io: Io, json: boolean, silent = false) {
   const branch = await gitText(sharedRoot, ["rev-parse", "--abbrev-ref", "HEAD"])
 
   if (branch === "HEAD") {
-    throw new CommitMyError("commit-my requires a branch. The shared repository is in detached HEAD.")
+    throw new CommitMyError("git-commit-thread requires a branch. The shared repository is in detached HEAD.")
   }
 
   const startHead = await gitText(sharedRoot, ["rev-parse", "HEAD"])
   const snapshotTree = await writeSnapshotTree(sharedRoot)
-  const sandboxRoot = await makeTempDir("commit-my-")
+  const sandboxRoot = await makeTempDir("git-commit-thread-")
   const sandbox = join(sandboxRoot, "work")
 
   const state: CommitMyState = {
@@ -327,7 +327,7 @@ async function start(io: Io, json: boolean, silent = false) {
     return state
   }
 
-  io.log(`commit-my sandbox ready`)
+  io.log(`git-commit-thread sandbox ready`)
   io.log(`sandbox: ${sandbox}`)
   io.log(`branch: ${branch}`)
   io.log(`head: ${startHead}`)
@@ -370,7 +370,7 @@ async function finish(io: Io, sandboxArg?: string) {
   const sandboxHead = await gitText(state.sandbox, ["rev-parse", "HEAD"])
 
   if (sandboxHead === state.startHead) {
-    throw new CommitMyError("No commits in the sandbox. Commit first, or run commit-my abort.")
+    throw new CommitMyError("No commits in the sandbox. Commit first, or run git-commit-thread abort.")
   }
 
   const currentHead = await gitText(state.sharedRoot, ["rev-parse", state.branch])
@@ -390,8 +390,8 @@ async function finish(io: Io, sandboxArg?: string) {
       throw new CommitMyError(
         [
           "Rebase conflict while integrating onto the current branch tip.",
-          "Resolve the conflict in the sandbox, then run git rebase --continue and commit-my finish.",
-          "Or run commit-my abort to drop the sandbox.",
+          "Resolve the conflict in the sandbox, then run git rebase --continue and git-commit-thread finish.",
+          "Or run git-commit-thread abort to drop the sandbox.",
           `sandbox: ${state.sandbox}`,
           result.stderr || result.stdout,
         ].join("\n"),
@@ -407,7 +407,7 @@ async function finish(io: Io, sandboxArg?: string) {
     if (updated.code !== 0) {
       throw new CommitMyError(
         [
-          "Branch moved while integrating. Re-run commit-my finish.",
+          "Branch moved while integrating. Re-run git-commit-thread finish.",
           `sandbox: ${state.sandbox}`,
           updated.stderr || updated.stdout,
         ].join("\n"),
@@ -448,7 +448,7 @@ async function status(io: Io, sandboxArg: string | undefined, json: boolean) {
 }
 
 async function writeSnapshotTree(sharedRoot: string) {
-  const indexDir = await makeTempDir("commit-my-index-")
+  const indexDir = await makeTempDir("git-commit-thread-index-")
   const indexPath = join(indexDir, "index")
 
   try {
@@ -478,7 +478,7 @@ async function bunInstall(sandbox: string) {
 
 function assertSafePaths(paths: string[], patch?: string) {
   if (!paths.length && !patch) {
-    throw new CommitMyError('Pass explicit paths or --patch. Example: commit-my -m "message" -- path')
+    throw new CommitMyError('Pass explicit paths or --patch. Example: git-commit-thread -m "message" -- path')
   }
 
   for (const path of paths) {
@@ -577,10 +577,10 @@ async function loadState(io: Io, sandboxArg?: string): Promise<CommitMyState> {
 
   if (matches.length > 1) {
     const paths = matches.map((state) => state.sandbox).join("\n")
-    throw new CommitMyError(`Multiple commit-my sandboxes exist. Pass one:\n${paths}`)
+    throw new CommitMyError(`Multiple git-commit-thread sandboxes exist. Pass one:\n${paths}`)
   }
 
-  throw new CommitMyError("No commit-my sandbox found. Run commit-my start first.")
+  throw new CommitMyError("No git-commit-thread sandbox found. Run git-commit-thread start first.")
 }
 
 async function listSandboxes(sharedRoot: string) {
@@ -612,7 +612,7 @@ async function readState(sandbox: string) {
   const state = await readStateIfPresent(sandbox)
 
   if (!state) {
-    throw new CommitMyError(`Not a commit-my sandbox: ${sandbox}`)
+    throw new CommitMyError(`Not a git-commit-thread sandbox: ${sandbox}`)
   }
 
   return state
@@ -634,7 +634,7 @@ async function readStateIfPresent(sandbox: string) {
   const parsed: unknown = JSON.parse(await Bun.file(statePath).text())
 
   if (!isState(parsed)) {
-    throw new CommitMyError(`Invalid commit-my state at ${statePath}`)
+    throw new CommitMyError(`Invalid git-commit-thread state at ${statePath}`)
   }
 
   return parsed
@@ -675,7 +675,7 @@ async function assertNoRebaseInProgress(sandbox: string) {
 
   if ((await pathExists(join(gitDir, "rebase-merge"))) || (await pathExists(join(gitDir, "rebase-apply")))) {
     throw new CommitMyError(
-      `Rebase still in progress in the sandbox. Resolve conflicts, git rebase --continue, then commit-my finish.\nsandbox: ${sandbox}`,
+      `Rebase still in progress in the sandbox. Resolve conflicts, git rebase --continue, then git-commit-thread finish.\nsandbox: ${sandbox}`,
     )
   }
 }
