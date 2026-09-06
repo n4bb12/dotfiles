@@ -1,7 +1,11 @@
 # ACCOUNTS =============================
 
 login() {
-  account="$1"
+  local account="$1"
+
+  if [ $# -gt 0 ]; then
+    shift
+  fi
 
   # git
   # https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
@@ -23,8 +27,8 @@ login() {
   elif [ "$account" = "pnpm" ]; then
     pnpm login "$@"
 
-    # aws
-    # https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html
+  # aws
+  # https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html
   elif [ "$account" = "aws" ]; then
     aws configure "$@"
 
@@ -48,8 +52,8 @@ login() {
   elif [ "$account" = "salesforce" ] || [ "$account" = "sf" ] || [ "$account" = "sfdx" ]; then
     sfdx auth:web:login "$@"
 
-    # kubectl
-    # https://kubernetes.io/docs/reference/kubectl/#in-cluster-authentication-and-namespace-overrides
+  # kubectl
+  # https://kubernetes.io/docs/reference/kubectl/#in-cluster-authentication-and-namespace-overrides
   elif [ "$account" = "kubectl" ]; then
     kubectl config set-context --current "$@"
 
@@ -75,10 +79,10 @@ who() {
     npm whoami "$@"
 
   elif [ "$account" = "yarn" ]; then
-    yarn login "$@"
+    yarn npm whoami "$@"
 
   elif [ "$account" = "pnpm" ]; then
-    pnpm login "$@"
+    pnpm whoami "$@"
 
   elif [ "$account" = "aws" ]; then
     aws iam get-user
@@ -114,16 +118,3 @@ profile() {
   open-cli "https://${site}.com/${USER}"
 }
 
-# Why did I need this?
-#
-# aws_login() {
-#   unset AWS_ACCESS_KEY_ID
-#   unset AWS_SECRET_ACCESS_KEY
-#   unset AWS_SESSION_TOKEN
-#
-#   json=$(aws sts get-session-token --serial-number arn:aws:iam::693991698473:mfa/abraham.schilling --token-code "$1")
-#
-#   export AWS_ACCESS_KEY_ID=$(echo "$json" | fx .Credentials.AccessKeyId)
-#   export AWS_SECRET_ACCESS_KEY=$(echo "$json" | fx .Credentials.SecretAccessKey)
-#   export AWS_SESSION_TOKEN=$(echo "$json" | fx .Credentials.SessionToken)
-# }
