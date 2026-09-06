@@ -11,5 +11,5 @@ if [ ! -d ~/git/n4bb12/dotfiles ]; then
   popd
 fi
 
-ln -s -f ~/git/n4bb12/dotfiles/install/ubuntu/install.sh ~/install.sh
+ln -s -f ~/git/n4bb12/dotfiles/install/ubuntu/_index.sh ~/install.sh
 append_bashrc '# dotfiles' 'source ~/git/n4bb12/dotfiles/aliases/load.sh'
