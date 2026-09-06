@@ -114,6 +114,7 @@ export type HostClient = {
 export const GENERATED_START = "<!-- mr-agent:generated:start -->"
 export const GENERATED_END = "<!-- mr-agent:generated:end -->"
 export const MAX_GITHUB_ATTACHMENTS = 50
+export const WORKSPACE_DIR = ".merge-request"
 export const CONFIG_NAME = "config.json"
 export const DESCRIPTION_NAME = "description.md"
 export const REMOTE_DESCRIPTION_NAME = "description.remote.md"

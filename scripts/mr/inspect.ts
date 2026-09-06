@@ -2,7 +2,14 @@ import { basename, join } from "node:path"
 
 import { currentBranch, git, gitText, mrPaths, originUrl, resolveBaseRef } from "./git.ts"
 import { resolveImageRefs } from "./markdown.ts"
-import type { CommandRunner, CurrentRequest, HostKind, Io, Workspace } from "./types.ts"
+import {
+  type CommandRunner,
+  type CurrentRequest,
+  type HostKind,
+  type Io,
+  WORKSPACE_DIR,
+  type Workspace,
+} from "./types.ts"
 import { pathExists, readText } from "./workspace.ts"
 
 export async function writeAnalysis(io: Io, workspace: Workspace, hostKind: HostKind, existing?: CurrentRequest) {
@@ -68,7 +75,7 @@ export async function inspectRepo(io: Io, workspace: Workspace, hostKind: HostKi
   const dirty = await git(workspace.repoRoot, ["status", "--porcelain"], io.runner)
 
   io.log(`Inspected ${analysis.changedFileCount} changed files against ${workspace.config.baseBranch}`)
-  io.log(`Wrote .mr/analysis.json`)
+  io.log(`Wrote ${WORKSPACE_DIR}/analysis.json`)
 
   if (dirty.stdout.trim()) {
     io.warn("Working tree has uncommitted changes. Description should be based on commits vs the base branch.")

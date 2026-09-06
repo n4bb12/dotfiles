@@ -14,15 +14,15 @@ import { commitSubjects, inspectRepo, suggestTitle } from "./inspect.ts"
 import { chooseWithGum, pickBaseBranch, suggestBaseBranches } from "./prompt-base.ts"
 import { requireTool } from "./publish.ts"
 import { renderForHost, statusImages } from "./render.ts"
-import { type Io, MrError, type Workspace } from "./types.ts"
+import { type Io, MrError, WORKSPACE_DIR, type Workspace } from "./types.ts"
 import { ensureWorkspaceDirs, hashText, pathExists, readConfig, writeConfig } from "./workspace.ts"
 
 const USAGE = `Usage: mr <command> [options]
 
 Commands:
-  init      Create .mr/ and choose a base branch
-  inspect   Refresh git facts in .mr/analysis.json
-  status    Check local images referenced by .mr/description.md
+  init      Create ${WORKSPACE_DIR}/ and choose a base branch
+  inspect   Refresh git facts in ${WORKSPACE_DIR}/analysis.json
+  status    Check local images referenced by ${WORKSPACE_DIR}/description.md
   render    Build the host markdown locally (no create/update)
   create    Create the merge request or pull request
   update    Update the existing merge request or pull request
@@ -201,7 +201,7 @@ async function initCommand(io: Io, flags: { base?: string; title?: string }) {
 
   await writeConfig(paths.config, config)
   io.log(`Base branch: ${baseBranch}`)
-  io.log("Created .mr/")
+  io.log(`Created ${WORKSPACE_DIR}/`)
 
   const workspace: Workspace = { repoRoot, mrDir: paths.mrDir, config }
 

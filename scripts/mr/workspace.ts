@@ -1,7 +1,7 @@
 import { join } from "node:path"
 
 import { mrPaths } from "./git.ts"
-import { GENERATED_END, GENERATED_START, type MrConfig, MrError, type UploadCache } from "./types.ts"
+import { GENERATED_END, GENERATED_START, type MrConfig, MrError, type UploadCache, WORKSPACE_DIR } from "./types.ts"
 
 export async function pathExists(path: string) {
   return Bun.file(path).exists()
@@ -25,18 +25,20 @@ export function parseConfig(text: string): MrConfig {
   try {
     parsed = JSON.parse(text)
   } catch {
-    throw new MrError(".mr/config.json is not valid JSON. Fix it or delete .mr/ and run mr init.")
+    throw new MrError(
+      `${WORKSPACE_DIR}/config.json is not valid JSON. Fix it or delete ${WORKSPACE_DIR}/ and run mr init.`,
+    )
   }
 
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-    throw new MrError(".mr/config.json must be an object with baseBranch.")
+    throw new MrError(`${WORKSPACE_DIR}/config.json must be an object with baseBranch.`)
   }
 
   const record = objectRecord(parsed)
   const baseBranch = record.baseBranch
 
   if (typeof baseBranch !== "string" || !baseBranch.trim()) {
-    throw new MrError(".mr/config.json is missing baseBranch. Run mr init --base <branch>.")
+    throw new MrError(`${WORKSPACE_DIR}/config.json is missing baseBranch. Run mr init --base <branch>.`)
   }
 
   return {
@@ -49,7 +51,7 @@ export function parseConfig(text: string): MrConfig {
 
 export async function readConfig(path: string) {
   if (!(await pathExists(path))) {
-    throw new MrError("No .mr/config.json. Run mr init first.")
+    throw new MrError(`No ${WORKSPACE_DIR}/config.json. Run mr init first.`)
   }
 
   return parseConfig(await readText(path))
@@ -134,7 +136,7 @@ export async function ensureWorkspaceDirs(repoRoot: string) {
   await ensureDir(paths.screenshots)
   await ensureDir(paths.context)
   await ensureDir(paths.gitInfo)
-  await ensureIgnoreLine(paths.exclude, ".mr/")
+  await ensureIgnoreLine(paths.exclude, `${WORKSPACE_DIR}/`)
 
   return paths
 }

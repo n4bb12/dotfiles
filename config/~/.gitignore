@@ -1,5 +1,5 @@
 # directories
-.mr/
+.merge-request/
 node_modules/
 
 # files

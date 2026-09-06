@@ -47,12 +47,12 @@ describe("markdown image refs", () => {
     expect(isRemoteDestination("./screenshots/01-before.png")).toBe(false)
   })
 
-  test("resolves attach paths relative to .mr", () => {
-    const refs = resolveImageRefs("![Before](./screenshots/01-before.png)", "/tmp/repo/.mr")
+  test("resolves attach paths relative to the workspace", () => {
+    const refs = resolveImageRefs("![Before](./screenshots/01-before.png)", "/tmp/repo/.merge-request")
     const first = refs[0]
 
     expect(first?.attachPath).toBe("screenshots/01-before.png")
-    expect(first?.absPath).toBe(join("/tmp/repo/.mr", "./screenshots/01-before.png"))
+    expect(first?.absPath).toBe(join("/tmp/repo/.merge-request", "./screenshots/01-before.png"))
   })
 
   test("replaces local destinations and keeps remote ones", () => {

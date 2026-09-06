@@ -3,7 +3,7 @@ import { join } from "node:path"
 import { mrPaths } from "./git.ts"
 import { localImageRefs, resolveImageRefs } from "./markdown.ts"
 import { nextRemoteBody } from "./publish.ts"
-import { type HostClient, type Io, MrError, type RenderResult, type Workspace } from "./types.ts"
+import { type HostClient, type Io, MrError, type RenderResult, WORKSPACE_DIR, type Workspace } from "./types.ts"
 import { pathExists, readText, writeText } from "./workspace.ts"
 
 export async function collectLocalImages(workspace: Workspace, markdown: string) {
@@ -33,7 +33,7 @@ export function missingImagesMessage(missing: { dest: string }[]) {
     "",
     ...lines,
     "",
-    "Add the files under .mr/screenshots/ (paths are relative to .mr/description.md)",
+    `Add the files under ${WORKSPACE_DIR}/screenshots/ (paths are relative to ${WORKSPACE_DIR}/description.md)`,
     "and run mr status again.",
   ].join("\n")
 }
@@ -42,7 +42,7 @@ export async function requireDescription(workspace: Workspace) {
   const path = mrPaths(workspace.repoRoot).description
 
   if (!(await pathExists(path))) {
-    throw new MrError("Missing .mr/description.md. Write it, then run this command again.")
+    throw new MrError(`Missing ${WORKSPACE_DIR}/description.md. Write it, then run this command again.`)
   }
 
   return readText(path)
@@ -53,7 +53,7 @@ export async function statusImages(io: Io, workspace: Workspace) {
   const { local, available, missing } = await collectLocalImages(workspace, markdown)
 
   if (!local.length) {
-    io.log("No local images in .mr/description.md")
+    io.log(`No local images in ${WORKSPACE_DIR}/description.md`)
 
     return { missing }
   }
@@ -114,7 +114,9 @@ export async function renderForHost(input: {
         : "No local images to attach",
     )
   } else {
-    input.io.log(`Wrote .mr/description.remote.md (${hostRender.uploaded} uploaded, ${hostRender.cached} cached)`)
+    input.io.log(
+      `Wrote ${WORKSPACE_DIR}/description.remote.md (${hostRender.uploaded} uploaded, ${hostRender.cached} cached)`,
+    )
   }
 
   return {
