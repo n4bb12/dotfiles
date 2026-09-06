@@ -30,6 +30,6 @@ If `git-commit-thread` is not on `PATH`, run this skill's `scripts/git-commit-th
 
 ## What to commit
 
-Same grouping as commit-all: one reason per commit, tests with implementation. Scope is your edits in this session, not every dirty file.
+Same grouping as commit-all: one reason per commit, tests with implementation. Scope is your edits in this session, not every dirty file. Write each message per the git commit rules in AGENTS.md.
 
 On failure, fix files in the shared tree and re-run the same command. If integrate conflicts, resolve in the printed sandbox, `git rebase --continue`, then `git-commit-thread finish`, or `git-commit-thread abort`.

@@ -197,6 +197,8 @@ export function useUserId() {
 - Before completing work, run the relevant verification commands for the repo, typically `bun types`, `bun fix`, and `bun run test`. Ignore commands that do not exist.
 - Postpone file deletions until the rest of the edits are done.
 - Do not make commits automatically unless asked. Do not stage changes automatically unless asked.
+- Git commit subject: conventional (`feat`, `fix`, `refactor`, and the rest), imperative present tense, no trailing period. Name the actual edit, not the surrounding function or file.
+- Git commit body: unless the change is trivial, follow the subject with a blank line and a short body that explains why and any non-obvious what. Subject only for typos, formatting, renames, and similar one-line chores.
 
 ## Security
 
