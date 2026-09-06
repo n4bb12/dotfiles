@@ -1,11 +1,21 @@
 # COMPLETION ===========================
 
 # https://www.cyberciti.biz/faq/add-bash-auto-completion-in-ubuntu-linux/
-source /etc/profile.d/bash_completion.sh
-source /usr/share/bash-completion/completions/git
+if [[ -f /etc/profile.d/bash_completion.sh ]]; then
+  source /etc/profile.d/bash_completion.sh
+fi
 
-# Copy global agent file (due to symlink issues)
-cp ~/git/n4bb12/dotfiles/config/~/.agents/AGENTS.md /mnt/c/Users/der_a/AppData/Roaming/Code/User/prompts/global.instructions.md
+# Copy global agent file (VS Code on Windows does not follow WSL symlinks)
+SCRIPT_DIR=${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}
+agents_src="$SCRIPT_DIR/../config/~/.agents/AGENTS.md"
+for prompts_dir in /mnt/c/Users/*/AppData/Roaming/{Code,Cursor}/User/prompts; do
+  if [[ -d "$prompts_dir" && -f "$agents_src" ]]; then
+    agents_dst="$prompts_dir/global.instructions.md"
+    if [[ ! -f "$agents_dst" || "$agents_src" -nt "$agents_dst" ]]; then
+      cp "$agents_src" "$agents_dst"
+    fi
+  fi
+done
 
 # PROMPT ===============================
 
