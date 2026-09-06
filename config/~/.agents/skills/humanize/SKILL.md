@@ -1,5 +1,5 @@
 ---
-name: humanize
+name: n4bb12-humanize
 description: Use when the user wants to humanize text, rewrite text to sound natural and human, remove AI artifacts or padding, make text clear/direct/conversational, or provides source text along with "humanize", "make this sound like a person wrote it", "revise for voice", etc.
 argument-hint: "source text [; audience/tone/key terms/length prefs]"
 ---
