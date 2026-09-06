@@ -67,6 +67,7 @@ not use one of those planning paths. For plans that do qualify:
 
 - Prefer TypeScript for scripts and application code.
 - Prefer `bun` and Bun APIs over `node`, `tsx`, `npm`, or `npx`.
+- Prefer `Bun.file`, `Bun.write`, `Bun.spawn`, and `Bun.$` over `node:fs` and `node:child_process`. Keep `node:path` when you need path math.
 - Default to React/Next.js for new web apps.
 - Default to Tailwind CSS 4+ for styling.
 - Prefer these libraries over alternatives when they fit: `ai` / `@ai-sdk/*`, `clsx`, `date-fns`, `es-toolkit`, `marked`, `nanoid`, `p-limit`, `zod`, `zustand`.
