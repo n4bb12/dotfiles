@@ -8,37 +8,26 @@
 </p>
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/n4bb12/dotfiles/master/LICENSE">
+  <a href="https://github.com/n4bb12/dotfiles/blob/main/LICENSE">
     <img alt="License" src="https://flat.badgen.net/github/license/n4bb12/dotfiles?icon=github">
   </a>
 </p>
 
-## Prerequisites
-
-[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) &middot; [Bash](https://www.google.de/search?q=install+bash) &middot; [Node](https://nodejs.org/en/download) &middot; [Bun](https://bun.sh/)
-
-## Usage
-
-#### Install
+## Load
 
 ```bash
 # Clone
-git clone https://github.com/n4bb12/dotfiles.git
-cd dotfiles
+git clone git@github.com:n4bb12/dotfiles.git ~/git/n4bb12/dotfiles
 
-# Run install script for mac/win
-bash install/mac.sh
-bash install/win.sh
-
-# Source bash utils in your shell profile
-# See config/shell for example files
-# Example:
-cp ~/git/n4bb12/dotfiles/config/shell/.zprofile ~/.zprofile
+# From ~/.bashrc, or the current terminal:
+source ~/git/n4bb12/dotfiles/aliases/load.sh
 ```
 
-#### Load
+## Config
 
-```bash
-# Import into the current terminal:
-source dist/bash.sh
-```
+Files under `config/` are named by destination. Copy or symlink them into place.
+
+- `config/~` is `$HOME`
+- `config/%USERPROFILE%` is the Windows user profile
+
+Machine bootstrap lives in `install/`.
