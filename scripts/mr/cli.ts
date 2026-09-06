@@ -171,10 +171,9 @@ async function initCommand(io: Io, flags: { base?: string; title?: string }) {
     extra.push(existing.baseBranch)
   }
 
-  try {
-    const origin = await originUrl(repoRoot, io.runner)
-    const kind = detectHostKind(origin)
-    const host = createHostClient(kind, repoRoot, io.runner)
+  const { host } = await optionalHost(io, repoRoot)
+
+  if (host) {
     const current = await host.getCurrentRequest().catch(() => undefined)
 
     if (current?.baseBranch) {
@@ -186,8 +185,6 @@ async function initCommand(io: Io, flags: { base?: string; title?: string }) {
     if (defaultBranch) {
       extra.push(defaultBranch)
     }
-  } catch {
-    // Host lookup is optional during init.
   }
 
   const suggestions = await suggestBaseBranches(repoRoot, io, extra)
@@ -205,20 +202,7 @@ async function initCommand(io: Io, flags: { base?: string; title?: string }) {
 
   const workspace: Workspace = { repoRoot, mrDir: paths.mrDir, config }
 
-  await inspectAfterInit(io, workspace)
-}
-
-async function inspectAfterInit(io: Io, workspace: Workspace) {
-  try {
-    const origin = await originUrl(workspace.repoRoot, io.runner)
-    const kind = detectHostKind(origin)
-    const host = createHostClient(kind, workspace.repoRoot, io.runner)
-    const current = await host.getCurrentRequest().catch(() => undefined)
-
-    await inspectRepo(io, workspace, kind, current)
-  } catch {
-    await inspectRepo(io, workspace, "github")
-  }
+  await inspectWorkspace(io, workspace)
 }
 
 async function loadWorkspace(io: Io): Promise<Workspace> {
@@ -232,8 +216,11 @@ async function loadWorkspace(io: Io): Promise<Workspace> {
 }
 
 async function inspectCommand(io: Io) {
-  const workspace = await loadWorkspace(io)
-  const { host, kind } = await optionalHost(io, workspace)
+  await inspectWorkspace(io, await loadWorkspace(io))
+}
+
+async function inspectWorkspace(io: Io, workspace: Workspace) {
+  const { host, kind } = await optionalHost(io, workspace.repoRoot)
   const current = host ? await host.getCurrentRequest().catch(() => undefined) : undefined
 
   await inspectRepo(io, workspace, kind, current)
@@ -329,12 +316,17 @@ async function publishCommand(io: Io, action: "create" | "update", flags: { titl
   io.log(published.url || published.iid)
 }
 
-async function optionalHost(io: Io, workspace: Workspace) {
+async function optionalHost(io: Io, repoRoot: string) {
   try {
-    const origin = await originUrl(workspace.repoRoot, io.runner)
+    const origin = await originUrl(repoRoot, io.runner)
     const kind = detectHostKind(origin)
+    const cli = kind === "github" ? "gh" : "glab"
 
-    return { kind, host: createHostClient(kind, workspace.repoRoot, io.runner) }
+    if (!io.which(cli)) {
+      return { kind, host: undefined }
+    }
+
+    return { kind, host: createHostClient(kind, repoRoot, io.runner) }
   } catch {
     return { kind: "github" as const, host: undefined }
   }
