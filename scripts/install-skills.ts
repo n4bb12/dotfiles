@@ -9,6 +9,8 @@ const sources = [
   join(import.meta.dir, "../config/~/.agents/skills"),
 ] as const
 
+await $`rm -rf ~/.agents/skills`
+
 for (const source of sources) {
   await $`bunx skills add ${source} --global --skill '*' --yes --agent universal`
 }
