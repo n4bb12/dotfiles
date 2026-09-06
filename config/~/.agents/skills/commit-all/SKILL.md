@@ -1,5 +1,5 @@
 ---
-name: commit-all
+name: n4bb12-commit-all
 description: Use when the user wants all existing uncommitted repository changes analyzed, split into logical atomic commits, staged, and committed without prescribing the grouping, or asks for /commit-all or atomic commits.
 argument-hint: "optional scope or commit-message convention"
 compatibility: Requires git
