@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# https://github.com/jkfran/killport
-# shellcheck disable=SC1091
-source "$HOME/.cargo/env"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$DIR/_lib.sh"
 
-cargo install killport
+brew_install killport
+
+cargo_uninstall killport
+remove_files "$HOME/.cargo/bin/killport" "$HOME/.local/bin/killport"

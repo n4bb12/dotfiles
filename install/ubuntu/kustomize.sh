@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-sudo install -o root -g root -m 0755 kustomize /usr/local/bin/kustomize
-rm kustomize
-kustomize --version
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$DIR/_lib.sh"
+
+brew_install kustomize
+remove_files /usr/local/bin/kustomize
+kustomize version

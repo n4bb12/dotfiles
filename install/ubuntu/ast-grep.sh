@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# shellcheck disable=SC1091
-source "$HOME/.cargo/env"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$DIR/_lib.sh"
 
-cargo install ast-grep
+brew_install ast-grep
+
+cargo_uninstall ast-grep
+remove_files "$HOME/.cargo/bin/ast-grep" "$HOME/.cargo/bin/sg"
