@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Logo" src="icon.png" height="48">
+  <img alt="Logo" src="icon.png" width="48" height="48">
   dotfiles
 </h1>
 
@@ -42,7 +42,3 @@ cp ~/git/n4bb12/dotfiles/config/shell/.zprofile ~/.zprofile
 # Import into the current terminal:
 source dist/bash.sh
 ```
-
----
-
-<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
