@@ -9,7 +9,7 @@ compatibility: Requires git
 
 Turn the repository's current uncommitted work into a fine-grained sequence of coherent commits. Invoking this skill authorizes staging and committing the in-scope changes. Do not ask the user to design the split.
 
-If other agents have parallel uncommitted work in this working tree, use commit-my instead. This skill commits from the shared tree and is for when every dirty change is in scope.
+If other agents have parallel uncommitted work in this working tree, use git-commit-thread instead. This skill commits from the shared tree and is for when every dirty change is in scope.
 
 ## Understand the Change Set
 

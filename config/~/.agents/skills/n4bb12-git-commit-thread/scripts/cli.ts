@@ -26,14 +26,14 @@ Commands:
 
 The shared working tree is never modified. Only finish updates the branch ref.`
 
-export class CommitMyError extends Error {
+export class GitCommitThreadError extends Error {
   constructor(message: string) {
     super(message)
-    this.name = "CommitMyError"
+    this.name = "GitCommitThreadError"
   }
 }
 
-type CommitMyState = {
+type GitCommitThreadState = {
   version: 1
   sharedRoot: string
   branch: string
@@ -97,7 +97,7 @@ export async function run(argv: string[], io: Partial<Io> = {}) {
       await status(ctx, sandboxArg, json)
       return
     default:
-      throw new CommitMyError(`Unknown command: ${command}\n\n${USAGE}`)
+      throw new GitCommitThreadError(`Unknown command: ${command}\n\n${USAGE}`)
   }
 }
 
@@ -132,7 +132,7 @@ function parseArgs(argv: string[]) {
       const value = argv[i + 1]
 
       if (typeof value !== "string") {
-        throw new CommitMyError(`Missing message after ${arg}`)
+        throw new GitCommitThreadError(`Missing message after ${arg}`)
       }
 
       messages.push(value)
@@ -144,7 +144,7 @@ function parseArgs(argv: string[]) {
       const value = argv[i + 1]
 
       if (typeof value !== "string") {
-        throw new CommitMyError("Missing file after --patch")
+        throw new GitCommitThreadError("Missing file after --patch")
       }
 
       patch = value
@@ -153,14 +153,14 @@ function parseArgs(argv: string[]) {
     }
 
     if (arg.startsWith("-")) {
-      throw new CommitMyError(`Unknown option: ${arg}\n\n${USAGE}`)
+      throw new GitCommitThreadError(`Unknown option: ${arg}\n\n${USAGE}`)
     }
 
     positional.push(arg)
   }
 
   if (patch && !messages.length) {
-    throw new CommitMyError("git-commit-thread --patch requires -m")
+    throw new GitCommitThreadError("git-commit-thread --patch requires -m")
   }
 
   if (messages.length) {
@@ -223,7 +223,7 @@ async function commitPaths(io: Io, messages: string[], paths: string[], patch?: 
   const patchFile = patch ? resolvePath(io.cwd, patch) : undefined
 
   if (patchFile && !(await pathExists(patchFile))) {
-    throw new CommitMyError(`Patch not found: ${patch}`)
+    throw new GitCommitThreadError(`Patch not found: ${patch}`)
   }
 
   const state = await start(io, false, true)
@@ -239,7 +239,7 @@ async function commitPaths(io: Io, messages: string[], paths: string[], patch?: 
       const applied = await git(state.sandbox, ["apply", "--cached", "--", patchFile])
 
       if (applied.code !== 0) {
-        throw new CommitMyError(applied.stderr || applied.stdout || "git apply --cached failed")
+        throw new GitCommitThreadError(applied.stderr || applied.stdout || "git apply --cached failed")
       }
     }
 
@@ -248,7 +248,7 @@ async function commitPaths(io: Io, messages: string[], paths: string[], patch?: 
     const staged = await git(state.sandbox, ["diff", "--cached", "--quiet"])
 
     if (staged.code === 0) {
-      throw new CommitMyError("Nothing staged. Check that the paths or patch match this working tree.")
+      throw new GitCommitThreadError("Nothing staged. Check that the paths or patch match this working tree.")
     }
 
     await bunInstall(state.sandbox)
@@ -257,7 +257,7 @@ async function commitPaths(io: Io, messages: string[], paths: string[], patch?: 
     const committed = await git(state.sandbox, ["commit", ...messageArgs])
 
     if (committed.code !== 0) {
-      throw new CommitMyError(committed.stderr || committed.stdout || "git commit failed")
+      throw new GitCommitThreadError(committed.stderr || committed.stdout || "git commit failed")
     }
 
     keepSandbox = true
@@ -279,7 +279,7 @@ async function start(io: Io, json: boolean, silent = false) {
   const branch = await gitText(sharedRoot, ["rev-parse", "--abbrev-ref", "HEAD"])
 
   if (branch === "HEAD") {
-    throw new CommitMyError("git-commit-thread requires a branch. The shared repository is in detached HEAD.")
+    throw new GitCommitThreadError("git-commit-thread requires a branch. The shared repository is in detached HEAD.")
   }
 
   const startHead = await gitText(sharedRoot, ["rev-parse", "HEAD"])
@@ -287,7 +287,7 @@ async function start(io: Io, json: boolean, silent = false) {
   const sandboxRoot = await makeTempDir("git-commit-thread-")
   const sandbox = join(sandboxRoot, "work")
 
-  const state: CommitMyState = {
+  const state: GitCommitThreadState = {
     version: 1,
     sharedRoot,
     branch,
@@ -345,7 +345,7 @@ async function isolate(io: Io, sandboxArg?: string) {
   io.log(statusText || "sandbox working tree matches the index")
 }
 
-async function isolateSandbox(state: CommitMyState) {
+async function isolateSandbox(state: GitCommitThreadState) {
   await gitText(state.sandbox, ["restore", "."])
   await gitText(state.sandbox, ["clean", "-fd", "--exclude=node_modules"])
   await prepareSandboxTooling(state.sharedRoot, state.sandbox)
@@ -370,7 +370,7 @@ async function finish(io: Io, sandboxArg?: string) {
   const sandboxHead = await gitText(state.sandbox, ["rev-parse", "HEAD"])
 
   if (sandboxHead === state.startHead) {
-    throw new CommitMyError("No commits in the sandbox. Commit first, or run git-commit-thread abort.")
+    throw new GitCommitThreadError("No commits in the sandbox. Commit first, or run git-commit-thread abort.")
   }
 
   const currentHead = await gitText(state.sharedRoot, ["rev-parse", state.branch])
@@ -387,7 +387,7 @@ async function finish(io: Io, sandboxArg?: string) {
     const result = await git(state.sandbox, ["rebase", "--onto", currentHead, mergeBase])
 
     if (result.code !== 0) {
-      throw new CommitMyError(
+      throw new GitCommitThreadError(
         [
           "Rebase conflict while integrating onto the current branch tip.",
           "Resolve the conflict in the sandbox, then run git rebase --continue and git-commit-thread finish.",
@@ -405,7 +405,7 @@ async function finish(io: Io, sandboxArg?: string) {
     const updated = await git(state.sharedRoot, ["update-ref", `refs/heads/${state.branch}`, newTip, currentHead])
 
     if (updated.code !== 0) {
-      throw new CommitMyError(
+      throw new GitCommitThreadError(
         [
           "Branch moved while integrating. Re-run git-commit-thread finish.",
           `sandbox: ${state.sandbox}`,
@@ -472,13 +472,13 @@ async function bunInstall(sandbox: string) {
   const result = await spawnCommand(sandbox, [process.execPath, "install"])
 
   if (result.code !== 0) {
-    throw new CommitMyError(result.stderr || result.stdout || "bun install failed")
+    throw new GitCommitThreadError(result.stderr || result.stdout || "bun install failed")
   }
 }
 
 function assertSafePaths(paths: string[], patch?: string) {
   if (!paths.length && !patch) {
-    throw new CommitMyError('Pass explicit paths or --patch. Example: git-commit-thread -m "message" -- path')
+    throw new GitCommitThreadError('Pass explicit paths or --patch. Example: git-commit-thread -m "message" -- path')
   }
 
   for (const path of paths) {
@@ -491,7 +491,7 @@ function assertSafePaths(paths: string[], patch?: string) {
       normalized === "*" ||
       normalized === "-u"
     ) {
-      throw new CommitMyError(`Refusing to stage ${path}. Pass explicit file paths.`)
+      throw new GitCommitThreadError(`Refusing to stage ${path}. Pass explicit file paths.`)
     }
   }
 }
@@ -501,7 +501,7 @@ function repoRelativePath(cwd: string, repoRoot: string, path: string) {
   const rel = relative(repoRoot, abs)
 
   if (!rel || rel === "." || rel.startsWith("..") || isAbsolute(rel)) {
-    throw new CommitMyError(`Path is outside the repository: ${path}`)
+    throw new GitCommitThreadError(`Path is outside the repository: ${path}`)
   }
 
   return rel
@@ -552,7 +552,7 @@ async function removeSandbox(sharedRoot: string, sandbox: string) {
   await removeDir(dirname(sandbox))
 }
 
-async function loadState(io: Io, sandboxArg?: string): Promise<CommitMyState> {
+async function loadState(io: Io, sandboxArg?: string): Promise<GitCommitThreadState> {
   if (sandboxArg) {
     const sandbox = resolvePath(io.cwd, sandboxArg)
     return readState(sandbox)
@@ -577,15 +577,15 @@ async function loadState(io: Io, sandboxArg?: string): Promise<CommitMyState> {
 
   if (matches.length > 1) {
     const paths = matches.map((state) => state.sandbox).join("\n")
-    throw new CommitMyError(`Multiple git-commit-thread sandboxes exist. Pass one:\n${paths}`)
+    throw new GitCommitThreadError(`Multiple git-commit-thread sandboxes exist. Pass one:\n${paths}`)
   }
 
-  throw new CommitMyError("No git-commit-thread sandbox found. Run git-commit-thread start first.")
+  throw new GitCommitThreadError("No git-commit-thread sandbox found. Run git-commit-thread start first.")
 }
 
 async function listSandboxes(sharedRoot: string) {
   const porcelain = await gitText(sharedRoot, ["worktree", "list", "--porcelain"])
-  const found: CommitMyState[] = []
+  const found: GitCommitThreadState[] = []
 
   for (const line of porcelain.split("\n")) {
     if (!line.startsWith("worktree ")) {
@@ -603,7 +603,7 @@ async function listSandboxes(sharedRoot: string) {
   return found
 }
 
-async function writeState(sandbox: string, state: CommitMyState) {
+async function writeState(sandbox: string, state: GitCommitThreadState) {
   const gitDir = await gitText(sandbox, ["rev-parse", "--absolute-git-dir"])
   await Bun.write(join(gitDir, STATE_NAME), `${JSON.stringify(state, null, 2)}\n`)
 }
@@ -612,7 +612,7 @@ async function readState(sandbox: string) {
   const state = await readStateIfPresent(sandbox)
 
   if (!state) {
-    throw new CommitMyError(`Not a git-commit-thread sandbox: ${sandbox}`)
+    throw new GitCommitThreadError(`Not a git-commit-thread sandbox: ${sandbox}`)
   }
 
   return state
@@ -634,7 +634,7 @@ async function readStateIfPresent(sandbox: string) {
   const parsed: unknown = JSON.parse(await Bun.file(statePath).text())
 
   if (!isState(parsed)) {
-    throw new CommitMyError(`Invalid git-commit-thread state at ${statePath}`)
+    throw new GitCommitThreadError(`Invalid git-commit-thread state at ${statePath}`)
   }
 
   return parsed
@@ -644,7 +644,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null
 }
 
-function isState(value: unknown): value is CommitMyState {
+function isState(value: unknown): value is GitCommitThreadState {
   if (!isRecord(value)) {
     return false
   }
@@ -665,7 +665,7 @@ async function assertUsableSharedRepo(sharedRoot: string) {
 
   for (const name of blockers) {
     if (await pathExists(join(gitDir, name))) {
-      throw new CommitMyError(`Shared repository has an in-progress ${name.replaceAll("_", " ").toLowerCase()}.`)
+      throw new GitCommitThreadError(`Shared repository has an in-progress ${name.replaceAll("_", " ").toLowerCase()}.`)
     }
   }
 }
@@ -674,7 +674,7 @@ async function assertNoRebaseInProgress(sandbox: string) {
   const gitDir = await gitText(sandbox, ["rev-parse", "--absolute-git-dir"])
 
   if ((await pathExists(join(gitDir, "rebase-merge"))) || (await pathExists(join(gitDir, "rebase-apply")))) {
-    throw new CommitMyError(
+    throw new GitCommitThreadError(
       `Rebase still in progress in the sandbox. Resolve conflicts, git rebase --continue, then git-commit-thread finish.\nsandbox: ${sandbox}`,
     )
   }
@@ -684,7 +684,7 @@ async function requireRepoRoot(cwd: string) {
   const result = await git(cwd, ["rev-parse", "--show-toplevel"])
 
   if (result.code !== 0) {
-    throw new CommitMyError("Not inside a git repository.")
+    throw new GitCommitThreadError("Not inside a git repository.")
   }
 
   return result.stdout
@@ -694,7 +694,7 @@ async function gitText(cwd: string, args: string[], env: Record<string, string> 
   const result = await git(cwd, args, env)
 
   if (result.code !== 0) {
-    throw new CommitMyError(result.stderr || result.stdout || `git ${args.join(" ")} failed`)
+    throw new GitCommitThreadError(result.stderr || result.stdout || `git ${args.join(" ")} failed`)
   }
 
   return result.stdout
@@ -732,7 +732,7 @@ async function makeTempDir(prefix: string) {
   const created = (await $`mktemp -d ${join(tmpDir(), `${prefix}XXXXXX`)}`.quiet().text()).trim()
 
   if (!created) {
-    throw new CommitMyError("mktemp failed")
+    throw new GitCommitThreadError("mktemp failed")
   }
 
   return created
