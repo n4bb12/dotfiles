@@ -376,6 +376,7 @@ alias fpush='pushf'
 alias pfusch='pushf'
 alias pfush='pushf'
 alias upst='git-set-upstream'
+alias ct='git-commit-thread'
 alias mr='git-merge-request'
 
 # Combos
