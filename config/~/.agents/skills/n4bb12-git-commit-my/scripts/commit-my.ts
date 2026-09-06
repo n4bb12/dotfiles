@@ -1,14 +1,19 @@
 #!/usr/bin/env bun
 
-import { access, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises"
-import { homedir, tmpdir } from "node:os"
-import { dirname, isAbsolute, join } from "node:path"
+import { dirname, isAbsolute, join, relative } from "node:path"
+import { $ } from "bun"
 
 const STATE_NAME = "commit-my-state.json"
 
-const LEFTHOOK_FILES = ["lefthook.yml", "lefthook.yaml", ".lefthook.yml", ".lefthook.yaml", "lefthook.toml"]
+const USAGE = `Usage: commit-my
+       commit-my -m <message> [--patch <file>] [--] <path>...
+       commit-my <command> [sandbox] [--json]
 
-const USAGE = `Usage: commit-my <command> [sandbox] [--json]
+With no arguments, print every dirty change in the shared working tree.
+Then commit your files and/or a hunk patch. Other dirty files stay put.
+
+  -m, --message   Commit message (repeat for paragraphs)
+  --patch <file>  Stage this git apply --cached patch (your hunks in mixed files)
 
 Commands:
   start     Create an isolated worktree sandbox and copy dirty files into it
@@ -54,14 +59,25 @@ export async function run(argv: string[], io: Partial<Io> = {}) {
   const log = io.log ?? console.log
   const warn = io.warn ?? console.error
   const ctx: Io = { cwd, log, warn }
-  const { command, sandboxArg, json } = parseArgs(argv)
+  const { command, sandboxArg, json, messages, paths, patch } = parseArgs(argv)
 
-  if (!command || command === "help" || command === "-h" || command === "--help") {
+  if (command === "help") {
     log(USAGE)
     return
   }
 
+  if (!command) {
+    await review(ctx)
+    return
+  }
+
   switch (command) {
+    case "commit":
+      await commitPaths(ctx, messages, paths, patch)
+      return
+    case "review":
+      await review(ctx)
+      return
     case "start":
       await start(ctx, json)
       return
@@ -86,15 +102,176 @@ export async function run(argv: string[], io: Partial<Io> = {}) {
 }
 
 function parseArgs(argv: string[]) {
-  const json = argv.includes("--json")
-  const rest = argv.filter((arg) => arg !== "--json")
-  const command = rest[0]
-  const sandboxArg = rest[1]
+  const messages: string[] = []
+  const positional: string[] = []
+  let json = false
+  let patch: string | undefined
 
-  return { command, sandboxArg, json }
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i]
+
+    if (typeof arg !== "string") {
+      break
+    }
+
+    if (arg === "--") {
+      positional.push(...argv.slice(i + 1))
+      break
+    }
+
+    if (arg === "--json") {
+      json = true
+      continue
+    }
+
+    if (arg === "-h" || arg === "--help") {
+      return { command: "help", json, messages, paths: [], patch: undefined, sandboxArg: undefined }
+    }
+
+    if (arg === "-m" || arg === "--message") {
+      const value = argv[i + 1]
+
+      if (typeof value !== "string") {
+        throw new CommitMyError(`Missing message after ${arg}`)
+      }
+
+      messages.push(value)
+      i++
+      continue
+    }
+
+    if (arg === "--patch") {
+      const value = argv[i + 1]
+
+      if (typeof value !== "string") {
+        throw new CommitMyError("Missing file after --patch")
+      }
+
+      patch = value
+      i++
+      continue
+    }
+
+    if (arg.startsWith("-")) {
+      throw new CommitMyError(`Unknown option: ${arg}\n\n${USAGE}`)
+    }
+
+    positional.push(arg)
+  }
+
+  if (patch && !messages.length) {
+    throw new CommitMyError("commit-my --patch requires -m")
+  }
+
+  if (messages.length) {
+    return {
+      command: "commit",
+      json,
+      messages,
+      paths: positional,
+      patch,
+      sandboxArg: undefined,
+    }
+  }
+
+  return {
+    command: positional[0],
+    json,
+    messages,
+    paths: [],
+    patch: undefined,
+    sandboxArg: positional[1],
+  }
 }
 
-async function start(io: Io, json: boolean) {
+async function review(io: Io) {
+  const sharedRoot = await requireRepoRoot(io.cwd)
+  const statusText = await gitText(sharedRoot, ["status", "--short"])
+
+  if (!statusText) {
+    io.log("working tree clean")
+    return
+  }
+
+  io.log(statusText)
+
+  const tracked = await git(sharedRoot, ["diff", "HEAD"])
+
+  if (tracked.stdout) {
+    io.log("")
+    io.log(tracked.stdout)
+  }
+
+  const untracked = await gitText(sharedRoot, ["ls-files", "--others", "--exclude-standard"])
+
+  for (const file of untracked.split("\n").filter(Boolean)) {
+    const diff = await git(sharedRoot, ["diff", "--no-index", "--", "/dev/null", file])
+    const text = diff.stdout || diff.stderr
+
+    if (text) {
+      io.log("")
+      io.log(text)
+    }
+  }
+}
+
+async function commitPaths(io: Io, messages: string[], paths: string[], patch?: string) {
+  assertSafePaths(paths, patch)
+
+  const sharedRoot = await requireRepoRoot(io.cwd)
+  const relPaths = paths.map((path) => repoRelativePath(io.cwd, sharedRoot, path))
+  const patchFile = patch ? resolvePath(io.cwd, patch) : undefined
+
+  if (patchFile && !(await pathExists(patchFile))) {
+    throw new CommitMyError(`Patch not found: ${patch}`)
+  }
+
+  const state = await start(io, false, true)
+
+  let keepSandbox = false
+
+  try {
+    if (relPaths.length) {
+      await gitText(state.sandbox, ["add", "--", ...relPaths])
+    }
+
+    if (patchFile) {
+      const applied = await git(state.sandbox, ["apply", "--cached", "--", patchFile])
+
+      if (applied.code !== 0) {
+        throw new CommitMyError(applied.stderr || applied.stdout || "git apply --cached failed")
+      }
+    }
+
+    await isolateSandbox(state)
+
+    const staged = await git(state.sandbox, ["diff", "--cached", "--quiet"])
+
+    if (staged.code === 0) {
+      throw new CommitMyError("Nothing staged. Check that the paths or patch match this working tree.")
+    }
+
+    await bunInstall(state.sandbox)
+
+    const messageArgs = messages.flatMap((message) => ["-m", message])
+    const committed = await git(state.sandbox, ["commit", ...messageArgs])
+
+    if (committed.code !== 0) {
+      throw new CommitMyError(committed.stderr || committed.stdout || "git commit failed")
+    }
+
+    keepSandbox = true
+    await finish(io, state.sandbox)
+  } catch (error) {
+    if (!keepSandbox) {
+      await removeSandbox(state.sharedRoot, state.sandbox)
+    }
+
+    throw error
+  }
+}
+
+async function start(io: Io, json: boolean, silent = false) {
   const sharedRoot = await requireRepoRoot(io.cwd)
 
   await assertUsableSharedRepo(sharedRoot)
@@ -107,28 +284,31 @@ async function start(io: Io, json: boolean) {
 
   const startHead = await gitText(sharedRoot, ["rev-parse", "HEAD"])
   const snapshotTree = await writeSnapshotTree(sharedRoot)
-  const sandboxRoot = await mkdtemp(join(tmpdir(), "commit-my-"))
+  const sandboxRoot = await makeTempDir("commit-my-")
   const sandbox = join(sandboxRoot, "work")
+
+  const state: CommitMyState = {
+    version: 1,
+    sharedRoot,
+    branch,
+    startHead,
+    snapshotTree,
+    sandbox,
+  }
 
   try {
     await gitText(sharedRoot, ["worktree", "add", "--detach", sandbox, startHead])
     await gitText(sandbox, ["restore", "--source", snapshotTree, "--worktree", "--no-overlay", "--", "."])
-    await prepareSandboxTooling(sharedRoot, sandbox, io.warn)
-
-    const state: CommitMyState = {
-      version: 1,
-      sharedRoot,
-      branch,
-      startHead,
-      snapshotTree,
-      sandbox,
-    }
-
+    await prepareSandboxTooling(sharedRoot, sandbox)
     await writeState(sandbox, state)
   } catch (error) {
     await removeSandbox(sharedRoot, sandbox)
-    await rm(sandboxRoot, { recursive: true, force: true })
+    await removeDir(sandboxRoot)
     throw error
+  }
+
+  if (silent) {
+    return state
   }
 
   if (json) {
@@ -144,38 +324,38 @@ async function start(io: Io, json: boolean) {
         2,
       ),
     )
-    return
+    return state
   }
 
   io.log(`commit-my sandbox ready`)
   io.log(`sandbox: ${sandbox}`)
   io.log(`branch: ${branch}`)
   io.log(`head: ${startHead}`)
-  io.log("")
-  io.log("cd into the sandbox, stage your changes, then:")
-  io.log("  commit-my isolate")
-  io.log("  git commit")
-  io.log("  commit-my refresh    # optional, for another atomic commit")
-  io.log("  commit-my finish")
+
+  return state
 }
 
 async function isolate(io: Io, sandboxArg?: string) {
   const state = await loadState(io, sandboxArg)
 
-  await gitText(state.sandbox, ["restore", "."])
-  await gitText(state.sandbox, ["clean", "-fd", "--exclude=node_modules"])
-  await prepareSandboxTooling(state.sharedRoot, state.sandbox, io.warn)
+  await isolateSandbox(state)
 
   const statusText = await gitText(state.sandbox, ["status", "--short"])
 
   io.log(statusText || "sandbox working tree matches the index")
 }
 
+async function isolateSandbox(state: CommitMyState) {
+  await gitText(state.sandbox, ["restore", "."])
+  await gitText(state.sandbox, ["clean", "-fd", "--exclude=node_modules"])
+  await prepareSandboxTooling(state.sharedRoot, state.sandbox)
+}
+
 async function refresh(io: Io, sandboxArg?: string) {
   const state = await loadState(io, sandboxArg)
 
   await gitText(state.sandbox, ["restore", "--source", state.snapshotTree, "--worktree", "--no-overlay", "--", "."])
-  await prepareSandboxTooling(state.sharedRoot, state.sandbox, io.warn)
+  await prepareSandboxTooling(state.sharedRoot, state.sandbox)
 
   const statusText = await gitText(state.sandbox, ["status", "--short"])
 
@@ -268,7 +448,7 @@ async function status(io: Io, sandboxArg: string | undefined, json: boolean) {
 }
 
 async function writeSnapshotTree(sharedRoot: string) {
-  const indexDir = await mkdtemp(join(tmpdir(), "commit-my-index-"))
+  const indexDir = await makeTempDir("commit-my-index-")
   const indexPath = join(indexDir, "index")
 
   try {
@@ -276,13 +456,55 @@ async function writeSnapshotTree(sharedRoot: string) {
     await gitText(sharedRoot, ["add", "-A"], { GIT_INDEX_FILE: indexPath })
     return await gitText(sharedRoot, ["write-tree"], { GIT_INDEX_FILE: indexPath })
   } finally {
-    await rm(indexDir, { recursive: true, force: true })
+    await removeDir(indexDir)
   }
 }
 
-async function prepareSandboxTooling(sharedRoot: string, sandbox: string, warn: (message: string) => void) {
+async function prepareSandboxTooling(sharedRoot: string, sandbox: string) {
   await linkPackageNodeModules(sharedRoot, sandbox)
-  await installLefthook(sandbox, warn)
+}
+
+async function bunInstall(sandbox: string) {
+  if (!(await pathExists(join(sandbox, "package.json")))) {
+    return
+  }
+
+  const result = await spawnCommand(sandbox, [process.execPath, "install"])
+
+  if (result.code !== 0) {
+    throw new CommitMyError(result.stderr || result.stdout || "bun install failed")
+  }
+}
+
+function assertSafePaths(paths: string[], patch?: string) {
+  if (!paths.length && !patch) {
+    throw new CommitMyError('Pass explicit paths or --patch. Example: commit-my -m "message" -- path')
+  }
+
+  for (const path of paths) {
+    const normalized = path.replaceAll("\\", "/").replace(/\/+$/, "") || "."
+
+    if (
+      normalized === "." ||
+      normalized === "-A" ||
+      normalized === "--all" ||
+      normalized === "*" ||
+      normalized === "-u"
+    ) {
+      throw new CommitMyError(`Refusing to stage ${path}. Pass explicit file paths.`)
+    }
+  }
+}
+
+function repoRelativePath(cwd: string, repoRoot: string, path: string) {
+  const abs = resolvePath(cwd, path)
+  const rel = relative(repoRoot, abs)
+
+  if (!rel || rel === "." || rel.startsWith("..") || isAbsolute(rel)) {
+    throw new CommitMyError(`Path is outside the repository: ${path}`)
+  }
+
+  return rel
 }
 
 async function linkPackageNodeModules(sharedRoot: string, sandbox: string) {
@@ -303,50 +525,8 @@ async function linkPackageNodeModules(sharedRoot: string, sandbox: string) {
       continue
     }
 
-    await mkdir(dirname(dest), { recursive: true })
-    await symlink(source, dest)
-  }
-}
-
-async function installLefthook(sandbox: string, warn: (message: string) => void) {
-  let hasConfig = false
-
-  for (const name of LEFTHOOK_FILES) {
-    if (await pathExists(join(sandbox, name))) {
-      hasConfig = true
-      break
-    }
-  }
-
-  if (!hasConfig) {
-    return
-  }
-
-  const binary = await findLefthook(sandbox)
-
-  if (!binary) {
-    warn("lefthook config found, but lefthook is not installed")
-    return
-  }
-
-  const result = await spawnCommand(sandbox, [binary, "install"])
-
-  if (result.code !== 0) {
-    warn(result.stderr || result.stdout || "lefthook install failed")
-  }
-}
-
-async function findLefthook(sandbox: string) {
-  const local = join(sandbox, "node_modules", ".bin", "lefthook")
-
-  if (await pathExists(local)) {
-    return local
-  }
-
-  const which = await spawnCommand(sandbox, ["sh", "-c", "command -v lefthook"])
-
-  if (which.code === 0 && which.stdout) {
-    return which.stdout
+    await ensureDir(dirname(dest))
+    await $`ln -sfn ${source} ${dest}`.quiet()
   }
 }
 
@@ -365,11 +545,11 @@ async function removeSandbox(sharedRoot: string, sandbox: string) {
   const result = await git(sharedRoot, ["worktree", "remove", "--force", sandbox])
 
   if (result.code !== 0) {
-    await rm(sandbox, { recursive: true, force: true })
+    await removeDir(sandbox)
     await git(sharedRoot, ["worktree", "prune"])
   }
 
-  await rm(dirname(sandbox), { recursive: true, force: true })
+  await removeDir(dirname(sandbox))
 }
 
 async function loadState(io: Io, sandboxArg?: string): Promise<CommitMyState> {
@@ -425,7 +605,7 @@ async function listSandboxes(sharedRoot: string) {
 
 async function writeState(sandbox: string, state: CommitMyState) {
   const gitDir = await gitText(sandbox, ["rev-parse", "--absolute-git-dir"])
-  await writeFile(join(gitDir, STATE_NAME), `${JSON.stringify(state, null, 2)}\n`)
+  await Bun.write(join(gitDir, STATE_NAME), `${JSON.stringify(state, null, 2)}\n`)
 }
 
 async function readState(sandbox: string) {
@@ -451,7 +631,7 @@ async function readStateIfPresent(sandbox: string) {
     return
   }
 
-  const parsed: unknown = JSON.parse(await readFile(statePath, "utf8"))
+  const parsed: unknown = JSON.parse(await Bun.file(statePath).text())
 
   if (!isState(parsed)) {
     throw new CommitMyError(`Invalid commit-my state at ${statePath}`)
@@ -545,12 +725,33 @@ async function spawnCommand(cwd: string, argv: string[], env: Record<string, str
 }
 
 async function pathExists(path: string) {
-  try {
-    await access(path)
-    return true
-  } catch {
-    return false
+  return (await $`test -e ${path}`.nothrow().quiet()).exitCode === 0
+}
+
+async function makeTempDir(prefix: string) {
+  const created = (await $`mktemp -d ${join(tmpDir(), `${prefix}XXXXXX`)}`.quiet().text()).trim()
+
+  if (!created) {
+    throw new CommitMyError("mktemp failed")
   }
+
+  return created
+}
+
+async function ensureDir(path: string) {
+  await $`mkdir -p ${path}`.quiet()
+}
+
+async function removeDir(path: string) {
+  await $`rm -rf ${path}`.nothrow().quiet()
+}
+
+function tmpDir() {
+  return Bun.env.TMPDIR || "/tmp"
+}
+
+function homeDir() {
+  return Bun.env.HOME || tmpDir()
 }
 
 function resolvePath(cwd: string, path: string) {
@@ -559,7 +760,7 @@ function resolvePath(cwd: string, path: string) {
   }
 
   if (path.startsWith("~/")) {
-    return join(homedir(), path.slice(2))
+    return join(homeDir(), path.slice(2))
   }
 
   return join(cwd, path)

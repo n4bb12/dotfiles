@@ -1,9 +1,8 @@
 import { afterEach, describe, expect, test } from "bun:test"
-import { chmod, lstat, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
-import { tmpdir } from "node:os"
 import { dirname, join } from "node:path"
+import { $ } from "bun"
 
-import { CommitMyError, run } from "../config/~/.agents/skills/commit-my/scripts/commit-my.js"
+import { CommitMyError, run } from "./commit-my"
 
 type Repo = {
   root: string
@@ -69,7 +68,7 @@ describe("commit-my", () => {
     expect(await pathExists(join(started.sandbox, ".env.local"))).toBe(false)
     expect(await git(repo, ["ls-tree", "-r", "--name-only", started.snapshotTree])).not.toContain("node_modules")
     expect(await git(repo, ["ls-tree", "-r", "--name-only", started.snapshotTree])).not.toContain(".env.local")
-    expect((await lstat(join(started.sandbox, "node_modules"))).isSymbolicLink()).toBe(true)
+    expect((await $`test -L ${join(started.sandbox, "node_modules")}`.nothrow().quiet()).exitCode).toBe(0)
     expect(await git(repo, ["status", "--short"])).toBe(statusBefore)
     expect(await git(repo, ["diff", "--cached"])).toBe(stagedBefore)
     expect(await readFile(join(repo, "app.js"), "utf8")).toBe(appBefore)
@@ -225,6 +224,180 @@ fi
     expect(await git(repo, ["worktree", "list"])).not.toContain(started.sandbox)
   })
 
+  test("one command commits only the given paths and leaves other dirty files", async () => {
+    const { repo } = await createRepo()
+    const hook = join(repo, ".git/hooks/pre-commit")
+
+    await writeFile(
+      hook,
+      `#!/bin/sh
+if grep -q THEIRS_BROKEN other.js 2>/dev/null; then
+  echo "HOOK_SAW_OTHER_AGENT" >&2
+  exit 1
+fi
+`,
+    )
+    await chmod(hook, 0o755)
+
+    await writeFile(join(repo, "app.js"), "mine\n")
+    await writeFile(join(repo, "other.js"), "THEIRS_BROKEN\n")
+
+    await run(["-m", "mine", "--", "app.js"], { cwd: repo, log: () => undefined, warn: () => undefined })
+
+    expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("mine")
+    expect(await git(repo, ["show", "HEAD:app.js"])).toBe("mine")
+    expect(await readFile(join(repo, "app.js"), "utf8")).toBe("mine\n")
+    expect(await readFile(join(repo, "other.js"), "utf8")).toBe("THEIRS_BROKEN\n")
+    expect(await git(repo, ["status", "--short"])).toBe(" M other.js")
+    expect(await worktreeCount(repo)).toBe(1)
+  })
+
+  test("review prints every dirty change in the shared tree", async () => {
+    const { repo } = await createRepo()
+
+    await writeFile(join(repo, "app.js"), "mine\n")
+    await writeFile(join(repo, "other.js"), "theirs\n")
+    await writeFile(join(repo, "new-file.txt"), "untracked\n")
+
+    const logs: string[] = []
+
+    await run([], { cwd: repo, log: (message) => logs.push(message), warn: () => undefined })
+
+    const output = logs.join("\n")
+
+    expect(output).toContain("app.js")
+    expect(output).toContain("other.js")
+    expect(output).toContain("new-file.txt")
+    expect(output).toContain("mine")
+    expect(output).toContain("theirs")
+    expect(output).toContain("untracked")
+    expect(await git(repo, ["status", "--short"])).toContain("?? new-file.txt")
+  })
+
+  test("commits selected hunks from a mixed file and leaves the other hunks dirty", async () => {
+    const { repo, root } = await createRepo()
+
+    await writeFile(join(repo, "app.js"), "alpha\nbravo\ncharlie\ndelta\necho\nfoxtrot\n")
+    await git(repo, ["add", "app.js"])
+    await git(repo, ["commit", "-m", "lines"])
+    await writeFile(join(repo, "app.js"), "alpha\nBRAVO\ncharlie\ndelta\nECHO\nfoxtrot\n")
+    await writeFile(join(repo, "other.js"), "theirs\n")
+
+    const patch = join(root, "mine.diff")
+
+    await writeFile(
+      patch,
+      `diff --git a/app.js b/app.js
+--- a/app.js
++++ b/app.js
+@@ -1,4 +1,4 @@
+ alpha
+-bravo
++BRAVO
+ charlie
+ delta
+`,
+    )
+
+    await run(["-m", "mine", "--patch", patch], { cwd: repo, log: () => undefined, warn: () => undefined })
+
+    expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("mine")
+    expect(await git(repo, ["show", "HEAD:app.js"])).toBe("alpha\nBRAVO\ncharlie\ndelta\necho\nfoxtrot")
+    expect(await readFile(join(repo, "app.js"), "utf8")).toBe("alpha\nBRAVO\ncharlie\ndelta\nECHO\nfoxtrot\n")
+    expect(await readFile(join(repo, "other.js"), "utf8")).toBe("theirs\n")
+    expect(await git(repo, ["status", "--short"])).toBe(" M app.js\n M other.js")
+    expect(await worktreeCount(repo)).toBe(1)
+  })
+
+  test("bun install registers commit hooks from package scripts", async () => {
+    const { repo } = await createRepo()
+
+    await writeFile(
+      join(repo, "package.json"),
+      `${JSON.stringify(
+        {
+          name: "commit-my-test",
+          private: true,
+          scripts: {
+            prepare: "sh prepare-hooks.sh",
+          },
+        },
+        null,
+        2,
+      )}\n`,
+    )
+    await writeFile(
+      join(repo, "prepare-hooks.sh"),
+      `#!/bin/sh
+set -e
+dir=$(git rev-parse --git-path hooks)
+mkdir -p "$dir"
+cat > "$dir/pre-commit" <<'HOOK'
+#!/bin/sh
+if grep -q THEIRS_BROKEN other.js 2>/dev/null; then
+  echo "HOOK_SAW_OTHER_AGENT" >&2
+  exit 1
+fi
+touch "$(git rev-parse --git-common-dir)/COMMIT_MY_HOOK_RAN"
+HOOK
+chmod +x "$dir/pre-commit"
+`,
+    )
+    await git(repo, ["add", "package.json", "prepare-hooks.sh"])
+    await git(repo, ["commit", "-m", "hooks"])
+
+    await writeFile(join(repo, "app.js"), "mine\n")
+    await writeFile(join(repo, "other.js"), "THEIRS_BROKEN\n")
+
+    await run(["-m", "mine", "--", "app.js"], { cwd: repo, log: () => undefined, warn: () => undefined })
+
+    expect(await pathExists(join(repo, ".git/COMMIT_MY_HOOK_RAN"))).toBe(true)
+    expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("mine")
+    expect(await readFile(join(repo, "other.js"), "utf8")).toBe("THEIRS_BROKEN\n")
+  })
+
+  test("refuses to stage the whole repository", async () => {
+    const { repo } = await createRepo()
+
+    await writeFile(join(repo, "app.js"), "mine\n")
+
+    let failed: unknown
+
+    try {
+      await run(["-m", "mine", "--", "."], { cwd: repo, log: () => undefined, warn: () => undefined })
+    } catch (error) {
+      failed = error
+    }
+
+    expect(failed).toBeInstanceOf(CommitMyError)
+    expect(String(failed)).toContain("Refusing to stage")
+    expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("init")
+  })
+
+  test("commit failure removes the sandbox and does not move the branch", async () => {
+    const { repo } = await createRepo()
+    const hook = join(repo, ".git/hooks/pre-commit")
+
+    await writeFile(hook, "#!/bin/sh\necho HOOK_FAILED >&2\nexit 1\n")
+    await chmod(hook, 0o755)
+    await writeFile(join(repo, "app.js"), "mine\n")
+
+    const head = await git(repo, ["rev-parse", "HEAD"])
+    let failed: unknown
+
+    try {
+      await run(["-m", "mine", "--", "app.js"], { cwd: repo, log: () => undefined, warn: () => undefined })
+    } catch (error) {
+      failed = error
+    }
+
+    expect(failed).toBeInstanceOf(CommitMyError)
+    expect(String(failed)).toContain("HOOK_FAILED")
+    expect(await git(repo, ["rev-parse", "HEAD"])).toBe(head)
+    expect(await readFile(join(repo, "app.js"), "utf8")).toBe("mine\n")
+    expect(await worktreeCount(repo)).toBe(1)
+  })
+
   test("start refuses a detached shared HEAD", async () => {
     const { repo } = await createRepo()
 
@@ -244,7 +417,7 @@ fi
 })
 
 async function createRepo() {
-  const root = await mkdtemp(join(tmpdir(), "commit-my-test-"))
+  const root = await mkdtemp("commit-my-test-")
   const repo = join(root, "repo")
 
   repos.push(root)
@@ -289,12 +462,37 @@ async function snapshotFiles(repo: string) {
 }
 
 async function pathExists(path: string) {
-  try {
-    await readFile(path)
-    return true
-  } catch {
-    return false
-  }
+  return (await $`test -e ${path}`.nothrow().quiet()).exitCode === 0
+}
+
+async function writeFile(path: string, content: string) {
+  await Bun.write(path, content)
+}
+
+async function readFile(path: string, _encoding?: string) {
+  return Bun.file(path).text()
+}
+
+async function mkdir(path: string, _opts?: { recursive?: boolean }) {
+  await $`mkdir -p ${path}`.quiet()
+}
+
+async function rm(path: string, _opts?: { recursive?: boolean; force?: boolean }) {
+  await $`rm -rf ${path}`.nothrow().quiet()
+}
+
+async function chmod(path: string, _mode?: number) {
+  await $`chmod 755 ${path}`.quiet()
+}
+
+async function mkdtemp(prefix: string) {
+  return (await $`mktemp -d ${join(Bun.env.TMPDIR || "/tmp", `${prefix}XXXXXX`)}`.quiet().text()).trim()
+}
+
+async function worktreeCount(repo: string) {
+  const porcelain = await git(repo, ["worktree", "list", "--porcelain"])
+
+  return porcelain.split("\n").filter((line) => line.startsWith("worktree ")).length
 }
 
 async function git(cwd: string, args: string[]) {
