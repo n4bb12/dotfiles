@@ -1,5 +1,5 @@
 ---
-name: n4bb12-personal-skill
+name: n4bb12-edit-personal-skill
 description: Use when creating or editing a personal skill that must live only in the dotfiles repo and be symlinked into agent skill directories for availability across tools.
 argument-hint: "name or topic of the new personal skill"
 ---
