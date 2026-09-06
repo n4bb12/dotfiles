@@ -41,7 +41,7 @@ For each group:
 2. Stage explicit paths when the whole file belongs to the group. When one file contains multiple concerns, stage selected hunks or construct and apply a precise cached patch. Never use broad staging commands such as `git add .` or `git add -A`.
 3. Review `git diff --cached --stat` and `git diff --cached`. Confirm the commit is complete, contains no unrelated hunks, and leaves the repository structurally valid for the next commit.
 4. Run focused, inexpensive checks when they materially reduce risk. Do not test every historical intermediate commit unless the user asks. Use dependency-aware judgment to preserve a buildable sequence by construction.
-5. Commit with the repository's message convention and a message describing this commit's single intent. Do not bypass hooks.
+5. Commit following the git commit message rules in AGENTS.md (conventional subject, body unless trivial, name the edit not the container). Do not bypass hooks.
 6. Reinspect status because hooks may modify files, then continue with the remaining groups.
 
 If intertwined lines cannot be separated safely, keep them in the smallest coherent group. Do not rewrite source code solely to manufacture a commit boundary.
