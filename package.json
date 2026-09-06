@@ -25,6 +25,7 @@
     "check": "tsc --noEmit",
     "fix": "bun format && bun check",
     "format": "biome check --write --unsafe .",
+    "mr": "bun scripts/mr/cli.ts",
     "skills": "bun scripts/install-skills.ts",
     "test": "bun test"
   },

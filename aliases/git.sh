@@ -134,6 +134,11 @@ git-commit-thread() {
   bun run "$here/../config/~/.agents/skills/n4bb12-git-commit-thread/scripts/cli.ts" "$@"
 }
 
+git-merge-request() {
+  local here="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}"
+  bun run "$here/../scripts/mr/cli.ts" "$@"
+}
+
 git-merge() {
   if [ ! -z $1 ]; then
     git merge $1
@@ -371,6 +376,7 @@ alias fpush='pushf'
 alias pfusch='pushf'
 alias pfush='pushf'
 alias upst='git-set-upstream'
+alias mr='git-merge-request'
 
 # Combos
 alias add-white='git add -A && git diff --cached -w | git apply --cached -R'
