@@ -132,3 +132,114 @@ cleanup() {
   echo
   echo "Cleanup complete. Space available before: $before, after: $after"
 }
+
+update() {
+  local failed=()
+
+  update_step() {
+    local name="$1"
+    shift
+    echo
+    printf '%b\n' "${cyan}==> ${name}${reset}"
+    if "$@"; then
+      return 0
+    fi
+    warn "Failed: $name"
+    failed+=("$name")
+  }
+
+  if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+  elif [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv bash)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv bash)"
+  fi
+
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  # shellcheck disable=SC1091
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+  if command -v apt >/dev/null 2>&1; then
+    update_step "apt update" sudo apt update
+    update_step "apt upgrade" sudo apt upgrade -y
+  fi
+
+  if [[ "$(uname -s)" == Darwin ]] && command -v softwareupdate >/dev/null 2>&1; then
+    update_step "macOS" softwareupdate --install --all
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    update_step "brew update" brew update
+    update_step "brew upgrade" brew upgrade
+  fi
+
+  if command -v rustup >/dev/null 2>&1; then
+    update_step "rustup" rustup update
+  fi
+
+  if command -v nvm >/dev/null 2>&1; then
+    update_step "node lts" nvm install --lts --latest-npm
+    update_step "node default" nvm alias default "lts/*"
+    update_step "node use" nvm use --lts
+  fi
+
+  if command -v bun >/dev/null 2>&1; then
+    update_step "bun" bun upgrade
+    update_step "bun globals" bun update --global
+  fi
+
+  if command -v composer >/dev/null 2>&1; then
+    update_step "composer" sudo composer self-update
+  fi
+
+  if command -v wp >/dev/null 2>&1; then
+    update_step "wp-cli" wp cli update --yes
+  fi
+
+  if command -v snap >/dev/null 2>&1; then
+    update_step "snap" sudo snap refresh
+  fi
+
+  if command -v gh >/dev/null 2>&1; then
+    update_step "gh extensions" gh extension upgrade --all
+  fi
+
+  if command -v claude >/dev/null 2>&1; then
+    update_step "claude" claude update
+  fi
+
+  if command -v cursor-agent >/dev/null 2>&1; then
+    update_step "cursor" cursor-agent update
+  fi
+
+  if command -v codex >/dev/null 2>&1; then
+    update_step "codex" codex update
+  fi
+
+  if command -v grok >/dev/null 2>&1; then
+    update_step "grok" grok update
+  fi
+
+  if command -v kimi >/dev/null 2>&1; then
+    update_step "kimi" kimi upgrade
+  fi
+
+  if command -v sst >/dev/null 2>&1; then
+    update_step "sst" sst upgrade
+  fi
+
+  if command -v heroku >/dev/null 2>&1; then
+    update_step "heroku" heroku update
+  fi
+
+  unset -f update_step
+
+  echo
+  if ((${#failed[@]})); then
+    warn "Finished with failures: ${failed[*]}"
+    return 1
+  fi
+
+  printf '%b\n' "${green}Update complete.${reset}"
+}
