@@ -2,7 +2,7 @@ import { afterEach, describe, expect, test } from "bun:test"
 import { dirname, join } from "node:path"
 import { $ } from "bun"
 
-import { CommitMyError, run } from "./commit-my"
+import { CommitMyError, run } from "./cli"
 
 type Repo = {
   root: string
