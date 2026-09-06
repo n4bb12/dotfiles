@@ -3,16 +3,16 @@
   "$schema": "https://aka.ms/terminal-profiles-schema",
   "actions": [
     {
-      "command": "find",
-      "id": "User.find"
-    },
-    {
       "command": {
         "action": "splitPane",
         "split": "auto",
         "splitMode": "duplicate"
       },
       "id": "User.splitPane.A6751878"
+    },
+    {
+      "command": "find",
+      "id": "User.find"
     },
     {
       "command": {
@@ -31,16 +31,16 @@
     },
     {
       "command": {
-        "action": "closeTab"
-      },
-      "id": "User.closeTab.0"
-    },
-    {
-      "command": {
         "action": "newTab",
         "index": 0
       },
       "id": "User.newTab.7975BEED"
+    },
+    {
+      "command": {
+        "action": "closeTab"
+      },
+      "id": "User.closeTab.0"
     }
   ],
   "alwaysShowNotificationIcon": false,
@@ -54,32 +54,32 @@
   "initialRows": 40,
   "keybindings": [
     {
-      "id": "User.newTab.7975BEED",
-      "keys": "ctrl+t"
+      "id": "Terminal.DuplicateTab",
+      "keys": "ctrl+shift+d"
     },
     {
       "id": "User.copy.644BA8F2",
       "keys": "ctrl+c"
     },
     {
-      "id": "Terminal.DuplicateTab",
-      "keys": "ctrl+shift+d"
+      "id": "User.newTab.7975BEED",
+      "keys": "ctrl+t"
     },
     {
       "id": "User.splitPane.A6751878",
       "keys": "alt+shift+d"
     },
     {
-      "id": "User.find",
-      "keys": "ctrl+shift+f"
+      "id": "User.paste",
+      "keys": "ctrl+v"
     },
     {
       "id": "User.openTabRenamer",
       "keys": "alt+shift+r"
     },
     {
-      "id": "User.paste",
-      "keys": "ctrl+v"
+      "id": "User.find",
+      "keys": "ctrl+shift+f"
     },
     {
       "id": "User.closeTab.0",
@@ -106,7 +106,9 @@
     },
     "list": [
       {
+        "adjustIndistinguishableColors": "always",
         "commandline": "wsl.exe -d Ubuntu",
+        "cursorShape": "bar",
         "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
         "hidden": false,
         "name": "Ubuntu",
@@ -133,6 +135,12 @@
         "hidden": false,
         "name": "PowerShell",
         "source": "Windows.Terminal.PowershellCore"
+      },
+      {
+        "guid": "{ac59cfc4-048d-5a91-89ab-f12abb029e6c}",
+        "hidden": false,
+        "name": "podman-machine-default",
+        "source": "Microsoft.WSL"
       }
     ]
   },
