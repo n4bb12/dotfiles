@@ -103,6 +103,17 @@ who() {
   fi
 }
 
+profile() {
+  local site="$1"
+
+  if [ -z "$site" ]; then
+    echo -e "Usage: profile <site>"
+    return 1
+  fi
+
+  open-cli "https://${site}.com/${USER}"
+}
+
 # Why did I need this?
 #
 # aws_login() {
