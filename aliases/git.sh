@@ -1,3 +1,5 @@
+# GIT ==================================
+
 source /usr/share/bash-completion/completions/git
 
 git-workon() {
@@ -291,7 +293,6 @@ git-worktree-add() {
 
 # Functions
 alias abort='git-abort'
-alias commit='git-commit'
 alias commit='git-commit-with-ai'
 alias cont='git-continue'
 alias merge='git-merge'
@@ -372,7 +373,6 @@ alias back='git-back'
 alias ch='git checkout'
 alias cm='git-commit'
 alias cmc='git-commit-with-ai'
-alias cont='git-continue'
 alias fpush='pushf'
 alias pfusch='pushf'
 alias pfush='pushf'

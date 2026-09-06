@@ -1,4 +1,5 @@
-# bash completion
+# COMPLETION ===========================
+
 # https://www.cyberciti.biz/faq/add-bash-auto-completion-in-ubuntu-linux/
 source /etc/profile.d/bash_completion.sh
 source /usr/share/bash-completion/completions/git
@@ -6,13 +7,14 @@ source /usr/share/bash-completion/completions/git
 # Copy global agent file (due to symlink issues)
 cp ~/git/n4bb12/dotfiles/config/~/.agents/AGENTS.md /mnt/c/Users/der_a/AppData/Roaming/Code/User/prompts/global.instructions.md
 
+# PROMPT ===============================
+
 # Preserve WSL path
 # https://learn.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory#wsl
 # PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\"
 # "$(wslpath -w "$PWD")"'
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
 
-# Sets the window title.
 set_title() {
   local DIR="${PWD}"
   # Check for match ignoring case (useful for Windows)
@@ -25,6 +27,8 @@ set_title() {
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}set_title
 export PROMPT_COMMAND
 
+# DISPLAY ==============================
+
 # This fixes convex oauth login getting stuck in WSL. It will open the default browser in Windows instead of WSL.
 export BROWSER=wslview
 
@@ -34,17 +38,30 @@ export XCURSOR_SIZE=64
 export GDK_SCALE=0.67
 export GDK_DPI_SCALE=1.5
 
-# host binaries
+# HOST =================================
+
 alias clip='clip.exe'
 alias explorer='explorer.exe'
-
-# aliases
-alias bat='batcat'
 alias copy='clip'
 alias ex='explorer'
+
+alias bat='batcat'
 alias fd='fdfind'
 
-# commands
 alias f='code "$(fzf)"'
 alias reload='source ~/.bashrc'
 alias bashrc='code ~/.bashrc'
+
+# DISK =================================
+
+zerofill() {
+  set -x
+  sudo dd if=/dev/zero of=zero.fill bs=1M
+  sudo rm zero.fill
+  set +x
+
+  echo "To optimize the VHDX file, run in PowerShell:"
+  echo "wsl --shutdown"
+  echo "wsl -l -v"
+  echo "Optimize-VHD -Path "C:\wsl\Ubuntu\ext4.vhdx" -Mode Full"
+}
