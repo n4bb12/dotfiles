@@ -20,6 +20,8 @@ alias devdeps='cat package.json | fx .devDependencies'
 alias ncuui='ncu -u -i --install never'
 alias deps='ncuui'
 
+# NPM ==================================
+
 free-name() {
   all-the-package-names | grep -E "^${1}$" >/dev/null
   status="$?"
