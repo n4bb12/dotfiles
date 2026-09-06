@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-curl 'https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip' -o 'awscliv2.zip'
-unzip -o awscliv2.zip
-sudo ./aws/install
-rm -rf aws awscliv2.zip
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$DIR/_lib.sh"
+
+brew_install awscli
+
+remove_files /usr/local/bin/aws /usr/local/bin/aws_completer
+remove_dirs /usr/local/aws-cli
