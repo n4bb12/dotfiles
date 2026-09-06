@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path"
 
-import { type CommandRunner, type HostKind, MrError } from "./types.ts"
+import { type CommandRunner, type HostKind, MrError, WORKSPACE_DIR } from "./types.ts"
 
 export async function defaultRunner(input: {
   argv: string[]
@@ -148,7 +148,7 @@ export async function branchExists(repoRoot: string, name: string, runner: Comma
 }
 
 export function mrPaths(repoRoot: string) {
-  const mrDir = join(repoRoot, ".mr")
+  const mrDir = join(repoRoot, WORKSPACE_DIR)
 
   return {
     repoRoot,

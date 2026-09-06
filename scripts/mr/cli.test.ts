@@ -5,7 +5,7 @@ import { join } from "node:path"
 
 import { run } from "./cli.ts"
 import { defaultRunner, detectHostKind, originHostname } from "./git.ts"
-import { MrError } from "./types.ts"
+import { MrError, WORKSPACE_DIR } from "./types.ts"
 
 const repos: string[] = []
 const gitEnv = {
@@ -45,34 +45,38 @@ describe("mr cli", () => {
 
     await run(["init", "--base", "main"], testIo(repo, logs))
 
-    const config = JSON.parse(await Bun.file(join(repo, ".mr/config.json")).text()) as { baseBranch: string }
+    const config = JSON.parse(await Bun.file(join(repo, WORKSPACE_DIR, "config.json")).text()) as { baseBranch: string }
     const exclude = await Bun.file(join(repo, ".git/info/exclude")).text()
-    const analysis = await Bun.file(join(repo, ".mr/analysis.json")).text()
+    const analysis = await Bun.file(join(repo, WORKSPACE_DIR, "analysis.json")).text()
 
     expect(config.baseBranch).toBe("main")
-    expect(exclude).toContain(".mr/")
+    expect(exclude).toContain(`${WORKSPACE_DIR}/`)
     expect(analysis).toContain("feat/checkout")
     expect(logs.join("\n")).toContain("Base branch: main")
 
     await run(["init", "--base", "main"], testIo(repo, []))
 
-    expect((await Bun.file(join(repo, ".git/info/exclude")).text()).match(/^\.mr\/$/gm)?.length).toBe(1)
+    expect(
+      (await Bun.file(join(repo, ".git/info/exclude")).text()).match(
+        new RegExp(`^${WORKSPACE_DIR.replaceAll(".", "\\.")}/$`, "gm"),
+      )?.length,
+    ).toBe(1)
   })
 
-  test("keeps the stored base branch until .mr is deleted", async () => {
+  test("keeps the stored base branch until the workspace is deleted", async () => {
     const { repo } = createRepo()
 
     await run(["init", "--base", "main"], testIo(repo, []))
     await run(["init"], testIo(repo, []))
 
-    const kept = JSON.parse(await Bun.file(join(repo, ".mr/config.json")).text()) as { baseBranch: string }
+    const kept = JSON.parse(await Bun.file(join(repo, WORKSPACE_DIR, "config.json")).text()) as { baseBranch: string }
 
     expect(kept.baseBranch).toBe("main")
 
-    rmSync(join(repo, ".mr"), { recursive: true, force: true })
+    rmSync(join(repo, WORKSPACE_DIR), { recursive: true, force: true })
     await run(["init", "--base", "develop"], testIo(repo, []))
 
-    const reset = JSON.parse(await Bun.file(join(repo, ".mr/config.json")).text()) as { baseBranch: string }
+    const reset = JSON.parse(await Bun.file(join(repo, WORKSPACE_DIR, "config.json")).text()) as { baseBranch: string }
 
     expect(reset.baseBranch).toBe("develop")
   })
@@ -81,8 +85,8 @@ describe("mr cli", () => {
     const { repo } = createRepo()
 
     writeWorkspace(repo, "| ![Before](./screenshots/01-before.png) | ![After](./screenshots/01-after.png) |\n")
-    mkdirSync(join(repo, ".mr/screenshots"), { recursive: true })
-    writeFileSync(join(repo, ".mr/screenshots/01-after.png"), "after")
+    mkdirSync(join(repo, WORKSPACE_DIR, "screenshots"), { recursive: true })
+    writeFileSync(join(repo, WORKSPACE_DIR, "screenshots/01-after.png"), "after")
 
     const logs: string[] = []
 
@@ -98,7 +102,7 @@ describe("mr cli", () => {
     expect(logs.join("\n")).toContain("✓ ./screenshots/01-after.png")
   })
 
-  test("status fails when .mr files are missing", async () => {
+  test("status fails when workspace files are missing", async () => {
     const { repo } = createRepo()
 
     try {
@@ -122,13 +126,13 @@ describe("mr cli", () => {
     expect(logs.join("\n")).toContain("No local images")
   })
 
-  test("create uses gh --attach from .mr without pushing", async () => {
+  test("create uses gh --attach from the workspace without pushing", async () => {
     const { repo } = createRepo()
     const calls: string[][] = []
 
     writeWorkspace(repo, "![Before](./screenshots/01-before.png)\n")
-    mkdirSync(join(repo, ".mr/screenshots"), { recursive: true })
-    writeFileSync(join(repo, ".mr/screenshots/01-before.png"), "before")
+    mkdirSync(join(repo, WORKSPACE_DIR, "screenshots"), { recursive: true })
+    writeFileSync(join(repo, WORKSPACE_DIR, "screenshots/01-before.png"), "before")
 
     const logs: string[] = []
 
@@ -158,7 +162,7 @@ describe("mr cli", () => {
         }
 
         if (input.argv[1] === "pr" && input.argv[2] === "create") {
-          expect(input.cwd).toBe(join(repo, ".mr"))
+          expect(input.cwd).toBe(join(repo, WORKSPACE_DIR))
           expect(input.env?.GH_PROMPT_DISABLED).toBe("1")
           expect(input.argv).toContain("--head")
           expect(input.argv).toContain("--attach")
@@ -196,9 +200,9 @@ function testIo(repo: string, logs: string[]) {
 }
 
 function writeWorkspace(repo: string, description: string) {
-  mkdirSync(join(repo, ".mr"), { recursive: true })
-  writeFileSync(join(repo, ".mr/config.json"), `${JSON.stringify({ baseBranch: "main" }, null, 2)}\n`)
-  writeFileSync(join(repo, ".mr/description.md"), description)
+  mkdirSync(join(repo, WORKSPACE_DIR), { recursive: true })
+  writeFileSync(join(repo, WORKSPACE_DIR, "config.json"), `${JSON.stringify({ baseBranch: "main" }, null, 2)}\n`)
+  writeFileSync(join(repo, WORKSPACE_DIR, "description.md"), description)
 }
 
 function createRepo() {

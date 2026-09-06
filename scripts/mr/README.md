@@ -1,14 +1,14 @@
 # Local merge request / pull request
 
-Companion CLI for a local `.mr/` workspace. Write the description yourself or with an agent, preview it, then create or update the request on GitHub (`gh`) or GitLab (`glab`).
+Companion CLI for a local `.merge-request/` workspace. Write the description yourself or with an agent, preview it, then create or update the request on GitHub (`gh`) or GitLab (`glab`).
 
 ## Commands
 
 After sourcing dotfiles aliases, from any git repo:
 
 ```bash
-mr init              # create .mr/, choose or keep the base branch
-mr inspect           # refresh .mr/analysis.json from git
+mr init              # create .merge-request/, choose or keep the base branch
+mr inspect           # refresh .merge-request/analysis.json from git
 mr status            # check local images
 mr render            # GitLab: write description.remote.md. GitHub: check attachments.
 mr create            # create the remote request
@@ -17,7 +17,7 @@ mr update            # update the remote request
 
 From this repo: `bun mr <command>`. Agents should pass `--base <branch>` to `mr init`.
 
-Reset by deleting `.mr/`.
+Reset by deleting `.merge-request/`.
 
 ## Auth
 
@@ -31,7 +31,7 @@ The tool does not store tokens. It does not push, force-push, or merge. Push the
 ## Local files
 
 ```text
-.mr/
+.merge-request/
   config.json              # baseBranch
   analysis.json            # git facts for the agent
   description.md           # source of truth, previewable
@@ -42,11 +42,11 @@ The tool does not store tokens. It does not push, force-push, or merge. Push the
   context/                 # optional notes
 ```
 
-`.mr/` is listed in the global gitignore (`~/.gitignore`). `mr init` also adds it to `.git/info/exclude`. It is not committed.
+`.merge-request/` is listed in the global gitignore (`~/.gitignore`). `mr init` also adds it to `.git/info/exclude`. It is not committed.
 
 ## Screenshots
 
-In `.mr/description.md` use normal relative links:
+In `.merge-request/description.md` use normal relative links:
 
 ```md
 | Before | After |
