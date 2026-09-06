@@ -13,13 +13,13 @@
 
 ## Canonical Sources
 
-- The master global instruction file is `config/~/.agents/AGENTS.md` in this dotfiles repo. Keep `~/AGENTS.md`, `~/.agents/AGENTS.md`, and `~/.claude/AGENTS.md` symlinked to it.
-- The master personal skills live in `config/~/.agents/skills/<name>/SKILL.md` in this dotfiles repo. Live skill entries should be symlinked to those repo directories.
+- The master global instruction file is `config/~/.agents/AGENTS.md` in this dotfiles repo.
+- The master personal skills live in `config/~/.agents/skills/<name>/SKILL.md` in this dotfiles repo. Install them with `bun skills`.
 
 ## Skills
 
 - Use Matt Pocock's Skills (https://github.com/mattpocock/skills), not superpowers or any other skill framework.
-- Personal skills are defined in `config/~/.agents/skills/<name>/SKILL.md` and linked into each agent's skill directory. When I reference a skill or type `/<name>`, read and follow that file.
+- Personal skills are defined in `config/~/.agents/skills/<name>/SKILL.md`. When I reference a skill or type `/<name>`, read and follow that file.
 
 ## Plans
 

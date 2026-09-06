@@ -25,9 +25,9 @@ source ~/git/n4bb12/dotfiles/aliases/load.sh
 
 ## Config
 
-Files under `config/` are named by destination. Copy or symlink them into place.
+Files under `config/` are named by destination. Run `bun run config` to copy them into place.
 
-- `config/~` is `$HOME`
-- `config/%USERPROFILE%` is the Windows user profile
+- `config/~` is the user home on linux.
+- `config/%USERPROFILE%` is the user home on Windows.
 
 Machine bootstrap lives in `install/`.
