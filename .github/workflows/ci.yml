@@ -10,4 +10,5 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun biome ci .
-      - run: bun test
+      - run: bun types
+      - run: bun run test
