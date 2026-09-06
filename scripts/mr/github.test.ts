@@ -61,8 +61,10 @@ describe("github argv", () => {
     expect(() => assertAttachmentLimit(attachments)).toThrow(MrError)
   })
 
-  test("uses a body path relative to .mr", () => {
-    expect(githubBodyFile("/tmp/repo/.mr", "/tmp/repo/.mr/description.publish.md")).toBe("description.publish.md")
-    expect(githubBodyFile("/tmp/repo/.mr", "description.publish.md")).toBe("description.publish.md")
+  test("uses a body path relative to the workspace", () => {
+    expect(githubBodyFile("/tmp/repo/.merge-request", "/tmp/repo/.merge-request/description.publish.md")).toBe(
+      "description.publish.md",
+    )
+    expect(githubBodyFile("/tmp/repo/.merge-request", "description.publish.md")).toBe("description.publish.md")
   })
 })
