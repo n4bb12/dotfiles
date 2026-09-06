@@ -14,10 +14,6 @@ export PGCLIENTENCODING="utf-8"
 
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}'printf "\e]9;9;%s\e\\" "`cygpath -w "$PWD"`"'
 
-function winget {
-  cmd.exe /c "winget $1 $2 $3"
-}
-
 alias reload="source ~/.bash_profile"
 
 alias mongod="mongod --dbpath $MONGO_HOME/db"
