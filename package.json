@@ -19,12 +19,13 @@
   "author": "Abraham Schilling",
   "type": "module",
   "scripts": {
-    "check": "tsc --noEmit",
-    "fix": "bun format && bun check",
+    "check": "bun types",
+    "fix": "bun format && bun types",
     "format": "biome check --write --unsafe .",
     "mr": "bun scripts/mr/cli.ts",
     "skills": "bun scripts/install-skills.ts",
-    "test": "bun test"
+    "test": "bun test ./scripts './config/~/.agents'",
+    "types": "tsc --noEmit"
   },
   "dependencies": {
     "ai": "^7.0.93"
