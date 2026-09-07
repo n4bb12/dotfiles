@@ -40,6 +40,17 @@ export PROMPT_COMMAND
 # DISPLAY ==============================
 
 # This fixes convex oauth login getting stuck in WSL. It will open the default browser in Windows instead of WSL.
+wslview() {
+  case "$1" in
+    http://*|https://*)
+      powershell.exe -NoProfile -Command "Start-Process '$1'"
+      ;;
+    *)
+      explorer.exe "$(wslpath -w "$1")"
+      ;;
+  esac
+}
+
 export BROWSER=wslview
 
 # vcxsrv
