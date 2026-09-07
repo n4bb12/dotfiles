@@ -6,12 +6,14 @@ import { $ } from "bun"
 const STATE_NAME = "state.json"
 
 const USAGE = `Usage: git-commit-thread
+       git-commit-thread show -- <path>...
        git-commit-thread -m <message> [--patch <file>] [--] <path>...
        git-commit-thread <command> [sandbox] [--json]
 
-With no arguments, print every dirty change in the shared working tree.
+With no arguments, print dirty paths and diff stats.
 Then commit your files and/or a hunk patch. Other dirty files stay put.
 
+  show            Print diffs for the given paths only
   -m, --message   Commit message (repeat for paragraphs)
   --patch <file>  Stage this git apply --cached patch (your hunks in mixed files)
 
@@ -77,6 +79,9 @@ export async function run(argv: string[], io: Partial<Io> = {}) {
       return
     case "review":
       await review(ctx)
+      return
+    case "show":
+      await show(ctx, paths)
       return
     case "start":
       await start(ctx, json)
@@ -178,7 +183,7 @@ function parseArgs(argv: string[]) {
     command: positional[0],
     json,
     messages,
-    paths: [],
+    paths: positional.slice(1),
     patch: undefined,
     sandboxArg: positional[1],
   }
@@ -195,23 +200,47 @@ async function review(io: Io) {
 
   io.log(statusText)
 
-  const tracked = await git(sharedRoot, ["diff", "HEAD"])
+  const stat = await git(sharedRoot, ["diff", "HEAD", "--stat"])
 
-  if (tracked.stdout) {
+  if (stat.stdout) {
     io.log("")
-    io.log(tracked.stdout)
+    io.log(stat.stdout)
+  }
+}
+
+async function show(io: Io, paths: string[]) {
+  if (!paths.length) {
+    throw new GitCommitThreadError("git-commit-thread show requires paths")
   }
 
-  const untracked = await gitText(sharedRoot, ["ls-files", "--others", "--exclude-standard"])
+  assertSafePaths(paths)
+
+  const sharedRoot = await requireRepoRoot(io.cwd)
+  const relPaths = paths.map((path) => repoRelativePath(io.cwd, sharedRoot, path))
+  const tracked = await git(sharedRoot, ["diff", "HEAD", "--", ...relPaths])
+  let printed = false
+
+  if (tracked.stdout) {
+    io.log(tracked.stdout)
+    printed = true
+  }
+
+  const untracked = await gitText(sharedRoot, ["ls-files", "--others", "--exclude-standard", "--", ...relPaths])
 
   for (const file of untracked.split("\n").filter(Boolean)) {
     const diff = await git(sharedRoot, ["diff", "--no-index", "--", "/dev/null", file])
     const text = diff.stdout || diff.stderr
 
-    if (text) {
-      io.log("")
-      io.log(text)
+    if (!text) {
+      continue
     }
+
+    if (printed) {
+      io.log("")
+    }
+
+    io.log(text)
+    printed = true
   }
 }
 
@@ -252,12 +281,13 @@ async function commitPaths(io: Io, messages: string[], paths: string[], patch?: 
     }
 
     await bunInstall(state.sandbox)
+    await quietLefthook(state.sandbox)
 
     const messageArgs = messages.flatMap((message) => ["-m", message])
-    const committed = await git(state.sandbox, ["commit", ...messageArgs])
+    const committed = await gitHooked(state.sandbox, ["commit", "-q", ...messageArgs])
 
     if (committed.code !== 0) {
-      throw new GitCommitThreadError(committed.stderr || committed.stdout || "git commit failed")
+      throw new GitCommitThreadError(commandOutput(committed) || "git commit failed")
     }
 
     keepSandbox = true
@@ -384,7 +414,8 @@ async function finish(io: Io, sandboxArg?: string) {
   const mergeBase = await gitText(state.sandbox, ["merge-base", sandboxHead, currentHead])
 
   if (mergeBase !== currentHead) {
-    const result = await git(state.sandbox, ["rebase", "--onto", currentHead, mergeBase])
+    await quietLefthook(state.sandbox)
+    const result = await gitHooked(state.sandbox, ["rebase", "--onto", currentHead, mergeBase])
 
     if (result.code !== 0) {
       throw new GitCommitThreadError(
@@ -469,11 +500,46 @@ async function bunInstall(sandbox: string) {
     return
   }
 
-  const result = await spawnCommand(sandbox, [process.execPath, "install"])
+  const result = await spawnCommand(sandbox, [process.execPath, "install", "--silent"])
 
   if (result.code !== 0) {
     throw new GitCommitThreadError(result.stderr || result.stdout || "bun install failed")
   }
+}
+
+const LEFTHOOK_CONFIGS = ["lefthook.yml", "lefthook.yaml", ".lefthook.yml", ".lefthook.yaml"] as const
+
+async function quietLefthook(sandbox: string) {
+  // Lefthook 2 applies LEFTHOOK_OUTPUT first, then cfg.Output. A missing
+  // `output` key is nil and turns every section back on, so the env is a no-op.
+  let found = false
+
+  for (const name of LEFTHOOK_CONFIGS) {
+    if (await pathExists(join(sandbox, name))) {
+      found = true
+      break
+    }
+  }
+
+  if (!found) {
+    return
+  }
+
+  const localPath = join(sandbox, "lefthook-local.yml")
+  const quiet = "output: false\n"
+
+  if (await pathExists(localPath)) {
+    const existing = await Bun.file(localPath).text()
+
+    if (/(^|\n)output:\s*false\s*(\n|$)/.test(existing)) {
+      return
+    }
+
+    await Bun.write(localPath, `${existing.trimEnd()}\n\n${quiet}`)
+    return
+  }
+
+  await Bun.write(localPath, quiet)
 }
 
 function assertSafePaths(paths: string[], patch?: string) {
@@ -690,11 +756,15 @@ async function requireRepoRoot(cwd: string) {
   return result.stdout
 }
 
+function commandOutput(result: GitResult) {
+  return [result.stderr, result.stdout].filter(Boolean).join("\n")
+}
+
 async function gitText(cwd: string, args: string[], env: Record<string, string> = {}) {
   const result = await git(cwd, args, env)
 
   if (result.code !== 0) {
-    throw new GitCommitThreadError(result.stderr || result.stdout || `git ${args.join(" ")} failed`)
+    throw new GitCommitThreadError(commandOutput(result) || `git ${args.join(" ")} failed`)
   }
 
   return result.stdout
@@ -704,10 +774,31 @@ async function git(cwd: string, args: string[], env: Record<string, string> = {}
   return spawnCommand(cwd, ["git", "-C", cwd, ...args], env)
 }
 
+async function gitHooked(cwd: string, args: string[], env: Record<string, string> = {}) {
+  const gitArgv = ["git", "-C", cwd, ...args]
+  return spawnCommand(cwd, await withoutControllingTty(gitArgv), env)
+}
+
+let canDetachTty: boolean | undefined
+
+async function withoutControllingTty(argv: string[]) {
+  if (canDetachTty === undefined) {
+    const probe = await spawnCommand(tmpDir(), ["setsid", "-w", "true"])
+    canDetachTty = probe.code === 0
+  }
+
+  if (!canDetachTty) {
+    return argv
+  }
+
+  return ["setsid", "-w", ...argv]
+}
+
 async function spawnCommand(cwd: string, argv: string[], env: Record<string, string> = {}): Promise<GitResult> {
   const proc = Bun.spawn(argv, {
     cwd,
     env: { ...process.env, ...env },
+    stdin: "ignore",
     stdout: "pipe",
     stderr: "pipe",
   })

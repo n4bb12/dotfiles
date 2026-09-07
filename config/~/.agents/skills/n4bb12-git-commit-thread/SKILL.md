@@ -7,29 +7,25 @@ compatibility: Requires git
 
 # Git Commit Thread
 
-Commit only your changes from a shared working tree. Invoking this skill authorizes staging and committing your in-scope work. Do not ask the user to design the split. Do not modify, restore, stash, or clean the shared working tree. Forgotten work stays there.
+This skill replaces the default commit protocol. Skip `git status`, `git diff`, and `git log`. The only git command is `git-commit-thread`.
 
-## Quick start
+Commit only the files you edited in this session. Invoking this skill authorizes staging and committing that work. Name your files from this conversation. Do not open AGENTS.md, commit-all, the CLI source, or other files to rebuild the diff.
 
-1. Run `git-commit-thread` and read the entire dirty diff. Find the hunks you wrote, including in files others also touched.
-2. One command per commit. Whole files:
-
-```
-git-commit-thread -m "subject" -- path [path...]
-```
-
-Hunks in a file others also touched: cut only your hunks from the review into a `git apply --cached` patch, then:
+1. `git-commit-thread` prints dirty paths and stats. Keep yours. Skip the rest.
+2. Whole files you own:
 
 ```
-git-commit-thread -m "subject" --patch /tmp/yours.diff
+git-commit-thread -m "type: subject" -- path [path...]
 ```
 
-Paths and `--patch` can go in the same commit. Never `.` or `-A`.
+If a file's stat is larger than your edits, `git-commit-thread show -- path` (that path only), then your hunks:
+
+```
+git-commit-thread -m "type: subject" --patch /tmp/yours.diff
+```
+
+Never `.` or `-A`. One reason per commit, tests with implementation. Conventional subject, body unless trivial, name the edit not the container.
+
+On hook failure, fix the shared tree and re-run. On integrate conflict, resolve in the printed sandbox, `git rebase --continue`, then `git-commit-thread finish`, or `git-commit-thread abort`.
 
 If `git-commit-thread` is not on `PATH`, run this skill's `scripts/cli.ts` with bun.
-
-## What to commit
-
-Same grouping as commit-all: one reason per commit, tests with implementation. Scope is your edits in this session, not every dirty file. Write each message per the git commit rules in AGENTS.md.
-
-On failure, fix files in the shared tree and re-run the same command. If integrate conflicts, resolve in the printed sandbox, `git rebase --continue`, then `git-commit-thread finish`, or `git-commit-thread abort`.
