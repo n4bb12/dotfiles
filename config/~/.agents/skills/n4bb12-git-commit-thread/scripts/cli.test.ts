@@ -252,12 +252,12 @@ fi
     expect(await worktreeCount(repo)).toBe(1)
   })
 
-  test("review prints every dirty change in the shared tree", async () => {
+  test("review prints dirty paths and stats without file contents", async () => {
     const { repo } = await createRepo()
 
-    await writeFile(join(repo, "app.js"), "mine\n")
-    await writeFile(join(repo, "other.js"), "theirs\n")
-    await writeFile(join(repo, "new-file.txt"), "untracked\n")
+    await writeFile(join(repo, "app.js"), "mine-unique-payload\n")
+    await writeFile(join(repo, "other.js"), "theirs-unique-payload\n")
+    await writeFile(join(repo, "new-file.txt"), "untracked-unique-payload\n")
 
     const logs: string[] = []
 
@@ -268,10 +268,64 @@ fi
     expect(output).toContain("app.js")
     expect(output).toContain("other.js")
     expect(output).toContain("new-file.txt")
-    expect(output).toContain("mine")
-    expect(output).toContain("theirs")
-    expect(output).toContain("untracked")
+    expect(output).not.toContain("mine-unique-payload")
+    expect(output).not.toContain("theirs-unique-payload")
+    expect(output).not.toContain("untracked-unique-payload")
     expect(await git(repo, ["status", "--short"])).toContain("?? new-file.txt")
+  })
+
+  test("show prints diffs only for the requested paths", async () => {
+    const { repo } = await createRepo()
+
+    await writeFile(join(repo, "app.js"), "mine-unique-payload\n")
+    await writeFile(join(repo, "other.js"), "theirs-unique-payload\n")
+    await writeFile(join(repo, "new-file.txt"), "untracked-unique-payload\n")
+
+    const logs: string[] = []
+
+    await run(["show", "--", "app.js", "new-file.txt"], {
+      cwd: repo,
+      log: (message) => logs.push(message),
+      warn: () => undefined,
+    })
+
+    const output = logs.join("\n")
+
+    expect(output).toContain("mine-unique-payload")
+    expect(output).toContain("untracked-unique-payload")
+    expect(output).not.toContain("theirs-unique-payload")
+  })
+
+  test("show refuses to dump the whole repository", async () => {
+    const { repo } = await createRepo()
+
+    await writeFile(join(repo, "app.js"), "mine\n")
+
+    let failed: unknown
+
+    try {
+      await run(["show", "--", "."], { cwd: repo, log: () => undefined, warn: () => undefined })
+    } catch (error) {
+      failed = error
+    }
+
+    expect(failed).toBeInstanceOf(GitCommitThreadError)
+    expect(String(failed)).toContain("Refusing to stage")
+  })
+
+  test("show requires paths", async () => {
+    const { repo } = await createRepo()
+
+    let failed: unknown
+
+    try {
+      await run(["show"], { cwd: repo, log: () => undefined, warn: () => undefined })
+    } catch (error) {
+      failed = error
+    }
+
+    expect(failed).toBeInstanceOf(GitCommitThreadError)
+    expect(String(failed)).toContain("show requires paths")
   })
 
   test("commits selected hunks from a mixed file and leaves the other hunks dirty", async () => {
@@ -372,6 +426,75 @@ chmod +x "$dir/pre-commit"
     expect(failed).toBeInstanceOf(GitCommitThreadError)
     expect(String(failed)).toContain("Refusing to stage")
     expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("init")
+  })
+
+  test("successful commit hides hook output", async () => {
+    const { repo } = await createRepo()
+    const hook = join(repo, ".git/hooks/pre-commit")
+
+    await writeFile(hook, "#!/bin/sh\necho COVERAGE_NOISE\necho COVERAGE_NOISE_ERR >&2\nexit 0\n")
+    await chmod(hook, 0o755)
+    await writeFile(join(repo, "app.js"), "mine\n")
+
+    const logs: string[] = []
+    const warns: string[] = []
+
+    await run(["-m", "mine", "--", "app.js"], {
+      cwd: repo,
+      log: (message) => logs.push(message),
+      warn: (message) => warns.push(message),
+    })
+
+    const output = `${logs.join("\n")}\n${warns.join("\n")}`
+
+    expect(output).not.toContain("COVERAGE_NOISE")
+    expect(output).toContain("mine")
+    expect(await git(repo, ["log", "-1", "--pretty=%s"])).toBe("mine")
+  })
+
+  test("commit failure shows stdout and stderr from the hook", async () => {
+    const { repo } = await createRepo()
+    const hook = join(repo, ".git/hooks/pre-commit")
+
+    await writeFile(hook, "#!/bin/sh\necho HOOK_STDOUT_FAIL\necho HOOK_STDERR_FAIL >&2\nexit 1\n")
+    await chmod(hook, 0o755)
+    await writeFile(join(repo, "app.js"), "mine\n")
+
+    let failed: unknown
+
+    try {
+      await run(["-m", "mine", "--", "app.js"], { cwd: repo, log: () => undefined, warn: () => undefined })
+    } catch (error) {
+      failed = error
+    }
+
+    expect(failed).toBeInstanceOf(GitCommitThreadError)
+    expect(String(failed)).toContain("HOOK_STDOUT_FAIL")
+    expect(String(failed)).toContain("HOOK_STDERR_FAIL")
+  })
+
+  test("commit writes leftover-local.yml so leftover hides successful output", async () => {
+    const { repo } = await createRepo()
+    const hook = join(repo, ".git/hooks/pre-commit")
+
+    await writeFile(join(repo, "lefthook.yml"), "pre-commit:\n  jobs: []\n")
+    await git(repo, ["add", "lefthook.yml"])
+    await git(repo, ["commit", "-m", "lefthook"])
+    await writeFile(
+      hook,
+      `#!/bin/sh
+root=$(git rev-parse --show-toplevel)
+cp "$root/lefthook-local.yml" "$(dirname "$0")/lefthook-local-seen.yml"
+exit 0
+`,
+    )
+    await chmod(hook, 0o755)
+    await writeFile(join(repo, "app.js"), "mine\n")
+
+    await run(["-m", "mine", "--", "app.js"], { cwd: repo, log: () => undefined, warn: () => undefined })
+
+    expect(await readFile(join(repo, ".git/hooks/lefthook-local-seen.yml"))).toBe("output: false\n")
+    expect(await pathExists(join(repo, "lefthook-local.yml"))).toBe(false)
   })
 
   test("commit failure removes the sandbox and does not move the branch", async () => {
