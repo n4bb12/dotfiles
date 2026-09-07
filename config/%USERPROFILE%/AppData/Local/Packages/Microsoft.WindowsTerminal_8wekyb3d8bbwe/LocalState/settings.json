@@ -113,7 +113,7 @@
         "hidden": false,
         "name": "Ubuntu",
         "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc",
-        "startingDirectory": "\\\\wsl$\\Ubuntu\\home\\n4bb12\\git"
+        "startingDirectory": "~/git"
       },
       {
         "commandline": "pwsh.exe",
