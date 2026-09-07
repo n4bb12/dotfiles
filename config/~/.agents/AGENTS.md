@@ -193,8 +193,10 @@ export function useUserId() {
 
 - Prefer existing package scripts over one-off commands.
 - Run `bun fix` when available.
-- Run `bun run test`, and use `bun run test -u` when snapshots need updating.
-- Before completing work, run the relevant verification commands for the repo, typically `bun types`, `bun fix`, and `bun run test`. Ignore commands that do not exist.
+- After edits, run the checks those edits can break: the touched tests, then types and lint. Run the full suite when completing the change set.
+- Keep verification quiet. Prefer the repo's fail-only scripts (`test:commit`, `test:lint`, `test:types`) when they exist. For `bun test`, set `AGENT=1` or pass `--only-failures` so a green run is a summary line and only failures print.
+- Use `bun run test -u` when snapshots need updating.
+- Before completing work, run the relevant verification commands for the repo, typically `bun types`, `bun fix`, and `bun run test` (or `test:commit`). Ignore commands that do not exist.
 - Postpone file deletions until the rest of the edits are done.
 - Do not make commits automatically unless asked. Do not stage changes automatically unless asked.
 - Git commit subject: conventional (`feat`, `fix`, `refactor`, and the rest), imperative present tense, no trailing period. Name the actual edit, not the surrounding function or file.
