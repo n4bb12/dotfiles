@@ -7,8 +7,8 @@
 
 ## General Instructions
 
-- Strive for the smallest change that fulfills what I asked.
-- When uncertain about intent or facts, verify in the codebase or ask — don't guess. Changes that follow directly from the request don't need confirmation.
+- Ship the smallest change that removes the reported symptom. Name that one-seam fix before the first edit. If two options both work, take the one that touches fewer files and leaves more of the existing design intact. Extra robustness around the same area waits until I ask.
+- When uncertain about intent or facts, verify in the codebase or ask. Don't guess. Changes that follow directly from the request don't need confirmation.
 - Use sub-agents only when I explicitly request them.
 
 ## Canonical Sources
