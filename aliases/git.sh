@@ -352,7 +352,7 @@ alias add='git add -A'
 
 alias amend='git commit --amend --no-edit --no-verify'
 alias empty='git commit -m "Trigger CI" --allow-empty'
-alias fix='git commit --no-verify --fixup'
+alias fixup='git commit --no-verify --fixup'
 alias squash='git commit --squash'
 
 alias show='git --no-pager show'
