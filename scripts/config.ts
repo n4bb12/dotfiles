@@ -1,18 +1,37 @@
+import { readdir } from "node:fs/promises"
 import { homedir } from "node:os"
 import { join } from "node:path"
 
 import { $ } from "bun"
 
-const root = join(import.meta.dir, "../config")
+export async function copyTree(srcDir: string, destDir: string) {
+  await $`mkdir -p ${destDir}`
 
-await $`cp -a --remove-destination ${`${join(root, "~")}/.`} ${homedir()}`
+  for (const entry of await readdir(srcDir, { withFileTypes: true })) {
+    const src = join(srcDir, entry.name)
+    const dest = join(destDir, entry.name)
 
-let windows = process.env.USERPROFILE
+    if (entry.isDirectory()) {
+      await copyTree(src, dest)
+      continue
+    }
 
-if (!windows && Bun.which("wslpath")) {
-  windows = (await $`wslpath -u $(cmd.exe /c "echo %USERPROFILE%")`.cwd("/mnt/c").nothrow().text()).trim()
+    await $`cp -a --remove-destination ${src} ${dest}`
+  }
 }
 
-if (windows) {
-  await $`cp -a --remove-destination ${`${join(root, "%USERPROFILE%")}/.`} ${windows}`
+if (import.meta.main) {
+  const root = join(import.meta.dir, "../config")
+
+  await copyTree(join(root, "~"), homedir())
+
+  let windows = process.env.USERPROFILE
+
+  if (!windows && Bun.which("wslpath")) {
+    windows = (await $`wslpath -u $(cmd.exe /c "echo %USERPROFILE%")`.cwd("/mnt/c").nothrow().text()).trim()
+  }
+
+  if (windows) {
+    await copyTree(join(root, "%USERPROFILE%"), windows)
+  }
 }
