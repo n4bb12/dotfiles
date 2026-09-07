@@ -193,8 +193,8 @@ export function useUserId() {
 
 - Prefer existing package scripts over one-off commands.
 - Run `bun fix` when available.
-- After edits, run the checks those edits can break: the touched tests, then types and lint. Run the full suite when completing the change set.
-- Keep verification quiet. Prefer the repo's fail-only scripts (`test:commit`, `test:lint`, `test:types`) when they exist. For `bun test`, set `AGENT=1` or pass `--only-failures` so a green run is a summary line and only failures print.
+- After edits, run the repo's test, types, and lint scripts. Prefer the full quiet suite over mapping changes to individual test files.
+- Keep verification quiet. Prefer fail-only scripts (`test:commit`, `test:lint`, `test:types`) when they exist. For `bun test`, set `AGENT=1` or pass `--only-failures` so a green run is a summary line and only failures print.
 - Use `bun run test -u` when snapshots need updating.
 - Before completing work, run the relevant verification commands for the repo, typically `bun types`, `bun fix`, and `bun run test` (or `test:commit`). Ignore commands that do not exist.
 - Postpone file deletions until the rest of the edits are done.
