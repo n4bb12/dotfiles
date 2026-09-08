@@ -46,7 +46,6 @@ source "$DIR/fly.sh"
 source "$DIR/sst.sh"
 source "$DIR/kimi.sh"
 source "$DIR/cloudflared.sh"
-source "$DIR/ngrok.sh"
 source "$DIR/sentry-cli.sh"
 source "$DIR/op.sh"
 
