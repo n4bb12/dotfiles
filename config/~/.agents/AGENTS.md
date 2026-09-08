@@ -8,6 +8,7 @@
 ## General Instructions
 
 - Ship the smallest change that removes the reported symptom. Name that one-seam fix before the first edit. If two options both work, take the one that touches fewer files and leaves more of the existing design intact. Extra robustness around the same area waits until I ask.
+- Before finishing, prune the diff. Drop edits that do not serve the request. Simplify remaining changes when a smaller form still works.
 - When uncertain about intent or facts, verify in the codebase or ask. Don't guess. Changes that follow directly from the request don't need confirmation.
 - Use sub-agents only when I explicitly request them.
 
@@ -186,8 +187,8 @@ export function useUserId() {
 - Always prefer `toMatchInlineSnapshot` over `toEqual`.
 - Do not use module mocks such as `mock.module`.
 - Do not use component renderers such as `renderToStaticMarkup`.
-- Do not write unit tests for trivial code.
-- Do not write unit tests to verify constants or the presence of certain code in a code file.
+- Keep a test only when it protects a contract or regression risk (behavior, logic, invariants). Visual-only work (padding, icon size, color, layout) and incidental copy or labels stay untested unless that detail is the contract. Skip tests of trivial code, constants, and whether certain code exists in a file.
+- A red-green test may drive a change. Prefer not writing one for visual-only or incidental edits. If you did write it, delete it before finishing unless it still protects a contract.
 
 ## Workflow
 
