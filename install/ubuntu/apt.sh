@@ -21,6 +21,7 @@ packages=(
   redis-tools
   unzip
   wget
+  xdg-utils
   xz-utils
   zip
 )
