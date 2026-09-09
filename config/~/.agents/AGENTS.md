@@ -187,8 +187,9 @@ export function useUserId() {
 - Always prefer `toMatchInlineSnapshot` over `toEqual`.
 - Do not use module mocks such as `mock.module`.
 - Do not use component renderers such as `renderToStaticMarkup`.
-- Keep a test only when it protects a contract or regression risk (behavior, logic, invariants). Visual-only work (padding, icon size, color, layout) and incidental copy or labels stay untested unless that detail is the contract. Skip tests of trivial code, constants, and whether certain code exists in a file.
-- A red-green test may drive a change. Prefer not writing one for visual-only or incidental edits. If you did write it, delete it before finishing unless it still protects a contract.
+- Keep a test only when it protects behavior, logic, or an invariant. Skip tests of trivial code, constants, and whether certain code exists in a file.
+- Assert behavior, not design. Pixel sizes, padding, color, shadow, and layout stay untested. If you touch a file that already asserts those, delete the assertions in the same change. Do not update them to match a new design.
+- A red-green test may drive a behavior change. Delete it before finishing unless it still protects behavior, logic, or an invariant.
 
 ## Workflow
 
