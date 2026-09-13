@@ -59,6 +59,7 @@ not use one of those planning paths. For plans that do qualify:
 
 ## Communication
 
+- Write complete, natural sentences. Cut filler, empty phrases, and restatement. Brevity is the extra pass that shortens the prose, not grammar clipped into fragments.
 - Respond and provide feedback only in chat.
 - Do not respond via code comments or via visual UI built by the agent.
 - UI and code must be free of any verbal reaction to requests made in chat.
