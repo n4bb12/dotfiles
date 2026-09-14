@@ -61,6 +61,7 @@ not use one of those planning paths. For plans that do qualify:
 
 - Write complete, natural sentences. Cut filler, empty phrases, and restatement. Brevity is the extra pass that shortens the prose, not grammar clipped into fragments.
 - Respond and provide feedback only in chat.
+- Write documents as standalone material for readers who have no access to the conversation. Integrate requested facts into the document’s own structure and voice; keep direct answers to chat questions, conversational framing, and reactions in chat.
 - Do not respond via code comments or via visual UI built by the agent.
 - UI and code must be free of any verbal reaction to requests made in chat.
 - All such reactions would be out of context for someone else or for a future reader.
