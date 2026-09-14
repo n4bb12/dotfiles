@@ -6,6 +6,7 @@ const sources = [
   // wrap-line
   "mattpocock/skills",
   "pbakaus/impeccable",
+  "tt-a1i/archify",
   join(import.meta.dir, "../config/~/.agents/skills"),
 ] as const
 
