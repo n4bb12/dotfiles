@@ -219,6 +219,7 @@ export function useUserId() {
 
 Use one thematically relevant emoji in each documentation heading to aid scanning.
 Keep the heading text descriptive and update affected internal anchor links.
+Write each Markdown paragraph and list item on one source line; let the editor and preview wrap long lines automatically.
 
 Default: **don't write documentation.** Most of what people ask to "document"
 is already in the code, package manifests, env templates, or enforced tests.
