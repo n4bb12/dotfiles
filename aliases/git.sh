@@ -371,6 +371,7 @@ alias blame="git blame -w -C -C -C --date relative --color-lines --color-by-age"
 alias git-mod='git update-index --chmod'
 
 # Shorthands
+alias fix='fixup'
 alias back='git-back'
 alias ch='git checkout'
 alias cm='git-commit'
