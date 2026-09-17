@@ -103,34 +103,9 @@ slug() {
   fi
 }
 
-cleanup_command() {
-  echo
-  echo "$@"
-  set -x
-  "$@"
-  set +x
-}
-
 cleanup() {
-  before=$(df -h / | tail -1 | awk '{print $3}')
-
-  cleanup_command npm cache clean -f
-  cleanup_command pnpm store prune -f
-  cleanup_command yarn cache clean -f
-  cleanup_command docker system prune -a -f
-
-  cleanup_command rm -rf ~/.local/share/pnpm/
-  cleanup_command rm -rf ~/.npm/_npx/
-  cleanup_command rm -rf ~/.yarn/berry/store/
-
-  cleanup_command find ~ -type d -name ".cache" -exec rm -rf {} +
-
-  cleanup_command sudo apt autoremove
-  cleanup_command sudo apt clean
-
-  after=$(df -h / | tail -1 | awk '{print $3}')
-  echo
-  echo "Cleanup complete. Space available before: $before, after: $after"
+  local here="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}"
+  bash "$here/../scripts/cleanup.sh" "$@"
 }
 
 update() {
