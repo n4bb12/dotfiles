@@ -10,7 +10,14 @@
 - Ship the smallest change that removes the reported symptom. Name that one-seam fix before the first edit. If two options both work, take the one that touches fewer files and leaves more of the existing design intact. Extra robustness around the same area waits until I ask.
 - Before finishing, prune the diff. Drop edits that do not serve the request. Simplify remaining changes when a smaller form still works.
 - When uncertain about intent or facts, verify in the codebase or ask. Don't guess. Changes that follow directly from the request don't need confirmation.
-- Use sub-agents only when I explicitly request them.
+
+## Subagents
+
+Start a subagent on your own judgment. No explicit request needed.
+
+Give the child work that can leave this context: search and locate, a short answer from files, a refactor, a fix. The parent keeps the short return. The files and detours stay in the child's window.
+
+The child spends the same tokens as doing the work inline. The win is a clean parent context, not a cheaper run.
 
 ## Canonical Sources
 
