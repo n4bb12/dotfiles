@@ -3,6 +3,7 @@ set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$DIR/_lib.sh"
+source "$DIR/../common/brew-packages.sh"
 
 if ! source_brew; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -15,21 +16,10 @@ append_bashrc '# local bin' 'export PATH=~/.local/bin:$PATH'
 brew update
 brew upgrade
 
-packages=(
-  bat
-  fd
-  ffmpeg
-  fzf
-  hyperfine
-  jq
-  openjdk
-  ripgrep
-  shfmt
-  xclip
-)
-for package in "${packages[@]}"; do
+for package in "${brew_packages[@]}"; do
   brew_install "$package"
 done
+brew_install xclip
 
 apt_remove bat fd-find ffmpeg fzf hyperfine jq openjdk-17-jdk openjdk-17-jdk-headless openjdk-17-jre openjdk-17-jre-headless ripgrep shfmt xclip
 apt_autoremove

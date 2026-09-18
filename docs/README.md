@@ -29,4 +29,4 @@ Files under `config/` are named by destination. Run `bun run config` to copy the
 - `config/~` is the user home on linux.
 - `config/%USERPROFILE%` is the user home on Windows.
 
-Machine bootstrap lives in `install/`.
+Machine bootstrap lives in `install/` (`ubuntu`, `omarchy`, `macos`, `windows`). Shared Linux steps are in `install/common/`.
