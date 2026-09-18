@@ -1,5 +1,4 @@
 <h1 align="center">
-  <img alt="Logo" src="icon.png" width="48" height="48">
   dotfiles
 </h1>
 
