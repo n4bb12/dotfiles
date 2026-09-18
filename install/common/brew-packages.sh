@@ -1,5 +1,4 @@
-# Shared Homebrew formulae for Linux.
-# Ubuntu installs these via brew; Omarchy installs the pacman equivalents.
+# Shared Homebrew formulae for Linux (Ubuntu).
 brew_packages=(
   bat
   fd

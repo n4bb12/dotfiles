@@ -34,10 +34,6 @@ packages=(
 )
 bun add --global "${packages[@]}"
 
-export NVM_DIR="$HOME/.nvm"
-# shellcheck disable=SC1091
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
 npm_uninstall_global \
   @biomejs/biome \
   @playwright/cli \
