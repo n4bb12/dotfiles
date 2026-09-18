@@ -28,7 +28,7 @@ __powerline() {
 
   __git_info() {
     [[ $POWERLINE_GIT = 0 ]] && return # disabled
-    hash git 2>/dev/null || return     # git not found
+    command -v git >/dev/null 2>&1 || return # git not found
     local git_eng="env LANG=C git"     # force git output in English to make our work easier
 
     # get current branch name
