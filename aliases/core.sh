@@ -135,7 +135,9 @@ update() {
   # shellcheck disable=SC1091
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-  if command -v apt >/dev/null 2>&1; then
+  if command -v omarchy >/dev/null 2>&1; then
+    update_step "omarchy" omarchy update
+  elif command -v apt >/dev/null 2>&1; then
     update_step "apt update" sudo apt update
     update_step "apt upgrade" sudo apt upgrade -y
   fi

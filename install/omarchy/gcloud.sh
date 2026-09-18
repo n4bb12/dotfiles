@@ -4,5 +4,6 @@ set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$DIR/_lib.sh"
 
-# shellcheck source=../common/dotfiles.sh
-source "$DIR/../common/dotfiles.sh"
+pkg_aur_add google-cloud-cli
+gcloud config set disable_usage_reporting True
+gcloud init
