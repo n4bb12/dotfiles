@@ -12,7 +12,7 @@ The description field is the only thing the agent harness sees when deciding to 
 
 ## Quick start
 
-1. Locate the dotfiles repo (usually `~/git/n4bb12/dotfiles`).
+1. Locate the dotfiles repo (usually `~/code/n4bb12/dotfiles`).
 2. Pick a kebab-case name.
 3. Create the dir only in `dotfiles/config/~/.agents/skills/<name>/`.
 4. Write SKILL.md there with a "Use when..." description and agent instructions.
@@ -35,19 +35,19 @@ See detailed steps below. Follow `write-a-skill` guidelines for structure and re
 <dotfiles-repo>/config/~/.agents/skills/<kebab-name>/SKILL.md
 ```
 
-Typical on this machine: `/home/n4bb12/git/n4bb12/dotfiles/config/~/.agents/skills/<name>/SKILL.md`
+Typical on this machine: `/home/n4bb12/code/n4bb12/dotfiles/config/~/.agents/skills/<name>/SKILL.md`
 
 ## Steps
 
 1. **Locate the dotfiles repo**
-   Usually `~/git/n4bb12/dotfiles`.
+   Usually `~/code/n4bb12/dotfiles`.
 
 2. **Choose a kebab-case name**
    2-64 chars, lowercase letters/digits/hyphens, starts and ends with alphanum (e.g. `stage`, `personal-skill`).
 
 3. **Create directory in dotfiles only**
    ```bash
-   DOTFILES=~/git/n4bb12/dotfiles
+   DOTFILES=~/code/n4bb12/dotfiles
    NAME=the-name
    mkdir -p "$DOTFILES/config/~/.agents/skills/$NAME"
    ```

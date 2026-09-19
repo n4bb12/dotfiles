@@ -12,7 +12,7 @@ When the user says "add to my personal agent file", "edit the global AGENTS.md",
 
 ## Quick Start
 
-1. Locate the dotfiles repo (usually `~/git/n4bb12/dotfiles`).
+1. Locate the dotfiles repo (usually `~/code/n4bb12/dotfiles`).
 2. Edit the canonical source: `dotfiles/config/~/.agents/AGENTS.md`
 3. Check whether the same rule is applicable to the Dorkas monorepo. If it is, add or update the equivalent rule in that repo's root `AGENTS.md` as part of the same task.
 4. Make precise, minimal edits that follow the existing structure.
@@ -24,7 +24,7 @@ When the user says "add to my personal agent file", "edit the global AGENTS.md",
 <dotfiles-repo>/config/~/.agents/AGENTS.md
 ```
 
-Typical path on this machine: `/home/n4bb12/git/n4bb12/dotfiles/config/~/.agents/AGENTS.md`
+Typical path on this machine: `/home/n4bb12/code/n4bb12/dotfiles/config/~/.agents/AGENTS.md`
 
 There may also be a CLAUDE.md in the same directory for Claude-specific global instructions.
 
@@ -33,7 +33,7 @@ Edit that source. Do not create per-agent copies.
 ## Steps
 
 1. **Locate the dotfiles repo**
-   Usually `~/git/n4bb12/dotfiles`.
+   Usually `~/code/n4bb12/dotfiles`.
 
 2. **Decide global vs project**
    - Global/personal: dotfiles version (applies everywhere).
@@ -61,7 +61,7 @@ Edit that source. Do not create per-agent copies.
 
 5. **Sync applicable rules to Dorkas**
    Inspect the root `AGENTS.md` in the Dorkas monorepo (usually
-   `~/git/work/dorkas/AGENTS.md`) whenever a global rule is added or changed.
+   `~/code/work/dorkas/AGENTS.md`) whenever a global rule is added or changed.
    - If the rule applies to the repo's technologies or workflows, add or update
      the equivalent project rule in the same task.
    - Do not copy rules that are inherently global, machine-specific, or about

@@ -16,10 +16,10 @@
 
 ```bash
 # Clone
-git clone git@github.com:n4bb12/dotfiles.git ~/git/n4bb12/dotfiles
+git clone git@github.com:n4bb12/dotfiles.git ~/code/n4bb12/dotfiles
 
 # From ~/.bashrc, or the current terminal:
-source ~/git/n4bb12/dotfiles/aliases/load.sh
+source ~/code/n4bb12/dotfiles/aliases/load.sh
 ```
 
 ## Config

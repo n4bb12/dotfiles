@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 ROOTS=(
-  "$HOME/git"
+  "$HOME/code"
 )
 
 echo "WSL cleanup"
