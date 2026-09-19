@@ -29,7 +29,8 @@
     "types": "tsc --noEmit"
   },
   "dependencies": {
-    "ai": "^7.0.93"
+    "ai": "^7.0.93",
+    "dotenv": "^18.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.12",

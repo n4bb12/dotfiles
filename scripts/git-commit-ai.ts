@@ -1,4 +1,5 @@
 import { type GatewayModelId, gateway, generateText, type LanguageModelCallOptions } from "ai"
+import { loadDotenv } from "./env.ts"
 
 const MODEL: GatewayModelId = "google/gemini-3.8-flash"
 const REASONING: LanguageModelCallOptions["reasoning"] = "low"
@@ -99,7 +100,7 @@ function stripFence(message: string) {
 
 function getModel() {
   if (!process.env.AI_GATEWAY_API_KEY) {
-    throw new Error("Please set AI_GATEWAY_API_KEY")
+    throw new Error("Please set AI_GATEWAY_API_KEY in .env.local")
   }
 
   return gateway(MODEL)
@@ -146,6 +147,8 @@ async function gitTextOptional(args: string[]) {
 }
 
 async function main() {
+  loadDotenv()
+
   const [diff, nameStatus, recentCommits] = await Promise.all([
     gitText(["diff", "--cached", "--no-color", "--no-ext-diff"]),
     gitText(["diff", "--cached", "--name-status"]),
