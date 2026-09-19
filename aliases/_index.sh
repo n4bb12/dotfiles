@@ -1,5 +1,5 @@
 # Source from ~/.bashrc:
-#   source ~/git/n4bb12/dotfiles/aliases/load.sh
+#   source ~/code/n4bb12/dotfiles/aliases/load.sh
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
