@@ -7,6 +7,7 @@ const sources = [
   "mattpocock/skills",
   "pbakaus/impeccable",
   "tt-a1i/archify",
+  "typesafe-ai/skills",
   join(import.meta.dir, "../config/~/.agents/skills"),
 ] as const
 
