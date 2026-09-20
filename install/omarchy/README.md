@@ -509,9 +509,6 @@ echo 'ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="13d3", ATTR{idProduct}==
 ```sh
 yay -S middleclick-autoscroll
 middleclick-autoscroll
-
-sed -i '/MiddleClickAutoscroll/d' ~/.config/electron-flags.conf
-printf '%s\n' '--enable-features=MiddleClickAutoscroll' >> ~/.config/chromium-flags.conf
 ```
 
 ### Rest
