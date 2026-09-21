@@ -74,10 +74,6 @@ if ! command -v fd >/dev/null 2>&1 && command -v fdfind >/dev/null 2>&1; then
   alias fd='fdfind'
 fi
 
-alias f='code "$(fzf)"'
-alias reload='source ~/.bashrc'
-alias bashrc='code ~/.bashrc'
-
 # DISK =================================
 
 zerofill() {

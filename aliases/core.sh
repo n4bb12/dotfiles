@@ -46,7 +46,10 @@ mkcd() {
 
 # UTILS ================================
 
+alias bashrc='code ~/.bashrc'
+alias reload='source ~/.bashrc'
 alias open='open-cli'
+alias f='code "$(fzf)"'
 
 config() {
   local here="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}"
