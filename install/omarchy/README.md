@@ -502,49 +502,14 @@ echo 'ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="13d3", ATTR{idProduct}==
   sudo tee /etc/udev/rules.d/81-disable-internal-bluetooth.rules
 ```
 
-## Windows-like autoscroll
-
-### Chrome
+## Windows-like autoscroll in Chrome
 
 ```sh
 yay -S middleclick-autoscroll
 middleclick-autoscroll
 ```
 
-### Rest
-
-https://github.com/estebanhiram/hypr-autoscroll
-
-```sh
-omarchy pkg add cmake cpio pkgconf git gcc
-
-hyprpm update
-
-bash <(curl -fsSL https://raw.githubusercontent.com/estebanhiram/hypr-autoscroll/main/scripts/setup-omarchy.sh)
-```
-
-https://github.com/estebanhiram/hypr-autoscroll#configuration
-
-```lua
-hl.config({
-  plugin = {
-    hypr_autoscroll = {
-      enabled = true,
-      direct_activation = false,
-      button = 274,
-      dead_zone = 12.0,
-      sensitivity = 4.0,
-      acceleration = 1.075,
-      max_speed = 1500.0,
-      horizontal = true,
-      vertical = true,
-      frame_interval_ms = 16,
-    },
-  },
-})
-```
-
-## Cursor
+## Mouse Cursor
 
 https://www.gnome-look.org/p/1932768
 
