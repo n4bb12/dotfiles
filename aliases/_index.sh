@@ -7,8 +7,6 @@ source "$SCRIPT_DIR/core.sh"
 
 if grep -qi microsoft /proc/version 2>/dev/null; then
   source "$SCRIPT_DIR/os_wsl.sh"
-elif [[ "${OSTYPE:-}" == msys* || "${OSTYPE:-}" == cygwin* || -n "${MSYSTEM:-}" ]]; then
-  source "$SCRIPT_DIR/os_windows.sh"
 fi
 
 source "$SCRIPT_DIR/js.sh"
