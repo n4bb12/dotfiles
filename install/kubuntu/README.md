@@ -7,6 +7,12 @@ sudo apt update
 sudo apt upgrade
 ```
 
+## Bypass password min length
+
+```sh
+sudo passwd "$USER"
+```
+
 ## Install NVIDIA Drivers
 
 ```sh
@@ -15,12 +21,6 @@ sudo apt full-upgrade
 sudo ubuntu-drivers devices
 sudo ubuntu-drivers install
 sudo reboot
-```
-
-## Bypass password min length
-
-```sh
-sudo passwd "$USER"
 ```
 
 ## Configure system
@@ -84,6 +84,8 @@ gpg --full-generate-key
 ## Install software (via Discover)
 
 - Steam
+- Discord
+- OnlyOffice
 
 ## Install software (manually)
 
@@ -240,4 +242,3 @@ pkill -f chrome
 - https://signal.org/de/download/
 - https://slack.com/intl/de-de/downloads/linux
 - https://teams.cloud.microsoft/
-- https://discord.com/download
