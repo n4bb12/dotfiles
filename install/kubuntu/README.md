@@ -251,6 +251,7 @@ cp /usr/share/applications/google-chrome.desktop \
   ~/.local/share/applications/google-chrome.desktop
 sed -i 's|Exec=/usr/bin/google-chrome-stable %U|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --use-gl=egl %U|' \
   ~/.local/share/applications/google-chrome.desktop
+
 kbuildsycoca6 --noincremental
 pkill -f chrome
 ```
@@ -267,3 +268,35 @@ pkill -f chrome
 
 https://openwhispr.com/de
 
+## Mount WSL Disk
+
+```sh
+VHDX=/mnt/windows/WSL/Ubuntu/ext4.vhdx
+MNT=/mnt/wsl
+UID_="$(id -u)"
+GID_="$(id -g)"
+
+sudo apt update
+sudo apt install -y libguestfs-tools
+
+sudo mkdir -p "$MNT"
+
+# allow_other für FUSE erlauben
+grep -qxF user_allow_other /etc/fuse.conf \
+  || echo user_allow_other | sudo tee -a /etc/fuse.conf
+
+# Eventuell bestehenden guestmount aushängen
+sudo guestunmount "$MNT" 2>/dev/null || true
+
+# WSL VHDX automatisch read-only mounten
+printf '[Unit]\nDescription=Mount WSL VHDX read-only\nRequiresMountsFor=/mnt/windows\nAfter=local-fs.target\n\n[Service]\nType=simple\nExecStart=/usr/bin/guestmount --no-fork --ro -a %s -m /dev/sda -o allow_other -o uid=%s -o gid=%s %s\nExecStop=/usr/bin/guestunmount %s\nRestart=on-failure\nRestartSec=2\n\n[Install]\nWantedBy=multi-user.target\n' \
+"$VHDX" "$UID_" "$GID_" "$MNT" "$MNT" \
+| sudo tee /etc/systemd/system/wsl-vhdx.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable wsl-vhdx.service
+sudo systemctl restart wsl-vhdx.service
+
+findmnt "$MNT"
+ls "$MNT/home"
+```
