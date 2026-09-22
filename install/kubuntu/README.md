@@ -174,6 +174,35 @@ echo 'source ~/code/n4bb12/dotfiles/aliases/_index.sh' >> ~/.bashrc
 - Configure Keyboard Shortcuts
 - Hide Menu
 
+## Color picker
+
+Alt+Shift+C — Pick screen color and copy `#RRGGBB` to the clipboard.
+
+KDE Plasma 6 on Wayland, using the native KWin ColorPicker. The notification shows a swatch of the sampled pixel. KWin only returns the color on click, so there is no live hover preview. `aliases/kubuntu.sh` puts `pick-color` on PATH. After installing the shortcut, log out and back in.
+
+```sh
+bash install/kubuntu/pick-color.sh
+```
+
+Files this step manages:
+
+- `~/.local/bin/pick-color`
+- `~/.local/share/applications/com.n4bb12.dotfiles.pick-color.desktop`
+- `~/.local/share/kglobalaccel/com.n4bb12.dotfiles.pick-color.desktop`
+- `[services][com.n4bb12.dotfiles.pick-color.desktop]` `_launch` in `~/.config/kglobalshortcutsrc`
+
+There is no uninstall command. Remove those files, then delete only that key:
+
+```sh
+kwriteconfig6 \
+  --file kglobalshortcutsrc \
+  --group services \
+  --group com.n4bb12.dotfiles.pick-color.desktop \
+  --key _launch \
+  --delete \
+  ''
+```
+
 ## Mount windows partitions
 
 ```sh
