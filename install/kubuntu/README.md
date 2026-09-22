@@ -143,7 +143,25 @@ EOF
 ## Install software (via bun)
 
 ```sh
-bun i -g @biomejs/biome
+xargs bun i -g <<EOF || true
+@biomejs/biome
+@playwright/cli
+@shopify/cli
+agent-browser
+fx
+nodemon
+npm-check-updates
+pnpm
+prettier
+release-it
+serve
+skills
+slugify-cli
+sort-package-json
+supabase
+vercel
+yarn
+EOF
 ```
 
 ## Configure git
