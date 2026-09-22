@@ -50,6 +50,8 @@ Change monospace font
 DejaVu Sans Mono 10pt
 ```
 
+Configure login screen (SDDM)
+
 ## Install initial browser
 
 ```sh
@@ -260,3 +262,8 @@ pkill -f chrome
 - https://signal.org/de/download/
 - https://slack.com/intl/de-de/downloads/linux
 - https://teams.cloud.microsoft/
+
+## Instal STT App
+
+https://openwhispr.com/de
+
