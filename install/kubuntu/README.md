@@ -84,7 +84,6 @@ gpg --full-generate-key
 ## Install software (via Discover)
 
 - Steam
-- Discord
 
 ## Install software (manually)
 
@@ -233,3 +232,12 @@ sed -i 's|Exec=/usr/bin/google-chrome-stable %U|Exec=/usr/bin/google-chrome-stab
 kbuildsycoca6 --noincremental
 pkill -f chrome
 ```
+
+## Install messaging apps
+
+- https://web.telegram.org/k/
+- https://web.whatsapp.com/
+- https://signal.org/de/download/
+- https://slack.com/intl/de-de/downloads/linux
+- https://teams.cloud.microsoft/
+- https://discord.com/download
