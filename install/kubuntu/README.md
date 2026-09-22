@@ -172,3 +172,20 @@ echo 'source ~/code/n4bb12/dotfiles/aliases/_index.sh' >> ~/.bashrc
 - Configure Konsole
 - Configure Keyboard Shortcuts
 - Hide Menu
+
+## Mount windows partitions
+
+```sh
+sudo mkdir -p /mnt/windows /mnt/data
+
+sudo cp /etc/fstab /etc/fstab.backup
+
+printf '\n# Windows, read-only\nUUID=863E271D3E270631  /mnt/windows  ntfs3  ro,uid=%s,gid=%s,umask=022,nofail  0  0\n\n# Shared Data, read-write\nUUID=D8A85E6FA85E4C5E  /mnt/data  ntfs3  rw,uid=%s,gid=%s,umask=022,nofail  0  0\n' \
+"$(id -u)" "$(id -g)" "$(id -u)" "$(id -g)" | sudo tee -a /etc/fstab
+
+sudo systemctl daemon-reload
+sudo mount -a
+
+findmnt /mnt/windows
+findmnt /mnt/data
+```
