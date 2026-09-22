@@ -109,6 +109,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
 
 - Cursor https://cursor.com/de/download
 - VSCode https://code.visualstudio.com/download
+- 1Password https://1password.com/downloads/linux
 
 ## Install software (via brew)
 
@@ -188,4 +189,18 @@ sudo mount -a
 
 findmnt /mnt/windows
 findmnt /mnt/data
+```
+
+## Configure Chrome
+
+- Enable sticky scroll
+- Fix Netflix black screen bug
+
+```sh
+cp /usr/share/applications/google-chrome.desktop \
+  ~/.local/share/applications/google-chrome.desktop
+sed -i 's|Exec=/usr/bin/google-chrome-stable %U|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --use-gl=egl %U|' \
+  ~/.local/share/applications/google-chrome.desktop
+kbuildsycoca6 --noincremental
+pkill -f chrome
 ```
