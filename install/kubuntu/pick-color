@@ -1,0 +1,270 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+die() {
+  printf 'pick-color: %s\n' "$*" >&2
+  exit 1
+}
+
+qdbus_bin() {
+  if command -v qdbus6 >/dev/null 2>&1; then
+    printf '%s\n' qdbus6
+    return 0
+  fi
+  if command -v qdbus-qt6 >/dev/null 2>&1; then
+    printf '%s\n' qdbus-qt6
+    return 0
+  fi
+  return 1
+}
+
+# Last uint32 in qdbus output. KWin returns a QColor as D-Bus struct (u).
+# qdbus --literal prints that as: [Argument: (u) 4280163886]
+parse_argb() {
+  local raw="$1"
+  local rest="$raw"
+  local token=""
+  local found=""
+
+  while [[ "$rest" =~ ([0-9]+) ]]; do
+    token="${BASH_REMATCH[1]}"
+    rest="${rest#*"$token"}"
+    if [[ ! "$token" =~ ^[0-9]{1,10}$ ]]; then
+      continue
+    fi
+    if ((10#$token > 4294967295)); then
+      continue
+    fi
+    found="$token"
+  done
+
+  if [[ -z "$found" ]]; then
+    return 1
+  fi
+  printf '%s\n' "$found"
+}
+
+ensure_session_bus() {
+  if [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+    return 0
+  fi
+
+  local bus
+  bus="/run/user/$(id -u)/bus"
+  if [[ -S "$bus" ]]; then
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=${bus}"
+  fi
+}
+
+klipper_interface() {
+  local qdbus="$1"
+  local xml=""
+  local iface=""
+
+  xml="$("$qdbus" org.kde.klipper /klipper org.freedesktop.DBus.Introspectable.Introspect 2>/dev/null || true)"
+  if [[ -z "$xml" ]]; then
+    return 1
+  fi
+
+  iface="$(
+    awk '
+      /<interface[[:space:]]/ {
+        iface = ""
+        if (match($0, /name="[^"]+"/)) {
+          iface = substr($0, RSTART + 6, RLENGTH - 7)
+        }
+      }
+      /<method[[:space:]]/ && /name="setClipboardContents"/ && iface != "" {
+        print iface
+        exit
+      }
+    ' <<<"$xml"
+  )"
+
+  if [[ -z "$iface" ]]; then
+    return 1
+  fi
+  printf '%s\n' "$iface"
+}
+
+swatch_path() {
+  printf '%s/pick-color.png' "${XDG_RUNTIME_DIR:-/tmp}"
+}
+
+# 48x48 PNG of the sampled pixel, with a contrasting border.
+write_swatch() {
+  local dest="$1"
+  local r="$2"
+  local g="$3"
+  local b="$4"
+  local python=""
+
+  if [[ -x /usr/bin/python3 ]]; then
+    python=/usr/bin/python3
+  elif command -v python3 >/dev/null 2>&1; then
+    python=$(command -v python3)
+  else
+    return 1
+  fi
+
+  "$python" - "$dest" "$r" "$g" "$b" <<'PY'
+import struct
+import sys
+import zlib
+from pathlib import Path
+
+dest = Path(sys.argv[1])
+red, green, blue = (int(sys.argv[i]) for i in range(2, 5))
+size = 48
+border = 3
+luma = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+edge = (16, 16, 16) if luma > 140 else (240, 240, 240)
+
+
+def chunk(tag: bytes, data: bytes) -> bytes:
+    return struct.pack(">I", len(data)) + tag + data + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+
+
+rows = []
+for y in range(size):
+    row = bytearray()
+    for x in range(size):
+        if x < border or y < border or x >= size - border or y >= size - border:
+            row.extend(edge)
+        else:
+            row.extend((red, green, blue))
+    rows.append(b"\x00" + bytes(row))
+
+raw = b"".join(rows)
+ihdr = struct.pack(">IIBBBBB", size, size, 8, 2, 0, 0, 0)
+png = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", zlib.compress(raw, 9)) + chunk(b"IEND", b"")
+dest.write_bytes(png)
+PY
+}
+
+print_swatch() {
+  local r="$1"
+  local g="$2"
+  local b="$3"
+  local hex="$4"
+  local i
+
+  for i in 1 2; do
+    printf '  \e[48;2;%d;%d;%dm        \e[0m\n' "$r" "$g" "$b"
+  done
+  printf '  %s\n' "$hex"
+}
+
+notify_copied() {
+  local hex="$1"
+  local icon="$2"
+  local args=()
+
+  command -v notify-send >/dev/null 2>&1 || return 0
+
+  args=(--app-name="Color Picker")
+  if [[ -n "$icon" && -f "$icon" ]]; then
+    args+=(--icon="$icon")
+  fi
+  notify-send "${args[@]}" "Farbe kopiert" "$hex" || true
+}
+
+set_clipboard() {
+  local qdbus="$1"
+  local text="$2"
+  local status=0
+  local err=""
+  local iface=""
+
+  err="$("$qdbus" org.kde.klipper /klipper setClipboardContents "$text" 2>&1)" || status=$?
+  if ((status == 0)); then
+    return 0
+  fi
+
+  if iface="$(klipper_interface "$qdbus")"; then
+    status=0
+    err="$("$qdbus" org.kde.klipper /klipper "${iface}.setClipboardContents" "$text" 2>&1)" || status=$?
+    if ((status == 0)); then
+      return 0
+    fi
+  fi
+
+  printf 'pick-color: Klipper is not reachable\n' >&2
+  if [[ -n "$err" ]]; then
+    printf '%s\n' "$err" >&2
+  fi
+  return 1
+}
+
+main() {
+  local qdbus=""
+  local methods=""
+  local raw=""
+  local status=0
+  local argb=""
+  local rgb=0
+  local r=0
+  local g=0
+  local b=0
+  local hex=""
+  local icon=""
+
+  ensure_session_bus
+
+  if ! qdbus="$(qdbus_bin)"; then
+    die "qdbus6 or qdbus-qt6 is required"
+  fi
+
+  status=0
+  methods="$("$qdbus" org.kde.KWin /ColorPicker 2>&1)" || status=$?
+  if ((status != 0)); then
+    if [[ -n "$methods" ]]; then
+      printf '%s\n' "$methods" >&2
+    fi
+    die "org.kde.KWin /ColorPicker is not available"
+  fi
+  if [[ "$methods" != *"org.kde.kwin.ColorPicker.pick"* ]]; then
+    die "KWin does not offer ColorPicker.pick"
+  fi
+
+  status=0
+  raw="$("$qdbus" --literal org.kde.KWin /ColorPicker org.kde.kwin.ColorPicker.pick 2>&1)" || status=$?
+  if ((status != 0)); then
+    if [[ "$raw" == *"org.kde.kwin.ColorPicker.Error.Cancelled"* ]]; then
+      exit 0
+    fi
+    if [[ -n "$raw" ]]; then
+      printf '%s\n' "$raw" >&2
+    fi
+    die "KWin color picker failed"
+  fi
+
+  if ! argb="$(parse_argb "$raw")"; then
+    if [[ -n "$raw" ]]; then
+      printf '%s\n' "$raw" >&2
+    fi
+    die "KWin did not return a valid color"
+  fi
+
+  rgb=$((10#$argb & 0xFFFFFF))
+  r=$(((rgb >> 16) & 0xFF))
+  g=$(((rgb >> 8) & 0xFF))
+  b=$((rgb & 0xFF))
+  printf -v hex '#%06X' "$rgb"
+
+  set_clipboard "$qdbus" "$hex"
+
+  icon="$(swatch_path)"
+  if ! write_swatch "$icon" "$r" "$g" "$b"; then
+    icon=""
+  fi
+  notify_copied "$hex" "$icon"
+  if [[ -t 2 ]]; then
+    print_swatch "$r" "$g" "$b" "$hex" >&2
+  fi
+  printf '%s\n' "$hex"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+  main "$@"
+fi
