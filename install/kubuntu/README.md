@@ -260,6 +260,14 @@ kwriteconfig6 \
   ''
 ```
 
+## PDF Tools
+
+```sh
+wget https://files.stirlingpdf.com/linux-installer.deb
+sudo dpkg -i linux-installer.deb
+rm linux-installer.deb
+```
+
 # Windows dual boot
 
 ## Mount windows partitions
