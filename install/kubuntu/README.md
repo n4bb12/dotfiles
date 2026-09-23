@@ -195,7 +195,12 @@ EOF
 
 ## Install Docker
 
-https://docs.docker.com/engine/install/ubuntu/
+- Docker https://docs.docker.com/engine/install/ubuntu/
+- Portainer https://docs.portainer.io/start/install-ce/server/docker/linux#docker-compose
+
+```sh
+sudo docker compose -f install/kubuntu/portainer-compose.yaml up -d
+```
 
 ## GPG key
 
