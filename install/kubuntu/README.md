@@ -52,6 +52,17 @@ DejaVu Sans Mono 10pt
 
 Configure login screen (SDDM)
 
+## Configure terminal
+
+- Configure Konsole
+- Configure Keyboard Shortcuts
+- Hide Menu
+
+## Headphones
+
+- Open Bluetooth settings
+- Pair WH-1000XM4
+
 ## Install initial browser
 
 ```sh
@@ -64,11 +75,26 @@ https://www.google.com/intl/de/chrome/
 
 Open Chrome
 
-## GPG key
+## Configure Chrome
+
+- Enable sticky scroll
+- Fix Netflix black screen bug
 
 ```sh
-gpg --full-generate-key
+cp /usr/share/applications/google-chrome.desktop \
+  ~/.local/share/applications/google-chrome.desktop
+sed -i 's|Exec=/usr/bin/google-chrome-stable %U|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --use-gl=egl %U|' \
+  ~/.local/share/applications/google-chrome.desktop
+
+kbuildsycoca6 --noincremental
+pkill -f chrome
 ```
+
+## Install software (via .deb)
+
+- Cursor https://cursor.com/de/download
+- VSCode https://code.visualstudio.com/download
+- 1Password https://1password.com/downloads/linux
 
 ## 1Password
 
@@ -78,16 +104,23 @@ gpg --full-generate-key
 - Pair 1Password accounts
 - Install 1Password App
 
-## Headphones
-
-- Open Bluetooth settings
-- Pair WH-1000XM4
-
 ## Install software (via Discover)
 
 - Steam
 - Discord
 - OnlyOffice
+
+## Install messaging apps
+
+- https://web.telegram.org/k/
+- https://web.whatsapp.com/
+- https://signal.org/de/download/
+- https://slack.com/intl/de-de/downloads/linux
+- https://teams.cloud.microsoft/
+
+## Install STT App
+
+https://openwhispr.com/de
 
 ## Install software (manually)
 
@@ -107,12 +140,6 @@ NVM https://github.com/nvm-sh/nvm#install--update-script
 ```sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
 ```
-
-## Install software (via .deb)
-
-- Cursor https://cursor.com/de/download
-- VSCode https://code.visualstudio.com/download
-- 1Password https://1password.com/downloads/linux
 
 ## Install software (via brew)
 
@@ -166,6 +193,16 @@ yarn
 EOF
 ```
 
+## Install Docker
+
+https://docs.docker.com/engine/install/ubuntu/
+
+## GPG key
+
+```sh
+gpg --full-generate-key
+```
+
 ## Configure git
 
 Execute git config https://github.com/n4bb12/dotfiles/blob/main/install/git.sh
@@ -188,12 +225,6 @@ echo '' >> ~/.bashrc
 echo '# dotfiles' >> ~/.bashrc
 echo 'source ~/code/n4bb12/dotfiles/aliases/_index.sh' >> ~/.bashrc
 ```
-
-## Configure terminal
-
-- Configure Konsole
-- Configure Keyboard Shortcuts
-- Hide Menu
 
 ## Color picker
 
@@ -224,6 +255,8 @@ kwriteconfig6 \
   ''
 ```
 
+# Windows dual boot
+
 ## Mount windows partitions
 
 ```sh
@@ -240,33 +273,6 @@ sudo mount -a
 findmnt /mnt/windows
 findmnt /mnt/data
 ```
-
-## Configure Chrome
-
-- Enable sticky scroll
-- Fix Netflix black screen bug
-
-```sh
-cp /usr/share/applications/google-chrome.desktop \
-  ~/.local/share/applications/google-chrome.desktop
-sed -i 's|Exec=/usr/bin/google-chrome-stable %U|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --use-gl=egl %U|' \
-  ~/.local/share/applications/google-chrome.desktop
-
-kbuildsycoca6 --noincremental
-pkill -f chrome
-```
-
-## Install messaging apps
-
-- https://web.telegram.org/k/
-- https://web.whatsapp.com/
-- https://signal.org/de/download/
-- https://slack.com/intl/de-de/downloads/linux
-- https://teams.cloud.microsoft/
-
-## Instal STT App
-
-https://openwhispr.com/de
 
 ## Mount WSL Disk
 
@@ -300,7 +306,3 @@ sudo systemctl restart wsl-vhdx.service
 findmnt "$MNT"
 ls "$MNT/home"
 ```
-
-## Install Docker
-
-https://docs.docker.com/engine/install/ubuntu/
