@@ -1,6 +1,5 @@
 # AGENTS ===============================
 
-alias skills='bunx skills'
 alias ai='codex e --skip-git-repo-check'
 alias oc='opencode'
 
