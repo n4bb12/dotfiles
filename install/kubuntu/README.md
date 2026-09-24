@@ -25,49 +25,98 @@ sudo reboot
 
 ## Configure system
 
-Change system theme
-
-```
-Kubuntu Dark
-```
-
-Set Display Scale
-
-```
-150%
-```
-
-Disable annoying window effects
+- System Theme: Kubuntu Dark
+- Display Scale: 150%
+- Monospace font: Fira Code Retina
+- Login Screen (SDDM): set an image
+- Screen Locking: Bing image
+- Wallpaper: Bing image
+- Disable annoying window effects:
 
 ```sh
 kwriteconfig6 --file kwinrc --group Plugins --key translucencyEnabled false
 kwriteconfig6 --file kwinrc --group Plugins --key wobblywindowsEnabled false
 ```
 
-Change monospace font
-
-```
-DejaVu Sans Mono 10pt
-```
-
-Configure login screen (SDDM)
-
 ## Headphones
 
 - Open Bluetooth settings
 - Pair WH-1000XM4
 
-## Install initial browser
+## Install software (via apt)
+
+Text after `#` is a comment. A line that is only a comment is skipped.
 
 ```sh
-sudo apt install firefox
+libs="
+# toolchain
+build-essential # used by Homebrew
+flatpak
+
+# browser and terminal
+firefox # Ubuntu package starts the Firefox snap
+kitty
+fonts-firacode
+
+# desktop
+steam-installer
+gimp
+gnome-calculator
+openrgb
+skanpage
+video-downloader
+vlc
+
+# hardware
+vainfo # VA-API
+libguestfs-tools # read-only WSL VHDX
+"
+
+echo "$libs" | cut -d'#' -f1 | xargs -r sudo apt install -y
 ```
 
-## Install default browser
+## Install software (via flatpak)
 
-https://www.google.com/intl/de/chrome/
+```sh
+libs="
+com.obsproject.Studio # OBS Studio
+de.bund.ausweisapp.ausweisapp2 # AusweisApp
+"
 
-Open Chrome
+echo "$libs" | cut -d'#' -f1 | xargs -r flatpak install -y flathub
+```
+
+## Install software (via snap)
+
+```sh
+libs="
+cameractrls
+onlyoffice-desktopeditors
+"
+
+echo "$libs" | cut -d'#' -f1 | xargs -r sudo snap install
+```
+
+## Install software (download)
+
+- Chrome https://www.google.com/intl/de/chrome/
+- Cursor https://cursor.com/de/download
+- VSCode https://code.visualstudio.com/download
+- 1Password https://1password.com/downloads/linux
+- Signal https://signal.org/de/download/
+- Slack https://slack.com/intl/de-de/downloads/linux
+- Discord https://discord.com/download
+- OpenWhispr https://openwhispr.com/de
+
+Open Chrome.
+
+Stirling PDF:
+
+```sh
+wget https://files.stirlingpdf.com/linux-installer.deb
+sudo dpkg -i linux-installer.deb
+rm linux-installer.deb
+```
 
 ## Configure Chrome
 
@@ -84,12 +133,6 @@ kbuildsycoca6 --noincremental
 pkill -f chrome
 ```
 
-## Install software (via .deb)
-
-- Cursor https://cursor.com/de/download
-- VSCode https://code.visualstudio.com/download
-- 1Password https://1password.com/downloads/linux
-
 ## 1Password
 
 - Sign in to 1Password
@@ -98,27 +141,23 @@ pkill -f chrome
 - Pair 1Password accounts
 - Install 1Password App
 
-## Install software (via Discover)
-
-- Steam
-- Discord
-- OnlyOffice
-
 ## Install messaging apps
 
 - https://web.telegram.org/k/
 - https://web.whatsapp.com/
-- https://signal.org/de/download/
-- https://slack.com/intl/de-de/downloads/linux
 - https://teams.cloud.microsoft/
 
-## Install STT App
+## Install NVM
 
-https://openwhispr.com/de
+https://github.com/nvm-sh/nvm#install--update-script
 
-## Install software (manually)
+```sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
+```
 
-Homebrew https://brew.sh/
+## Install Homebrew
+
+https://brew.sh/
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -126,25 +165,15 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 echo '' >> ~/.bashrc
 echo '# brew' >> ~/.bashrc
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-sudo apt-get install build-essential
-```
-
-NVM https://github.com/nvm-sh/nvm#install--update-script
-
-```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
 ```
 
 ## Install software (via brew)
 
 ```sh
-brew tap oven-sh/bun
-brew trust oven-sh/bun
-
-xargs brew install <<EOF || true
+libs="
+oven-sh/bun/bun # Bun's own tap
 1password-cli
 ast-grep
-bun
 cloudflared
 deno
 ffmpeg
@@ -153,27 +182,33 @@ gh
 git-crypt
 git-lfs
 glab
-jq
 killport
-kubernetes-cli
+kubernetes-cli # kubectl
 kustomize
 openjdk
 ripgrep
 shfmt
-EOF
+claude-code
+"
+
+brew tap oven-sh/bun
+brew trust oven-sh/bun
+echo "$libs" | cut -d'#' -f1 | xargs -r brew install
 ```
 
 ## Install software (via bun)
 
 ```sh
-xargs bun i -g <<EOF || true
+libs="
 @biomejs/biome
+@openai/codex
 @playwright/cli
 @shopify/cli
 agent-browser
 fx
 nodemon
 npm-check-updates
+open-cli
 pnpm
 prettier
 release-it
@@ -184,17 +219,14 @@ sort-package-json
 supabase
 vercel
 yarn
-EOF
+"
+
+echo "$libs" | cut -d'#' -f1 | xargs -r bun i -g
 ```
 
 ## Install Docker
 
-- Docker https://docs.docker.com/engine/install/ubuntu/
-- Portainer https://docs.portainer.io/start/install-ce/server/docker/linux#docker-compose
-
-```sh
-sudo docker compose -f install/kubuntu/portainer-compose.yaml up -d
-```
+https://docs.docker.com/engine/install/ubuntu/
 
 ## GPG key
 
@@ -205,9 +237,11 @@ gpg --full-generate-key
 ## Configure git
 
 Execute git config https://github.com/n4bb12/dotfiles/blob/main/install/git.sh
+
 ```sh
 ssh-keygen -t ed25519 -C $(git config user.email)
 ```
+
 ```sh
 cat ~/.ssh/id_ed25519.pub
 ```
@@ -219,10 +253,19 @@ Clone repositories https://github.com/n4bb12?tab=repositories
 ## Configure dotfiles
 
 ```sh
-git clone git@github.com:n4bb12/dotfiles.git
+mkdir -p ~/code/n4bb12
+git clone git@github.com:n4bb12/dotfiles.git ~/code/n4bb12/dotfiles
 echo '' >> ~/.bashrc
 echo '# dotfiles' >> ~/.bashrc
 echo 'source ~/code/n4bb12/dotfiles/aliases/_index.sh' >> ~/.bashrc
+```
+
+## Portainer
+
+https://docs.portainer.io/start/install-ce/server/docker/linux#docker-compose
+
+```sh
+sudo docker compose -f ~/code/n4bb12/dotfiles/install/kubuntu/portainer-compose.yaml up -d
 ```
 
 ## Configure terminal
@@ -230,8 +273,6 @@ echo 'source ~/code/n4bb12/dotfiles/aliases/_index.sh' >> ~/.bashrc
 Kitty replaces Konsole. Ctrl+Alt+T and Super+Enter open Kitty in `~/code`. The shortcuts apply after the next login. `kitty.conf` uses Fira Code Retina, which `fonts-firacode` installs.
 
 ```sh
-sudo apt install kitty fonts-firacode
-
 mkdir -p ~/.config/kitty ~/.local/share/applications
 ln -sfn ~/code/n4bb12/dotfiles/config/~/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
 ln -sfn ~/code/n4bb12/dotfiles/config/~/.local/share/applications/kitty.desktop ~/.local/share/applications/kitty.desktop
@@ -252,7 +293,7 @@ Alt+Shift+C — Pick screen color and copy `#RRGGBB` to the clipboard.
 KDE Plasma 6 on Wayland, using the native KWin ColorPicker. The notification shows a swatch of the sampled pixel. KWin only returns the color on click, so there is no live hover preview. `aliases/kubuntu.sh` puts `pick-color` on PATH. After installing the shortcut, log out and back in.
 
 ```sh
-bash install/kubuntu/pick-color.sh
+bash ~/code/n4bb12/dotfiles/install/kubuntu/pick-color.sh
 ```
 
 Files this step manages:
@@ -274,21 +315,17 @@ kwriteconfig6 \
   ''
 ```
 
-## Video acceleration (VA-API)
+## Emoji picker
 
 ```sh
-sudo apt install vainfo
+bash ~/code/n4bb12/dotfiles/install/kubuntu/pick-emoji.sh
 ```
 
-## PDF Tools
-
-```sh
-wget https://files.stirlingpdf.com/linux-installer.deb
-sudo dpkg -i linux-installer.deb
-rm linux-installer.deb
-```
+Log out and back in.
 
 # Windows dual boot
+
+`libguestfs-tools` is in the apt list above.
 
 ## Mount windows partitions
 
@@ -314,9 +351,6 @@ VHDX=/mnt/windows/WSL/Ubuntu/ext4.vhdx
 MNT=/mnt/wsl
 UID_="$(id -u)"
 GID_="$(id -g)"
-
-sudo apt update
-sudo apt install -y libguestfs-tools
 
 sudo mkdir -p "$MNT"
 
