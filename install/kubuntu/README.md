@@ -52,12 +52,6 @@ DejaVu Sans Mono 10pt
 
 Configure login screen (SDDM)
 
-## Configure terminal
-
-- Configure Konsole
-- Configure Keyboard Shortcuts
-- Hide Menu
-
 ## Headphones
 
 - Open Bluetooth settings
@@ -229,6 +223,26 @@ git clone git@github.com:n4bb12/dotfiles.git
 echo '' >> ~/.bashrc
 echo '# dotfiles' >> ~/.bashrc
 echo 'source ~/code/n4bb12/dotfiles/aliases/_index.sh' >> ~/.bashrc
+```
+
+## Configure terminal
+
+Kitty replaces Konsole. Ctrl+Alt+T and Super+Enter open Kitty in `~/code`. The shortcuts apply after the next login. `kitty.conf` uses Fira Code Retina, which `fonts-firacode` installs.
+
+```sh
+sudo apt install kitty fonts-firacode
+
+mkdir -p ~/.config/kitty ~/.local/share/applications
+ln -sfn ~/code/n4bb12/dotfiles/config/~/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
+ln -sfn ~/code/n4bb12/dotfiles/config/~/.local/share/applications/kitty.desktop ~/.local/share/applications/kitty.desktop
+
+kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty
+kwriteconfig6 --file kdeglobals --group General --key TerminalService kitty.desktop
+
+kwriteconfig6 --file kglobalshortcutsrc --group services --group org.kde.konsole.desktop --key _launch none
+kwriteconfig6 --file kglobalshortcutsrc --group services --group kitty.desktop --key _launch $'Ctrl+Alt+T\tMeta+Return'
+
+sudo update-alternatives --set x-terminal-emulator /usr/bin/kitty
 ```
 
 ## Color picker
