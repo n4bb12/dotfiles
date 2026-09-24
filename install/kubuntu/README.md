@@ -288,7 +288,7 @@ sudo update-alternatives --set x-terminal-emulator /usr/bin/kitty
 
 ## Color picker
 
-Alt+Shift+C — Pick screen color and copy `#RRGGBB` to the clipboard.
+Alt+C — Pick screen color and copy `#RRGGBB` to the clipboard.
 
 KDE Plasma 6 on Wayland, using the native KWin ColorPicker. The notification shows a swatch of the sampled pixel. KWin only returns the color on click, so there is no live hover preview. `aliases/kubuntu.sh` puts `pick-color` on PATH. After installing the shortcut, log out and back in.
 

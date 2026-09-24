@@ -4,7 +4,7 @@ set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 desktop_id="com.n4bb12.dotfiles.pick-color.desktop"
-shortcut="Alt+Shift+C"
+shortcut="Alt+C"
 desktop_name="Pick Color"
 # Plasma 6 service shortcuts store only the active sequence; the default lives in X-KDE-Shortcuts.
 
