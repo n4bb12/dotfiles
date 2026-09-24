@@ -274,6 +274,12 @@ kwriteconfig6 \
   ''
 ```
 
+## Video acceleration (VA-API)
+
+```sh
+sudo apt install vainfo
+```
+
 ## PDF Tools
 
 ```sh
