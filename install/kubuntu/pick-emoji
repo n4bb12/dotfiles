@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+set -u
+
+die() {
+  printf 'pick-emoji: %s\n' "$*" >&2
+  exit 1
+}
+
+if command -v qdbus6 >/dev/null 2>&1; then
+  QDBUS=qdbus6
+elif command -v qdbus-qt6 >/dev/null 2>&1; then
+  QDBUS=qdbus-qt6
+elif command -v qdbus >/dev/null 2>&1; then
+  QDBUS=qdbus
+else
+  die "qdbus6, qdbus-qt6, or qdbus not found"
+fi
+
+command -v plasma-emojier >/dev/null 2>&1 || die "plasma-emojier not found"
+command -v ydotool >/dev/null 2>&1 || die "ydotool not found"
+
+ensure_session_bus() {
+  if [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+    return 0
+  fi
+
+  local bus
+  bus="/run/user/$(id -u)/bus"
+  if [[ -S "$bus" ]]; then
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=${bus}"
+  fi
+}
+
+clipboard_get() {
+  "$QDBUS" \
+    org.kde.klipper \
+    /klipper \
+    org.kde.klipper.klipper.getClipboardContents \
+    2>/dev/null || true
+}
+
+clipboard_set() {
+  "$QDBUS" \
+    org.kde.klipper \
+    /klipper \
+    org.kde.klipper.klipper.setClipboardContents \
+    "$1" >/dev/null 2>&1 || true
+}
+
+paste_selection() {
+  kill "$PICKER_PID" 2>/dev/null || true
+  wait "$PICKER_PID" 2>/dev/null || true
+
+  # The previous window needs a moment to take focus back.
+  sleep 0.25
+
+  # Left Ctrl (29) + V (47).
+  ydotool key 29:1 47:1 47:0 29:0
+
+  # The target application needs a moment to read the clipboard.
+  sleep 0.3
+
+  # Restore the previous clipboard so the same emoji can be chosen again.
+  clipboard_set "$OLD_CLIP"
+  exit 0
+}
+
+ensure_session_bus
+
+OLD_CLIP="$(clipboard_get)"
+
+plasma-emojier &
+PICKER_PID=$!
+
+while kill -0 "$PICKER_PID" 2>/dev/null; do
+  sleep 0.1
+
+  NEW_CLIP="$(clipboard_get)"
+  if [[ "$NEW_CLIP" != "$OLD_CLIP" ]]; then
+    paste_selection
+  fi
+done
+
+# plasma-emojier can copy the emoji and exit before the next poll.
+NEW_CLIP="$(clipboard_get)"
+if [[ "$NEW_CLIP" != "$OLD_CLIP" ]]; then
+  paste_selection
+fi
