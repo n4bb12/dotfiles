@@ -1,4 +1,5 @@
-# App menu and Ctrl+Alt+T / Super+Enter. Open Terminal Here uses kitty-here.desktop.
+# Dolphin "Open Terminal Here". KDE sets the process working directory and
+# does not pass a directory flag for Kitty, so this Exec must not set one.
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -7,8 +8,9 @@ GenericName=Terminal emulator
 Comment=Fast, feature-rich, GPU based terminal
 TryExec=kitty
 StartupNotify=true
-Exec=kitty --directory ~/code
+Exec=kitty
 Icon=kitty
+NoDisplay=true
 Categories=System;TerminalEmulator;
 X-TerminalArgExec=--
 X-TerminalArgTitle=--title
