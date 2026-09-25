@@ -270,15 +270,16 @@ sudo docker compose -f ~/code/n4bb12/dotfiles/install/kubuntu/portainer-compose.
 
 ## Configure terminal
 
-Kitty replaces Konsole. Ctrl+Alt+T and Super+Enter open Kitty in `~/code`. The shortcuts apply after the next login. `kitty.conf` uses Fira Code Retina, which `fonts-firacode` installs.
+Kitty replaces Konsole. Ctrl+Alt+T and Super+Enter open Kitty in `~/code` via `kitty.desktop`. Open Terminal Here uses `kitty-here.desktop` (`Exec=kitty`) so the clicked folder is kept. KDE only sets the process working directory for Kitty, and `--directory` overrides it. The shortcuts apply after the next login. `kitty.conf` uses Fira Code Retina, which `fonts-firacode` installs.
 
 ```sh
 mkdir -p ~/.config/kitty ~/.local/share/applications
 ln -sfn ~/code/n4bb12/dotfiles/config/~/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
 ln -sfn ~/code/n4bb12/dotfiles/config/~/.local/share/applications/kitty.desktop ~/.local/share/applications/kitty.desktop
+ln -sfn ~/code/n4bb12/dotfiles/config/~/.local/share/applications/kitty-here.desktop ~/.local/share/applications/kitty-here.desktop
 
 kwriteconfig6 --file kdeglobals --group General --key TerminalApplication kitty
-kwriteconfig6 --file kdeglobals --group General --key TerminalService kitty.desktop
+kwriteconfig6 --file kdeglobals --group General --key TerminalService kitty-here.desktop
 
 kwriteconfig6 --file kglobalshortcutsrc --group services --group org.kde.konsole.desktop --key _launch none
 kwriteconfig6 --file kglobalshortcutsrc --group services --group kitty.desktop --key _launch $'Ctrl+Alt+T\tMeta+Return'
