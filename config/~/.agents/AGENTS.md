@@ -75,7 +75,7 @@ not use one of those planning paths. For plans that do qualify:
 
 ## Defaults
 
-- Prefer TypeScript for scripts and application code.
+- Write code that stays in the repo in TypeScript. Python is only for a throwaway helper that does not stay in the repo. When a tool only executes another language, use that language.
 - Prefer `bun` and Bun APIs over `node`, `tsx`, `npm`, or `npx`.
 - Prefer `Bun.file`, `Bun.write`, `Bun.spawn`, and `Bun.$` over `node:fs` and `node:child_process`. Keep `node:path` when you need path math.
 - Default to React/Next.js for new web apps.

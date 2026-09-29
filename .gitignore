@@ -2,6 +2,7 @@
 .cache/
 .fallow/
 .merge-request/
+__pycache__/
 node_modules/
 notes/
 
