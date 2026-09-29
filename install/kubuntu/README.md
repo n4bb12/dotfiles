@@ -133,6 +133,12 @@ kbuildsycoca6 --noincremental
 pkill -f chrome
 ```
 
+Middle click in Chrome is autoscroll only. Pasting stays on right click in Kitty. KWin stops offering the Wayland primary selection, which is what Chrome pastes on middle click. Log out and back in after changing it. Already open Chrome windows keep the old behavior until Chrome is restarted.
+
+```sh
+kwriteconfig6 --file kwinrc --group Wayland --key EnablePrimarySelection false
+```
+
 ## 1Password
 
 - Sign in to 1Password
