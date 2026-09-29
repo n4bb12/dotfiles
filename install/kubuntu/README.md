@@ -275,6 +275,7 @@ Kitty replaces Konsole. Ctrl+Alt+T and Super+Enter open Kitty in `~/code` via `k
 ```sh
 mkdir -p ~/.config/kitty ~/.local/share/applications
 ln -sfn ~/code/n4bb12/dotfiles/config/~/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf
+ln -sfn ~/code/n4bb12/dotfiles/config/~/.config/kitty/tab_bar.py ~/.config/kitty/tab_bar.py
 ln -sfn ~/code/n4bb12/dotfiles/config/~/.local/share/applications/kitty.desktop ~/.local/share/applications/kitty.desktop
 ln -sfn ~/code/n4bb12/dotfiles/config/~/.local/share/applications/kitty-here.desktop ~/.local/share/applications/kitty-here.desktop
 
