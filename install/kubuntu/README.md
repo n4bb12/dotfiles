@@ -107,6 +107,7 @@ echo "$libs" | cut -d'#' -f1 | xargs -r sudo snap install
 - Slack https://slack.com/intl/de-de/downloads/linux
 - Discord https://discord.com/download
 - OpenWhispr https://openwhispr.com/de
+- Vibe Typer https://dev.vibetyper.com/downloads
 
 Open Chrome.
 
@@ -117,6 +118,32 @@ wget https://files.stirlingpdf.com/linux-installer.deb
 sudo dpkg -i linux-installer.deb
 rm linux-installer.deb
 ```
+
+## Vibe Typer
+
+Linux is an AppImage: a self-contained executable, not a package-manager app. Keep it in `~/Applications` and add a KDE launcher. Delete the copy in `Downloads` after moving it. Updating means replacing `~/Applications/VibeTyper.AppImage` unless Vibe Typer ships its own updater.
+
+```sh
+mkdir -p ~/Applications
+mv ~/Downloads/VibeTyper*.AppImage ~/Applications/VibeTyper.AppImage
+chmod +x ~/Applications/VibeTyper.AppImage
+
+mkdir -p ~/.local/share/applications
+cat > ~/.local/share/applications/vibetyper.desktop <<EOF
+[Desktop Entry]
+Name=Vibe Typer
+Comment=Voice typing
+Exec=$HOME/Applications/VibeTyper.AppImage
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true
+EOF
+
+kbuildsycoca6 --noincremental
+```
+
+It then appears in the KDE application launcher. Right-click to pin it to the task manager or favorites. To start it at login: **System Settings → Autostart → Add New → Application → Vibe Typer**.
 
 ## Configure Chrome
 
