@@ -10,6 +10,23 @@
 - Ship the smallest change that removes the reported symptom. Name that one-seam fix before the first edit. If two options both work, take the one that touches fewer files and leaves more of the existing design intact. Extra robustness around the same area waits until I ask.
 - Before finishing, prune the diff. Drop edits that do not serve the request. Simplify remaining changes when a smaller form still works.
 - When uncertain about intent or facts, verify in the codebase or ask. Don't guess. Changes that follow directly from the request don't need confirmation.
+- The reply goes in the chat. Files pass the test in "Reply in chat".
+
+## Reply in chat
+
+Chat is the only reply. A file is for a reader who was not in this conversation: another person, a later session, or you without this thread. This holds in every project, for every kind of request, including when the request was to write the file.
+
+In the chat, say what you checked, what you decided, and what you changed. That is where the person who asked finds out.
+
+A file states the behavior, the rule, and the reason that stays true after this thread is gone. Before saving a sentence into source, a comment, a document, UI copy, an identifier, a log line, an error, a test name, a commit message, or a pull request, both tests have to pass.
+
+The listener test: if this chat had never mentioned the example, would this still be the sentence? A correct general rule with the thread's example welded on fails. The example was there so the diff proves you listened. Write the general rule. The example is part of the chat reply.
+
+The draft test: forget every earlier draft from this session. Does the sentence still make sense? Words that only mean something against a draft you just wrote are a reply: back, still, again, restored, stays deleted, put back, no longer missing, added. The file describes the thing as it stands. The path of the edit goes in the chat. A feature that was already there, and was missing only in a draft, is described as the feature. The draft is invisible.
+
+A request to write a document still leaves the reply in the chat. The document passes both tests.
+
+A file that answers the thread fails the task. Working code beside that sentence does not rescue it.
 
 ## Subagents
 
@@ -67,11 +84,6 @@ not use one of those planning paths. For plans that do qualify:
 ## Communication
 
 - Write complete, natural sentences. Cut filler, empty phrases, and restatement. Brevity is the extra pass that shortens the prose, not grammar clipped into fragments.
-- Respond and provide feedback only in chat.
-- Write documents as standalone material for readers who have no access to the conversation. Integrate requested facts into the document’s own structure and voice; keep direct answers to chat questions, conversational framing, and reactions in chat.
-- Do not respond via code comments or via visual UI built by the agent.
-- UI and code must be free of any verbal reaction to requests made in chat.
-- All such reactions would be out of context for someone else or for a future reader.
 
 ## Defaults
 
@@ -104,7 +116,7 @@ not use one of those planning paths. For plans that do qualify:
 - Use `import type` for type-only imports.
 - Let the formatter control wrapping and layout instead of hand-formatting code.
 - In TypeScript repos, prefer double quotes and no semicolons unless the local formatter rewrites otherwise.
-- Keep comments sparse and only use them for non-obvious intent. Code comments must be written for future readers without any context from the current conversation. Explain why the code is the way it is. Do not narrate a past failure, a fix, or chat context ("this used to X", "Y didn't work", "we changed this because").
+- Keep comments sparse and only use them for non-obvious intent. Explain why the code is the way it is, for a reader who was not in the chat. Comments follow "Reply in chat".
 - Add an empty line between every block of code including control flow, variable declarations, and function declarations.
 - In JSX, add an empty line between sibling blocks. A block is any element, fragment, or expression that spans 2 or more lines (e.g. between a multi-line `button` and a multi-line `input`).
 - Treat a line with a comment directly above it, or a statement that wraps onto multiple lines, as a code block: put an empty line above and below it when it sits next to other code.
