@@ -148,13 +148,12 @@ It then appears in the KDE application launcher. Right-click to pin it to the ta
 ## Configure Chrome
 
 - Enable sticky scroll
-- Fix Netflix black screen bug
 - Make permission bubbles clickable on Wayland
 
 ```sh
 cp /usr/share/applications/google-chrome.desktop \
   ~/.local/share/applications/google-chrome.desktop
-sed -i 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --use-gl=egl --disable-features=OzoneBubblesUsePlatformWidgets|' \
+sed -i 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --disable-features=OzoneBubblesUsePlatformWidgets|' \
   ~/.local/share/applications/google-chrome.desktop
 
 kbuildsycoca6 --noincremental
