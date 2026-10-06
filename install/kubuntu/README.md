@@ -149,16 +149,19 @@ It then appears in the KDE application launcher. Right-click to pin it to the ta
 
 - Enable sticky scroll
 - Fix Netflix black screen bug
+- Make permission bubbles clickable on Wayland
 
 ```sh
 cp /usr/share/applications/google-chrome.desktop \
   ~/.local/share/applications/google-chrome.desktop
-sed -i 's|Exec=/usr/bin/google-chrome-stable %U|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --use-gl=egl %U|' \
+sed -i 's|Exec=/usr/bin/google-chrome-stable|Exec=/usr/bin/google-chrome-stable --enable-blink-features=MiddleClickAutoscroll --use-gl=egl --disable-features=OzoneBubblesUsePlatformWidgets|' \
   ~/.local/share/applications/google-chrome.desktop
 
 kbuildsycoca6 --noincremental
 pkill -f chrome
 ```
+
+Chrome paints notification, camera, and location prompts as extra Wayland surfaces. On KDE those surfaces drop clicks, so Allow does nothing. `--disable-features=OzoneBubblesUsePlatformWidgets` draws the bubble in the browser window instead.
 
 Middle click in Chrome is autoscroll only. Pasting stays on right click in Kitty. KWin stops offering the Wayland primary selection, which is what Chrome pastes on middle click. Log out and back in after changing it. Already open Chrome windows keep the old behavior until Chrome is restarted.
 
