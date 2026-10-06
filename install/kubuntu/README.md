@@ -70,6 +70,8 @@ vlc
 # hardware
 vainfo # VA-API
 libguestfs-tools # read-only WSL VHDX
+v4l-utils
+v4l2loopback-dkms # OBS virtual camera
 "
 
 echo "$libs" | cut -d'#' -f1 | xargs -r sudo apt install -y
@@ -80,6 +82,9 @@ echo "$libs" | cut -d'#' -f1 | xargs -r sudo apt install -y
 ```sh
 libs="
 com.obsproject.Studio # OBS Studio
+com.obsproject.Studio.Plugin.BackgroundRemoval
+com.github.wwmm.easyeffects # microphone effects, includes RNNoise
+hu.irl.cameractrls # Facecam controls
 de.bund.ausweisapp.ausweisapp2 # AusweisApp
 "
 
@@ -90,7 +95,6 @@ echo "$libs" | cut -d'#' -f1 | xargs -r flatpak install -y flathub
 
 ```sh
 libs="
-cameractrls
 onlyoffice-desktopeditors
 "
 
@@ -357,6 +361,47 @@ bash ~/code/n4bb12/dotfiles/install/kubuntu/pick-emoji.sh
 ```
 
 Log out and back in.
+
+## Elgato
+
+Facecam MK.2, Wave:3, and Key Light MK.2.
+
+```text
+Elgato Facecam → cameractrls → OBS + Background Removal → OBS Virtual Camera → applications
+Elgato Wave:3 → Easy Effects preset Meetings → Easy Effects Source → applications
+```
+
+The Ubuntu `easyeffects` package has no RNNoise, so microphone processing uses the Flatpak. Cameractrls comes from Flathub. LimeLight is not on Flathub:
+
+```sh
+curl -fL -o /tmp/LimeLight.flatpak \
+  https://github.com/Chimi6/limelight-linux-elgato-lights-controller/releases/download/v0.3.1/LimeLight.flatpak
+flatpak install --user -y /tmp/LimeLight.flatpak
+```
+
+`keylightd` listens on `http://127.0.0.1:9124`. `GET /v1/lights/states`.
+
+```sh
+mkdir -p ~/.config/systemd/user
+cp ~/code/n4bb12/dotfiles/install/kubuntu/cameractrlsd.service ~/.config/systemd/user/
+cp ~/code/n4bb12/dotfiles/install/kubuntu/keylightd.service ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now cameractrlsd.service keylightd.service
+```
+
+`cameractrlsd` restores preset 1 when the Facecam appears. Change exposure, gain, white balance, zoom, and pan/tilt in Cameractrls, then save preset 1.
+
+```sh
+ee_data=~/.var/app/com.github.wwmm.easyeffects/data/easyeffects
+mkdir -p "$ee_data/input"
+cp ~/code/n4bb12/dotfiles/install/kubuntu/easyeffects-meetings.json "$ee_data/input/Meetings.json"
+```
+
+Autoload is one JSON file per microphone route. On this machine the Wave:3 route is `Microphone`, and the file is `alsa_input…mono-fallback:Microphone.json` with `"preset-name": "Meetings"`. Easy Effects starts at login and does not take over speaker playback.
+
+OBS scene collection `Meetings` puts `~/Pictures/obs-hintergrund.png` under the Facecam. The camera has a Crop filter and Background Removal. Replace the image in the source properties, then crop and place the camera in the preview. OBS starts the virtual camera at login.
+
+`v4l2loopback` is unsigned until Secure Boot enrolls the DKMS key. After `apt install`, reboot and confirm the blue MOK screen. In Meet, Zoom, Teams, and Discord choose **OBS Virtual Camera** and **Easy Effects Source**.
 
 # Windows dual boot
 

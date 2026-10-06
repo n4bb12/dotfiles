@@ -1,0 +1,13 @@
+[Unit]
+Description=Elgato Key Light daemon
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/flatpak run --command=keylightd io.github.chimi6.limelight-linux-elgato-lights-controller serve
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

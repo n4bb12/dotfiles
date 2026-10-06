@@ -1,0 +1,13 @@
+[Unit]
+Description=Restore Elgato Facecam controls
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/flatpak run --command=cameractrlsd.py hu.irl.cameractrls
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target
