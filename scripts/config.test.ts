@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, test } from "bun:test"
-import { lstat, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises"
+import { lstat, mkdir, mkdtemp, readFile, readlink, rm, symlink, writeFile } from "node:fs/promises"
 import { join } from "node:path"
 
-import { copyTree } from "./config.ts"
+import { copyTree, linkCursorUserConfig } from "./config.ts"
 
 const tmpDirs: string[] = []
 
@@ -52,5 +52,31 @@ describe("copyTree", () => {
     await copyTree(src, dest)
 
     expect(await readFile(join(dest, ".gitignore"), "utf8")).toBe("from-repo\n")
+  })
+})
+
+describe("linkCursorUserConfig", () => {
+  test("replaces regular Cursor user files with symlinks to the repo copies", async () => {
+    const root = await tmp()
+    const source = join(root, "cursor")
+    const user = join(root, "User")
+
+    await mkdir(source)
+    await mkdir(user)
+    await writeFile(join(source, "settings.json"), "from-repo\n")
+    await writeFile(join(source, "keybindings.json"), "bindings\n")
+    await writeFile(join(user, "settings.json"), "old\n")
+    await writeFile(join(user, "keybindings.json"), "old\n")
+
+    await linkCursorUserConfig(source, user)
+    await linkCursorUserConfig(source, user)
+
+    for (const name of ["settings.json", "keybindings.json"]) {
+      const dest = join(user, name)
+      expect((await lstat(dest)).isSymbolicLink()).toBe(true)
+      expect(await readlink(dest)).toBe(join(source, name))
+    }
+
+    expect(await readFile(join(user, "settings.json"), "utf8")).toBe("from-repo\n")
   })
 })
