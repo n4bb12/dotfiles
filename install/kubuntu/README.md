@@ -108,6 +108,7 @@ echo "$libs" | cut -d'#' -f1 | xargs -r sudo snap install
 - Discord https://discord.com/download
 - OpenWhispr https://openwhispr.com/de
 - Vibe Typer https://dev.vibetyper.com/downloads
+- LinuxBroadcast https://github.com/Pedrojok01/linux-broadcast/releases (see section below)
 
 Open Chrome.
 
@@ -144,6 +145,77 @@ kbuildsycoca6 --noincremental
 ```
 
 It then appears in the KDE application launcher. Right-click to pin it to the task manager or favorites. To start it at login: **System Settings → Autostart → Add New → Application → Vibe Typer**.
+
+## LinuxBroadcast
+
+Virtual webcam with background blur/replace for Meet / Zoom / OBS. Install the `.deb` from GitHub Releases (not from source for everyday use).
+
+```sh
+VERSION=0.4.0
+mkdir -p ~/Downloads
+cd ~/Downloads
+gh release download "v$VERSION" --repo Pedrojok01/linux-broadcast \
+  --pattern "linux-broadcast_${VERSION}-1_amd64.deb"
+sudo apt install -y "./linux-broadcast_${VERSION}-1_amd64.deb"
+```
+
+The package installs `v4l2loopback` options for `/dev/video10` (`card_label=LinuxBroadcast`). If an older OBS drop-in owns that device number, move it aside so LinuxBroadcast's config wins:
+
+```sh
+sudo mv /etc/modprobe.d/v4l2loopback.conf \
+  /etc/modprobe.d/v4l2loopback.conf.obs-bak 2>/dev/null || true
+```
+
+### Secure Boot (required once)
+
+DKMS signs `v4l2loopback` with the machine MOK. Until that key is enrolled, `modprobe` fails with `Key was rejected by service` and `/dev/video10` never appears.
+
+```sh
+sudo mokutil --import /var/lib/shim-signed/mok/MOK.der
+sudo reboot
+```
+
+At the blue **Perform MOK management** screen: **Enroll MOK → Continue → Yes →** enter the one-time password → reboot. Then:
+
+```sh
+sudo modprobe v4l2loopback
+ls /dev/video10
+linux-broadcast
+```
+
+In the app: pick the camera, background mode, and enable **Start on login** (writes `~/.config/autostart/LinuxBroadcast-autostart.desktop` with `--headless`). In Meet / Zoom / OBS pick the camera named **LinuxBroadcast**.
+
+### Tray vs taskbar on Wayland
+
+On Plasma Wayland, Close / Hide cannot unmap the window — xdg-shell has no hide verb — so the app minimizes instead. Use the **system tray** icon to show the window or **Quit**. To keep the taskbar entry away during permanent use, add a KWin window rule (skip if you already manage `kwinrulesrc` yourself and merge by hand):
+
+```sh
+cat > ~/.config/kwinrulesrc <<'EOF'
+[General]
+count=1
+rules=1
+
+[1]
+Description=LinuxBroadcast: keep off the taskbar (tray app)
+wmclass=linuxbroadcast
+wmclassmatch=2
+wmclasscomplete=false
+skiptaskbar=true
+skiptaskbarrule=1
+skippager=true
+skippagerrule=1
+skipswitcher=true
+skipswitcherrule=1
+EOF
+
+qdbus6 org.kde.KWin /KWin org.kde.KWin.reconfigure
+```
+
+Restart LinuxBroadcast once so the rule applies. Tray left-click / menu **Show** brings the window back; **Quit** exits.
+
+### GPU (optional)
+
+CPU segmentation works without extras. The stock `linux-broadcast-cuda` addon needs CUDA 13 + cuDNN 9, and the prebuilt ONNX CUDA provider does **not** support Blackwell (RTX 50 / SM 120) — the app falls back to CPU. A custom ONNX Runtime build for `CMAKE_CUDA_ARCHITECTURES=120` is required for GPU on this machine; follow the upstream README section *New NVIDIA architectures*.
 
 ## Configure Chrome
 
