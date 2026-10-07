@@ -10,6 +10,7 @@ import {
   cursorUserDir,
   glassThemeRecord,
   isCursorDesktopCommand,
+  withoutGlassWindowBorder,
 } from "./cursor-agent-theme"
 
 function itemRow(row: unknown) {
@@ -54,6 +55,19 @@ describe("isCursorDesktopCommand", () => {
     expect(isCursorDesktopCommand("/Applications/Cursor.app/Contents/MacOS/Cursor")).toBe(true)
     expect(isCursorDesktopCommand("C:\\Users\\abraham\\AppData\\Local\\Programs\\cursor\\Cursor.exe")).toBe(true)
     expect(isCursorDesktopCommand("/home/abraham/.local/bin/cursor-agent --use-system-ca")).toBe(false)
+  })
+})
+
+describe("withoutGlassWindowBorder", () => {
+  test("drops the linux and windows inset outline and leaves a second pass unchanged", () => {
+    const css =
+      ".keep{color:red}[data-component=root][data-system=linux]:not([data-fullscreen=true]):after,[data-component=root][data-system=windows]:not([data-fullscreen=true]):after{box-shadow:inset 0 0 0 1px var(--glass-window-border-color)}.after{color:blue}"
+
+    const once = withoutGlassWindowBorder(css)
+
+    expect(once).toContain("box-shadow:none")
+    expect(once).not.toContain("--glass-window-border-color)}")
+    expect(withoutGlassWindowBorder(once)).toBe(once)
   })
 })
 

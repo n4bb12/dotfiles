@@ -78,6 +78,28 @@ export function isCursorDesktopCommand(command: string) {
   )
 }
 
+const GLASS_WINDOW_BORDER =
+  "[data-component=root][data-system=linux]:not([data-fullscreen=true]):after,[data-component=root][data-system=windows]:not([data-fullscreen=true]):after{box-shadow:inset 0 0 0 1px var(--glass-window-border-color)}"
+
+const GLASS_WINDOW_BORDER_NONE =
+  "[data-component=root][data-system=linux]:not([data-fullscreen=true]):after,[data-component=root][data-system=windows]:not([data-fullscreen=true]):after{box-shadow:none}"
+
+export function withoutGlassWindowBorder(css: string) {
+  return css.replaceAll(GLASS_WINDOW_BORDER, GLASS_WINDOW_BORDER_NONE)
+}
+
+export function glassStylesheetCandidates(platform = process.platform) {
+  if (platform === "darwin") {
+    return ["/Applications/Cursor.app/Contents/Resources/app/out/vs/workbench/workbench.glass.main.css"]
+  }
+
+  if (platform === "linux") {
+    return ["/usr/share/cursor/resources/app/out/vs/workbench/workbench.glass.main.css"]
+  }
+
+  return []
+}
+
 export function glassThemeRecord(now = Date.now(), createdAt = now) {
   return {
     id: THEME_ID,
@@ -252,8 +274,53 @@ async function listProcessCommands() {
     .filter(Boolean)
 }
 
+export async function clearInstalledGlassWindowBorder(paths = glassStylesheetCandidates()) {
+  for (const path of paths) {
+    const file = Bun.file(path)
+
+    if (!(await file.exists())) {
+      continue
+    }
+
+    const css = await file.text()
+    const next = withoutGlassWindowBorder(css)
+
+    if (next === css) {
+      return { path, status: "unchanged" as const }
+    }
+
+    try {
+      await Bun.write(path, next)
+
+      return { path, status: "patched" as const }
+    } catch (error) {
+      if (isAccessError(error)) {
+        return { path, status: "not-writable" as const }
+      }
+
+      throw error
+    }
+  }
+
+  return { path: undefined, status: "not-found" as const }
+}
+
+function isAccessError(error: unknown) {
+  return typeof error === "object" && error !== null && "code" in error && error.code === "EACCES"
+}
+
 if (import.meta.main) {
   try {
+    const border = await clearInstalledGlassWindowBorder()
+
+    if (border.status === "patched") {
+      console.log(`Removed the agent window border in ${border.path}`)
+    } else if (border.status === "unchanged") {
+      console.log(`Agent window border is already gone in ${border.path}`)
+    } else if (border.status === "not-writable") {
+      console.error(`Could not remove the agent window border. ${border.path} is not writable.`)
+    }
+
     const applied = await applyCursorAgentTheme({
       userDir: cursorUserDir(),
       commands: await listProcessCommands(),
