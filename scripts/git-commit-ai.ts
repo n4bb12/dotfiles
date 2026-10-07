@@ -166,7 +166,8 @@ async function main() {
     maxOutputTokens: 400,
     providerOptions: {
       gateway: {
-        zeroDataRetention: true,
+        // requires a pro plan
+        // zeroDataRetention: true,
       },
     },
     system: SYSTEM_PROMPT,
