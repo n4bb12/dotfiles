@@ -22,6 +22,7 @@
     "backup": "bun scripts/backup.ts",
     "check": "bun types",
     "config": "bun scripts/config.ts",
+    "cursor-agent-theme": "bun scripts/cursor-agent-theme.ts",
     "fix": "bun format && bun types",
     "format": "biome check --write --unsafe .",
     "mr": "bun scripts/mr/cli.ts",
