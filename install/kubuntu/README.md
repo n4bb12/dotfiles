@@ -425,6 +425,16 @@ kwriteconfig6 \
   ''
 ```
 
+## Show desktop
+
+KWin has no minimize-all shortcut. Super+D is Peek at Desktop, which only hides windows and brings them all back together. This script minimizes instead, and a second press restores that set unless a window was opened in between.
+
+```sh
+bash ~/code/n4bb12/dotfiles/install/kubuntu/show-desktop.sh
+```
+
+The shortcut is active immediately. It is loaded again on the next login.
+
 ## Emoji picker
 
 ```sh

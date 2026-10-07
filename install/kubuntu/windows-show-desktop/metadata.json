@@ -1,0 +1,19 @@
+{
+  "KPackageStructure": "KWin/Script",
+  "KPlugin": {
+    "Authors": [
+      {
+        "Name": "Abraham Schilling"
+      }
+    ],
+    "Description": "Super+D minimizes windows and leaves them minimized, like Windows",
+    "EnabledByDefault": true,
+    "Icon": "preferences-system-windows",
+    "Id": "windows-show-desktop",
+    "License": "ISC",
+    "Name": "Windows Show Desktop",
+    "Version": "1.0"
+  },
+  "X-Plasma-API": "javascript",
+  "X-Plasma-MainScript": "code/main.js"
+}
