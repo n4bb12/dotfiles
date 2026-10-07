@@ -311,7 +311,8 @@ alias workon='git-workon'
 # Aliases
 alias fetch='git fetch --prune'
 
-alias bra='git branch -a'
+alias bra='git branch'
+alias braa='git branch -a'
 
 alias wt='git worktree'
 alias wta='git-worktree-add'
