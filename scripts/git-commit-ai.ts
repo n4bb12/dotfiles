@@ -164,6 +164,11 @@ async function main() {
     reasoning: REASONING,
     temperature: 0,
     maxOutputTokens: 400,
+    providerOptions: {
+      gateway: {
+        zeroDataRetention: true,
+      },
+    },
     system: SYSTEM_PROMPT,
     prompt: buildUserPrompt({
       diff,
