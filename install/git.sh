@@ -6,7 +6,6 @@ git config --global --add safe.directory "*"
 git config --global alias.lg "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --decorate=full"
 git config --global alias.ref 'reflog --pretty="%C(auto)%h %<|(20)%gd %C(blue)%cr%C(reset) %gs (%s)"'
 git config --global color.ui auto
-git config --global core.attributesFile ~/.gitattributes
 git config --global core.autocrlf false
 git config --global core.editor 'code --wait --reuse-window'
 git config --global core.eol lf
