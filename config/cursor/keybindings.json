@@ -233,5 +233,23 @@
   {
     "key": "ctrl+r",
     "command": "-glass.refreshDiffTab"
+  },
+  {
+    "key": "f1",
+    "command": "-workbench.action.showCommands"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-cursor.toggleAgentWindowIDEUnification",
+    "when": "!isGlass && workbenchState != 'empty'"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-editor.action.toggleScreenReaderAccessibilityMode",
+    "when": "accessibilityHelpIsShown"
   }
 ]
