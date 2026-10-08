@@ -11,6 +11,7 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
+  "js/ts.tsserver.maxMemory": 8192,
   "chat.viewSessions.orientation": "stacked",
   "claudeCode.allowDangerouslySkipPermissions": true,
   "claudeCode.preferredLocation": "panel",
