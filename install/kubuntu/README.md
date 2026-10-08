@@ -38,6 +38,29 @@ kwriteconfig6 --file kwinrc --group Plugins --key translucencyEnabled false
 kwriteconfig6 --file kwinrc --group Plugins --key wobblywindowsEnabled false
 ```
 
+## Swap
+
+A default install leaves a 512 MB `/swapfile`. Cursor allows the TypeScript server an 8192 MB heap with `js/ts.tsserver.maxMemory` in `config/cursor/settings.json`. When that process, or a core dump of it, pushes the machine, 512 MB of swap is not enough and the desktop freezes. `/etc/fstab` already lists `/swapfile`. Replace the file with 16 GB.
+
+```sh
+sudo swapoff /swapfile
+sudo rm -f /swapfile
+sudo fallocate -l 16G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+```
+
+## Coredumps
+
+Each TypeScript server crash writes a few hundred megabytes under `/var/lib/systemd/coredump`, and `systemd-coredump` peaks around 2 GB while compressing it. A crash loop does that every half minute. Keep the journal line and skip the core file.
+
+```sh
+sudo mkdir -p /etc/systemd/coredump.conf.d
+sudo cp ~/code/n4bb12/dotfiles/install/kubuntu/coredump.conf /etc/systemd/coredump.conf.d/coredump.conf
+sudo systemctl daemon-reload
+```
+
 ## Headphones
 
 - Open Bluetooth settings
