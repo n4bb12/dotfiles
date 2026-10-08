@@ -15,7 +15,6 @@ packages=(
   kustomize
   mariadb-clients
   python-pip
-  sentry-cli
   shfmt
   wget
 )

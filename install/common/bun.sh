@@ -23,6 +23,7 @@ packages=(
   pnpm
   prettier
   release-it
+  sentry
   serve
   skills
   slugify-cli
@@ -33,8 +34,10 @@ packages=(
   yarn
 )
 bun add --global "${packages[@]}"
+bun remove --global @sentry/cli || true
 
 npm_uninstall_global \
+  @sentry/cli \
   @biomejs/biome \
   @playwright/cli \
   @shopify/cli \
