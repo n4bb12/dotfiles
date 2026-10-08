@@ -311,7 +311,6 @@ libs="
 @openai/codex
 @playwright/cli
 @schpet/linear-cli
-@sentry/cli
 @shopify/cli
 agent-browser
 fx
@@ -321,6 +320,7 @@ open-cli
 pnpm
 prettier
 release-it
+sentry
 serve
 skills
 slugify-cli
