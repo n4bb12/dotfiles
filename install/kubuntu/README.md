@@ -169,6 +169,14 @@ kbuildsycoca6 --noincremental
 
 It then appears in the KDE application launcher. Right-click to pin it to the task manager or favorites. To start it at login: **System Settings → Autostart → Add New → Application → Vibe Typer**.
 
+The waveform is fixed at the bottom center of the screen and sits on top of a maximized chat input. Vibe Typer marks that window immovable, so KWin shifts it up by 200px whenever it appears. It stays horizontally centered. The shift is active immediately and is loaded again on the next login.
+
+```sh
+bash ~/code/n4bb12/dotfiles/install/kubuntu/vibe-typer-lift.sh
+```
+
+Change `liftPx` in `~/code/n4bb12/dotfiles/install/kubuntu/vibetyperlift/contents/code/main.js`, then run the script again.
+
 ## LinuxBroadcast
 
 Virtual webcam with background blur/replace for Meet / Zoom / OBS. Install the `.deb` from GitHub Releases (not from source for everyday use).
