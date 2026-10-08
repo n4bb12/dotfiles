@@ -38,6 +38,12 @@ kwriteconfig6 --file kwinrc --group Plugins --key translucencyEnabled false
 kwriteconfig6 --file kwinrc --group Plugins --key wobblywindowsEnabled false
 ```
 
+- NumLock on at startup. `0` is on, `1` is off, `2` leaves the current state. Plasma applies this at the next login, from this user's `~/.config/kcminputrc`. `bun config` does not install that file. The login screen is separate and uses `Numlock=on` under `[General]` in `/etc/sddm.conf.d/kde_settings.conf`.
+
+```sh
+kwriteconfig6 --file kcminputrc --group Keyboard --key NumLock 0
+```
+
 ## Swap
 
 A default install leaves a 512 MB `/swapfile`. Cursor allows the TypeScript server an 8192 MB heap with `js/ts.tsserver.maxMemory` in `config/cursor/settings.json`. When that process, or a core dump of it, pushes the machine, 512 MB of swap is not enough and the desktop freezes. `/etc/fstab` already lists `/swapfile`. Replace the file with 16 GB.
