@@ -1,0 +1,14 @@
+{
+  "KPackageStructure": "KWin/Script",
+  "KPlugin": {
+    "Description": "Moves the Vibe Typer waveform up so it does not cover the bottom of the screen",
+    "EnabledByDefault": true,
+    "Icon": "preferences-system-windows",
+    "Id": "vibetyperlift",
+    "License": "ISC",
+    "Name": "Vibe Typer Lift",
+    "Version": "1.0"
+  },
+  "X-Plasma-API": "javascript",
+  "X-Plasma-MainScript": "code/main.js"
+}
