@@ -84,6 +84,9 @@ not use one of those planning paths. For plans that do qualify:
 ## Communication
 
 - Write complete, natural sentences. Cut filler, empty phrases, and restatement. Brevity is the extra pass that shortens the prose, not grammar clipped into fragments.
+- A sentence the reader can act on names who does what, when, and what they then see. Dropping one of those to stay short makes the sentence ambiguous.
+- When they have to choose, give each option its own sentences: what happens if they pick it, and what stays as it is. Do not make them infer the outcome from a file name or an internal function name.
+- The first time a name from the project appears, the same sentence says what that thing is. The file path comes after that, so they can open it. Later mentions can use the short name.
 
 ## Defaults
 
