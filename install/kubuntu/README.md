@@ -435,6 +435,15 @@ kwriteconfig6 --file kglobalshortcutsrc --group services --group kitty.desktop -
 sudo update-alternatives --set x-terminal-emulator /usr/bin/kitty
 ```
 
+## Open folders in Cursor
+
+Dolphin shows **Open in Cursor** on a folder and on empty space inside a folder. The entry is `config/~/.local/share/kio/servicemenus/cursor-here.desktop`. `bun config` copies it. KDE skips a service menu in that directory unless the file is executable. Rebuild the menu cache, then restart Dolphin if the entry is missing.
+
+```sh
+bun config
+kbuildsycoca6 --noincremental
+```
+
 ## Color picker
 
 Alt+C — Pick screen color and copy `#RRGGBB` to the clipboard.
