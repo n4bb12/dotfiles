@@ -1,0 +1,16 @@
+# Dolphin: right-click a folder, or empty space inside a folder.
+# KDE ignores service menus under ~/.local/share/kio/servicemenus unless this file is executable.
+[Desktop Entry]
+Type=Service
+MimeType=inode/directory;
+Actions=openInCursor;
+X-KDE-Priority=TopLevel
+X-KDE-Protocol=file
+X-KDE-StartupNotify=false
+
+[Desktop Action openInCursor]
+Name=Open in Cursor
+Name[de]=In Cursor öffnen
+Icon=co.anysphere.cursor
+Exec=cursor %f
+TryExec=cursor
