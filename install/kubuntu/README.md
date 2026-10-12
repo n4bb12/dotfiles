@@ -120,6 +120,7 @@ echo "$libs" | cut -d'#' -f1 | xargs -r flatpak install -y flathub
 ```sh
 libs="
 cameractrls
+losslesscut
 onlyoffice-desktopeditors
 "
 
