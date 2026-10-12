@@ -40,6 +40,7 @@ The child spends the same tokens as doing the work inline. The win is a clean pa
 
 - The master global instruction file is `config/~/.agents/AGENTS.md` in this dotfiles repo.
 - The master personal skills live in `config/~/.agents/skills/<name>/SKILL.md` in this dotfiles repo. Install them with `bun skills`.
+- The dotfiles repo is public. Everything in it, this file and the skills included, stays generic: rules about tools, code, and writing that hold in any project. Employer and customer names, work project names and paths, machine user names, internal URLs, colleagues, secrets, and personal data of anyone belong in that project's own `AGENTS.md` or rules.
 
 ## Skills
 
@@ -83,10 +84,12 @@ not use one of those planning paths. For plans that do qualify:
 
 ## Communication
 
-- Write complete, natural sentences. Cut filler, empty phrases, and restatement. Brevity is the extra pass that shortens the prose, not grammar clipped into fragments.
-- A sentence the reader can act on names who does what, when, and what they then see. Dropping one of those to stay short makes the sentence ambiguous.
-- When they have to choose, give each option its own sentences: what happens if they pick it, and what stays as it is. Do not make them infer the outcome from a file name or an internal function name.
-- The first time a name from the project appears, the same sentence says what that thing is. The file path comes after that, so they can open it. Later mentions can use the short name.
+- The first sentence answers the question in the form it was asked. A yes/no question starts with yes or no plus the scope it holds for.
+- When the answer rests on things the reader has not met in this conversation, introduce each one in its own short paragraph (what it is, what starts it, what it does) before any sentence compares them or describes how they fail.
+- Each thing gets one name, and every mention uses exactly that name. A second word for the same thing reads as a second thing.
+- One topic per paragraph, named in its first words, so the reader skips what they know.
+- Write complete, natural sentences that hold only what the answer rests on. File paths, function names, and side observations come in when asked for or when the reader opens that file next.
+- When they have to choose, give each option its own sentences: what happens if they pick it, and what stays as it is.
 
 ## Defaults
 
