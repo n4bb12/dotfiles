@@ -211,9 +211,10 @@ export function useUserId() {
 - Always prefer `toMatchInlineSnapshot` over `toEqual`.
 - Do not use module mocks such as `mock.module`.
 - Do not use component renderers such as `renderToStaticMarkup`.
-- Keep a test only when it protects behavior, logic, or an invariant. Skip tests of trivial code, constants, and whether certain code exists in a file.
+- Every test you write is one you will keep. It protects behavior a caller can observe, or an invariant that would still matter if the implementation were rewritten. A test that only confirms the edit landed does not. Reading a source file and asserting a substring is that test: the edit already put the text there.
+- Red-green is only for a test you will keep, written as it will appear in the pull request. It states the behavior, fails, and passes once that behavior exists.
+- When no such test exists, make the change directly.
 - Assert behavior, not design. Pixel sizes, padding, color, shadow, and layout stay untested. If you touch a file that already asserts those, delete the assertions in the same change. Do not update them to match a new design.
-- A red-green test may drive a behavior change. Delete it before finishing unless it still protects behavior, logic, or an invariant.
 
 ## Workflow
 
