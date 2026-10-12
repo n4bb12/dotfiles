@@ -251,5 +251,24 @@
     "key": "ctrl+e",
     "command": "-editor.action.toggleScreenReaderAccessibilityMode",
     "when": "accessibilityHelpIsShown"
+  },
+  {
+    "key": "f4",
+    "command": "-references-view.next",
+    "when": "reference-list.hasResult && references-view.canNavigate"
+  },
+  {
+    "key": "f4",
+    "command": "-search.action.focusNextSearchResult",
+    "when": "hasSearchResult || inSearchEditor"
+  },
+  {
+    "key": "f4",
+    "command": "-goToNextReference",
+    "when": "inReferenceSearchEditor || referenceSearchVisible"
+  },
+  {
+    "key": "f2",
+    "command": "composer.renameChat"
   }
 ]
