@@ -19,6 +19,19 @@
       "allowComments": true
     }
   },
+  "overrides": [
+    {
+      "includes": ["config/cursor/settings.json"],
+      "json": {
+        "parser": {
+          "allowTrailingCommas": true
+        },
+        "formatter": {
+          "trailingCommas": "all"
+        }
+      }
+    }
+  ],
   "linter": {
     "enabled": true,
     "includes": ["**", "!**/*.test.*"],
