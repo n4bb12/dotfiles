@@ -36,3 +36,4 @@ git config --global rerere.enabled true
 git config --global user.email '6810177+n4bb12@users.noreply.github.com'
 git config --global user.name 'Abraham Schilling'
 git config --global user.signingkey ~/.ssh/id_ed25519.pub
+git config --global 'url.git@github-personal:n4bb12/.insteadOf' 'git@github.com:n4bb12/'
