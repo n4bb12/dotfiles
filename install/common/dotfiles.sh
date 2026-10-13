@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Requires DIR to be the flavor directory (install/ubuntu or install/omarchy).
+# Requires DIR to be the flavor directory (install/omarchy).
 : "${DIR:?DIR must be the flavor install directory}"
 
 COMMON="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
