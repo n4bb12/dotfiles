@@ -38,7 +38,7 @@ kwriteconfig6 --file kwinrc --group Plugins --key translucencyEnabled false
 kwriteconfig6 --file kwinrc --group Plugins --key wobblywindowsEnabled false
 ```
 
-- NumLock on at startup. `0` is on, `1` is off, `2` leaves the current state. Plasma applies this at the next login, from this user's `~/.config/kcminputrc`. `bun config` does not install that file. The login screen is separate and uses `Numlock=on` under `[General]` in `/etc/sddm.conf.d/kde_settings.conf`.
+- NumLock on at startup. `0` is on, `1` is off, `2` leaves the current state. Plasma applies this at the next login, from this user's `~/.config/kcminputrc`. The login screen is separate and uses `Numlock=on` under `[General]` in `/etc/sddm.conf.d/kde_settings.conf`.
 
 ```sh
 kwriteconfig6 --file kcminputrc --group Keyboard --key NumLock 0
@@ -438,10 +438,12 @@ sudo update-alternatives --set x-terminal-emulator /usr/bin/kitty
 
 ## Open folders in Cursor
 
-Dolphin shows **Open in Cursor** on a folder and on empty space inside a folder. The entry is `config/~/.local/share/kio/servicemenus/cursor-here.desktop`. `bun config` copies it. KDE skips a service menu in that directory unless the file is executable. Rebuild the menu cache, then restart Dolphin if the entry is missing.
+Dolphin shows **Open in Cursor** on a folder and on empty space inside a folder. The entry is `config/~/.local/share/kio/servicemenus/cursor-here.desktop`. KDE skips a service menu in that directory unless the file is executable. Rebuild the menu cache, then restart Dolphin if the entry is missing.
 
 ```sh
-bun config
+mkdir -p ~/.local/share/kio/servicemenus
+cp ~/code/n4bb12/dotfiles/config/~/.local/share/kio/servicemenus/cursor-here.desktop ~/.local/share/kio/servicemenus/
+chmod +x ~/.local/share/kio/servicemenus/cursor-here.desktop
 kbuildsycoca6 --noincremental
 ```
 
