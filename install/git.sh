@@ -36,4 +36,10 @@ git config --global rerere.enabled true
 git config --global user.email '6810177+n4bb12@users.noreply.github.com'
 git config --global user.name 'Abraham Schilling'
 git config --global user.signingkey ~/.ssh/id_ed25519.pub
-git config --global 'url.git@github-personal:n4bb12/.insteadOf' 'git@github.com:n4bb12/'
+
+# Pick the personal key for n4bb12 repos; remotes stay on github.com (see install/wsl/README.md).
+mkdir -p ~/.config/git
+cp "$DIR/../config/~/.config/git/github-n4bb12.gitconfig" ~/.config/git/
+git config --global --remove-section 'url.git@github-personal:n4bb12/' 2>/dev/null || true
+git config --global 'includeIf.hasconfig:remote.*.url:git@github.com:n4bb12/**.path' '~/.config/git/github-n4bb12.gitconfig'
+git -C "$DIR/.." remote set-url origin git@github.com:n4bb12/dotfiles.git

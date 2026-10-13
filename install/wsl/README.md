@@ -83,7 +83,7 @@ chmod 700 ~/.ssh ~/.ssh/1Password
 chmod 600 ~/.ssh/1Password/*
 ```
 
-`github-personal` and `github-work` pick the matching key. `IdentityAgent SSH_AUTH_SOCK` uses the socket from `wsl2-ssh-agent`, not `~/.1password/agent.sock` from `config/~/.ssh/config`.
+`github-personal` and `github-work` pick the matching key for `ssh` and the first clone below; git itself picks the key per GitHub owner (see "Configure git"). `IdentityAgent SSH_AUTH_SOCK` uses the socket from `wsl2-ssh-agent`, not `~/.1password/agent.sock` from `config/~/.ssh/config`.
 
 ```sh
 cat > ~/.ssh/config <<'EOF'
@@ -126,14 +126,18 @@ source ~/.bashrc
 bash ~/code/n4bb12/dotfiles/install/git.sh
 ```
 
-`install/git.sh` sets the personal email. If the machine commits as a different user, override it globally, add the work URL rewrite, and keep the personal email for the dotfiles repo only.
+Remotes stay `git@github.com:<owner>/<repo>`. Git picks the SSH key per owner with `includeIf "hasconfig:remote.*.url:…"` and `core.sshCommand`, instead of rewriting URLs to the `github-*` host aliases: tools that read `git remote -v`, such as stagCode/T3 Code, only recognize `github.com` and treat an alias as an unknown host. `install/git.sh` sets this up for `n4bb12` and points the dotfiles clone at `github.com`.
+
+`install/git.sh` sets the personal email. If the machine commits as a different user, override it globally, add the work owner's key, and keep the personal email for the dotfiles repo only. `key` is the work key's file name in `~/.ssh/1Password` (`ssh -o IdentitiesOnly=yes -i ~/.ssh/1Password/$key -T git@github.com` greets the work account).
 
 ```sh
 email=
 org=
+key=
 
 git config --global user.email $email
-git config --global url.git@github-work:$org/.insteadOf git@github.com:$org/
+printf '[core]\n\tsshCommand = ssh -o IdentitiesOnly=yes -i ~/.ssh/1Password/%s\n' "$key" > ~/.config/git/github-$org.gitconfig
+git config --global "includeIf.hasconfig:remote.*.url:git@github.com:$org/**.path" "~/.config/git/github-$org.gitconfig"
 git -C ~/code/n4bb12/dotfiles config user.email 6810177+n4bb12@users.noreply.github.com
 ```
 
