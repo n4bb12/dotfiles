@@ -24,7 +24,7 @@ source ~/code/n4bb12/dotfiles/aliases/load.sh
 
 ## Config
 
-Files under `config/` are named by destination. Run `bun run config` to copy them into place.
+Files under `config/` are named by destination. Each system README in `install/` says which ones to copy or link, and how.
 
 - `config/~` is the user home on linux.
 - `config/%USERPROFILE%` is the user home on Windows.
