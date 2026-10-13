@@ -29,4 +29,4 @@ Files under `config/` are named by destination. Each system README in `install/`
 - `config/~` is the user home on linux.
 - `config/%USERPROFILE%` is the user home on Windows.
 
-Machine bootstrap lives in `install/` (`ubuntu`, `kubuntu`, `omarchy`, `macos`, `windows`). Shared Linux steps are in `install/common/`.
+Machine bootstrap lives in `install/` (`wsl`, `kubuntu`, `omarchy`, `macos`, `windows`). Shared Omarchy steps are in `install/common/`.
