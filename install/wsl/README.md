@@ -229,8 +229,10 @@ source ~/.bashrc
 libs="
 @biomejs/biome
 @playwright/cli
+@schpet/linear-cli
 agent-browser
 npm-check-updates
+sentry
 vercel
 "
 
