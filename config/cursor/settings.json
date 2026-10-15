@@ -122,9 +122,7 @@
   "chat.agentSkillsLocations": {
     "~/.github/skills": true,
     ".copilot/skills": true,
-    "~/git/n4bb12/dotfiles/config/~/.agents/skills": true,
-    "~/git/n4bb12/dotfiles/config/~/.agents/skills/n4bb12": true,
-    "~/git/n4bb12/dotfiles/config/~/.agents/skills/superpowers": true,
+    "~/.agents/skills": true,
   },
   "chat.instructionsFilesLocations": {
     "~/.agents": true,
