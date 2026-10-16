@@ -1,6 +1,6 @@
 [wsl2]
-memory=20GB
+memory=24GB
 swap=8GB
 
 [experimental]
-autoMemoryReclaim=dropCache
+autoMemoryReclaim=gradual
