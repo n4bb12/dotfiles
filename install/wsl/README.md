@@ -152,7 +152,11 @@ cp "$D/~/.gitignore" "$D/~/.editorconfig" "$D/~/.prettierrc" "$D/~/.bunfig.toml"
 mkdir -p ~/.agents ~/.aws
 cp "$D/~/.agents/AGENTS.md" ~/.agents/
 cp "$D/~/.aws/config" ~/.aws/
+mkdir -p ~/.local/bin
+ln -sfn "$D/~/.local/bin/wslview" ~/.local/bin/wslview
 ```
+
+`wslview` opens URLs in the Windows browser and paths in Explorer. `aliases/os_wsl.sh` sets `BROWSER=wslview`, so `gh auth login` and other logins open the browser on Windows.
 
 Windows side. Cursor runs on Windows and does not follow WSL symlinks, so these are copies. After changing a setting in Cursor or Windows Terminal, copy it back into the repo.
 
