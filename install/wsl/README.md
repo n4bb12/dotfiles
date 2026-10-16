@@ -168,6 +168,22 @@ cp "$D/cursor/settings.json" "$D/cursor/keybindings.json" "$W/AppData/Roaming/Cu
 
 `.wslconfig` applies after `wsl --shutdown`.
 
+## Memory log
+
+`memlog` shows how memory was used over a day, in WSL and on Windows: peaks, minutes in which every process waited on memory, which tool in which project grew during those minutes, and the `.wslconfig` limits in effect. A systemd user timer records a sample once a minute to `~/.local/state/memlog/` and keeps 14 days.
+
+```sh
+D=~/code/n4bb12/dotfiles/config
+
+mkdir -p ~/.config/systemd/user
+cp "$D/~/.config/systemd/user/memlog."* ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now memlog.timer
+sudo loginctl enable-linger "$USER"
+```
+
+Linger keeps the timer running while no terminal is open. `memlog` reports today, `memlog yesterday` or `memlog 2026-10-16` another day.
+
 ## GitHub CLI
 
 [https://github.com/cli/cli/blob/trunk/docs/install_linux.md](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
