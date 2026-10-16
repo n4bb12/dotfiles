@@ -1,0 +1,6 @@
+[Unit]
+Description=Record memory, swap and the largest process groups
+
+[Service]
+Type=oneshot
+ExecStart=%h/.bun/bin/bun %h/code/n4bb12/dotfiles/scripts/memlog/cli.ts sample

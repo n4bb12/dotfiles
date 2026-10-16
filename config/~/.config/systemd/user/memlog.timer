@@ -1,0 +1,9 @@
+[Unit]
+Description=Record memory once a minute
+
+[Timer]
+OnCalendar=minutely
+AccuracySec=5s
+
+[Install]
+WantedBy=timers.target
