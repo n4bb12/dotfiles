@@ -1,0 +1,16 @@
+#!/bin/bash
+# Open a URL in the default Windows browser, or a file or folder in Explorer.
+#
+# BROWSER=wslview (aliases/os_wsl.sh) points here. It has to be a program on
+# PATH, not a shell function: gh, convex and others exec $BROWSER directly.
+case "${1:-}" in
+  http://* | https://*)
+    # The URL goes through the environment: powershell.exe -Command would
+    # splice it into the script text, where a quote in it breaks the command.
+    cd /mnt/c && URL="$1" WSLENV="${WSLENV:+$WSLENV:}URL" \
+      exec powershell.exe -NoProfile -NonInteractive -Command 'Start-Process $env:URL' </dev/null
+    ;;
+  *)
+    exec explorer.exe "$(wslpath -w "${1:-.}")"
+    ;;
+esac
