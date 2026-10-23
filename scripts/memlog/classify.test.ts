@@ -17,6 +17,20 @@ group("labelOf", () => {
       { comm: "node", args: ["/home/me/.cursor-server/bin/abc/node", "/home/me/.cursor-server/x/tsserver.js"] },
       { comm: "claude", args: ["claude"] },
       { comm: "bun", args: ["bun", "run", "dev"] },
+      {
+        comm: "MainThread",
+        args: [
+          "/usr/bin/node",
+          "--conditions=development",
+          "/home/me/code/acme/shop/node_modules/@react-router/dev/bin.cjs",
+          "dev",
+        ],
+      },
+      {
+        comm: "MainThread",
+        args: ["/usr/bin/node", "/home/me/code/acme/shop/node_modules/vitest/dist/workers/forks.js"],
+      },
+      { comm: "MainThread", args: ["/usr/bin/node", "scripts/seed.js"] },
       { comm: "postgres", args: ["postgres"], container: "shop-postgres-1" },
       { comm: "bash", args: ["bash"] },
     ].map((info) => labelOf({ ...info, cwd: "/home/me/code/acme/shop/apps/web" }, HOME))
@@ -30,6 +44,9 @@ group("labelOf", () => {
         "tsserver · shop",
         "Claude Code · shop",
         "bun run dev · shop",
+        "react-router · shop",
+        "vitest · shop",
+        "node seed.js · shop",
         "docker shop-postgres-1",
         "bash · shop",
       ]

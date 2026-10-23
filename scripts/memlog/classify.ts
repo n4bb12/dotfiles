@@ -23,6 +23,8 @@ const TOOLS = [
   "playwright",
   "next-server",
   "next",
+  "react-router",
+  "tsx",
   "vite",
   "turbo",
   "biome",
@@ -46,8 +48,20 @@ function stripExtension(name: string) {
   return name.replace(/\.(c|m)?(j|t)s$/, "")
 }
 
+/** The package a script belongs to, by its scope if it has one: ".../node_modules/@react-router/dev/bin.cjs" is "react-router". */
+function packageOf(arg: string) {
+  const name = arg.match(/.*\/node_modules\/(@?[^/]+)/)?.[1]
+
+  return name?.replace(/^@/, "")
+}
+
 function findTool(comm: string, args: string[]) {
-  const names = [comm, ...args.slice(0, 4).map((arg) => stripExtension(basename(arg)))]
+  const scripts = args.slice(0, 4)
+  const names = [
+    comm,
+    ...scripts.map((arg) => stripExtension(basename(arg))),
+    ...scripts.flatMap((arg) => packageOf(arg) ?? []),
+  ]
 
   // Tools rename their worker processes, e.g. "node (vitest 3)" or "next-server (v15.2.0)".
   return TOOLS.find((tool) => names.some((name) => new RegExp(`(^|[\\s(])${tool}([\\s)]|$)`).test(name)))
@@ -82,12 +96,15 @@ export function describe(info: ProcessInfo) {
 
   const executable = basename(info.args[0] ?? info.comm)
 
+  // Node 24 names its main thread "MainThread", so the executable tells the runtime.
+  const runtime = RUNTIMES.has(info.comm) ? info.comm : RUNTIMES.has(executable) ? executable : undefined
+
   return (
     findTool(info.comm, info.args) ??
     AGENTS[info.comm] ??
     AGENTS[executable] ??
     findEditor(info.args) ??
-    (RUNTIMES.has(info.comm) ? describeRuntime(info.comm, info.args) : info.comm)
+    (runtime ? describeRuntime(runtime, info.args) : info.comm)
   )
 }
 
