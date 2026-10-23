@@ -114,7 +114,7 @@ backup() {
 
 memlog() {
   local here="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)}"
-  bun run "$here/../scripts/memlog/cli.ts" report "$@"
+  bun run "$here/../scripts/memlog/cli.ts" "$@"
 }
 
 update() {

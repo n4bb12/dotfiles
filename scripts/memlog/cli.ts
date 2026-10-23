@@ -4,6 +4,7 @@ import { join } from "node:path"
 
 import { groupBy, labelOf, type ProcessInfo, parseTasklist, parseWslconfig } from "./classify.ts"
 import { renderReport, type Sample } from "./report.ts"
+import { renderPage } from "./web.ts"
 
 const HOME = homedir()
 const LOG_DIR = join(process.env.XDG_STATE_HOME ?? join(HOME, ".local", "state"), "memlog")
@@ -225,30 +226,53 @@ function parseDay(arg: string | undefined) {
   return arg ?? dayOf(new Date())
 }
 
-async function report(arg: string | undefined) {
-  const day = parseDay(arg)
+async function readSamples(day: string) {
   const file = Bun.file(join(LOG_DIR, `${day}.jsonl`))
   const text = (await file.exists()) ? await file.text() : ""
 
   // A line cut off when WSL stopped mid-write is skipped instead of failing the whole day.
-  const samples: Sample[] = text.split("\n").flatMap((line) => {
+  return text.split("\n").flatMap((line) => {
     try {
       return line ? [JSON.parse(line) as Sample] : []
     } catch {
       return []
     }
   })
+}
 
-  console.log(renderReport(day, samples))
+async function report(arg: string | undefined) {
+  const day = parseDay(arg)
+
+  console.log(renderReport(day, await readSamples(day)))
+}
+
+/** Writes every logged day into one page and opens it in the Windows browser. */
+async function web(arg: string | undefined) {
+  const names = (await readdir(LOG_DIR).catch(() => [])).filter((name) => name.endsWith(".jsonl")).sort()
+  const days = await Promise.all(
+    names.map(async (name) => ({ day: name.slice(0, -6), samples: await readSamples(name.slice(0, -6)) })),
+  )
+  const template = await Bun.file(join(import.meta.dir, "web.html")).text()
+  const page = join(LOG_DIR, "memlog.html")
+
+  await mkdir(LOG_DIR, { recursive: true })
+  await Bun.write(page, renderPage(days, parseDay(arg), template))
+  await run(["wslview", page])
+
+  console.log(page)
 }
 
 const [command, arg] = process.argv.slice(2)
 
 if (command === "sample") {
   await sample()
-} else if (command === "report" || !command) {
+} else if (command === "web") {
+  await web(arg)
+} else if (command === "report") {
   await report(arg)
+} else if (!command || command === "yesterday" || /^\d{4}-\d{2}-\d{2}$/.test(command)) {
+  await report(command)
 } else {
-  console.error("Usage: memlog [report [YYYY-MM-DD|yesterday]] | memlog sample")
+  console.error("Usage: memlog [report] [YYYY-MM-DD|yesterday] | memlog web [YYYY-MM-DD|yesterday] | memlog sample")
   process.exit(1)
 }

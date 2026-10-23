@@ -186,7 +186,7 @@ systemctl --user enable --now memlog.timer
 sudo loginctl enable-linger "$USER"
 ```
 
-Linger keeps the timer running while no terminal is open. `memlog` reports today, `memlog yesterday` or `memlog 2026-10-16` another day.
+Linger keeps the timer running while no terminal is open. `memlog` reports today, `memlog yesterday` or `memlog 2026-10-16` another day. `memlog web` writes all logged days into one page, `~/.local/state/memlog/memlog.html`, and opens it in the Windows browser: memory per program over the day, Windows RAM and commit, pressure episodes, and what ran at any minute.
 
 ## GitHub CLI
 

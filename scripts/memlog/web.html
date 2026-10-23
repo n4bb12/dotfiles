@@ -1,0 +1,1435 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Speicherverlauf</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --page: #f9f9f7;
+        --surface: #fcfcfb;
+        --ink: #0b0b0b;
+        --ink-2: #52514e;
+        --muted: #898781;
+        --grid: #e1e0d9;
+        --axis: #c3c2b7;
+        --border: rgba(11, 11, 11, 0.1);
+        --wash: rgba(11, 11, 11, 0.04);
+        --s1: #2a78d6;
+        --s2: #eb6834;
+        --s3: #1baf7a;
+        --s4: #eda100;
+        --s5: #e87ba4;
+        --s6: #008300;
+        --s7: #6250d6;
+        --other: #c3c2b7;
+        --serious: #ec835a;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          color-scheme: dark;
+          --page: #0d0d0d;
+          --surface: #1a1a19;
+          --ink: #f0efec;
+          --ink-2: #c3c2b7;
+          --muted: #898781;
+          --grid: #2c2c2a;
+          --axis: #383835;
+          --border: rgba(255, 255, 255, 0.1);
+          --wash: rgba(255, 255, 255, 0.05);
+          --s1: #3987e5;
+          --s2: #d95926;
+          --s3: #199e70;
+          --s4: #c98500;
+          --s5: #d55181;
+          --s6: #008300;
+          --s7: #9085e9;
+          --other: #52514e;
+        }
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --page: #0d0d0d;
+        --surface: #1a1a19;
+        --ink: #f0efec;
+        --ink-2: #c3c2b7;
+        --muted: #898781;
+        --grid: #2c2c2a;
+        --axis: #383835;
+        --border: rgba(255, 255, 255, 0.1);
+        --wash: rgba(255, 255, 255, 0.05);
+        --s1: #3987e5;
+        --s2: #d95926;
+        --s3: #199e70;
+        --s4: #c98500;
+        --s5: #d55181;
+        --s6: #008300;
+        --s7: #9085e9;
+        --other: #52514e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--page);
+        color: var(--ink);
+        font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+
+      .page {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      header p {
+        margin: 2px 0 0;
+        color: var(--ink-2);
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin: 18px 0 16px;
+      }
+
+      button {
+        font: inherit;
+        color: var(--ink);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 5px 11px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: var(--wash);
+      }
+
+      button[aria-pressed="true"] {
+        border-color: var(--ink);
+        font-weight: 600;
+      }
+
+      .filters .hint {
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 16px;
+        align-items: start;
+      }
+
+      @media (max-width: 1000px) {
+        .layout {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .tiles {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .tile,
+      .card,
+      aside {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+      }
+
+      .tile {
+        padding: 12px 14px;
+      }
+
+      .tile .label {
+        color: var(--ink-2);
+        font-size: 12px;
+      }
+
+      .tile .value {
+        font-size: 24px;
+        font-weight: 600;
+        margin-top: 2px;
+      }
+
+      .tile .sub {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .card {
+        padding: 14px 16px 10px;
+        margin-bottom: 16px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .card .sub {
+        color: var(--ink-2);
+        font-size: 12px;
+        margin: 2px 0 8px;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 14px;
+        margin: 6px 0 8px;
+        font-size: 12px;
+        color: var(--ink-2);
+        list-style: none;
+        padding: 0;
+      }
+
+      .legend li {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+      }
+
+      .key {
+        flex: none;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+      }
+
+      .key.line {
+        height: 2px;
+        width: 14px;
+        border-radius: 1px;
+      }
+
+      svg.chart {
+        display: block;
+        width: 100%;
+        touch-action: none;
+        cursor: crosshair;
+        outline: none;
+      }
+
+      svg.chart:focus-visible {
+        box-shadow: 0 0 0 2px var(--s1);
+        border-radius: 4px;
+      }
+
+      .chart text {
+        fill: var(--muted);
+        font-size: 11px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .chart .limit-label {
+        fill: var(--ink-2);
+      }
+
+      .strip-title {
+        font-size: 12px;
+        color: var(--ink-2);
+        margin: 6px 0 0;
+      }
+
+      aside {
+        position: sticky;
+        top: 12px;
+        padding: 14px 16px;
+        max-height: calc(100vh - 24px);
+        overflow: auto;
+      }
+
+      aside .time {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      aside .time strong {
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      aside .badge {
+        font-size: 11px;
+        color: var(--ink-2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0 6px;
+      }
+
+      aside h3 {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink-2);
+        margin: 14px 0 6px;
+      }
+
+      .facts {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2px 12px;
+        margin-top: 8px;
+        font-size: 13px;
+      }
+
+      .facts dt {
+        color: var(--ink-2);
+      }
+
+      .facts dd {
+        margin: 0;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+      }
+
+      .rows {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+      }
+
+      .rows li {
+        display: grid;
+        grid-template-columns: 14px minmax(0, 1fr) auto;
+        gap: 2px 6px;
+        align-items: center;
+        padding: 3px 0;
+      }
+
+      .rows .name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--ink-2);
+      }
+
+      .rows .num {
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        text-align: right;
+      }
+
+      .rows .bar {
+        grid-column: 2 / 4;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--grid);
+        overflow: hidden;
+        display: flex;
+      }
+
+      .rows .bar span {
+        display: block;
+        height: 100%;
+      }
+
+      .tooltip {
+        position: fixed;
+        z-index: 10;
+        pointer-events: none;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        padding: 8px 10px;
+        font-size: 12px;
+        min-width: 180px;
+        max-width: 300px;
+      }
+
+      .tooltip .head {
+        color: var(--ink-2);
+        margin-bottom: 4px;
+      }
+
+      .tooltip .row {
+        display: grid;
+        grid-template-columns: 14px auto minmax(0, 1fr);
+        gap: 6px;
+        align-items: center;
+      }
+
+      .tooltip .row strong {
+        font-variant-numeric: tabular-nums;
+      }
+
+      .tooltip .label {
+        color: var(--ink-2);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      section.episodes {
+        margin-top: 8px;
+      }
+
+      .episode-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      .episode {
+        text-align: left;
+        padding: 12px 14px;
+        border-radius: 12px;
+        line-height: 1.4;
+      }
+
+      .episode .when {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .episode .when::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        background: var(--serious);
+      }
+
+      .episode .meta {
+        color: var(--ink-2);
+        font-size: 12px;
+        margin: 2px 0 6px;
+      }
+
+      .episode ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 12px;
+      }
+
+      .episode li {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .episode .label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--ink-2);
+      }
+
+      .episode .num {
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+      }
+
+      .empty {
+        color: var(--muted);
+      }
+
+      details {
+        margin-top: 20px;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin-top: 10px;
+      }
+
+      table {
+        border-collapse: collapse;
+        font-size: 12px;
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 4px 10px 4px 0;
+        border-bottom: 1px solid var(--grid);
+        text-align: right;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+
+      th {
+        color: var(--ink-2);
+        font-weight: 600;
+      }
+
+      th:last-child,
+      td:last-child {
+        text-align: left;
+        white-space: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>Speicherverlauf</h1>
+        <p id="subtitle"></p>
+      </header>
+
+      <div class="filters" role="toolbar" aria-label="Tag">
+        <span id="days"></span>
+        <button type="button" id="reset" hidden>Ganzer Tag</button>
+        <span class="hint">Ziehen vergrößert einen Zeitraum · Klick heftet eine Minute an · Pfeiltasten bewegen</span>
+      </div>
+
+      <div class="layout">
+        <main>
+          <div class="tiles" id="tiles"></div>
+
+          <section class="card">
+            <h2>WSL nach Programm</h2>
+            <p class="sub">RAM und Swap je Programmgruppe, gestapelt. „Rest“ ist, was sonst in WSL belegt ist.</p>
+            <ul class="legend" id="stack-legend"></ul>
+            <svg class="chart" id="stack" aria-label="WSL-Speicher nach Programm"></svg>
+          </section>
+
+          <section class="card">
+            <h2>Windows</h2>
+            <p class="sub">Belegter RAM des PCs samt WSL-VM, und Commit: was Windows Programmen zugesagt hat, RAM plus Auslagerungsdatei.</p>
+            <ul class="legend">
+              <li><span class="key line" style="background: var(--s1)"></span>RAM belegt</li>
+              <li><span class="key line" style="background: var(--s2)"></span>Commit</li>
+            </ul>
+            <svg class="chart" id="windows" aria-label="Windows-Speicher"></svg>
+          </section>
+
+          <section class="card">
+            <h2>Speicherdruck in WSL</h2>
+            <p class="sub">
+              <span class="key" style="background: var(--serious); opacity: 0.5"></span> Druckphase: alle Prozesse
+              warten auf Speicher, oder viel wird aus dem Swap zurückgelesen.
+            </p>
+            <p class="strip-title">Gewartet, Sekunden pro Minute</p>
+            <svg class="chart" id="wait" aria-label="Wartezeit auf Speicher"></svg>
+            <p class="strip-title">Aus dem Swap gelesen, MB pro Minute</p>
+            <svg class="chart" id="swapin" aria-label="Swap-in"></svg>
+          </section>
+
+          <section class="episodes">
+            <h2>Druckphasen</h2>
+            <div class="episode-list" id="episodes"></div>
+          </section>
+
+          <details>
+            <summary>Tabelle, Spitze je 15 Minuten</summary>
+            <div class="table-wrap"><table id="table"></table></div>
+          </details>
+        </main>
+
+        <aside id="detail" aria-live="polite"></aside>
+      </div>
+    </div>
+
+    <div class="tooltip" id="tooltip" hidden></div>
+
+    <script>
+      const DATA = /*DATA*/ null
+
+      const MAX_GAP_MS = 10 * 60_000
+      const SLOTS = 7
+      const COLORS = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6", "--s7"].map((name) => `var(${name})`)
+      const OTHER = "var(--other)"
+      const M = { top: 10, right: 12, bottom: 22, left: 58 }
+
+      const nf1 = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+      const nf0 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 })
+      const gb = (mb) => nf1.format(mb / 1024)
+      const size = (mb) => (mb >= 1024 ? `${gb(mb)} GB` : `${nf0.format(mb)} MB`)
+      const clock = (t) => new Date(t).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" })
+      const dayName = (day) =>
+        new Date(`${day}T12:00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "numeric", month: "numeric" })
+
+      const $ = (id) => document.getElementById(id)
+
+      function el(tag, props = {}, ...children) {
+        const node = document.createElement(tag)
+
+        for (const [key, value] of Object.entries(props)) {
+          if (key === "style") {
+            node.style.cssText = value
+          } else if (key === "class") {
+            node.className = value
+          } else {
+            node[key] = value
+          }
+        }
+
+        node.append(...children.filter((child) => child !== null && child !== undefined))
+
+        return node
+      }
+
+      function prepare(raw) {
+        const n = raw.t.length
+
+        const groups = raw.groups.map((flat) => {
+          const list = []
+
+          for (let k = 0; k < flat.length; k += 4) {
+            list.push({ label: raw.labels[flat[k]], count: flat[k + 1], rss: flat[k + 2], swap: flat[k + 3] })
+          }
+
+          return list
+        })
+
+        const apps = raw.apps.map((flat) => {
+          const list = []
+
+          for (let k = 0; k < flat.length; k += 2) {
+            list.push({ label: raw.labels[flat[k]], mb: flat[k + 1] })
+          }
+
+          return list
+        })
+
+        // The colored groups are the ones that grow largest during the day, so a spike gets its own color.
+        const peak = new Map()
+
+        for (const list of groups) {
+          for (const group of list) {
+            peak.set(group.label, Math.max(peak.get(group.label) ?? 0, group.rss + group.swap))
+          }
+        }
+
+        const top = [...peak]
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, SLOTS)
+          .map(([label]) => label)
+
+        const footprint = raw.ramUsed.map((mb, i) => mb + raw.swapUsed[i])
+
+        const layers = top.map((label) =>
+          groups.map((list) => {
+            const group = list.find((item) => item.label === label)
+
+            return group ? group.rss + group.swap : 0
+          }),
+        )
+
+        layers.push(footprint.map((mb, i) => Math.max(0, mb - layers.reduce((sum, layer) => sum + layer[i], 0))))
+
+        const segments = []
+        let start = 0
+
+        for (let i = 1; i <= n; i++) {
+          if (i === n || raw.t[i] - raw.t[i - 1] > MAX_GAP_MS) {
+            segments.push([start, i - 1])
+            start = i
+          }
+        }
+
+        const color = new Map(top.map((label, i) => [label, COLORS[i]]))
+
+        return { ...raw, n, groups, apps, top, layers, footprint, segments, color }
+      }
+
+      const days = DATA.days.map(prepare)
+      let day = days.find((item) => item.day === DATA.initialDay) ?? days.at(-1)
+      let range = null
+      let hover = null
+      let pinned = null
+      let drag = null
+
+      function fullRange() {
+        return [day.t[0] - 30_000, day.t[day.n - 1] + 30_000]
+      }
+
+      function visible() {
+        const [a, b] = range
+        const out = []
+
+        for (let i = 0; i < day.n; i++) {
+          if (day.t[i] >= a && day.t[i] <= b) {
+            out.push(i)
+          }
+        }
+
+        return out
+      }
+
+      function nearest(t) {
+        let lo = 0
+        let hi = day.n - 1
+
+        while (lo < hi) {
+          const mid = (lo + hi) >> 1
+
+          if (day.t[mid] < t) {
+            lo = mid + 1
+          } else {
+            hi = mid
+          }
+        }
+
+        return lo > 0 && t - day.t[lo - 1] < day.t[lo] - t ? lo - 1 : lo
+      }
+
+      function niceStep(max, count) {
+        const raw = max / count
+        const power = 10 ** Math.floor(Math.log10(raw))
+
+        return [1, 2, 2.5, 5, 10].map((f) => f * power).find((step) => step >= raw) ?? raw
+      }
+
+      function geometry(svg, height) {
+        const width = svg.clientWidth || svg.parentNode.clientWidth
+        const [a, b] = range
+        const plotW = width - M.left - M.right
+        const plotH = height - M.top - M.bottom
+
+        return {
+          width,
+          height,
+          plotW,
+          plotH,
+          x: (t) => M.left + ((t - a) / (b - a)) * plotW,
+        }
+      }
+
+      function yAxis(g, yMax, unit, format) {
+        const step = niceStep(yMax, g.plotH < 80 ? 2 : 4)
+        const top = Math.ceil(yMax / step) * step
+        const y = (value) => M.top + g.plotH - (value / top) * g.plotH
+        let svg = ""
+
+        for (let value = 0; value <= top + step / 2; value += step) {
+          const py = y(value).toFixed(1)
+          const stroke = value === 0 ? "var(--axis)" : "var(--grid)"
+          svg += `<line x1="${M.left}" x2="${g.width - M.right}" y1="${py}" y2="${py}" stroke="${stroke}" stroke-width="1" shape-rendering="crispEdges"/>`
+          svg += `<text x="${M.left - 6}" y="${py}" dy="0.32em" text-anchor="end">${format(value)}${value === top ? ` ${unit}` : ""}</text>`
+        }
+
+        return { y, svg }
+      }
+
+      function xAxis(g) {
+        const [a, b] = range
+        const steps = [5, 10, 15, 30, 60, 120, 180, 360].map((m) => m * 60_000)
+        const step = steps.find((s) => (s / (b - a)) * g.plotW >= 64) ?? steps.at(-1)
+        const first = new Date(a)
+        first.setHours(0, 0, 0, 0)
+        let svg = ""
+
+        for (let t = first.getTime(); t <= b; t += step) {
+          if (t < a) {
+            continue
+          }
+
+          svg += `<text x="${g.x(t).toFixed(1)}" y="${g.height - 6}" text-anchor="middle">${clock(t)}</text>`
+        }
+
+        return svg
+      }
+
+      function bands(g) {
+        return day.episodes
+          .map((episode) => {
+            const x0 = Math.max(M.left, g.x(episode.start - 30_000))
+            const x1 = Math.min(g.width - M.right, g.x(episode.end + 30_000))
+
+            return x1 > x0
+              ? `<rect x="${x0.toFixed(1)}" y="${M.top}" width="${Math.max(2, x1 - x0).toFixed(1)}" height="${g.plotH}" fill="var(--serious)" opacity="0.16"/>`
+              : ""
+          })
+          .join("")
+      }
+
+      function clip(id, g) {
+        return `<clipPath id="${id}-clip"><rect x="${M.left}" y="0" width="${g.plotW}" height="${g.height}"/></clipPath>`
+      }
+
+      /** Path through the segments of a series, broken where WSL was off. */
+      function linePath(g, y, value) {
+        return day.segments
+          .map(([i0, i1]) => {
+            let d = ""
+
+            for (let i = i0; i <= i1; i++) {
+              const v = value(i)
+
+              if (v === null || v === undefined) {
+                continue
+              }
+
+              d += `${d ? "L" : "M"}${g.x(day.t[i]).toFixed(1)},${y(v).toFixed(1)}`
+            }
+
+            return d
+          })
+          .join("")
+      }
+
+      function stepPath(g, y, value) {
+        return day.segments
+          .map(([i0, i1]) => {
+            let d = ""
+
+            for (let i = i0; i <= i1; i++) {
+              const v = value(i)
+
+              if (v === null || v === undefined) {
+                continue
+              }
+
+              const px = g.x(day.t[i]).toFixed(1)
+              d += d ? `H${px}V${y(v).toFixed(1)}` : `M${px},${y(v).toFixed(1)}`
+            }
+
+            return d ? `${d}H${g.x(day.t[i1] + 30_000).toFixed(1)}` : ""
+          })
+          .join("")
+      }
+
+      function columnPath(g, y, value) {
+        const half = Math.max(0.5, (g.plotW / ((range[1] - range[0]) / 60_000)) * 0.4)
+        let d = ""
+
+        for (let i = 0; i < day.n; i++) {
+          const v = value(i)
+
+          if (!v) {
+            continue
+          }
+
+          const px = g.x(day.t[i])
+          d += `M${(px - half).toFixed(1)},${y(0).toFixed(1)}V${y(v).toFixed(1)}H${(px + half).toFixed(1)}V${y(0).toFixed(1)}Z`
+        }
+
+        return d
+      }
+
+      function limitLabel(g, y, value, text) {
+        const last = visible().at(-1)
+
+        if (last === undefined) {
+          return ""
+        }
+
+        return `<text class="limit-label" x="${g.width - M.right - 4}" y="${(y(value(last)) - 5).toFixed(1)}" text-anchor="end">${text}</text>`
+      }
+
+      function maxOf(indices, value) {
+        return indices.reduce((max, i) => Math.max(max, value(i) ?? 0), 0)
+      }
+
+      const charts = {
+        stack: {
+          height: 300,
+          render(svg) {
+            const g = geometry(svg, this.height)
+            const shown = visible()
+            const limit = (i) => day.ramTotal[i] + day.swapTotal[i]
+            const top = (i) => day.layers.reduce((sum, layer) => sum + layer[i], 0)
+            const axis = yAxis(g, Math.max(maxOf(shown, limit), maxOf(shown, top)) / 1024, "GB", nf0.format)
+            const y = (mb) => axis.y(mb / 1024)
+            let areas = ""
+
+            for (const [i0, i1] of day.segments) {
+              const base = new Array(i1 - i0 + 1).fill(0)
+
+              day.layers.forEach((layer, k) => {
+                const color = k < day.top.length ? COLORS[k] : OTHER
+                let upper = ""
+                let lower = ""
+
+                for (let i = i0; i <= i1; i++) {
+                  const px = g.x(day.t[i]).toFixed(1)
+                  lower = `L${px},${y(base[i - i0]).toFixed(1)}${lower}`
+                  base[i - i0] += layer[i]
+                  upper += `${upper ? "L" : "M"}${px},${y(base[i - i0]).toFixed(1)}`
+                }
+
+                areas += `<path d="${upper}${lower}Z" fill="${color}" fill-opacity="0.85"/>`
+                areas += `<path d="${upper}" fill="none" stroke="var(--surface)" stroke-width="1.5" stroke-linejoin="round"/>`
+              })
+            }
+
+            svg.setAttribute("viewBox", `0 0 ${g.width} ${g.height}`)
+            svg.setAttribute("height", g.height)
+            svg.innerHTML =
+              clip("stack", g) +
+              axis.svg +
+              `<g clip-path="url(#stack-clip)">${areas}${bands(g)}` +
+              `<path d="${stepPath(g, y, (i) => day.ramTotal[i])}" fill="none" stroke="var(--ink-2)" stroke-width="1"/>` +
+              `<path d="${stepPath(g, y, limit)}" fill="none" stroke="var(--ink-2)" stroke-width="1"/></g>` +
+              limitLabel(g, y, (i) => day.ramTotal[i], "RAM-Grenze") +
+              limitLabel(g, y, limit, "RAM + Swap") +
+              xAxis(g) +
+              cursor(g)
+          },
+          rows(i) {
+            const rows = day.top.map((label, k) => [COLORS[k], day.layers[k][i], label])
+            rows.push([OTHER, day.layers.at(-1)[i], "Rest"])
+
+            return [
+              ...rows.filter(([, mb]) => mb > 0).sort((a, b) => b[1] - a[1]),
+              [null, day.footprint[i], `WSL gesamt, ${gb(day.ramUsed[i])} GB RAM + ${gb(day.swapUsed[i])} GB Swap`],
+            ]
+          },
+        },
+        windows: {
+          height: 220,
+          render(svg) {
+            const g = geometry(svg, this.height)
+            const shown = visible()
+            const used = (i) => (day.winTotal[i] === null ? null : day.winTotal[i] - day.winFree[i])
+            const axis = yAxis(
+              g,
+              Math.max(maxOf(shown, (i) => day.commitLimit[i]), maxOf(shown, (i) => day.winTotal[i]), 1024) / 1024,
+              "GB",
+              nf0.format,
+            )
+            const y = (mb) => axis.y(mb / 1024)
+
+            svg.setAttribute("viewBox", `0 0 ${g.width} ${g.height}`)
+            svg.setAttribute("height", g.height)
+            svg.innerHTML =
+              clip("windows", g) +
+              axis.svg +
+              `<g clip-path="url(#windows-clip)">${bands(g)}` +
+              `<path d="${stepPath(g, y, (i) => day.winTotal[i])}" fill="none" stroke="var(--ink-2)" stroke-width="1"/>` +
+              `<path d="${stepPath(g, y, (i) => day.commitLimit[i])}" fill="none" stroke="var(--ink-2)" stroke-width="1"/>` +
+              `<path d="${linePath(g, y, used)}" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>` +
+              `<path d="${linePath(g, y, (i) => day.commit[i])}" fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g>` +
+              limitLabel(g, y, (i) => day.winTotal[i] ?? 0, "RAM gesamt") +
+              limitLabel(g, y, (i) => day.commitLimit[i] ?? 0, "Commit-Grenze") +
+              xAxis(g) +
+              cursor(g, [
+                ["var(--s1)", (i) => (used(i) === null ? null : y(used(i)))],
+                ["var(--s2)", (i) => (day.commit[i] === null ? null : y(day.commit[i]))],
+              ])
+          },
+          rows(i) {
+            if (day.winTotal[i] === null) {
+              return [[null, null, "keine Windows-Werte"]]
+            }
+
+            return [
+              ["var(--s1)", day.winTotal[i] - day.winFree[i], `RAM belegt, ${gb(day.winFree[i])} GB frei`],
+              ["var(--s2)", day.commit[i], `Commit, Grenze ${gb(day.commitLimit[i])} GB`],
+            ]
+          },
+        },
+        wait: {
+          height: 90,
+          render(svg) {
+            const g = geometry(svg, this.height)
+            const axis = yAxis(g, Math.max(5, maxOf(visible(), (i) => day.waitSec[i])), "s", nf0.format)
+
+            svg.setAttribute("viewBox", `0 0 ${g.width} ${g.height}`)
+            svg.setAttribute("height", g.height)
+            svg.innerHTML =
+              clip("wait", g) +
+              axis.svg +
+              `<g clip-path="url(#wait-clip)">${bands(g)}<path d="${columnPath(g, axis.y, (i) => day.waitSec[i])}" fill="var(--s1)"/></g>` +
+              xAxis(g) +
+              cursor(g)
+          },
+          rows: (i) => [["var(--s1)", null, `${nf1.format(day.waitSec[i])} s gewartet`]],
+        },
+        swapin: {
+          height: 90,
+          render(svg) {
+            const g = geometry(svg, this.height)
+            const axis = yAxis(g, Math.max(50, maxOf(visible(), (i) => day.swapIn[i])), "MB", nf0.format)
+
+            svg.setAttribute("viewBox", `0 0 ${g.width} ${g.height}`)
+            svg.setAttribute("height", g.height)
+            svg.innerHTML =
+              clip("swapin", g) +
+              axis.svg +
+              `<g clip-path="url(#swapin-clip)">${bands(g)}<path d="${columnPath(g, axis.y, (i) => day.swapIn[i])}" fill="var(--s1)"/></g>` +
+              xAxis(g) +
+              cursor(g)
+          },
+          rows: (i) => [["var(--s1)", day.swapIn[i], "aus dem Swap gelesen"]],
+        },
+      }
+
+      /** Crosshair, dots and brush, hidden until the pointer or a pin puts them somewhere. */
+      function cursor(g, dots = []) {
+        return (
+          `<line class="xh" y1="${M.top}" y2="${M.top + g.plotH}" stroke="var(--ink-2)" stroke-width="1" visibility="hidden"/>` +
+          dots
+            .map(
+              ([color], k) =>
+                `<circle class="dot" data-k="${k}" r="4" fill="${color}" stroke="var(--surface)" stroke-width="2" visibility="hidden"/>`,
+            )
+            .join("") +
+          `<rect class="brush" y="${M.top}" height="${g.plotH}" fill="var(--ink)" opacity="0.08" visibility="hidden"/>`
+        )
+      }
+
+      const dotsOf = {
+        windows: (svg) => {
+          const g = geometry(svg, charts.windows.height)
+          const used = (i) => (day.winTotal[i] === null ? null : day.winTotal[i] - day.winFree[i])
+          const axis = yAxis(
+            g,
+            Math.max(
+              maxOf(visible(), (i) => day.commitLimit[i]),
+              maxOf(visible(), (i) => day.winTotal[i]),
+              1024,
+            ) / 1024,
+            "",
+            String,
+          )
+
+          return [used, (i) => day.commit[i]].map((value) => (i) => {
+            const v = value(i)
+
+            return v === null ? null : axis.y(v / 1024)
+          })
+        },
+      }
+
+      function moveCursor() {
+        const i = hover ?? pinned
+
+        for (const id of Object.keys(charts)) {
+          const svg = $(id)
+          const line = svg.querySelector(".xh")
+
+          if (!line) {
+            continue
+          }
+
+          if (i === null) {
+            line.setAttribute("visibility", "hidden")
+            for (const dot of svg.querySelectorAll(".dot")) {
+              dot.setAttribute("visibility", "hidden")
+            }
+            continue
+          }
+
+          const g = geometry(svg, charts[id].height)
+          const px = g.x(day.t[i]).toFixed(1)
+          line.setAttribute("x1", px)
+          line.setAttribute("x2", px)
+          line.setAttribute("visibility", "visible")
+
+          const ys = dotsOf[id]?.(svg) ?? []
+
+          svg.querySelectorAll(".dot").forEach((dot) => {
+            const py = ys[Number(dot.dataset.k)]?.(i)
+
+            dot.setAttribute("visibility", py === null || py === undefined ? "hidden" : "visible")
+            dot.setAttribute("cx", px)
+            dot.setAttribute("cy", py ?? 0)
+          })
+        }
+
+        renderDetail()
+      }
+
+      function showTooltip(id, i, clientX, clientY) {
+        const tip = $("tooltip")
+        tip.replaceChildren(el("div", { class: "head", textContent: clock(day.t[i]) }))
+
+        for (const [color, mb, label] of charts[id].rows(i)) {
+          tip.append(
+            el(
+              "div",
+              { class: "row" },
+              el("span", { class: "key line", style: color ? `background:${color}` : "" }),
+              el("strong", { textContent: mb === null || mb === undefined ? "" : `${gb(mb)} GB` }),
+              el("span", { class: "label", textContent: label }),
+            ),
+          )
+        }
+
+        tip.hidden = false
+        const box = tip.getBoundingClientRect()
+        const left = clientX + 16 + box.width > innerWidth ? clientX - 16 - box.width : clientX + 16
+        tip.style.left = `${Math.max(4, left)}px`
+        tip.style.top = `${Math.min(innerHeight - box.height - 4, Math.max(4, clientY - box.height / 2))}px`
+      }
+
+      function hideTooltip() {
+        $("tooltip").hidden = true
+      }
+
+      function timeAt(svg, clientX) {
+        const box = svg.getBoundingClientRect()
+        const [a, b] = range
+        const frac = (clientX - box.left - M.left) / (box.width - M.left - M.right)
+
+        return a + Math.min(1, Math.max(0, frac)) * (b - a)
+      }
+
+      function bindChart(id) {
+        const svg = $(id)
+        svg.tabIndex = 0
+
+        svg.addEventListener("pointerdown", (event) => {
+          drag = { x: event.clientX, t: timeAt(svg, event.clientX) }
+          svg.setPointerCapture(event.pointerId)
+        })
+
+        svg.addEventListener("pointermove", (event) => {
+          const t = timeAt(svg, event.clientX)
+          hover = nearest(t)
+          moveCursor()
+          showTooltip(id, hover, event.clientX, event.clientY)
+
+          const brush = svg.querySelector(".brush")
+
+          if (drag && brush && Math.abs(event.clientX - drag.x) > 6) {
+            const g = geometry(svg, charts[id].height)
+            const x0 = g.x(Math.min(drag.t, t))
+            const x1 = g.x(Math.max(drag.t, t))
+            brush.setAttribute("x", x0.toFixed(1))
+            brush.setAttribute("width", (x1 - x0).toFixed(1))
+            brush.setAttribute("visibility", "visible")
+          }
+        })
+
+        svg.addEventListener("pointerup", (event) => {
+          if (!drag) {
+            return
+          }
+
+          const t = timeAt(svg, event.clientX)
+
+          if (Math.abs(event.clientX - drag.x) > 6) {
+            range = [Math.min(drag.t, t), Math.max(drag.t, t)]
+            drag = null
+            render()
+          } else {
+            const i = nearest(t)
+            pinned = pinned === i ? null : i
+            drag = null
+            moveCursor()
+          }
+        })
+
+        svg.addEventListener("pointerleave", () => {
+          hover = null
+          hideTooltip()
+          moveCursor()
+        })
+
+        svg.addEventListener("dblclick", () => {
+          range = fullRange()
+          render()
+        })
+
+        svg.addEventListener("keydown", (event) => {
+          const current = hover ?? pinned ?? visible().at(-1) ?? 0
+          const by = event.shiftKey ? 15 : 1
+
+          if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            pinned = Math.min(day.n - 1, Math.max(0, current + (event.key === "ArrowLeft" ? -by : by)))
+            hover = null
+            moveCursor()
+            event.preventDefault()
+          } else if (event.key === "Escape") {
+            pinned = null
+            moveCursor()
+          }
+        })
+      }
+
+      function tile(label, value, sub) {
+        return el(
+          "div",
+          { class: "tile" },
+          el("div", { class: "label", textContent: label }),
+          el("div", { class: "value", textContent: value }),
+          el("div", { class: "sub", textContent: sub }),
+        )
+      }
+
+      function renderTiles() {
+        const shown = visible()
+
+        if (!shown.length) {
+          $("tiles").replaceChildren()
+          return
+        }
+
+        const peakBy = (value) => shown.reduce((best, i) => ((value(i) ?? -Infinity) > (value(best) ?? -Infinity) ? i : best))
+        const ram = peakBy((i) => day.ramUsed[i])
+        const swap = peakBy((i) => day.swapUsed[i])
+        const waited = shown.reduce((sum, i) => sum + day.waitSec[i], 0) / 60
+        const swapIn = shown.reduce((sum, i) => sum + day.swapIn[i], 0)
+        const withWindows = shown.filter((i) => day.winFree[i] !== null)
+        const tiles = [
+          tile("WSL-RAM, Spitze", `${gb(day.ramUsed[ram])} GB`, `von ${gb(day.ramTotal[ram])} GB · ${clock(day.t[ram])}`),
+          tile("Swap, Spitze", `${gb(day.swapUsed[swap])} GB`, `von ${gb(day.swapTotal[swap])} GB · ${clock(day.t[swap])}`),
+          tile("Auf Speicher gewartet", `${nf1.format(waited)} min`, `${size(swapIn)} aus dem Swap gelesen`),
+        ]
+
+        if (withWindows.length) {
+          const low = withWindows.reduce((best, i) => (day.winFree[i] < day.winFree[best] ? i : best))
+          const commit = withWindows.reduce((best, i) => (day.commit[i] > day.commit[best] ? i : best))
+          tiles.push(
+            tile("Windows frei, Tiefstwert", `${gb(day.winFree[low])} GB`, `von ${gb(day.winTotal[low])} GB · ${clock(day.t[low])}`),
+            tile("Commit, Spitze", `${gb(day.commit[commit])} GB`, `von ${gb(day.commitLimit[commit])} GB · ${clock(day.t[commit])}`),
+          )
+        }
+
+        $("tiles").replaceChildren(...tiles)
+      }
+
+      function renderLegend() {
+        const items = day.top.map((label, k) =>
+          el("li", {}, el("span", { class: "key", style: `background:${COLORS[k]}` }), el("span", { textContent: label })),
+        )
+        items.push(el("li", {}, el("span", { class: "key", style: `background:${OTHER}` }), el("span", { textContent: "Rest" })))
+        $("stack-legend").replaceChildren(...items)
+      }
+
+      function groupRows(list, total, colorOf) {
+        const max = Math.max(1, ...list.map((item) => item.mb))
+
+        return el(
+          "ul",
+          { class: "rows" },
+          ...list.map((item) =>
+            el(
+              "li",
+              { title: item.title ?? item.label },
+              el("span", { class: "key", style: `background:${colorOf(item.label) ?? "transparent"}` }),
+              el("span", { class: "name", textContent: item.label }),
+              el("span", { class: "num", textContent: size(item.mb) }),
+              el(
+                "span",
+                { class: "bar" },
+                el("span", { style: `width:${((item.rss ?? item.mb) / max) * 100}%;background:var(--ink-2)` }),
+                item.swap ? el("span", { style: `width:${(item.swap / max) * 100}%;background:var(--muted);opacity:.5` }) : null,
+              ),
+            ),
+          ),
+          total,
+        )
+      }
+
+      function renderDetail() {
+        const i = hover ?? pinned ?? visible().at(-1)
+        const aside = $("detail")
+
+        if (i === undefined) {
+          aside.replaceChildren(el("p", { class: "empty", textContent: "Keine Messwerte im Zeitraum." }))
+          return
+        }
+
+        const facts = el("dl", { class: "facts" })
+        const fact = (label, value) => facts.append(el("dt", { textContent: label }), el("dd", { textContent: value }))
+
+        fact("WSL-RAM", `${gb(day.ramUsed[i])} / ${gb(day.ramTotal[i])} GB`)
+        fact("Swap", `${gb(day.swapUsed[i])} / ${gb(day.swapTotal[i])} GB`)
+        fact("Gewartet", `${nf1.format(day.waitSec[i])} s`)
+        fact("Aus Swap gelesen", size(day.swapIn[i]))
+
+        if (day.winFree[i] !== null) {
+          fact("Windows frei", `${gb(day.winFree[i])} / ${gb(day.winTotal[i])} GB`)
+          fact("Commit", `${gb(day.commit[i])} / ${gb(day.commitLimit[i])} GB`)
+        }
+
+        const wsl = day.groups[i].map((group) => ({
+          label: group.label,
+          title: `${group.label} · ${group.count} Prozesse · ${size(group.rss)} RAM, ${size(group.swap)} Swap`,
+          mb: group.rss + group.swap,
+          rss: group.rss,
+          swap: group.swap,
+        }))
+
+        aside.replaceChildren(
+          el(
+            "div",
+            { class: "time" },
+            el("strong", { textContent: clock(day.t[i]) }),
+            pinned === i && hover === null ? el("span", { class: "badge", textContent: "angeheftet" }) : null,
+            hover === null && pinned === null ? el("span", { class: "badge", textContent: "letzte Messung" }) : null,
+          ),
+          facts,
+          el("h3", { textContent: "Größte in WSL · RAM, heller Teil Swap" }),
+          groupRows(wsl, null, (label) => day.color.get(label)),
+          day.apps[i].length ? el("h3", { textContent: "Größte in Windows" }) : null,
+          day.apps[i].length ? groupRows(day.apps[i], null, () => null) : null,
+        )
+      }
+
+      function renderEpisodes() {
+        const target = $("episodes")
+
+        if (!day.episodes.length) {
+          target.replaceChildren(el("p", { class: "empty", textContent: "Kein Speicherdruck an diesem Tag." }))
+          return
+        }
+
+        target.replaceChildren(
+          ...day.episodes.map((episode) => {
+            const peak = nearest(episode.peak)
+            const button = el(
+              "button",
+              { type: "button", class: "episode", title: "Zeitraum vergrößern" },
+              el("div", { class: "when", textContent: `${clock(episode.start)}–${clock(episode.end)}` }),
+              el("div", {
+                class: "meta",
+                textContent: `RAM ${gb(day.ramUsed[peak])} GB · Swap ${gb(day.swapUsed[peak])} GB · ${nf1.format(episode.stallMin)} min gewartet · ${size(episode.swapInMb)} aus Swap`,
+              }),
+              episode.grew.length
+                ? el(
+                    "ol",
+                    {},
+                    ...episode.grew.map(([label, mb]) =>
+                      el(
+                        "li",
+                        {},
+                        el("span", { class: "label", textContent: day.labels[label] }),
+                        el("span", { class: "num", textContent: `+${size(mb)}` }),
+                      ),
+                    ),
+                  )
+                : el("div", { class: "meta", textContent: "Keine Gruppe ist um 100 MB oder mehr gewachsen." }),
+            )
+
+            button.addEventListener("click", () => {
+              range = [episode.start - 20 * 60_000, episode.end + 20 * 60_000]
+              pinned = peak
+              render()
+              scrollTo({ top: 0, behavior: "smooth" })
+            })
+
+            return button
+          }),
+        )
+      }
+
+      function renderTable() {
+        const buckets = new Map()
+
+        for (const i of visible()) {
+          const key = Math.floor(day.t[i] / (15 * 60_000)) * 15 * 60_000
+          buckets.set(key, [...(buckets.get(key) ?? []), i])
+        }
+
+        const head = el(
+          "tr",
+          {},
+          ...["Zeit", "WSL-RAM GB", "Swap GB", "Gewartet s", "Windows frei GB", "Größte in WSL (Spitze)"].map((text) =>
+            el("th", { textContent: text }),
+          ),
+        )
+
+        const rows = [...buckets].map(([key, indices]) => {
+          const peak = indices.reduce((best, i) => (day.footprint[i] > day.footprint[best] ? i : best))
+          const wait = indices.reduce((sum, i) => sum + day.waitSec[i], 0)
+          const largest = day.groups[peak]
+            .slice(0, 3)
+            .map((group) => `${group.label} ${gb(group.rss + group.swap)}`)
+            .join(" · ")
+
+          return el(
+            "tr",
+            {},
+            el("td", { textContent: clock(key) }),
+            el("td", { textContent: gb(day.ramUsed[peak]) }),
+            el("td", { textContent: gb(day.swapUsed[peak]) }),
+            el("td", { textContent: nf0.format(wait) }),
+            el("td", { textContent: day.winFree[peak] === null ? "–" : gb(day.winFree[peak]) }),
+            el("td", { textContent: largest }),
+          )
+        })
+
+        $("table").replaceChildren(el("thead", {}, head), el("tbody", {}, ...rows))
+      }
+
+      function renderDays() {
+        $("days").replaceChildren(
+          ...days.map((item) => {
+            const button = el("button", { type: "button", textContent: dayName(item.day) })
+            button.setAttribute("aria-pressed", String(item === day))
+            button.addEventListener("click", () => {
+              day = item
+              range = fullRange()
+              hover = null
+              pinned = null
+              renderDay()
+            })
+
+            return button
+          }),
+        )
+      }
+
+      function render() {
+        const [a, b] = range
+        $("reset").hidden = a <= day.t[0] && b >= day.t[day.n - 1]
+
+        for (const [id, chart] of Object.entries(charts)) {
+          chart.render($(id))
+        }
+
+        renderTiles()
+        renderTable()
+        moveCursor()
+      }
+
+      function renderDay() {
+        renderDays()
+        renderLegend()
+        renderEpisodes()
+        $("subtitle").textContent =
+          `${new Date(`${day.day}T12:00:00`).toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" })} · ` +
+          `${clock(day.t[0])}–${clock(day.t[day.n - 1])} · ${day.n} Messungen · erzeugt ${clock(DATA.generated)}`
+        render()
+      }
+
+      if (!days.length) {
+        $("subtitle").textContent = "Noch keine Messungen."
+      } else {
+        range = fullRange()
+        Object.keys(charts).forEach(bindChart)
+        $("reset").addEventListener("click", () => {
+          range = fullRange()
+          render()
+        })
+        new ResizeObserver(() => render()).observe(document.querySelector("main"))
+        renderDay()
+      }
+    </script>
+  </body>
+</html>
