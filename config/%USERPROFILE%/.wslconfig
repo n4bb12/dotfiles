@@ -1,6 +1,8 @@
 [wsl2]
 memory=24GB
 swap=8GB
+# WSLg (msrdc.exe) loses key-up events, which left Shift stuck on Windows
+guiApplications=false
 
 [experimental]
 autoMemoryReclaim=gradual

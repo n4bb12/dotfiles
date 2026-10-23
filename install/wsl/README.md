@@ -16,7 +16,7 @@ default=$USER
 EOF
 ```
 
-Run `wsl --shutdown` in PowerShell, then open Ubuntu again. `.wslconfig` (memory, swap) is copied in [Config files](#config-files).
+Run `wsl --shutdown` in PowerShell, then open Ubuntu again. `.wslconfig` (memory, swap, WSLg off) is copied in [Config files](#config-files).
 
 ## Update packages
 
