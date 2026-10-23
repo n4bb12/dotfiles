@@ -44,6 +44,7 @@ wget
 xz-utils
 zip
 
+ffmpeg
 fzf
 jq
 ripgrep
