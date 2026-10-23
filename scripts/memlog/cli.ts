@@ -230,10 +230,14 @@ async function report(arg: string | undefined) {
   const file = Bun.file(join(LOG_DIR, `${day}.jsonl`))
   const text = (await file.exists()) ? await file.text() : ""
 
-  const samples: Sample[] = text
-    .split("\n")
-    .filter(Boolean)
-    .map((line) => JSON.parse(line))
+  // A line cut off when WSL stopped mid-write is skipped instead of failing the whole day.
+  const samples: Sample[] = text.split("\n").flatMap((line) => {
+    try {
+      return line ? [JSON.parse(line) as Sample] : []
+    } catch {
+      return []
+    }
+  })
 
   console.log(renderReport(day, samples))
 }
